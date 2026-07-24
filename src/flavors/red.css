@@ -1,0 +1,12 @@
+/**
+ * Neubrutalism — Flavor: Red
+ * Overrides only --main (ekmas core variable).
+ */
+
+:root,
+html.t-light {
+	--main: oklch(71.1% 0.168 28.04deg); /* Red */
+	--border-radius: 5px;
+	--box-shadow-x: 4px;
+	--box-shadow-y: 4px;
+}

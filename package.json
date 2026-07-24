@@ -1,0 +1,31 @@
+{
+  "name": "neubrutalism-orca-theme",
+  "version": "1.0.0",
+  "description": "A Neubrutalism-style theme for Orca Notes — hard shadows, thick borders, zero border-radius.",
+  "type": "module",
+  "scripts": {
+    "build:css": "node scripts/build-theme-css.cjs",
+    "build:plugin-css": "node scripts/build-plugin-css.cjs",
+    "dev": "npm run build:css && vite",
+    "build": "npm run build:css && cross-env NODE_ENV=production tsc && vite build",
+    "deploy": "npm run build && npm run build:plugin-css && node scripts/deploy.cjs",
+    "lint:css": "stylelint \"src/theme-css/**/*.css\" \"src/flavors/**/*.css\" \"src/plugin-styles/**/*.css\"",
+    "check": "npm run build && npm run lint:css",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "valtio": "^1.13.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "cross-env": "^7.0.3",
+    "rollup-plugin-external-globals": "^0.9.2",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^36.0.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  }
+}

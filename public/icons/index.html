@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neubrutalism Icons — Preview</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        background: #f5f0eb;
+        color: #000;
+        padding: 2rem;
+      }
+      h1 {
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+      .sub {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
+      .tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: 1.5rem;
+        border: 2px solid #000;
+        display: inline-flex;
+      }
+      .tabs button {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: #fff;
+        cursor: pointer;
+        font-weight: 600;
+        border-right: 2px solid #000;
+      }
+      .tabs button:last-child {
+        border-right: none;
+      }
+      .tabs button.active {
+        background: #000;
+        color: #fff;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 0.8rem;
+      }
+      .card {
+        background: #fff;
+        border: 2px solid #000;
+        padding: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        box-shadow: 3px 3px 0 0 #000;
+      }
+      .card svg {
+        width: 40px;
+        height: 40px;
+        display: block;
+      }
+      .card span {
+        font-size: 0.6rem;
+        color: #888;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .card:hover {
+        box-shadow: 5px 5px 0 0 #000;
+        transform: translate(-2px, -2px);
+        transition: 0.12s ease;
+      }
+      .count {
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎨 Neubrutalism Icons</h1>
+    <p class="sub">
+      Source: <a href="https://github.com/siddsarkar/neicon">neicon</a> (MIT) ·
+      68 icons × 2 weights
+    </p>
+    <div class="tabs">
+      <button id="tab-clr" class="active" onclick="show('clr')">
+        🎨 Colored
+      </button>
+      <button id="tab-bw" onclick="show('bw')">⚫ B&amp;W</button>
+    </div>
+    <p class="count" id="count"></p>
+    <div class="grid" id="grid"></div>
+    <script>
+      const icons = [
+        "add",
+        "analytics",
+        "apps",
+        "attention",
+        "basket",
+        "bookmark",
+        "check",
+        "close",
+        "credit-card",
+        "delete",
+        "down-arrow",
+        "download",
+        "exit",
+        "filters",
+        "folder",
+        "hashtag",
+        "info",
+        "layout",
+        "left-arrow",
+        "mail",
+        "menu",
+        "message",
+        "pause",
+        "photo",
+        "pie-chart",
+        "play",
+        "remove",
+        "right",
+        "time",
+        "up-arrow",
+        "upload",
+        "video",
+        "letter-a",
+        "letter-b",
+        "letter-c",
+        "letter-coin",
+        "letter-d",
+        "letter-e",
+        "letter-f",
+        "letter-g",
+        "letter-h",
+        "letter-j",
+        "letter-k",
+        "letter-l",
+        "letter-m",
+        "letter-n",
+        "letter-o",
+        "letter-p",
+        "letter-q",
+        "letter-r",
+        "letter-s",
+        "letter-t",
+        "letter-u",
+        "letter-v",
+        "letter-w",
+        "letter-x",
+        "letter-y",
+        "letter-z",
+        "number-0",
+        "number-1",
+        "number-2",
+        "number-3",
+        "number-4",
+        "number-5",
+        "number-6",
+        "number-7",
+        "number-8",
+        "number-9",
+      ];
+      let mode = "clr";
+      function show(m) {
+        mode = m;
+        document.getElementById("tab-clr").className =
+          m === "clr" ? "active" : "";
+        document.getElementById("tab-bw").className =
+          m === "bw" ? "active" : "";
+        render();
+      }
+      async function render() {
+        const grid = document.getElementById("grid");
+        grid.innerHTML = "";
+        document.getElementById("count").textContent =
+          `Showing ${icons.length} ${mode === "clr" ? "colored" : "B&W"} icons`;
+        for (const name of icons) {
+          const resp = await fetch(`icons/${mode}_${name}.svg`);
+          const svgText = await resp.text();
+          const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+          const svgEl = doc.querySelector("svg");
+          if (svgEl) svgEl.removeAttribute("width");
+          if (svgEl) svgEl.removeAttribute("height");
+          const card = document.createElement("div");
+          card.className = "card";
+          if (svgEl) card.appendChild(svgEl);
+          const label = document.createElement("span");
+          label.textContent = name;
+          card.appendChild(label);
+          grid.appendChild(card);
+        }
+      }
+      render();
+    </script>
+  </body>
+</html>

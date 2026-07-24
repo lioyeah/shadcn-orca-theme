@@ -1,0 +1,996 @@
+/**
+ * TUI-minimal — Task Planner Plugin Styles
+ * Only loaded when orca-plugin-task-planner is installed.
+ * Relies on --orca-color-* / --ctp-* variables from the active flavor.
+ */
+
+/* ===== Global Reset ===== */
+/* :not(#_) raises specificity to (0,1,1,0) to beat task-planner's own (0,1,0) rules.
+ * Also double-attribute for extra insurance on element-level matches. */
+[class*="mlo-"]:not(#_),
+[class*="mlo-"]:not(#_) *,
+[class*="mlo-"]:not(#_)::before,
+[class*="mlo-"]:not(#_)::after {
+	box-shadow: none !important;
+	text-shadow: none !important;
+	transition: none !important;
+	animation: none !important;
+	border-radius: 0 !important;
+	background-image: none !important;
+	filter: none !important;
+	backdrop-filter: none !important;
+	outline: none !important;
+	transform: none !important;
+}
+
+/* ===== Dashboard ===== */
+
+/* Hero section — card container, bottom border only for section separation */
+.mlo-dashboard-hero {
+	border: none !important;
+	border-bottom: 1px solid var(--orca-color-border) !important;
+	background-color: var(--orca-color-bg-1) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-hero-main {
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.mlo-dashboard-kicker {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+	background-color: var(--orca-color-primary-1) !important;
+	border: none !important;
+	border-radius: 0 !important;
+	padding: 0.15em 0.6em !important;
+}
+
+.mlo-dashboard-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-subtitle {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Hero stats — no border, children use bg color for separation */
+.mlo-dashboard-hero-stats {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: transparent !important;
+}
+
+.mlo-dashboard-hero-stat {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-hero-label {
+	color: var(--orca-color-text-2) !important;
+	font-weight: 600 !important;
+}
+
+.mlo-dashboard-hero-value {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-hero-helper {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Metric cards — container bottom border only, cards use bg+accent left */
+.mlo-dashboard-metric-grid {
+	border: none !important;
+	border-bottom: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+}
+
+.mlo-dashboard-metric-card {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-metric-label {
+	color: var(--orca-color-text-2) !important;
+	font-weight: 600 !important;
+}
+
+.mlo-dashboard-metric-value {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-metric-hint {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Metric card tones — left accent bars */
+.mlo-dashboard-metric-cool {
+	border-left: 1px solid var(--ctp-blue) !important;
+}
+
+.mlo-dashboard-metric-warm {
+	border-left: 1px solid var(--ctp-yellow) !important;
+}
+
+.mlo-dashboard-metric-danger {
+	border-left: 1px solid var(--ctp-red) !important;
+}
+
+.mlo-dashboard-metric-neutral {
+	border-left: 1px solid var(--orca-color-text-2) !important;
+}
+
+/* Cards — container bottom border only, no border on children */
+.mlo-dashboard-grid {
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-card {
+	border: none !important;
+	border-bottom: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-card-title {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+	border: none !important;
+}
+
+/* Shortcuts — no border, buttons use bg only */
+.mlo-dashboard-shortcuts {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: transparent !important;
+}
+
+.mlo-dashboard-shortcut-btn {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-shortcut-btn:hover:not(:disabled) {
+	background-color: var(--orca-color-primary-5) !important;
+	color: var(--orca-color-bg-1) !important;
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-dashboard-shortcut-btn:disabled {
+	opacity: 0.4 !important;
+}
+
+.mlo-dashboard-shortcut-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-shortcut-label {
+	color: var(--orca-color-text-2) !important;
+}
+
+.mlo-dashboard-shortcut-value {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-shortcut-hint {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Due date grid — no border on grid or cells */
+.mlo-dashboard-due-grid {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-due-cell {
+	border: none !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-due-cell.is-past {
+	background-color: var(--orca-color-bg-3) !important;
+}
+
+.mlo-dashboard-due-value {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-due-bar-track {
+	background-color: var(--orca-color-bg-3) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-due-bar-fill {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-due-label {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Progress bars */
+.mlo-dashboard-progress-track {
+	background-color: var(--orca-color-bg-3) !important;
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-progress-fill {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-track {
+	background-color: var(--orca-color-bg-3) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-fill {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+/* Lists — container bottom border only */
+.mlo-dashboard-list {
+	border: none !important;
+	border-bottom: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-list-row {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-dashboard-list-header {
+	color: var(--orca-color-text-2) !important;
+	font-weight: 600 !important;
+}
+
+.mlo-dashboard-list-label {
+	color: var(--orca-color-text-1) !important;
+}
+
+.mlo-dashboard-list-value {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Top items list — no container border, rows get bottom border */
+.mlo-dashboard-top-list {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+.mlo-dashboard-top-item {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	transition: none !important;
+}
+
+.mlo-dashboard-top-item:hover {
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-dashboard-top-text {
+	color: var(--orca-color-text-1) !important;
+}
+
+.mlo-dashboard-top-score {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-dashboard-top-due {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Empty state — no border */
+.mlo-dashboard-empty {
+	color: var(--orca-color-text-2) !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+/* Focus visible */
+.mlo-dashboard-shortcut-btn:focus-visible,
+.mlo-dashboard-top-item:focus-visible {
+	outline: 2px solid var(--orca-color-primary-5) !important;
+	outline-offset: 0 !important;
+}
+
+/* ===== My Day Board ===== */
+
+.mlo-my-day-board {
+	background-color: var(--orca-color-bg-1) !important;
+}
+
+.mlo-my-day-board-head {
+	border-bottom: 1px solid var(--orca-color-primary-5) !important;
+}
+
+.mlo-my-day-board-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-my-day-board-subtitle {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* My Day cards */
+.mlo-my-day-card {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-my-day-card:hover {
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-my-day-card-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 600 !important;
+}
+
+.mlo-my-day-card-title-row {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-my-day-card-label {
+	color: var(--orca-color-text-2) !important;
+}
+
+.mlo-my-day-card-foot {
+	border-top: 1px solid var(--orca-color-border) !important;
+}
+
+/* Card states */
+.mlo-my-day-card-completed {
+	opacity: 0.5 !important;
+}
+
+.mlo-my-day-card-starred {
+	border-left: 1px solid var(--ctp-yellow) !important;
+}
+
+.mlo-my-day-card-disabled {
+	opacity: 0.35 !important;
+}
+
+/* Card stack */
+.mlo-my-day-card-stack {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+}
+
+/* Timeline */
+.mlo-my-day-timeline {
+	background-color: var(--orca-color-bg-1) !important;
+}
+
+.mlo-my-day-timeline-card {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-my-day-timeline-card-head {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-my-day-timeline-card-completed {
+	opacity: 0.5 !important;
+}
+
+.mlo-my-day-timeline-card-starred {
+	border-left: 1px solid var(--ctp-yellow) !important;
+}
+
+.mlo-my-day-timeline-card-disabled {
+	opacity: 0.35 !important;
+}
+
+.mlo-my-day-timeline-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 600 !important;
+}
+
+.mlo-my-day-timeline-chip {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	color: inherit !important;
+	position: relative !important;
+}
+
+.mlo-my-day-timeline-chip::before {
+	content: "" !important;
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: 3px !important;
+	background: var(--orca-color-primary-5) !important;
+}
+
+.mlo-my-day-timeline-star {
+	color: var(--ctp-yellow) !important;
+}
+
+.mlo-my-day-timeline-panel {
+	border-right: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-my-day-timeline-scroll {
+	scrollbar-width: none !important;
+}
+
+.mlo-my-day-timeline-scroll::-webkit-scrollbar {
+	display: none !important;
+}
+
+/* Resize handles */
+.mlo-my-day-timeline-resize-handle,
+.mlo-my-day-timeline-resize-handle-start,
+.mlo-my-day-timeline-resize-handle-end {
+	background-color: var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-my-day-timeline-resize-handle:hover,
+.mlo-my-day-timeline-resize-handle-start:hover,
+.mlo-my-day-timeline-resize-handle-end:hover {
+	background-color: var(--orca-color-primary-5) !important;
+}
+
+/* Time slots */
+.mlo-my-day-slot {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-my-day-slot-major {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-my-day-slot-label {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Time pill */
+.mlo-my-day-time-pill {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	color: inherit !important;
+	position: relative !important;
+}
+
+.mlo-my-day-time-pill::before {
+	content: "" !important;
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: 3px !important;
+	background: var(--orca-color-primary-5) !important;
+}
+
+/* Now line */
+.mlo-my-day-now-line {
+	background-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-my-day-now-dot {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-my-day-now-marker {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+/* Unscheduled panel */
+.mlo-my-day-unscheduled-panel {
+	border-top: 1px solid var(--orca-color-border) !important;
+	background-color: var(--orca-color-bg-1) !important;
+}
+
+.mlo-my-day-unscheduled-drop-cta {
+	color: var(--orca-color-text-2) !important;
+	border: 1px dashed var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-my-day-unscheduled-panel-drop-target {
+	border: 1px dashed var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+/* Drop line */
+.mlo-my-day-drop-line {
+	background-color: var(--orca-color-primary-5) !important;
+}
+
+/* Panel title */
+.mlo-my-day-panel-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+/* Empty hint */
+.mlo-my-day-empty-hint {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Inline more labels */
+.mlo-my-day-inline-more-labels {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Action danger button */
+.mlo-my-day-action-danger {
+	background-color: var(--ctp-red) !important;
+	color: var(--orca-color-bg-1) !important;
+	border-radius: 0 !important;
+	border: 1px solid var(--ctp-red) !important;
+}
+
+.mlo-my-day-action-danger:hover {
+	background-color: var(--ctp-maroon) !important;
+}
+
+/* Schedule style wrapper */
+.mlo-my-day-schedule-style {
+	background-color: var(--orca-color-bg-1) !important;
+}
+
+/* My Day board compact */
+.mlo-my-day-board-compact {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-my-day-board-layout {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+/* ===== Task Timer ===== */
+
+/* Timer popup */
+.mlo-task-timer-popup {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+.mlo-task-timer-popup-header {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-task-timer-popup-title {
+	color: var(--orca-color-text-1) !important;
+	font-weight: 700 !important;
+}
+
+.mlo-task-timer-popup-title:disabled {
+	opacity: 0.5 !important;
+}
+
+.mlo-task-timer-popup-time {
+	color: var(--orca-color-primary-5) !important;
+	font-weight: 700 !important;
+	font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+.mlo-task-timer-popup-kicker {
+	color: var(--orca-color-text-2) !important;
+}
+
+.mlo-task-timer-popup-meta {
+	color: var(--orca-color-text-2) !important;
+}
+
+.mlo-task-timer-popup-progress {
+	background-color: var(--orca-color-bg-3) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-task-timer-popup-progress > div {
+	background-color: var(--orca-color-primary-5) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-task-timer-popup-section-title {
+	color: var(--orca-color-text-2) !important;
+	font-weight: 600 !important;
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-task-timer-popup-task-picker {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+}
+
+.mlo-task-timer-popup-actions {
+	border-top: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-task-timer-popup-action {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-2) !important;
+	color: var(--orca-color-text-1) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+
+.mlo-task-timer-popup-action:hover:not(:disabled) {
+	background-color: var(--orca-color-primary-5) !important;
+	color: var(--orca-color-bg-1) !important;
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-task-timer-popup-action:disabled {
+	opacity: 0.4 !important;
+}
+
+.mlo-task-timer-popup-empty {
+	color: var(--orca-color-text-2) !important;
+}
+
+/* Timer detail (inline) */
+.mlo-task-timer-detail {
+	background-color: var(--orca-color-bg-2) !important;
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+.mlo-task-timer-detail-indent {
+	border-left: 1px solid var(--orca-color-primary-5) !important;
+}
+
+/* Headbar timer */
+.mlo-task-timer-headbar {
+	color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-task-timer-headbar.is-focus {
+	color: var(--ctp-red) !important;
+}
+
+.mlo-task-timer-headbar.is-break {
+	color: var(--ctp-green) !important;
+}
+
+.mlo-task-timer-headbar.is-paused {
+	color: var(--orca-color-text-2) !important;
+}
+
+.mlo-task-timer-headbar-text {
+	font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+/* Tag button */
+.mlo-task-timer-tag-button {
+	background-color: var(--orca-color-bg-2) !important;
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	color: var(--orca-color-text-1) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+
+.mlo-task-timer-tag-button:hover {
+	background-color: var(--orca-color-primary-5) !important;
+	color: var(--orca-color-bg-1) !important;
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-task-timer-tag-button.is-running {
+	background-color: var(--orca-color-primary-5) !important;
+	color: var(--orca-color-bg-1) !important;
+}
+
+.mlo-task-timer-tag-icon {
+	color: var(--orca-color-primary-5) !important;
+}
+
+.mlo-task-timer-tag-text {
+	font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+/* Inline timer */
+.mlo-task-timer-inline-style {
+	border-bottom: 1px dashed var(--orca-color-primary-5) !important;
+}
+
+/* Runtime style */
+.mlo-task-timer-runtime-style {
+	font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+/* ===== Task Row ===== */
+
+.mlo-task-row-style {
+	border-bottom: 1px solid var(--orca-color-border) !important;
+}
+
+/* Status menu */
+.mlo-task-row-status-menu-content,
+.mlo-task-status-menu-content {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+}
+
+/* Context menu */
+.mlo-task-row-context-menu-content,
+.mlo-my-day-context-menu-content {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+}
+
+/* ===== Task Property Panel ===== */
+
+.mlo-task-property-popup-root {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+/* Backdrop overlay (position:absolute inset:0) — raise above headbar (z-index:300) */
+[data-role="mlo-task-property-popup-root"] > div:first-child {
+	z-index: 310 !important;
+}
+
+/* ===== Project Property Popup ===== */
+
+.mlo-project-property-popup-root {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+/* ===== Task Views Panel ===== */
+
+.mlo-task-views-panel-root {
+	background-color: var(--orca-color-bg-1) !important;
+	border-right: 1px solid var(--orca-color-border) !important;
+}
+
+.mlo-task-filter-select-menu {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+}
+
+/* ===== Parent Task Link Popup ===== */
+
+.mlo-parent-task-link-popup-root {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background-color: var(--orca-color-bg-1) !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	transition: none !important;
+}
+
+/* ===== Task ID ===== */
+
+.mlo-task-id {
+	color: var(--orca-color-text-2) !important;
+	font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+/* ===== Time Field Anchor ===== */
+
+.mlo-time-field-anchor {
+	color: var(--orca-color-primary-5) !important;
+}
+
+/* ===== Dashboard Theme Variables Override ===== */
+/* Set mlo-dash-* / mlo-myday-* CSS variables to use TUI-minimal palette */
+/* !important prevents the plugin's runtime-injected <style> from overwriting ours */
+
+.mlo-dashboard-root,
+.mlo-my-day-board {
+	--mlo-dash-accent: var(--orca-color-primary-5) !important;
+	--mlo-dash-ink: var(--orca-color-text-1) !important;
+	--mlo-dash-muted: var(--orca-color-text-2) !important;
+	--mlo-dash-line: var(--orca-color-border) !important;
+	--mlo-dash-shadow: none !important;
+	--mlo-dash-glow: none !important;
+	--mlo-dash-card-bg: var(--orca-color-bg-2) !important;
+	--mlo-dash-card-hover-border: var(--orca-color-primary-5) !important;
+	--mlo-dash-hero-bg: var(--orca-color-bg-1) !important;
+	--mlo-dash-stat-bg: var(--orca-color-bg-2) !important;
+	--mlo-dash-soft-bg: var(--orca-color-bg-2) !important;
+	--mlo-dash-empty-bg: var(--orca-color-bg-2) !important;
+	--mlo-dash-track-bg: var(--orca-color-bg-3) !important;
+	--mlo-dash-progress-bg: var(--orca-color-primary-5) !important;
+	--mlo-dash-chip-bg: var(--orca-color-primary-1) !important;
+	--mlo-dash-chip-text: var(--orca-color-primary-5) !important;
+	--mlo-dash-kicker-bg: var(--orca-color-primary-1) !important;
+	--mlo-dash-kicker-text: var(--orca-color-primary-5) !important;
+	--mlo-dash-button-bg: var(--orca-color-bg-2) !important;
+	--mlo-dash-button-hover-shadow: none !important;
+	--mlo-dash-danger: var(--ctp-red) !important;
+	--mlo-dash-warning: var(--ctp-yellow) !important;
+	--mlo-dash-pressure-bg: var(--orca-color-bg-3) !important;
+	--mlo-dash-pressure-vertical-bg: var(--orca-color-bg-3) !important;
+
+	--mlo-myday-accent: var(--orca-color-primary-5) !important;
+	--mlo-myday-accent-soft: var(--orca-color-primary-1) !important;
+	--mlo-myday-ink: var(--orca-color-text-1) !important;
+	--mlo-myday-muted: var(--orca-color-text-2) !important;
+	--mlo-myday-line: var(--orca-color-border) !important;
+	--mlo-myday-shadow: none !important;
+	--mlo-myday-bg: var(--orca-color-bg-1) !important;
+	--mlo-myday-surface-bg: var(--orca-color-bg-2) !important;
+	--mlo-myday-soft-bg: var(--orca-color-bg-2) !important;
+	--mlo-myday-panel-bg: var(--orca-color-bg-1) !important;
+	--mlo-myday-panel-highlight: var(--orca-color-bg-2) !important;
+	--mlo-myday-card-bg: var(--orca-color-bg-2) !important;
+	--mlo-myday-card-border: var(--orca-color-border) !important;
+	--mlo-myday-card-shadow: none !important;
+	--mlo-myday-card-hover-shadow: none !important;
+	--mlo-myday-card-hue: var(--orca-color-primary-5) !important;
+	--mlo-myday-card-completed-bg: var(--orca-color-bg-3) !important;
+	--mlo-myday-stack-bg: var(--orca-color-bg-2) !important;
+	--mlo-myday-stripe: transparent !important;
+	--mlo-myday-now: var(--orca-color-primary-5) !important;
+	--mlo-myday-now-soft: var(--orca-color-primary-1) !important;
+	--mlo-myday-pill-bg: var(--orca-color-primary-1) !important;
+	--mlo-myday-danger: var(--ctp-red) !important;
+	--mlo-myday-warning: var(--ctp-yellow) !important;
+	--mlo-myday-success: var(--ctp-green) !important;
+	--mlo-myday-scrollbar: transparent !important;
+	--mlo-myday-track-line: var(--orca-color-border) !important;
+	--mlo-myday-track-line-soft: var(--orca-color-border) !important;
+	--mlo-myday-track-line-left: var(--orca-color-border) !important;
+	--mlo-myday-time-marker-left: var(--orca-color-border) !important;
+	--mlo-myday-time-marker-right: var(--orca-color-border) !important;
+}
+
+/* ===== Catch panel-level inline styles from non-mlo-* views ===== */
+/* The ProjectViewsPanel and view switcher tab bar use unnamed divs with inline styles.
+   Scope to active panels to avoid affecting other UI. */
+.orca-panel.active .orca-hideable [style*="transform"]:hover,
+.orca-panel.active .orca-hideable [style*="translateY"] {
+	transform: none !important;
+}
+
+/* ===== Override inline blue accent in non-dashboard views ===== */
+/* TaskListRow / ProjectListCard: hover/selected 时 inline style 用
+   var(--orca-color-text-blue, #2563eb) 作 border-color。
+   直接 attribute selector + !important 压 inline style。 */
+.orca-panel.active [style*="--orca-color-text-blue"] {
+	border-color: var(--orca-color-primary-5) !important;
+}
+
+/* ===== Tag / Pill 风格统一 ===== */
+/* 确保插件面板内的标签和主主题一致：灰色 1px 边框 + accent 左侧柱 */
+.orca-panel.active .orca-tag,
+.orca-panel.active .orca-pill {
+	border: 1px solid var(--orca-color-border) !important;
+	background: var(--orca-color-bg-2) !important;
+	border-radius: 0 !important;
+	position: relative !important;
+}
+
+.orca-panel.active .orca-tag::before,
+.orca-panel.active .orca-pill::before {
+	content: "" !important;
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: 3px !important;
+	background: currentcolor !important;
+}
+
+/* Orca renders block tags as unnamed <span> with inline pill styles.
+   Match by border-radius: 999px + height: 16px. */
+.orca-panel.active span[style*="border-radius: 999px"][style*="height: 16px"] {
+	border: 1px solid var(--orca-color-border) !important;
+	border-radius: 0 !important;
+	background: var(--orca-color-bg-2) !important;
+	color: var(--orca-color-text-1) !important;
+	position: relative !important;
+	height: 16px !important;
+	padding: 0 6px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+}
+
+.orca-panel.active span[style*="border-radius: 999px"][style*="height: 16px"]::before {
+	content: "" !important;
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: 3px !important;
+	background: var(--orca-color-primary-5) !important;
+}
+
+/* Neutralize solid button hover — use [style*="text-blue"] for higher specificity
+   to override Orca's built-in background-color and React style resets. */
+.orca-panel.active .orca-button.solid[style*="text-blue"]:hover,
+.orca-panel.active .orca-button.solid[style*="text-blue"]:active,
+.orca-panel.active .orca-button.solid[style*="text-blue"]:focus-visible {
+	background: transparent !important;
+	border-color: var(--orca-color-primary-5) !important;
+	color: var(--orca-color-text-1) !important;
+}
+
+/* ===== Scrollbar for plugin panels ===== */
+[class*="mlo-"]::-webkit-scrollbar {
+	width: 6px !important;
+	height: 6px !important;
+}
+
+[class*="mlo-"]::-webkit-scrollbar-track {
+	background: transparent !important;
+}
+
+[class*="mlo-"]::-webkit-scrollbar-thumb {
+	background: var(--orca-color-border) !important;
+	border-radius: 0 !important;
+}
+
+[class*="mlo-"]::-webkit-scrollbar-thumb:hover {
+	background: var(--orca-color-primary-5) !important;
+}

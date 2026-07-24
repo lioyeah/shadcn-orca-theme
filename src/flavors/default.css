@@ -1,0 +1,591 @@
+/**
+ * Neubrutalism — Default Flavor: Orange
+ *
+ * CSS variables follow ekmas/neobrutalism-components standard.
+ * Orca convention: :root = dark (default), html.t-light = light.
+ * Mapping: ekmas .dark → :root, ekmas :root → html.t-light
+ * Reference: https://github.com/ekmas/neobrutalism-components
+ */
+
+/* ===== Base Tokens — Dark (Orca default) ===== */
+:root {
+	/* ekmas core (from .dark) */
+	--main: oklch(67.56% 0.1796 49.61deg);
+	--background: oklch(26.86% 0.0327 60.06deg);
+	--secondary-background: oklch(23.93% 0 0deg);
+	--foreground: oklch(92.49% 0 0deg);
+	--main-foreground: oklch(0% 0 0deg);
+	--border: oklch(0% 0 0deg);
+	--ring: oklch(100% 0 0deg);
+	--overlay: oklch(0% 0 0deg / 80%);
+
+	/* ekmas layout */
+	--border-radius: 5px;
+	--box-shadow-x: 4px;
+	--box-shadow-y: 4px;
+
+	/* Extended semantic colors */
+	--nb-accent: oklch(71.5% 0.197 354.23deg);
+	--nb-info: oklch(64.37% 0.1162 218.75deg);
+	--nb-success: oklch(73.03% 0.1865 153.23deg);
+	--nb-warning: oklch(67.56% 0.1796 49.61deg);
+	--nb-danger: oklch(67.28% 0.2147 24.22deg);
+}
+
+/* ===== Base Tokens — Light (Orca html.t-light) ===== */
+html.t-light {
+	/* ekmas core (from :root) */
+	--main: oklch(72.27% 0.1894 50.19deg);
+	--background: oklch(95.38% 0.0357 72.89deg);
+	--secondary-background: oklch(100% 0 0deg);
+	--foreground: oklch(0% 0 0deg);
+	--main-foreground: oklch(0% 0 0deg);
+	--border: oklch(0% 0 0deg);
+	--ring: oklch(0% 0 0deg);
+	--overlay: oklch(0% 0 0deg / 80%);
+
+	--border-radius: 5px;
+	--box-shadow-x: 4px;
+	--box-shadow-y: 4px;
+
+	--nb-accent: oklch(71.5% 0.197 354.23deg);
+	--nb-info: oklch(76.89% 0.1392 219.13deg);
+	--nb-success: oklch(79.76% 0.2044 153.08deg);
+	--nb-warning: oklch(72.27% 0.1894 50.19deg);
+	--nb-danger: oklch(67.28% 0.2147 24.22deg);
+}
+
+/* ===== Orca Semantic Mapping — Dark (:root) ===== */
+:root {
+	color-scheme: dark;
+
+	--orca-color-bg-0: color-mix(
+		in oklab,
+		var(--background) 85%,
+		var(--foreground)
+	);
+	--orca-color-bg-1: var(--background);
+	--orca-color-bg-2: var(--secondary-background);
+	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
+
+	--orca-color-text-1: var(--foreground);
+	--orca-color-text-2: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-text-3: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+
+	--orca-color-border: var(--border);
+	--orca-color-border-2: var(--ring);
+	--orca-color-divider: var(--border);
+
+	--orca-color-link: var(--nb-info);
+	--orca-color-link-hover: color-mix(
+		in oklab,
+		var(--nb-info),
+		var(--foreground) 20%
+	);
+	--orca-color-link-visited: var(--nb-accent);
+
+	--orca-color-heading-1: var(--main);
+	--orca-color-heading-2: var(--foreground);
+	--orca-color-heading-3: color-mix(
+		in oklab,
+		var(--main) 60%,
+		var(--foreground)
+	);
+	--orca-color-heading-4: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+
+	--orca-color-primary-1: color-mix(
+		in oklab,
+		var(--main) 10%,
+		var(--background)
+	);
+	--orca-color-primary-2: color-mix(
+		in oklab,
+		var(--main) 20%,
+		var(--background)
+	);
+	--orca-color-primary-3: color-mix(
+		in oklab,
+		var(--main) 35%,
+		var(--background)
+	);
+	--orca-color-primary-4: color-mix(
+		in oklab,
+		var(--main) 50%,
+		var(--background)
+	);
+	--orca-color-primary-5: var(--main);
+	--orca-color-primary-6: color-mix(
+		in oklab,
+		var(--main) 60%,
+		var(--foreground)
+	);
+	--orca-color-primary-7: color-mix(
+		in oklab,
+		var(--main) 40%,
+		var(--foreground)
+	);
+	--orca-color-primary-8: color-mix(
+		in oklab,
+		var(--main) 20%,
+		var(--foreground)
+	);
+	--orca-color-primary-9: color-mix(
+		in oklab,
+		var(--main) 10%,
+		var(--foreground)
+	);
+
+	--orca-color-gray-0: color-mix(
+		in oklab,
+		var(--background) 80%,
+		var(--foreground)
+	);
+	--orca-color-gray-1: var(--background);
+	--orca-color-gray-2: var(--secondary-background);
+	--orca-color-gray-3: color-mix(
+		in oklab,
+		var(--secondary-background) 70%,
+		var(--background)
+	);
+	--orca-color-gray-4: color-mix(
+		in oklab,
+		var(--secondary-background) 50%,
+		var(--border)
+	);
+	--orca-color-gray-5: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+	--orca-color-gray-6: color-mix(
+		in oklab,
+		var(--foreground) 55%,
+		var(--background)
+	);
+	--orca-color-gray-7: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-gray-8: color-mix(
+		in oklab,
+		var(--foreground) 80%,
+		var(--background)
+	);
+	--orca-color-gray-9: var(--foreground);
+
+	--orca-color-success-1: color-mix(
+		in oklab,
+		var(--nb-success) 15%,
+		var(--background)
+	);
+	--orca-color-success-5: var(--nb-success);
+	--orca-color-success-9: color-mix(
+		in oklab,
+		var(--nb-success) 15%,
+		var(--foreground)
+	);
+	--orca-color-warning-1: color-mix(
+		in oklab,
+		var(--nb-warning) 15%,
+		var(--background)
+	);
+	--orca-color-warning-5: var(--nb-warning);
+	--orca-color-warning-9: color-mix(
+		in oklab,
+		var(--nb-warning) 15%,
+		var(--foreground)
+	);
+	--orca-color-dangerous-1: color-mix(
+		in oklab,
+		var(--nb-danger) 15%,
+		var(--background)
+	);
+	--orca-color-dangerous-5: var(--nb-danger);
+	--orca-color-dangerous-9: color-mix(
+		in oklab,
+		var(--nb-danger) 15%,
+		var(--foreground)
+	);
+
+	--orca-color-tag: var(--nb-accent);
+	--orca-color-scrollbar: var(--border);
+	--orca-color-scrollbar-hover: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+	--orca-color-selection: var(--main);
+
+	--orca-color-scope-line: var(--ring);
+	--orca-color-separator: var(--border);
+	--orca-color-tab: var(--border);
+	--orca-color-heading-1-dim: color-mix(
+		in oklab,
+		var(--main) 50%,
+		var(--background)
+	);
+	--orca-color-heading-2-dim: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		var(--background)
+	);
+	--orca-color-heading-3-dim: color-mix(
+		in oklab,
+		var(--main) 30%,
+		var(--background)
+	);
+	--orca-color-heading-4-dim: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		var(--background)
+	);
+	--orca-color-mirror: var(--secondary-background);
+	--orca-color-placeholder: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		transparent
+	);
+	--orca-color-win-scrollbar: var(--border);
+	--orca-color-menu-highlight: var(--orca-color-bg-3);
+	--orca-color-result-highlight: color-mix(
+		in oklab,
+		var(--background) 90%,
+		var(--foreground)
+	);
+
+	/* Code highlight */
+	--orca-color-code-fg: var(--foreground);
+	--orca-color-code-comment: var(--orca-color-text-3);
+	--orca-color-code-keyword: var(--nb-accent);
+	--orca-color-code-string: var(--nb-success);
+	--orca-color-code-number: var(--nb-warning);
+	--orca-color-code-function: var(--nb-info);
+	--orca-color-code-constant: var(--main);
+	--orca-color-code-type: var(--main);
+	--orca-color-code-operator: var(--orca-color-text-2);
+	--orca-color-code-punctuation: var(--orca-color-text-2);
+	--orca-color-code-builtin: color-mix(
+		in oklab,
+		var(--nb-info) 70%,
+		var(--foreground)
+	);
+	--orca-color-code-variable: var(--foreground);
+	--orca-color-code-attribute: var(--nb-warning);
+	--orca-color-code-doc: color-mix(
+		in oklab,
+		var(--nb-success) 60%,
+		var(--foreground)
+	);
+	--orca-color-code-diff-added: color-mix(
+		in oklab,
+		var(--nb-success) 30%,
+		var(--background)
+	);
+	--orca-color-code-diff-removed: color-mix(
+		in oklab,
+		var(--nb-danger) 30%,
+		var(--background)
+	);
+}
+
+/* ===== Orca Semantic Mapping — Light (html.t-light) ===== */
+html.t-light {
+	color-scheme: light;
+
+	--orca-color-bg-0: var(--secondary-background);
+	--orca-color-bg-1: var(--background);
+	--orca-color-bg-2: var(--secondary-background);
+	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
+
+	--orca-color-text-1: var(--foreground);
+	--orca-color-text-2: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-text-3: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+
+	--orca-color-border: var(--border);
+	--orca-color-border-2: var(--ring);
+	--orca-color-divider: var(--border);
+
+	--orca-color-link: var(--nb-info);
+	--orca-color-link-hover: color-mix(
+		in oklab,
+		var(--nb-info),
+		var(--foreground) 20%
+	);
+	--orca-color-link-visited: var(--nb-accent);
+
+	--orca-color-heading-1: var(--main);
+	--orca-color-heading-2: var(--foreground);
+	--orca-color-heading-3: color-mix(
+		in oklab,
+		var(--main) 60%,
+		var(--foreground)
+	);
+	--orca-color-heading-4: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+
+	--orca-color-primary-1: color-mix(
+		in oklab,
+		var(--main) 10%,
+		var(--background)
+	);
+	--orca-color-primary-2: color-mix(
+		in oklab,
+		var(--main) 20%,
+		var(--background)
+	);
+	--orca-color-primary-3: color-mix(
+		in oklab,
+		var(--main) 35%,
+		var(--background)
+	);
+	--orca-color-primary-4: color-mix(
+		in oklab,
+		var(--main) 50%,
+		var(--background)
+	);
+	--orca-color-primary-5: var(--main);
+	--orca-color-primary-6: color-mix(
+		in oklab,
+		var(--main) 60%,
+		var(--foreground)
+	);
+	--orca-color-primary-7: color-mix(
+		in oklab,
+		var(--main) 40%,
+		var(--foreground)
+	);
+	--orca-color-primary-8: color-mix(
+		in oklab,
+		var(--main) 20%,
+		var(--foreground)
+	);
+	--orca-color-primary-9: color-mix(
+		in oklab,
+		var(--main) 10%,
+		var(--foreground)
+	);
+
+	--orca-color-gray-0: var(--background);
+	--orca-color-gray-1: var(--secondary-background);
+	--orca-color-gray-2: var(--background);
+	--orca-color-gray-3: var(--secondary-background);
+	--orca-color-gray-4: color-mix(
+		in oklab,
+		var(--border) 10%,
+		var(--background)
+	);
+	--orca-color-gray-5: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+	--orca-color-gray-6: color-mix(
+		in oklab,
+		var(--foreground) 55%,
+		var(--background)
+	);
+	--orca-color-gray-7: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-gray-8: color-mix(
+		in oklab,
+		var(--foreground) 80%,
+		var(--background)
+	);
+	--orca-color-gray-9: var(--foreground);
+
+	--orca-color-success-1: color-mix(
+		in oklab,
+		var(--nb-success) 15%,
+		var(--background)
+	);
+	--orca-color-success-5: var(--nb-success);
+	--orca-color-success-9: color-mix(
+		in oklab,
+		var(--nb-success) 15%,
+		var(--foreground)
+	);
+	--orca-color-warning-1: color-mix(
+		in oklab,
+		var(--nb-warning) 15%,
+		var(--background)
+	);
+	--orca-color-warning-5: var(--nb-warning);
+	--orca-color-warning-9: color-mix(
+		in oklab,
+		var(--nb-warning) 15%,
+		var(--foreground)
+	);
+	--orca-color-dangerous-1: color-mix(
+		in oklab,
+		var(--nb-danger) 15%,
+		var(--background)
+	);
+	--orca-color-dangerous-5: var(--nb-danger);
+	--orca-color-dangerous-9: color-mix(
+		in oklab,
+		var(--nb-danger) 15%,
+		var(--foreground)
+	);
+
+	--orca-color-tag: var(--nb-accent);
+	--orca-color-scrollbar: var(--border);
+	--orca-color-scrollbar-hover: color-mix(
+		in oklab,
+		var(--foreground) 45%,
+		var(--background)
+	);
+	--orca-color-selection: var(--main);
+
+	--orca-color-scope-line: var(--ring);
+	--orca-color-separator: var(--border);
+	--orca-color-tab: var(--border);
+	--orca-color-heading-1-dim: color-mix(
+		in oklab,
+		var(--main) 50%,
+		var(--background)
+	);
+	--orca-color-heading-2-dim: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		var(--background)
+	);
+	--orca-color-heading-3-dim: color-mix(
+		in oklab,
+		var(--main) 30%,
+		var(--background)
+	);
+	--orca-color-heading-4-dim: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		var(--background)
+	);
+	--orca-color-mirror: var(--secondary-background);
+	--orca-color-placeholder: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		transparent
+	);
+	--orca-color-win-scrollbar: var(--border);
+	--orca-color-menu-highlight: var(--orca-color-bg-3);
+	--orca-color-result-highlight: color-mix(
+		in oklab,
+		var(--background) 90%,
+		var(--foreground)
+	);
+
+	/* Code highlight */
+	--orca-color-code-fg: var(--foreground);
+	--orca-color-code-comment: var(--orca-color-text-3);
+	--orca-color-code-keyword: var(--nb-accent);
+	--orca-color-code-string: var(--nb-success);
+	--orca-color-code-number: var(--nb-warning);
+	--orca-color-code-function: var(--nb-info);
+	--orca-color-code-constant: var(--main);
+	--orca-color-code-type: var(--main);
+	--orca-color-code-operator: var(--orca-color-text-2);
+	--orca-color-code-punctuation: var(--orca-color-text-2);
+	--orca-color-code-builtin: color-mix(
+		in oklab,
+		var(--nb-info) 70%,
+		var(--foreground)
+	);
+	--orca-color-code-variable: var(--foreground);
+	--orca-color-code-attribute: var(--nb-warning);
+	--orca-color-code-doc: color-mix(
+		in oklab,
+		var(--nb-success) 60%,
+		var(--foreground)
+	);
+	--orca-color-code-diff-added: color-mix(
+		in oklab,
+		var(--nb-success) 30%,
+		var(--background)
+	);
+	--orca-color-code-diff-removed: color-mix(
+		in oklab,
+		var(--nb-danger) 30%,
+		var(--background)
+	);
+}
+
+/* ===== Sidebar scoped overrides ===== */
+#sidebar {
+	--orca-color-bg-1: var(--background);
+	--orca-color-bg-2: var(--secondary-background);
+	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
+	--orca-color-text-1: var(--foreground);
+	--orca-color-text-2: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-border: var(--border);
+	--orca-color-primary-5: var(--main);
+	--orca-color-menu-highlight: color-mix(
+		in oklab,
+		var(--main) 15%,
+		var(--background)
+	);
+	--orca-color-selection: var(--main);
+	--orca-color-placeholder: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		transparent
+	);
+	--orca-color-dangerous-5: var(--nb-danger);
+	--orca-color-win-scrollbar: var(--border);
+}
+
+html.t-light #sidebar {
+	--orca-color-bg-1: var(--background);
+	--orca-color-bg-2: var(--secondary-background);
+	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
+	--orca-color-text-1: var(--foreground);
+	--orca-color-text-2: color-mix(
+		in oklab,
+		var(--foreground) 65%,
+		var(--background)
+	);
+	--orca-color-border: var(--border);
+	--orca-color-primary-5: var(--main);
+	--orca-color-menu-highlight: color-mix(
+		in oklab,
+		var(--main) 15%,
+		var(--background)
+	);
+	--orca-color-selection: var(--main);
+	--orca-color-placeholder: color-mix(
+		in oklab,
+		var(--foreground) 50%,
+		transparent
+	);
+	--orca-color-dangerous-5: var(--nb-danger);
+	--orca-color-win-scrollbar: var(--border);
+}
