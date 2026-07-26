@@ -369,12 +369,12 @@ select:focus {
 }
 
 /* Tag items in popups (property selector) */
-.orca-tags-tag-item {
+.orca-popup .orca-tags-tag-item {
 	border: 2px solid var(--border) !important;
 	background: transparent !important;
 	border-radius: var(--border-radius) !important;
 }
-.orca-tags-tag-item:hover {
+.orca-popup .orca-tags-tag-item:hover {
 	background: var(--secondary-background) !important;
 }
 
@@ -708,33 +708,48 @@ html:not(#_) .orca-menu-text.orca-key-selected {
 #sidebar .orca-sidebar-item,
 #sidebar .orca-list-item,
 #sidebar .orca-page-item,
-#sidebar .orca-fav-item-item {
-	display: block !important;
+#sidebar .orca-aliased-block-item,
+#sidebar .orca-fav-item-item,
+#sidebar .orca-tags-tag-item {
 	width: 100% !important;
-	padding: 6px 12px !important;
-	border: 2px solid transparent !important;
+	padding: 3px 12px !important;
+	border: none !important;
 	border-radius: var(--border-radius) !important;
 	cursor: pointer !important;
 	transition: all 0.15s ease !important;
 }
 
+/* Sidebar item icons — inline, no background */
+#sidebar .orca-fav-item-icon,
+#sidebar .orca-aliased-block-icon,
+#sidebar .orca-tags-tag-icon {
+	background: transparent !important;
+	display: inline !important;
+	padding: 0 !important;
+	border: none !important;
+}
+
 #sidebar .orca-sidebar-item:hover,
 #sidebar .orca-list-item:hover,
 #sidebar .orca-page-item:hover,
-#sidebar .orca-fav-item-item:hover {
+#sidebar .orca-aliased-block-item:hover,
+#sidebar .orca-fav-item-item:hover,
+#sidebar .orca-tags-tag-item:hover {
 	background: var(--main) !important;
 	color: var(--main-foreground) !important;
-	border-color: var(--border) !important;
 }
 
 #sidebar .orca-sidebar-item.selected,
 #sidebar .orca-list-item.selected,
 #sidebar .orca-page-item.selected,
+#sidebar .orca-aliased-block-item.selected,
+#sidebar .orca-fav-item-item.selected,
+#sidebar .orca-tags-tag-item.selected,
 #sidebar .orca-list-item[aria-selected="true"],
 #sidebar .orca-sidebar-item[aria-selected="true"] {
 	background: var(--main) !important;
 	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
+	border: none !important;
 	font-weight: var(--heading-font-weight) !important;
 }
 
@@ -1300,13 +1315,36 @@ object,
    31. New Page button (sidebar)
    ============================================================ */
 
+/* ============================================================
+   31. New Page button (sidebar) — neobrutalism Button style
+   ============================================================
+
+   Reference: https://www.neobrutalism.dev/docs/button
+     variant="default": bg-main text-main-foreground border-2 border-border
+                        shadow-shadow
+     hover: translate-x-boxShadowX translate-y-boxShadowY shadow-none
+*/
+
 .orca-sidebar-create-aliased-btn.orca-button,
 #sidebar .orca-sidebar-create-aliased-btn,
 #sidebar .orca-button[aria-label="新页面"],
 #sidebar .orca-sidebar-footer .orca-button {
-	background: transparent !important;
-	border: none !important;
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
+	box-shadow: var(--shadow) !important;
+	width: 100% !important;
+	justify-content: center !important;
+	padding: 6px 12px !important;
+	font-weight: var(--base-font-weight) !important;
+}
+.orca-sidebar-create-aliased-btn.orca-button:hover,
+#sidebar .orca-sidebar-create-aliased-btn:hover,
+#sidebar .orca-button[aria-label="新页面"]:hover,
+#sidebar .orca-sidebar-footer .orca-button:hover {
+	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+	box-shadow: none !important;
 }
 
 /* ============================================================
@@ -1577,20 +1615,11 @@ pre .token.punctuation {
 }
 
 /* ============================================================
-   SIDEBAR SECTION DIVIDERS — thick separators like reference
+   SIDEBAR SECTION DIVIDERS
    ============================================================ */
 
-#sidebar [class*="tab-options"],
-#sidebar [class*="sidebar-tab"] {
-	border-top: 2px solid var(--border) !important;
-	border-bottom: 2px solid var(--border) !important;
-	padding: 4px 0 !important;
-	margin: 8px 0 !important;
-}
-
-#sidebar .orca-sidebar-create-aliased-btn,
-#sidebar [class*="create-aliased"],
-#sidebar [class*="sidebar-footer"] {
+#sidebar [class*="sidebar-footer"],
+#sidebar [class*="create-aliased"]:not(.orca-button) {
 	border-top: 2px solid var(--border) !important;
 	margin-top: 8px !important;
 	padding-top: 8px !important;

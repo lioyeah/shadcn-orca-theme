@@ -6,6 +6,7 @@
   "scripts": {
     "build:css": "node scripts/build-theme-css.cjs",
     "build:plugin-css": "node scripts/build-plugin-css.cjs",
+    "build:deploy": "npm run build:css && npm run build:plugin-css && node scripts/deploy.cjs",
     "dev": "npm run build:css && vite",
     "build": "npm run build:css && cross-env NODE_ENV=production tsc && vite build",
     "deploy": "npm run build && npm run build:plugin-css && node scripts/deploy.cjs",
