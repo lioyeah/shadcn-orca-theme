@@ -133,21 +133,39 @@ input[type="checkbox"] {
 }
 
 /* ============================================================
-   6. BODY BACKGROUND — ekmas: bg-background + dot grid overlay
+   6. BACKGROUND — ekmas: main area gets dot grid + bg-background
+   Sidebar gets bg-secondary-background, NO grid
+   Surfaces (popups/modals) get their own defined backgrounds
    ============================================================ */
-/* Dot grid pattern from neobrutalism.dev homepage: 70px squares,
-   #80808033 on light sections, #00000033 on main-colored sections */
 
-html body,
-html body #app,
-html body .orca-panels-container,
-html body #main,
-nav#sidebar {
-	background-color: var(--background) !important;
-	background-image:
+/* Grid background: offset so lines don't coincide with container edges */
+.orca-panels-row,
+#main {
+	background:
 		linear-gradient(to right, #80808033 1px, transparent 1px),
-		linear-gradient(to bottom, #80808033 1px, transparent 1px) !important;
-	background-size: 70px 70px !important;
+		linear-gradient(to bottom, #80808033 1px, transparent 1px),
+		var(--background) !important;
+	background-size:
+		70px 70px,
+		70px 70px,
+		auto !important;
+	background-position: 35px 35px, 35px 35px, 0 0 !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+/* Sidebar: bg-secondary-background, NO dot grid */
+nav#sidebar {
+	background: var(--secondary-background) !important;
+}
+
+/* Non-editor areas: match sidebar bg-secondary-background */
+.orca-panels-container,
+html body,
+html body #app {
+	background: var(--secondary-background) !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
 
 /* ============================================================
@@ -440,14 +458,21 @@ input[type="checkbox"]:checked::after {
 	border: 2px solid var(--border) !important;
 	background: var(--background) !important;
 	border-radius: var(--border-radius) !important;
+	padding: 4px !important;
 }
 
 .orca-tab-item,
 .orca-segmented-item {
 	background: transparent !important;
+	color: var(--foreground) !important;
 	border-radius: var(--border-radius) !important;
 	font-weight: var(--base-font-weight) !important;
 	border: 2px solid transparent !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 4px 8px !important;
+	margin: 0 2px !important;
 }
 
 .orca-tab-item.orca-selected,
@@ -503,22 +528,26 @@ input[type="checkbox"]:checked::after {
 	box-shadow: none !important;
 }
 
-/* Sidebar — ekmas: bg-secondary-background, right border separator */
+/* Sidebar — ekmas: bg-secondary-background, no borders, no shadow */
 nav#sidebar {
 	border: none !important;
-	border-top: 2px solid var(--main) !important;
-	border-right: 2px solid var(--border) !important;
 	background: var(--secondary-background) !important;
 	color: var(--foreground) !important;
-	border-radius: var(--border-radius) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
 
+/* Main editor area — ekmas: top + left black borders, bg-background with dot grid */
 #main,
 .orca-panels-container #main {
 	border: none !important;
-	border-top: 2px solid var(--main) !important;
+	border-left: 2px solid #000 !important;
+	border-top: 2px solid #000 !important;
 	background: var(--background) !important;
 	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+	outline: none !important;
 }
 
 /* Menus / Command palette → ekmas: DropdownMenu = bg-main text-main-foreground, NO shadow */
@@ -537,11 +566,11 @@ nav#sidebar {
 	box-shadow: none !important;
 }
 
-/* Toolbar */
+/* Toolbar — no border (handled by #main top border) */
 .orca-toolbar,
 .orca-panels-container > header {
-	border-bottom: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
 }
 
 /* ============================================================
@@ -669,6 +698,43 @@ html:not(#_) .orca-menu-text.orca-key-selected {
 	background: var(--main) !important;
 	color: var(--main-foreground) !important;
 	border-radius: var(--border-radius) !important;
+	font-weight: var(--heading-font-weight) !important;
+}
+
+/* ============================================================
+   SIDEBAR ITEMS V2 — extra selectors for all page list variants
+   ============================================================ */
+
+#sidebar .orca-sidebar-item,
+#sidebar .orca-list-item,
+#sidebar .orca-page-item,
+#sidebar .orca-fav-item-item {
+	display: block !important;
+	width: 100% !important;
+	padding: 6px 12px !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+#sidebar .orca-sidebar-item:hover,
+#sidebar .orca-list-item:hover,
+#sidebar .orca-page-item:hover,
+#sidebar .orca-fav-item-item:hover {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border-color: var(--border) !important;
+}
+
+#sidebar .orca-sidebar-item.selected,
+#sidebar .orca-list-item.selected,
+#sidebar .orca-page-item.selected,
+#sidebar .orca-list-item[aria-selected="true"],
+#sidebar .orca-sidebar-item[aria-selected="true"] {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
 	font-weight: var(--heading-font-weight) !important;
 }
 
@@ -807,83 +873,295 @@ th,
 }
 
 /* ============================================================
-   22. Component: Calendar — ekmas: Calendar
+   22. Component: Calendar — Orca inline sidebar calendar
    ============================================================
 
-   ekmas: bg-main text-main-foreground font-heading
-          border-2 border-border shadow-shadow
-   Selected day: bg-black! text-white!
-   Today: bg-secondary-background text-foreground!
-   Outside/Disabled: opacity-50
+   Orca DOM: .orca-calendar > header + .days (CSS grid, 8 cols)
+     header: .choosen-year, .choosen-month, .go-now, nav buttons
+     .days grid: .weekday ×7, .week ×5-6, .day ×35-42
+
+   Reference: neobrutalism.dev/docs/calendar
+     Blue card container, all cells same blue as bg,
+     thick 2px black borders on everything,
+     selected = slightly darker blue (not black)
 */
 
+/* Container — blue card with black border + shadow, matching reference */
 .orca-calendar {
 	background: var(--main) !important;
 	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
+	border: 2px solid #000 !important;
 	border-radius: var(--border-radius) !important;
 	box-shadow: var(--shadow) !important;
+	display: block !important;
+	padding-bottom: 8px !important;
 }
 
-/* Caption (month/year header) */
-.orca-calendar header,
-.orca-calendar .caption {
-	color: var(--main-foreground) !important;
-}
-
-/* Weekday headers */
-.orca-calendar .day-header,
-.orca-calendar th {
-	color: var(--main-foreground) !important;
-	opacity: 0.85 !important;
-}
-
-/* Day cells */
-.orca-calendar .day,
-.orca-calendar .month,
-.orca-calendar .year {
+/* ===== HEADER ===== */
+.orca-calendar header {
 	background: transparent !important;
+	color: var(--foreground) !important;
+	border: none !important;
+	display: flex !important;
+	align-items: center !important;
+	padding: 4px 8px !important;
+	margin-bottom: 4px !important;
+}
+
+/* Year / Month — clickable, no border by default, border on hover only */
+.orca-calendar .choosen-year,
+.orca-calendar .choosen-month {
 	color: var(--main-foreground) !important;
+	font-weight: 700 !important;
+	font-size: 0.9em !important;
+	padding: 2px 4px !important;
+	background: transparent !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	cursor: pointer !important;
+	white-space: nowrap !important;
+}
+.orca-calendar .choosen-year:hover,
+.orca-calendar .choosen-month:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+}
+/* Active/selected year or month — black bg, white text like active day */
+.orca-calendar .choosen-year.active,
+.orca-calendar .choosen-year.selected,
+.orca-calendar .choosen-month.active,
+.orca-calendar .choosen-month.selected {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
+/* "本月" button/label — match year/month sizing */
+.orca-calendar .go-now {
+	color: var(--main-foreground) !important;
+	font-weight: 700 !important;
+	font-size: 0.9em !important;
+	cursor: pointer !important;
+	padding: 2px 4px !important;
+	background: transparent !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	white-space: nowrap !important;
+}
+.orca-calendar .go-now:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+}
+
+/* Navigation buttons — always black border, no hover bg change */
+.orca-calendar .orca-calendar-left-btn.orca-button.plain,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain {
+	background: transparent !important;
+	color: var(--border) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
+	padding: 2px 6px !important;
+	cursor: pointer !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover {
+	background: transparent !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
 }
 
-/* Today */
+/* Arrow icons inside nav buttons — inherit button color */
+.orca-calendar .orca-calendar-left-btn.orca-button.plain i,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain i,
+.orca-calendar .orca-calendar-left-btn.orca-button.plain svg,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain svg {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+}
+.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover i,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover i,
+.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover svg,
+.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover svg {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+}
+
+/* ===== DAYS GRID ===== */
+.orca-calendar .days {
+	display: grid !important;
+	grid-template-columns: auto repeat(7, 1fr) !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+/* ===== WEEKDAY HEADERS ===== */
+.orca-calendar .weekday {
+	color: var(--main-foreground) !important;
+	opacity: 0.6 !important;
+	font-size: 0 !important;
+	font-weight: 600 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	background: transparent !important;
+	border: none !important;
+	padding: 4px 0 !important;
+	min-height: 21px !important;
+}
+.orca-calendar .weekday.weekend {
+	color: var(--main-foreground) !important;
+	opacity: 0.4 !important;
+}
+
+/* Weekday headers start at grid column 2 (column 1 is for week numbers) */
+.orca-calendar .weekday:nth-child(1) { grid-column: 2 !important; }
+.orca-calendar .weekday:nth-child(2) { grid-column: 3 !important; }
+.orca-calendar .weekday:nth-child(3) { grid-column: 4 !important; }
+.orca-calendar .weekday:nth-child(4) { grid-column: 5 !important; }
+.orca-calendar .weekday:nth-child(5) { grid-column: 6 !important; }
+.orca-calendar .weekday:nth-child(6) { grid-column: 7 !important; }
+.orca-calendar .weekday:nth-child(7) { grid-column: 8 !important; }
+
+/* Replace Chinese weekday text with 2-letter abbreviations (like reference) */
+.orca-calendar .weekday::before {
+	font-size: 0.7rem !important;
+	display: block !important;
+}
+.orca-calendar .weekday:nth-child(1)::before { content: "Mo" !important; }
+.orca-calendar .weekday:nth-child(2)::before { content: "Tu" !important; }
+.orca-calendar .weekday:nth-child(3)::before { content: "We" !important; }
+.orca-calendar .weekday:nth-child(4)::before { content: "Th" !important; }
+.orca-calendar .weekday:nth-child(5)::before { content: "Fr" !important; }
+.orca-calendar .weekday:nth-child(6)::before { content: "Sa" !important; }
+.orca-calendar .weekday:nth-child(7)::before { content: "Su" !important; }
+
+/* ===== WEEK NUMBERS ===== */
+.orca-calendar .week {
+	color: var(--main-foreground) !important;
+	opacity: 0.4 !important;
+	font-size: 0.65em !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	background: transparent !important;
+	border: none !important;
+}
+
+/* ===== DAY CELLS ===== */
+.orca-calendar .day {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	cursor: pointer !important;
+	font-size: 0.75em !important;
+	aspect-ratio: 1 !important;
+	min-width: 0 !important;
+	min-height: 24px !important;
+	transition: all 0.15s ease !important;
+	position: relative !important;
+}
+
+/* Weekend cells — same blue bg as regular days (override Orca defaults) */
+.orca-calendar .day.weekend {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid transparent !important;
+}
+
+/* Outside month — dimmed, no border */
+.orca-calendar .day.outside {
+	opacity: 0.4 !important;
+	border-color: transparent !important;
+}
+
+/* All day cells show black border on hover */
+.orca-calendar .day:hover {
+	border-color: var(--border) !important;
+	background: var(--main) !important;
+}
+
+/* Today highlight — black bg, white text, always visible */
 .orca-calendar .day.today,
 .orca-calendar .day.current {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+	font-weight: 700 !important;
 }
 
-/* Selected day — bg-black text-white */
+/* Selected — black bg, white text, always visible */
 .orca-calendar .day.value,
-.orca-calendar .day.selected,
+.orca-calendar .day.selected {
+	background: #000 !important;
+	color: #fff !important;
+	font-weight: 700 !important;
+	border: 2px solid var(--border) !important;
+}
+
+/* Hover on non-special days */
+.orca-calendar .day:not(.value):not(.selected):not(.today):not(.current):hover {
+	background: color-mix(in oklab, var(--main) 80%, #000) !important;
+}
+
+/* ===== MONTH / YEAR PICKER CELLS (matrix shown when clicking year/month) ===== */
+.orca-calendar .month,
+.orca-calendar .year {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	cursor: pointer !important;
+	font-size: 0.75em !important;
+	padding: 4px !important;
+	min-height: 28px !important;
+	transition: all 0.15s ease !important;
+}
+/* Hover: black border only, no bg change */
+.orca-calendar .month:hover,
+.orca-calendar .year:hover {
+	border-color: var(--border) !important;
+	background: var(--main) !important;
+}
+/* Active/selected: black bg, white text like active day */
 .orca-calendar .month.value,
 .orca-calendar .month.selected,
 .orca-calendar .year.value,
 .orca-calendar .year.selected {
 	background: #000 !important;
 	color: #fff !important;
-	font-weight: var(--heading-font-weight) !important;
 	border: 2px solid var(--border) !important;
 }
 
-/* Hover on non-selected days */
-.orca-calendar .day:not(.value):not(.selected):hover {
-	background: color-mix(in oklab, #000 15%, var(--main)) !important;
+/* Journal dot — tiny indicator inside day cells */
+.orca-calendar .journal-dot {
+	width: 4px !important;
+	height: 4px !important;
+	border-radius: 50% !important;
+	background: var(--main-foreground) !important;
+	opacity: 0.4 !important;
+	position: absolute !important;
+	bottom: 2px !important;
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+	border: none !important;
 }
-
-/* Outside month / disabled */
-.orca-calendar .day.outside,
-.orca-calendar .day.disabled {
-	opacity: 0.5 !important;
-}
-
-/* Grid body */
-.orca-calendar .days-grid,
-.orca-calendar > :not(header) {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
+/* On today/selected journal dot should be white on black bg */
+.orca-calendar .day.today .journal-dot,
+.orca-calendar .day.current .journal-dot,
+.orca-calendar .day.value .journal-dot,
+.orca-calendar .day.selected .journal-dot {
+	background: #fff !important;
+	opacity: 0.8 !important;
 }
 
 /* ============================================================
@@ -1120,29 +1398,33 @@ object,
 .orca-date-picker,
 .orca-time-picker {
 	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
+	border-radius: 0 !important;
+	background: var(--background) !important;
+	color: var(--foreground) !important;
 	box-shadow: var(--shadow) !important;
 }
 
+/* Selected days in date-picker */
 .orca-date-picker .day.value,
 .orca-date-picker .day.selected {
 	background: #000 !important;
 	color: #fff !important;
 }
 
+/* Today in date-picker */
 .orca-date-picker .day.today {
 	background: var(--secondary-background) !important;
 	color: var(--foreground) !important;
 }
 
+/* Outside month */
 .orca-date-picker .day.outside {
 	opacity: 0.5 !important;
 }
 
+/* Hover in date-picker */
 .orca-date-picker .day:hover:not(.value):not(.selected) {
-	background: color-mix(in oklab, #000 15%, var(--main)) !important;
+	background: color-mix(in oklab, var(--main) 80%, #000) !important;
 }
 
 /* ============================================================
@@ -1294,6 +1576,26 @@ pre .token.punctuation {
 	background-color: var(--background) !important;
 }
 
+/* ============================================================
+   SIDEBAR SECTION DIVIDERS — thick separators like reference
+   ============================================================ */
+
+#sidebar [class*="tab-options"],
+#sidebar [class*="sidebar-tab"] {
+	border-top: 2px solid var(--border) !important;
+	border-bottom: 2px solid var(--border) !important;
+	padding: 4px 0 !important;
+	margin: 8px 0 !important;
+}
+
+#sidebar .orca-sidebar-create-aliased-btn,
+#sidebar [class*="create-aliased"],
+#sidebar [class*="sidebar-footer"] {
+	border-top: 2px solid var(--border) !important;
+	margin-top: 8px !important;
+	padding-top: 8px !important;
+}
+
 
 /**
  * Neubrutalism — Default Flavor: Orange
@@ -1306,9 +1608,9 @@ pre .token.punctuation {
 
 /* ===== Base Tokens — Dark (Orca default) ===== */
 :root {
-	/* ekmas core (from .dark) */
-	--main: oklch(67.56% 0.1796 49.61deg);
-	--background: oklch(26.86% 0.0327 60.06deg);
+	/* ekmas core: BLUE theme (from colors.ts index 10) */
+	--main: oklch(67.47% 0.1726 259.49deg);
+	--background: oklch(29.12% 0.0633 270.86deg);
 	--secondary-background: oklch(23.93% 0 0deg);
 	--foreground: oklch(92.49% 0 0deg);
 	--main-foreground: oklch(0% 0 0deg);
@@ -1323,17 +1625,17 @@ pre .token.punctuation {
 
 	/* Extended semantic colors */
 	--nb-accent: oklch(71.5% 0.197 354.23deg);
-	--nb-info: oklch(64.37% 0.1162 218.75deg);
-	--nb-success: oklch(73.03% 0.1865 153.23deg);
-	--nb-warning: oklch(67.56% 0.1796 49.61deg);
+	--nb-info: oklch(76.89% 0.1392 219.13deg);
+	--nb-success: oklch(79.76% 0.2044 153.08deg);
+	--nb-warning: oklch(72.27% 0.1894 50.19deg);
 	--nb-danger: oklch(67.28% 0.2147 24.22deg);
 }
 
 /* ===== Base Tokens — Light (Orca html.t-light) ===== */
 html.t-light {
-	/* ekmas core (from :root) */
-	--main: oklch(72.27% 0.1894 50.19deg);
-	--background: oklch(95.38% 0.0357 72.89deg);
+	/* ekmas core: BLUE theme (from colors.ts :root) */
+	--main: oklch(67.47% 0.1726 259.49deg);
+	--background: oklch(93.46% 0.0305 255.11deg);
 	--secondary-background: oklch(100% 0 0deg);
 	--foreground: oklch(0% 0 0deg);
 	--main-foreground: oklch(0% 0 0deg);

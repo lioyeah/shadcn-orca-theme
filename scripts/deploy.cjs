@@ -13,8 +13,6 @@ const ROOT_FILES = ["package.json", "icon.png", "LICENSE", "README.md"];
 const DIST_FILES = [
 	"index.js",
 	"neubrutalism.css",
-	"neubrutalism-task-planner.css",
-	"neubrutalism-vignette.css",
 ];
 
 function copy(src, dest) {

@@ -9,9 +9,9 @@
 
 /* ===== Base Tokens — Dark (Orca default) ===== */
 :root {
-	/* ekmas core (from .dark) */
-	--main: oklch(67.56% 0.1796 49.61deg);
-	--background: oklch(26.86% 0.0327 60.06deg);
+	/* ekmas core: BLUE theme (from colors.ts index 10) */
+	--main: oklch(67.47% 0.1726 259.49deg);
+	--background: oklch(29.12% 0.0633 270.86deg);
 	--secondary-background: oklch(23.93% 0 0deg);
 	--foreground: oklch(92.49% 0 0deg);
 	--main-foreground: oklch(0% 0 0deg);
@@ -26,17 +26,17 @@
 
 	/* Extended semantic colors */
 	--nb-accent: oklch(71.5% 0.197 354.23deg);
-	--nb-info: oklch(64.37% 0.1162 218.75deg);
-	--nb-success: oklch(73.03% 0.1865 153.23deg);
-	--nb-warning: oklch(67.56% 0.1796 49.61deg);
+	--nb-info: oklch(76.89% 0.1392 219.13deg);
+	--nb-success: oklch(79.76% 0.2044 153.08deg);
+	--nb-warning: oklch(72.27% 0.1894 50.19deg);
 	--nb-danger: oklch(67.28% 0.2147 24.22deg);
 }
 
 /* ===== Base Tokens — Light (Orca html.t-light) ===== */
 html.t-light {
-	/* ekmas core (from :root) */
-	--main: oklch(72.27% 0.1894 50.19deg);
-	--background: oklch(95.38% 0.0357 72.89deg);
+	/* ekmas core: BLUE theme (from colors.ts :root) */
+	--main: oklch(67.47% 0.1726 259.49deg);
+	--background: oklch(93.46% 0.0305 255.11deg);
 	--secondary-background: oklch(100% 0 0deg);
 	--foreground: oklch(0% 0 0deg);
 	--main-foreground: oklch(0% 0 0deg);

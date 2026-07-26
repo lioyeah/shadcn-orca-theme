@@ -25,12 +25,6 @@ export async function load(name: string) {
 		orca.themes.register(pluginName, THEME_NAME, "neubrutalism.css");
 	}
 
-	// Plugin-specific styles (injectCSSResource resolves relative to plugins root)
-	orca.themes.injectCSSResource(
-		"Neubrutalism/dist/neubrutalism-task-planner.css",
-		"task-planner",
-	);
-
 	document.documentElement.classList.add(THEME_CLASS);
 
 	// Sync with Orca's built-in light/dark toggle
@@ -45,7 +39,6 @@ export async function unload() {
 		themeModeUnsub();
 		themeModeUnsub = null;
 	}
-	orca.themes.removeCSSResources("task-planner");
 	orca.themes.unregister(THEME_NAME);
 	document.documentElement.classList.remove(THEME_CLASS);
 	document.documentElement.classList.remove(LIGHT_CLASS);
