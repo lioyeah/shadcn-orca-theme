@@ -240,10 +240,9 @@ html body #app {
 	color: var(--foreground) !important;
 	border: 2px solid transparent !important;
 }
-.orca-button.plain:not(.orca-select-button):not(
-	.orca-block-ref-count-marker
-):hover {
-	background: var(--secondary-background) !important;
+.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
 }
 
 /* --- Destructive --- */
@@ -414,31 +413,50 @@ select:focus {
 
 .orca-checkbox-box {
 	outline: 2px solid var(--border) !important;
-	outline-offset: -2px !important;
+	outline-offset: 0 !important;
 	border: none !important;
-	border-radius: var(--border-radius) !important;
+	border-radius: 0 !important;
 	box-shadow: none !important;
+	background: transparent !important;
 }
 
 input[type="checkbox"] {
 	appearance: none !important;
 	width: 1em !important;
 	height: 1em !important;
+	min-width: 16px !important;
+	min-height: 16px !important;
 	outline: 2px solid var(--border) !important;
-	outline-offset: -2px !important;
+	outline-offset: 0 !important;
 	border: none !important;
-	border-radius: var(--border-radius) !important;
+	border-radius: 0 !important;
 	background: transparent !important;
 	display: inline-grid !important;
 	place-content: center !important;
+	margin: 0 !important;
 }
 input[type="checkbox"]:checked {
 	background: var(--main) !important;
-	color: var(--main-foreground) !important;
+	color: var(--border) !important;
 }
 input[type="checkbox"]:checked::after {
-	content: "✓" !important;
-	font-size: 0.75em !important;
+	content: "✔" !important;
+	font-size: 0.9em !important;
+	font-weight: 900 !important;
+	line-height: 1 !important;
+	color: var(--border) !important;
+}
+
+/* .orca-checkbox-box checked state */
+.orca-checkbox-box[data-state="checked"] {
+	background: var(--main) !important;
+	color: var(--border) !important;
+}
+.orca-checkbox-box[data-state="checked"] svg,
+.orca-checkbox-box[data-state="checked"] svg * {
+	stroke: var(--border) !important;
+	fill: var(--border) !important;
+	color: var(--border) !important;
 }
 
 /* ============================================================
@@ -1099,7 +1117,7 @@ th,
 /* All day cells show black border on hover */
 .orca-calendar .day:hover {
 	border-color: var(--border) !important;
-	background: var(--main) !important;
+	background: transparent !important;
 }
 
 /* Today highlight — black bg, white text, always visible */
@@ -1122,7 +1140,7 @@ th,
 
 /* Hover on non-special days */
 .orca-calendar .day:not(.value):not(.selected):not(.today):not(.current):hover {
-	background: color-mix(in oklab, var(--main) 80%, #000) !important;
+	background: transparent !important;
 }
 
 /* ===== MONTH / YEAR PICKER CELLS (matrix shown when clicking year/month) ===== */
@@ -1145,7 +1163,7 @@ th,
 .orca-calendar .month:hover,
 .orca-calendar .year:hover {
 	border-color: var(--border) !important;
-	background: var(--main) !important;
+	background: transparent !important;
 }
 /* Active/selected: black bg, white text like active day */
 .orca-calendar .month.value,
@@ -1312,10 +1330,6 @@ object,
 }
 
 /* ============================================================
-   31. New Page button (sidebar)
-   ============================================================ */
-
-/* ============================================================
    31. New Page button (sidebar) — neobrutalism Button style
    ============================================================
 
@@ -1345,6 +1359,189 @@ object,
 #sidebar .orca-sidebar-footer .orca-button:hover {
 	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
 	box-shadow: none !important;
+}
+
+/* ============================================================
+   31b. Block Editor Go buttons (carousel arrow style)
+   ============================================================
+
+   Reference: https://www.neobrutalism.dev/docs/carousel
+     Default (dim, like disabled carousel arrow): low opacity, no bg
+     Hover (bright, like active carousel arrow): bg-main + border
+*/
+
+.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	opacity: 0.5 !important;
+	box-shadow: none !important;
+	outline: none !important;
+	transition: all 0.15s ease !important;
+}
+.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+	opacity: 1 !important;
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+/* Arrow icons inside go buttons — inherit color */
+.orca-block-editor-go-btn.orca-button.plain svg:not(.orca-select-button),
+.orca-block-editor-go-btn.orca-button.plain i:not(.orca-select-button),
+.orca-block-editor-go-btn.orca-button.plain i::before {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+}
+
+/* ============================================================
+   31d. Journal date navigation — carousel arrow style
+   ============================================================
+
+   Match go-up/go-down / carousel arrow behavior:
+   Default: dim (opacity 0.5), Hover: fully lit.
+*/
+
+#main .orca-repr-journal-btn.orca-button.plain {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	opacity: 0.5 !important;
+	box-shadow: none !important;
+	outline: none !important;
+	transition: all 0.15s ease !important;
+}
+#main .orca-repr-journal-btn.orca-button.plain:hover {
+	opacity: 1 !important;
+}
+#main .orca-repr-journal-btn svg,
+#main .orca-repr-journal-btn i,
+#main .orca-repr-journal-btn i::before {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+}
+
+/* ============================================================
+   31e. Query Conditions — accordion style
+   ============================================================
+
+   Reference: https://www.neobrutalism.dev/docs/accordion
+     AccordionItem: bg-main border-2 border-border rounded-base
+*/
+
+/* Query editor — dark bg card with full border-radius */
+.orca-query-editor {
+	background: var(--secondary-background) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	overflow: hidden !important;
+}
+
+/* Header bar, flush with container top — no margin, no gap */
+.orca-query-conditions-header {
+	background: var(--main) !important;
+	color: var(--border) !important;
+	border: none !important;
+	border-bottom: 2px solid var(--border) !important;
+	padding: 10px 14px !important;
+	margin: 0 !important;
+	min-height: 40px !important;
+	display: flex !important;
+	align-items: center !important;
+	gap: 6px !important;
+	font-weight: var(--base-font-weight) !important;
+	border-radius: 0 !important;
+	box-sizing: border-box !important;
+}
+
+/* Everything inside the header must be vertically centered and black */
+.orca-query-conditions-header,
+.orca-query-conditions-header *,
+.orca-query-conditions-header .orca-button.plain,
+.orca-query-conditions-header .orca-button.plain *,
+.orca-query-conditions-header .orca-select-button-text,
+.orca-query-conditions-header .orca-button.plain svg,
+.orca-query-conditions-header .orca-button.plain i,
+.orca-query-conditions-header .orca-button.plain i::before {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+	stroke: var(--border) !important;
+}
+
+/* Vertically center icons/images inside the header */
+.orca-query-conditions-header svg,
+.orca-query-conditions-header img,
+.orca-query-conditions-header i,
+.orca-query-conditions-header .orca-icon {
+	vertical-align: middle !important;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	align-self: center !important;
+}
+
+/* Orca select button inner elements - reset padding */
+.orca-query-conditions-header .orca-select-button-text {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	line-height: 1.2 !important;
+}
+.orca-query-conditions-header .orca-button.plain:hover,
+.orca-query-conditions-header .orca-button.plain:hover * {
+	border-color: var(--border) !important;
+	background: transparent !important;
+}
+
+/* Arrow icon in header */
+.orca-query-conditions-header-arrow {
+	color: var(--border) !important;
+	font-size: 1em !important;
+}
+
+/* Reset parent container padding inside the query editor */
+.orca-query-editor .orca-query-conditions {
+	padding: 0 !important;
+}
+
+/* Kill border-radius and overflow on inner panels */
+.orca-query-editor .orca-query-conditions,
+.orca-query-editor .orca-query-results {
+	border-radius: 0 !important;
+	overflow: visible !important;
+}
+
+/* Reset button — full neobrutalism button variant */
+.orca-query-conditions-reset.orca-button.soft {
+	background: color-mix(in oklab, var(--main) 20%, var(--secondary-background)) !important;
+	color: var(--foreground) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: var(--shadow) !important;
+	transition: all 0.15s ease !important;
+}
+.orca-query-conditions-reset.orca-button.soft:hover {
+	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+	box-shadow: none !important;
+}
+
+/* Query results area */
+.orca-query-results {
+	background: transparent !important;
+	color: var(--foreground) !important;
+	border: none !important;
+	padding: 8px 12px !important;
+}
+
+/* Checkbox inside conditions */
+.orca-query-conditions .orca-checkbox-box {
+	outline: 2px solid var(--border) !important;
+	outline-offset: 0 !important;
+	border: none !important;
 }
 
 /* ============================================================
@@ -1392,10 +1589,11 @@ object,
 
 .orca-checkbox-box {
 	outline: 2px solid var(--border) !important;
-	outline-offset: -2px !important;
+	outline-offset: 0 !important;
 	border: none !important;
-	border-radius: var(--border-radius) !important;
+	border-radius: 0 !important;
 	box-shadow: none !important;
+	background: transparent !important;
 }
 
 /* ============================================================
@@ -1406,9 +1604,23 @@ object,
 .orca-math-toolbar,
 .orca-mermaid-toolbar,
 .orca-image-toolbar {
+	background: var(--main) !important;
+	color: var(--border) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
+	box-shadow: none !important;
+}
+.orca-block-editor-sidetools svg,
+.orca-block-editor-sidetools i,
+.orca-block-editor-sidetools i::before,
+.orca-block-editor-sidetools .orca-button.plain {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+}
+.orca-block-editor-sidetools .orca-button.plain:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	box-shadow: none !important;
 }
 
 /* ============================================================
@@ -1460,9 +1672,10 @@ object,
 	opacity: 0.5 !important;
 }
 
-/* Hover in date-picker */
+/* Hover in date-picker — border only, no bg */
 .orca-date-picker .day:hover:not(.value):not(.selected) {
-	background: color-mix(in oklab, var(--main) 80%, #000) !important;
+	border-color: var(--border) !important;
+	background: transparent !important;
 }
 
 /* ============================================================
@@ -1477,17 +1690,78 @@ object,
 	color: var(--foreground) !important;
 	fill: var(--foreground) !important;
 }
+/* ============================================================
+   39. Repo switcher — collapsible trigger style
+   ============================================================
 
+   Reference: https://www.neobrutalism.dev/docs/collapsible
+     Trigger: bg-main border-2 border-border text-main-foreground
+              flex items-center px-4 py-2
+     Toggle button on right: bg-secondary-background text-foreground
+*/
+
+.orca-repo-switcher-button,
+.orca-select-button.orca-repo-switcher-button,
+#sidebar .orca-repo-switcher-button {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	display: flex !important;
+	align-items: center !important;
+	gap: 6px !important;
+	padding: 8px 10px !important;
+	width: auto !important;
+	box-shadow: none !important;
+	transition: none !important;
+	transform: none !important;
+	font-weight: var(--base-font-weight) !important;
+}
+
+/* Icon — book icon */
 .orca-repo-switcher-button svg,
 .orca-repo-switcher-button i,
 .orca-repo-switcher-button i::before,
-.orca-repo-switcher-button .orca-icon {
-	color: var(--main) !important;
-	fill: var(--main) !important;
+.orca-repo-switcher-button .orca-icon,
+.orca-repo-switcher-icon {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+}
+
+/* Text — flex grow */
+.orca-repo-switcher-button .orca-select-button-text {
+	flex: 1 !important;
+	color: var(--main-foreground) !important;
+}
+
+/* Selector dropdown arrow — neobrutalism no-shadow button style */
+.orca-repo-switcher-button .orca-select-button-selector {
+	background: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	width: 24px !important;
+	height: 24px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-shrink: 0 !important;
+	margin-left: auto !important;
+	font-size: 14px !important;
+	line-height: 1 !important;
+	padding: 0 !important;
+}
+.orca-repo-switcher-button i.orca-select-button-selector,
+.orca-repo-switcher-button i.orca-select-button-selector::before {
+	color: var(--foreground) !important;
+	stroke: var(--foreground) !important;
+	fill: var(--foreground) !important;
+	padding: 0 !important;
+	margin: 0 !important;
 }
 
 /* ============================================================
-   39. Dot grid background — from ekmas website
+   40. Dot grid background — from ekmas website
    ============================================================ */
 
 /* Optional: add .nb-dot-grid to body/section */
