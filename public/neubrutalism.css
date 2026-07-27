@@ -370,6 +370,25 @@ select:focus {
 	background: var(--secondary-background) !important;
 }
 
+/* Select menu items — black border on hover, no black bg */
+.orca-menu .orca-select-item {
+	border: 2px solid transparent !important;
+	background: transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+.orca-menu .orca-select-item:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+}
+
+/* Menu checkmark icon — keep black */
+:root .orca-menu .orca-select-item-check,
+:root .orca-menu .orca-select-item-check::before {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+	stroke: var(--border) !important;
+}
+
 /* ============================================================
    10. Component: Switch — ekmas: Switch
    ============================================================
@@ -1552,11 +1571,6 @@ object,
 	box-sizing: border-box !important;
 }
 
-/* Border only around the filter area, NOT around the item list */
-.orca-query-editor .orca-query-conditions {
-	border: 2px solid var(--border) !important;
-}
-
 /* Header bar, flush with container top — no margin, no gap */
 .orca-query-conditions-header {
 	background: var(--main) !important;
@@ -1625,9 +1639,16 @@ object,
 }
 
 /* Kill border-radius and overflow on inner panels */
-.orca-query-editor .orca-query-conditions,
 .orca-query-editor .orca-query-results {
-	border-radius: 0 !important;
+	overflow: visible !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
+}
+
+.orca-query-editor .orca-query-conditions {
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
 	overflow: visible !important;
 	width: 100% !important;
 	max-width: 100% !important;
@@ -1725,12 +1746,39 @@ object,
 	border-radius: var(--border-radius) !important;
 }
 
-.orca-settings > .sections .title,
+.orca-settings > .sections .title {
+	background: var(--secondary-background) !important;
+}
+
+.orca-settings > .sections .item,
+.orca-settings > .sections .plugin-item {
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+
+/* Prevent gray active background on settings right-side items */
+:root .orca-settings section *:active {
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+}
+
 .orca-settings > .sections .item.selected,
 .orca-settings > .sections .item:hover,
 .orca-settings > .sections .plugin-item.selected,
 .orca-settings > .sections .plugin-item:hover {
-	background: var(--background) !important;
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	color: var(--main-foreground) !important;
+}
+
+/* Right content area — blue bg matching header */
+:root .orca-settings > section,
+:root .orca-settings section.views,
+:root .orca-settings section.orca-memoizedviews {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
 }
 
 /* ============================================================
@@ -1806,34 +1854,108 @@ object,
 .orca-date-picker,
 .orca-time-picker {
 	border: 2px solid var(--border) !important;
-	border-radius: 0 !important;
-	background: var(--background) !important;
-	color: var(--foreground) !important;
-	box-shadow: var(--shadow) !important;
+	border-radius: var(--border-radius) !important;
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	box-shadow: none !important;
 }
 
-/* Selected days in date-picker */
+/* Remove unexpected borders inside the datepicker popup */
+.orca-datepicker-menu .nl-input-container {
+	border-bottom: none !important;
+}
+.orca-datepicker-menu .button-bar {
+	border-top: none !important;
+}
+
+/* Date-picker calendar — match sidebar .orca-calendar */
+.orca-date-picker header {
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+	border: none !important;
+}
+
+.orca-date-picker .choosen-year,
+.orca-date-picker .choosen-month {
+	color: var(--main-foreground) !important;
+	font-weight: 700 !important;
+	background: transparent !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+
+/* "当下" button in datepicker popup — no .go-now class, just .orca-button.plain inside .button-bar */
+:root .orca-datepicker-menu .button-bar .orca-button.plain {
+	color: var(--border) !important;
+	background: transparent !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+:root .orca-datepicker-menu .button-bar .orca-button.plain:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+}
+
+.orca-date-picker .day {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+
 .orca-date-picker .day.value,
 .orca-date-picker .day.selected {
 	background: #000 !important;
 	color: #fff !important;
+	border: 2px solid var(--border) !important;
 }
 
-/* Today in date-picker */
 .orca-date-picker .day.today {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
 }
 
-/* Outside month */
 .orca-date-picker .day.outside {
-	opacity: 0.5 !important;
+	opacity: 0.4 !important;
+	border-color: transparent !important;
 }
 
-/* Hover in date-picker — border only, no bg */
-.orca-date-picker .day:hover:not(.value):not(.selected) {
+.orca-date-picker .day:hover:not(.value):not(.selected):not(.today) {
 	border-color: var(--border) !important;
 	background: transparent !important;
+}
+
+.orca-date-picker .orca-date-picker-left-btn,
+.orca-date-picker .orca-date-picker-right-btn {
+	background: transparent !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+}
+.orca-date-picker .orca-date-picker-left-btn:hover,
+.orca-date-picker .orca-date-picker-right-btn:hover {
+	background: transparent !important;
+	border-color: var(--border) !important;
+}
+
+/* Time picker — each LI is an hour or minute item */
+.time-picker li {
+	border: 2px solid transparent !important;
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border-radius: var(--border-radius) !important;
+}
+.time-picker li:hover {
+	border-color: var(--border) !important;
+	background: var(--main) !important;
+}
+.time-picker li.selected,
+.time-picker li.value,
+.time-picker li[data-state="checked"] {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
 }
 
 /* ============================================================
