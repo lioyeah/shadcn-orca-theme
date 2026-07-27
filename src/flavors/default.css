@@ -16,7 +16,7 @@
 	--foreground: oklch(92.49% 0 0deg);
 	--main-foreground: oklch(0% 0 0deg);
 	--border: oklch(0% 0 0deg);
-	--ring: oklch(100% 0 0deg);
+	--ring: oklch(0% 0 0deg);
 	--overlay: oklch(0% 0 0deg / 80%);
 
 	/* ekmas layout */
