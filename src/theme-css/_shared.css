@@ -1001,310 +1001,240 @@ th,
    Reference: neobrutalism.dev/docs/calendar
 */
 
-/* Container — blue card with black border + shadow, matching reference */
-.orca-calendar {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid #000 !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
-	display: block !important;
-	padding-bottom: 8px !important;
-}
+@scope (.orca-calendar) {
+	:scope {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid #000;
+		border-radius: var(--border-radius);
+		box-shadow: var(--shadow);
+		display: block;
+		padding-bottom: 8px;
+	}
 
-/* ===== HEADER ===== */
-.orca-calendar header {
-	background: transparent !important;
-	color: var(--foreground) !important;
-	border: none !important;
-	display: flex !important;
-	align-items: center !important;
-	padding: 4px 8px !important;
-	margin-bottom: 4px !important;
-}
+	/* HEADER */
+	header {
+		background: transparent;
+		color: var(--foreground);
+		border: none;
+		display: flex;
+		align-items: center;
+		padding: 4px 8px;
+		margin-bottom: 4px;
+	}
 
-/* Year / Month — clickable, no border by default, border on hover only */
-.orca-calendar .choosen-year,
-.orca-calendar .choosen-month {
-	color: var(--main-foreground) !important;
-	font-weight: 700 !important;
-	font-size: 0.9em !important;
-	padding: 2px 4px !important;
-	background: transparent !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-	cursor: pointer !important;
-	white-space: nowrap !important;
-}
-.orca-calendar .choosen-year:hover,
-.orca-calendar .choosen-month:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-/* Active/selected year or month — black bg, white text like active day */
-.orca-calendar .choosen-year.active,
-.orca-calendar .choosen-year.selected,
-.orca-calendar .choosen-month.active,
-.orca-calendar .choosen-month.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
+	.choosen-year, .choosen-month {
+		color: var(--main-foreground);
+		font-weight: 700;
+		font-size: 0.9em;
+		padding: 2px 4px;
+		background: transparent;
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+		cursor: pointer;
+		white-space: nowrap;
+	}
+	.choosen-year:hover, .choosen-month:hover {
+		border-color: var(--border);
+		background: transparent;
+	}
+	.choosen-year.active, .choosen-year.selected,
+	.choosen-month.active, .choosen-month.selected {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
 
-/* "本月" button/label — match year/month sizing */
-.orca-calendar .go-now {
-	color: var(--main-foreground) !important;
-	font-weight: 700 !important;
-	font-size: 0.9em !important;
-	cursor: pointer !important;
-	padding: 2px 4px !important;
-	background: transparent !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-	white-space: nowrap !important;
-}
-.orca-calendar .go-now:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
+	.go-now {
+		color: var(--main-foreground);
+		font-weight: 700;
+		font-size: 0.9em;
+		cursor: pointer;
+		padding: 2px 4px;
+		background: transparent;
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+		white-space: nowrap;
+	}
+	.go-now:hover {
+		border-color: var(--border);
+		background: transparent;
+	}
 
-/* Navigation buttons — always black border, no hover bg change */
-.orca-calendar .orca-calendar-left-btn.orca-button.plain,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain {
-	background: transparent !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	padding: 2px 6px !important;
-	cursor: pointer !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-}
-.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover {
-	background: transparent !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-}
+	.orca-calendar-left-btn.orca-button.plain,
+	.orca-calendar-right-btn.orca-button.plain {
+		background: transparent;
+		color: var(--border);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		padding: 2px 6px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.orca-calendar-left-btn.orca-button.plain:hover,
+	.orca-calendar-right-btn.orca-button.plain:hover {
+		background: transparent;
+		color: var(--border);
+		border: 2px solid var(--border);
+	}
+	.orca-calendar-left-btn.orca-button.plain i,
+	.orca-calendar-right-btn.orca-button.plain i,
+	.orca-calendar-left-btn.orca-button.plain svg,
+	.orca-calendar-right-btn.orca-button.plain svg {
+		color: var(--border);
+		fill: var(--border);
+	}
 
-/* Arrow icons inside nav buttons — inherit button color */
-.orca-calendar .orca-calendar-left-btn.orca-button.plain i,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain i,
-.orca-calendar .orca-calendar-left-btn.orca-button.plain svg,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain svg {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover i,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover i,
-.orca-calendar .orca-calendar-left-btn.orca-button.plain:hover svg,
-.orca-calendar .orca-calendar-right-btn.orca-button.plain:hover svg {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
+	/* DAYS GRID */
+	.days {
+		display: grid;
+		grid-template-columns: auto repeat(7, 1fr);
+		padding: 0;
+		margin: 0;
+	}
 
-/* ===== DAYS GRID ===== */
-.orca-calendar .days {
-	display: grid !important;
-	grid-template-columns: auto repeat(7, 1fr) !important;
-	padding: 0 !important;
-	margin: 0 !important;
-}
+	/* WEEKDAY HEADERS */
+	.weekday {
+		color: var(--main-foreground);
+		opacity: 0.6;
+		font-size: 0;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: none;
+		padding: 4px 0;
+		min-height: 21px;
+	}
+	.weekday.weekend {
+		color: var(--main-foreground);
+		opacity: 0.4;
+	}
+	.weekday:nth-child(1) { grid-column: 2; }
+	.weekday:nth-child(2) { grid-column: 3; }
+	.weekday:nth-child(3) { grid-column: 4; }
+	.weekday:nth-child(4) { grid-column: 5; }
+	.weekday:nth-child(5) { grid-column: 6; }
+	.weekday:nth-child(6) { grid-column: 7; }
+	.weekday:nth-child(7) { grid-column: 8; }
 
-/* ===== WEEKDAY HEADERS ===== */
-.orca-calendar .weekday {
-	color: var(--main-foreground) !important;
-	opacity: 0.6 !important;
-	font-size: 0 !important;
-	font-weight: 600 !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	background: transparent !important;
-	border: none !important;
-	padding: 4px 0 !important;
-	min-height: 21px !important;
-}
-.orca-calendar .weekday.weekend {
-	color: var(--main-foreground) !important;
-	opacity: 0.4 !important;
-}
+	.weekday::before {
+		font-size: 0.7rem;
+		display: block;
+	}
+	.weekday:nth-child(1)::before { content: "Mo"; }
+	.weekday:nth-child(2)::before { content: "Tu"; }
+	.weekday:nth-child(3)::before { content: "We"; }
+	.weekday:nth-child(4)::before { content: "Th"; }
+	.weekday:nth-child(5)::before { content: "Fr"; }
+	.weekday:nth-child(6)::before { content: "Sa"; }
+	.weekday:nth-child(7)::before { content: "Su"; }
 
-/* Weekday headers start at grid column 2 (column 1 is for week numbers) */
-.orca-calendar .weekday:nth-child(1) {
-	grid-column: 2 !important;
-}
-.orca-calendar .weekday:nth-child(2) {
-	grid-column: 3 !important;
-}
-.orca-calendar .weekday:nth-child(3) {
-	grid-column: 4 !important;
-}
-.orca-calendar .weekday:nth-child(4) {
-	grid-column: 5 !important;
-}
-.orca-calendar .weekday:nth-child(5) {
-	grid-column: 6 !important;
-}
-.orca-calendar .weekday:nth-child(6) {
-	grid-column: 7 !important;
-}
-.orca-calendar .weekday:nth-child(7) {
-	grid-column: 8 !important;
-}
+	/* WEEK NUMBERS */
+	.week {
+		color: var(--main-foreground);
+		opacity: 0.4;
+		font-size: 0.65em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: none;
+	}
 
-/* Replace Chinese weekday text with 2-letter abbreviations (like reference) */
-.orca-calendar .weekday::before {
-	font-size: 0.7rem !important;
-	display: block !important;
-}
-.orca-calendar .weekday:nth-child(1)::before {
-	content: "Mo" !important;
-}
-.orca-calendar .weekday:nth-child(2)::before {
-	content: "Tu" !important;
-}
-.orca-calendar .weekday:nth-child(3)::before {
-	content: "We" !important;
-}
-.orca-calendar .weekday:nth-child(4)::before {
-	content: "Th" !important;
-}
-.orca-calendar .weekday:nth-child(5)::before {
-	content: "Fr" !important;
-}
-.orca-calendar .weekday:nth-child(6)::before {
-	content: "Sa" !important;
-}
-.orca-calendar .weekday:nth-child(7)::before {
-	content: "Su" !important;
-}
+	/* DAY CELLS */
+	.day {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		font-size: 0.75em;
+		aspect-ratio: 1;
+		min-width: 0;
+		min-height: 24px;
+		transition: all 0.15s ease;
+		position: relative;
+	}
+	.day.weekend {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid transparent;
+	}
+	.day.outside {
+		opacity: 0.4;
+		border-color: transparent;
+	}
+	.day:hover {
+		border-color: var(--border);
+		background: transparent;
+	}
+	.day.today, .day.current {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+		font-weight: 700;
+	}
+	.day.value, .day.selected {
+		background: #000;
+		color: #fff;
+		font-weight: 700;
+		border: 2px solid var(--border);
+	}
+	.day:not(.value):not(.selected):not(.today):not(.current):hover {
+		background: transparent;
+	}
 
-/* ===== WEEK NUMBERS ===== */
-.orca-calendar .week {
-	color: var(--main-foreground) !important;
-	opacity: 0.4 !important;
-	font-size: 0.65em !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	background: transparent !important;
-	border: none !important;
-}
+	/* MONTH / YEAR PICKER */
+	.month, .year {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		font-size: 0.75em;
+		padding: 4px;
+		min-height: 28px;
+		transition: all 0.15s ease;
+	}
+	.month:hover, .year:hover {
+		border-color: var(--border);
+		background: transparent;
+	}
+	.month.value, .month.selected,
+	.year.value, .year.selected {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
 
-/* ===== DAY CELLS ===== */
-.orca-calendar .day {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	cursor: pointer !important;
-	font-size: 0.75em !important;
-	aspect-ratio: 1 !important;
-	min-width: 0 !important;
-	min-height: 24px !important;
-	transition: all 0.15s ease !important;
-	position: relative !important;
-}
-
-/* Weekend cells — same blue bg as regular days (override Orca defaults) */
-.orca-calendar .day.weekend {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid transparent !important;
-}
-
-/* Outside month — dimmed, no border */
-.orca-calendar .day.outside {
-	opacity: 0.4 !important;
-	border-color: transparent !important;
-}
-
-/* All day cells show black border on hover */
-.orca-calendar .day:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-/* Today highlight — black bg, white text, always visible */
-.orca-calendar .day.today,
-.orca-calendar .day.current {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-	font-weight: 700 !important;
-}
-
-/* Selected — black bg, white text, always visible */
-.orca-calendar .day.value,
-.orca-calendar .day.selected {
-	background: #000 !important;
-	color: #fff !important;
-	font-weight: 700 !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Hover on non-special days */
-.orca-calendar .day:not(.value):not(.selected):not(.today):not(.current):hover {
-	background: transparent !important;
-}
-
-/* ===== MONTH / YEAR PICKER CELLS (matrix shown when clicking year/month) ===== */
-.orca-calendar .month,
-.orca-calendar .year {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	cursor: pointer !important;
-	font-size: 0.75em !important;
-	padding: 4px !important;
-	min-height: 28px !important;
-	transition: all 0.15s ease !important;
-}
-/* Hover: black border only, no bg change */
-.orca-calendar .month:hover,
-.orca-calendar .year:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-/* Active/selected: black bg, white text like active day */
-.orca-calendar .month.value,
-.orca-calendar .month.selected,
-.orca-calendar .year.value,
-.orca-calendar .year.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Journal dot — tiny indicator inside day cells */
-.orca-calendar .journal-dot {
-	width: 4px !important;
-	height: 4px !important;
-	border-radius: 50% !important;
-	background: var(--main-foreground) !important;
-	opacity: 0.4 !important;
-	position: absolute !important;
-	bottom: 2px !important;
-	left: 50% !important;
-	transform: translateX(-50%) !important;
-	border: none !important;
-}
-/* On today/selected journal dot should be white on black bg */
-.orca-calendar .day.today .journal-dot,
-.orca-calendar .day.current .journal-dot,
-.orca-calendar .day.value .journal-dot,
-.orca-calendar .day.selected .journal-dot {
-	background: #fff !important;
-	opacity: 0.8 !important;
+	/* Journal dot */
+	.journal-dot {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--main-foreground);
+		opacity: 0.4;
+		position: absolute;
+		bottom: 2px;
+		left: 50%;
+		transform: translateX(-50%);
+		border: none;
+	}
+	.day.today .journal-dot, .day.current .journal-dot,
+	.day.value .journal-dot, .day.selected .journal-dot {
+		background: #fff;
+		opacity: 0.8;
+	}
 }
 
 /* ============================================================
@@ -1754,12 +1684,15 @@ object,
 	.title {
 		background: var(--secondary-background);
 	}
-	.item, .plugin-item {
+	.item,
+	.plugin-item {
 		border: 2px solid transparent;
 		border-radius: var(--border-radius);
 	}
-	.item.selected, .item:hover,
-	.plugin-item.selected, .plugin-item:hover {
+	.item.selected,
+	.item:hover,
+	.plugin-item.selected,
+	.plugin-item:hover {
 		background: var(--main);
 		background-color: var(--main);
 		border: 2px solid var(--border);
@@ -1861,7 +1794,8 @@ object,
 		color: var(--main-foreground);
 		border: none;
 	}
-	.choosen-year, .choosen-month {
+	.choosen-year,
+	.choosen-month {
 		color: var(--main-foreground);
 		font-weight: 700;
 		background: transparent;
@@ -1874,7 +1808,8 @@ object,
 		border: 2px solid transparent;
 		border-radius: var(--border-radius);
 	}
-	.day.value, .day.selected {
+	.day.value,
+	.day.selected {
 		background: #000;
 		color: #fff;
 		border: 2px solid var(--border);
@@ -1892,13 +1827,15 @@ object,
 		border-color: var(--border);
 		background: transparent;
 	}
-	.orca-date-picker-left-btn, .orca-date-picker-right-btn {
+	.orca-date-picker-left-btn,
+	.orca-date-picker-right-btn {
 		background: transparent;
 		color: var(--border);
 		border: 2px solid var(--border);
 		border-radius: var(--border-radius);
 	}
-	.orca-date-picker-left-btn:hover, .orca-date-picker-right-btn:hover {
+	.orca-date-picker-left-btn:hover,
+	.orca-date-picker-right-btn:hover {
 		background: transparent;
 		border-color: var(--border);
 	}
@@ -1915,7 +1852,9 @@ object,
 		border-color: var(--border);
 		background: var(--main);
 	}
-	li.selected, li.value, li[data-state="checked"] {
+	li.selected,
+	li.value,
+	li[data-state="checked"] {
 		background: #000;
 		color: #fff;
 		border: 2px solid var(--border);
