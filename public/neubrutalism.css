@@ -528,10 +528,10 @@ input[type="checkbox"]:checked::after {
 	box-shadow: var(--shadow) !important;
 }
 
-/* Popups → ekmas: Popover = bg-main text-foreground, NO shadow */
+/* Popups → ekmas: Popover = bg-main text-main-foreground, NO shadow */
 .orca-popup {
 	background: var(--main) !important;
-	color: var(--foreground) !important;
+	color: var(--main-foreground) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
 	box-shadow: none !important;
@@ -544,6 +544,19 @@ input[type="checkbox"]:checked::after {
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
 	box-shadow: none !important;
+}
+
+/* All icons inside dropdowns — inherit color from parent */
+.orca-dropdown .ti,
+.orca-dropdown .ti::before,
+.orca-dropdown svg,
+.orca-dropdown svg *,
+.orca-dropdown .orca-icon,
+.orca-dropdown .orca-menu-text-icon,
+.orca-dropdown .orca-menu-text-kbd {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+	stroke: var(--main-foreground) !important;
 }
 
 /* Sidebar — ekmas: bg-secondary-background, no borders, no shadow */
@@ -648,7 +661,7 @@ html:not(#_) .orca-menu-text.orca-key-selected {
 	background-image: none !important;
 }
 
-/* Menu text colors — ekmas: all text inherits text-main-foreground from parent */
+/* Menumas: all text inherits text-main-foreground from parent */
 .orca-menu,
 .orca-menu-text-text,
 .orca-menu-text-kbd,
@@ -656,12 +669,39 @@ html:not(#_) .orca-menu-text.orca-key-selected {
 .orca-menu-item {
 	color: var(--main-foreground) !important;
 }
+.orca-menu .ti,
+.orca-menu .ti::before,
+.orca-menu svg,
+.orca-menu svg *,
+.orca-menu .orca-icon,
+.orca-slash-commands .ti,
+.orca-slash-commands .ti::before,
+.orca-slash-commands svg,
+.orca-slash-commands svg *,
+.orca-slash-commands .orca-icon {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+	stroke: var(--main-foreground) !important;
+}
 
 /* Disabled items — ekmas: opacity 50%, no color change */
 .orca-menu-item.disabled,
 .orca-menu-text.disabled {
 	opacity: 0.5 !important;
 	color: inherit !important;
+}
+
+/* All icons inside popup menus — inherit main-foreground (black on blue bg) */
+.orca-popup .ti,
+.orca-popup .ti::before,
+.orca-popup svg,
+.orca-popup svg *,
+.orca-popup .orca-icon,
+.orca-popup .orca-menu-text-icon,
+.orca-popup .orca-menu-text-kbd {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
+	stroke: var(--main-foreground) !important;
 }
 
 /* ekmas DropdownMenu item: focus ONLY changes border, NOT background */
@@ -1242,8 +1282,8 @@ th,
 .orca-headbar-user-tools .orca-button.plain svg,
 .orca-headbar-user-tools .orca-button.plain i,
 .orca-headbar-user-tools .orca-button.plain i::before {
-	color: var(--main) !important;
-	fill: var(--main) !important;
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
 }
 
 /* ============================================================
@@ -1438,7 +1478,7 @@ object,
 	background: var(--secondary-background) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
-	overflow: hidden !important;
+	box-sizing: border-box !important;
 }
 
 /* Header bar, flush with container top — no margin, no gap */
@@ -1454,7 +1494,7 @@ object,
 	align-items: center !important;
 	gap: 6px !important;
 	font-weight: var(--base-font-weight) !important;
-	border-radius: 0 !important;
+	border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
 	box-sizing: border-box !important;
 }
 
@@ -1513,6 +1553,9 @@ object,
 .orca-query-editor .orca-query-results {
 	border-radius: 0 !important;
 	overflow: visible !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
 }
 
 /* Reset button — full neobrutalism button variant */
