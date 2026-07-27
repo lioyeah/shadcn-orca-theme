@@ -381,9 +381,17 @@ select:focus {
 	background: transparent !important;
 }
 
-/* Menu checkmark icon — keep black */
-:root .orca-menu .orca-select-item-check,
-:root .orca-menu .orca-select-item-check::before {
+/* Icons inside popups/menus — black, double-ID wins any Orca rule */
+#app#app .orca-popup .ti,
+#app#app .orca-popup .ti::before,
+#app#app .orca-popup svg,
+#app#app .orca-popup i,
+#app#app .orca-popup i::before,
+#app#app .orca-menu .ti,
+#app#app .orca-menu .ti::before,
+#app#app .orca-menu svg,
+#app#app .orca-menu i,
+#app#app .orca-menu i::before {
 	color: var(--border) !important;
 	fill: var(--border) !important;
 	stroke: var(--border) !important;
@@ -1737,48 +1745,40 @@ object,
 }
 
 /* ============================================================
-   32. Settings page
+   32. Settings page — @scope
    ============================================================ */
 
-.orca-settings > .sections {
-	border-right: 2px solid var(--border) !important;
-	background: var(--secondary-background) !important;
-	border-radius: var(--border-radius) !important;
+@scope (.orca-settings > .sections) {
+	:scope {
+		border-right: 2px solid var(--border);
+		background: var(--secondary-background);
+		border-radius: var(--border-radius);
+	}
+	.title {
+		background: var(--secondary-background);
+	}
+	.item, .plugin-item {
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+	}
+	.item.selected, .item:hover,
+	.plugin-item.selected, .plugin-item:hover {
+		background: var(--main);
+		background-color: var(--main);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		color: var(--main-foreground);
+	}
 }
 
-.orca-settings > .sections .title {
-	background: var(--secondary-background) !important;
-}
-
-.orca-settings > .sections .item,
-.orca-settings > .sections .plugin-item {
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* Prevent gray active background on settings right-side items */
-:root .orca-settings section *:active {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-}
-
-.orca-settings > .sections .item.selected,
-.orca-settings > .sections .item:hover,
-.orca-settings > .sections .plugin-item.selected,
-.orca-settings > .sections .plugin-item:hover {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	color: var(--main-foreground) !important;
-}
-
-/* Right content area — blue bg matching header */
-:root .orca-settings > section,
-:root .orca-settings section.views,
-:root .orca-settings section.orca-memoizedviews {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
+@scope (.orca-settings > section.views) {
+	:scope {
+		background: var(--main);
+		color: var(--main-foreground);
+	}
+	*:active {
+		background: var(--main);
+	}
 }
 
 /* ============================================================
@@ -1848,43 +1848,90 @@ object,
 }
 
 /* ============================================================
-   37. Date / Time pickers
+   37. Date / Time pickers — @scope
    ============================================================ */
 
-.orca-date-picker,
-.orca-time-picker {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	box-shadow: none !important;
+@scope (.orca-date-picker, .orca-time-picker) {
+	:scope {
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		background: var(--main);
+		color: var(--main-foreground);
+		box-shadow: none;
+	}
+	header {
+		background: transparent;
+		color: var(--main-foreground);
+		border: none;
+	}
+	.choosen-year, .choosen-month {
+		color: var(--main-foreground);
+		font-weight: 700;
+		background: transparent;
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+	}
+	.day {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+	}
+	.day.value, .day.selected {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
+	.day.today {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
+	.day.outside {
+		opacity: 0.4;
+		border-color: transparent;
+	}
+	.day:hover:not(.value):not(.selected):not(.today) {
+		border-color: var(--border);
+		background: transparent;
+	}
+	.orca-date-picker-left-btn, .orca-date-picker-right-btn {
+		background: transparent;
+		color: var(--border);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+	}
+	.orca-date-picker-left-btn:hover, .orca-date-picker-right-btn:hover {
+		background: transparent;
+		border-color: var(--border);
+	}
 }
 
-/* Remove unexpected borders inside the datepicker popup */
+@scope (.time-picker) {
+	li {
+		border: 2px solid transparent;
+		background: var(--main);
+		color: var(--main-foreground);
+		border-radius: var(--border-radius);
+	}
+	li:hover {
+		border-color: var(--border);
+		background: var(--main);
+	}
+	li.selected, li.value, li[data-state="checked"] {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
+}
+
+/* Datepicker popup — misc overrides */
 .orca-datepicker-menu .nl-input-container {
 	border-bottom: none !important;
 }
 .orca-datepicker-menu .button-bar {
 	border-top: none !important;
 }
-
-/* Date-picker calendar — match sidebar .orca-calendar */
-.orca-date-picker header {
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-	border: none !important;
-}
-
-.orca-date-picker .choosen-year,
-.orca-date-picker .choosen-month {
-	color: var(--main-foreground) !important;
-	font-weight: 700 !important;
-	background: transparent !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* "当下" button in datepicker popup — no .go-now class, just .orca-button.plain inside .button-bar */
 :root .orca-datepicker-menu .button-bar .orca-button.plain {
 	color: var(--border) !important;
 	background: transparent !important;
@@ -1894,68 +1941,6 @@ object,
 :root .orca-datepicker-menu .button-bar .orca-button.plain:hover {
 	border-color: var(--border) !important;
 	background: transparent !important;
-}
-
-.orca-date-picker .day {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-
-.orca-date-picker .day.value,
-.orca-date-picker .day.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-.orca-date-picker .day.today {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-.orca-date-picker .day.outside {
-	opacity: 0.4 !important;
-	border-color: transparent !important;
-}
-
-.orca-date-picker .day:hover:not(.value):not(.selected):not(.today) {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-.orca-date-picker .orca-date-picker-left-btn,
-.orca-date-picker .orca-date-picker-right-btn {
-	background: transparent !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-.orca-date-picker .orca-date-picker-left-btn:hover,
-.orca-date-picker .orca-date-picker-right-btn:hover {
-	background: transparent !important;
-	border-color: var(--border) !important;
-}
-
-/* Time picker — each LI is an hour or minute item */
-.time-picker li {
-	border: 2px solid transparent !important;
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border-radius: var(--border-radius) !important;
-}
-.time-picker li:hover {
-	border-color: var(--border) !important;
-	background: var(--main) !important;
-}
-.time-picker li.selected,
-.time-picker li.value,
-.time-picker li[data-state="checked"] {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
 }
 
 /* ============================================================
