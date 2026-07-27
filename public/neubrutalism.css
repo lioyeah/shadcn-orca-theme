@@ -177,19 +177,7 @@ html body #app {
    7. Component: Button — ekmas: Button
    ============================================================
 
-   Mapping:
-     .orca-button.solid.primary   →  variant="default"    (bg-main)
-     .orca-button.solid:not(.primary) → variant="neutral" (bg-secondary-background)
-     .orca-button.outline         →  compose: border only + transparent bg
-     .orca-button.plain           →  compose: ghost (no border/bg on idle)
-     .orca-button.soft            →  compose: subtle bg
-     .orca-button.dangerous       →  variant="destructive"
-
-   ekmas base: rounded-base text-sm font-base ring-offset-white transition-all
-               gap-2 focus-visible:outline-hidden focus-visible:ring-2
-               focus-visible:ring-black focus-visible:ring-offset-2
-               disabled:pointer-events-none disabled:opacity-50
-   ekmas default: text-main-foreground bg-main border-2 border-border
+   ekmas default variant: bg-main text-main-foreground border-2 border-border
                   shadow-shadow hover:translate-x-boxShadowX
                   hover:translate-y-boxShadowY hover:shadow-none
 */
@@ -983,9 +971,6 @@ th,
      .days grid: .weekday ×7, .week ×5-6, .day ×35-42
 
    Reference: neobrutalism.dev/docs/calendar
-     Blue card container, all cells same blue as bg,
-     thick 2px black borders on everything,
-     selected = slightly darker blue (not black)
 */
 
 /* Container — blue card with black border + shadow, matching reference */
@@ -1495,7 +1480,7 @@ object,
 }
 
 /* ============================================================
-   31e. Query Conditions — accordion style
+   31c. Query Conditions — accordion style
    ============================================================
 
    Reference: https://www.neobrutalism.dev/docs/accordion
@@ -1576,21 +1561,8 @@ object,
 .orca-query-editor .orca-query-conditions {
 	padding: 0 !important;
 }
-/* Query header flex items — allow wrapping + shrinking */
-.orca-query-conditions-header {
-	flex-wrap: wrap !important;
-}
-.orca-query-conditions-header > * {
-	flex-shrink: 1 !important;
-	min-width: 0 !important;
-}
-.orca-query-conditions-header .orca-select-button-text {
-	overflow: hidden !important;
-	text-overflow: ellipsis !important;
-	white-space: nowrap !important;
-}
 
-/* Inner query panels — full width of expanded container */
+/* Kill border-radius and overflow on inner panels */
 .orca-query-editor .orca-query-conditions,
 .orca-query-editor .orca-query-results {
 	border-radius: 0 !important;
@@ -1711,19 +1683,6 @@ object,
 
 .orca-aichat-chatbox-button {
 	color: var(--main) !important;
-}
-
-/* ============================================================
-   34. Checkbox (inline list)
-   ============================================================ */
-
-.orca-checkbox-box {
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-	border: none !important;
-	border-radius: 0 !important;
-	box-shadow: none !important;
-	background: transparent !important;
 }
 
 /* ============================================================
