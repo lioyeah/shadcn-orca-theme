@@ -85,48 +85,34 @@
 .orca-calendar,
 .orca-calendar *,
 .orca-sidebar-tab-options,
-.orca-sidebar-tab-options *,
-.orca-segmented,
-.orca-segmented *,
-.orca-date-picker,
-.orca-date-picker *,
-.orca-time-picker,
-.orca-time-picker *,
+/* Base border-radius for all Orca UI shell elements (override inline styles) */
+.orca-button,
+.orca-input,
+.orca-tag,
+.orca-pill,
+.orca-calendar,
+.orca-popup,
+.orca-modal,
+.orca-dropdown,
+.orca-menu,
+.orca-settings,
 .orca-progress,
-.orca-progress *,
+.orca-segmented,
+.orca-date-picker,
+.orca-time-picker,
 .orca-query-tabs,
-.orca-query-tabs *,
 .orca-block-editor-query-tabs,
-.orca-block-editor-query-tabs *,
 .orca-query-conditions,
-.orca-query-conditions *,
 .orca-query-editor,
-.orca-query-editor *,
-img,
-video,
-iframe,
-embed,
-object,
-.orca-image,
-.orca-media,
-hr,
-.orca-divider,
-pre,
-.orca-code-block,
-.orca-code-wrapper,
-.orca-empty-state,
-.orca-empty,
-.orca-placeholder,
+.orca-repo-switcher-button,
+.orca-vault-icon,
+.orca-vault-selector-icon,
 .orca-list-item,
 .orca-sidebar-item,
 .orca-search-result-item,
 .orca-tags-tag-item,
 .orca-aliased-block-item,
 .orca-fav-item,
-.orca-vault-icon,
-.orca-vault-selector-icon,
-.orca-repo-switcher-button,
-.orca-sidebar-create-aliased-btn,
 .orca-block-ref-count-marker,
 input[type="checkbox"] {
 	border-radius: var(--border-radius) !important;
@@ -1026,7 +1012,8 @@ th,
 		margin-bottom: 4px;
 	}
 
-	.choosen-year, .choosen-month {
+	.choosen-year,
+	.choosen-month {
 		color: var(--main-foreground);
 		font-weight: 700;
 		font-size: 0.9em;
@@ -1037,12 +1024,15 @@ th,
 		cursor: pointer;
 		white-space: nowrap;
 	}
-	.choosen-year:hover, .choosen-month:hover {
+	.choosen-year:hover,
+	.choosen-month:hover {
 		border-color: var(--border);
 		background: transparent;
 	}
-	.choosen-year.active, .choosen-year.selected,
-	.choosen-month.active, .choosen-month.selected {
+	.choosen-year.active,
+	.choosen-year.selected,
+	.choosen-month.active,
+	.choosen-month.selected {
 		background: #000;
 		color: #fff;
 		border: 2px solid var(--border);
@@ -1116,25 +1106,53 @@ th,
 		color: var(--main-foreground);
 		opacity: 0.4;
 	}
-	.weekday:nth-child(1) { grid-column: 2; }
-	.weekday:nth-child(2) { grid-column: 3; }
-	.weekday:nth-child(3) { grid-column: 4; }
-	.weekday:nth-child(4) { grid-column: 5; }
-	.weekday:nth-child(5) { grid-column: 6; }
-	.weekday:nth-child(6) { grid-column: 7; }
-	.weekday:nth-child(7) { grid-column: 8; }
+	.weekday:nth-child(1) {
+		grid-column: 2;
+	}
+	.weekday:nth-child(2) {
+		grid-column: 3;
+	}
+	.weekday:nth-child(3) {
+		grid-column: 4;
+	}
+	.weekday:nth-child(4) {
+		grid-column: 5;
+	}
+	.weekday:nth-child(5) {
+		grid-column: 6;
+	}
+	.weekday:nth-child(6) {
+		grid-column: 7;
+	}
+	.weekday:nth-child(7) {
+		grid-column: 8;
+	}
 
 	.weekday::before {
 		font-size: 0.7rem;
 		display: block;
 	}
-	.weekday:nth-child(1)::before { content: "Mo"; }
-	.weekday:nth-child(2)::before { content: "Tu"; }
-	.weekday:nth-child(3)::before { content: "We"; }
-	.weekday:nth-child(4)::before { content: "Th"; }
-	.weekday:nth-child(5)::before { content: "Fr"; }
-	.weekday:nth-child(6)::before { content: "Sa"; }
-	.weekday:nth-child(7)::before { content: "Su"; }
+	.weekday:nth-child(1)::before {
+		content: "Mo";
+	}
+	.weekday:nth-child(2)::before {
+		content: "Tu";
+	}
+	.weekday:nth-child(3)::before {
+		content: "We";
+	}
+	.weekday:nth-child(4)::before {
+		content: "Th";
+	}
+	.weekday:nth-child(5)::before {
+		content: "Fr";
+	}
+	.weekday:nth-child(6)::before {
+		content: "Sa";
+	}
+	.weekday:nth-child(7)::before {
+		content: "Su";
+	}
 
 	/* WEEK NUMBERS */
 	.week {
@@ -1178,13 +1196,15 @@ th,
 		border-color: var(--border);
 		background: transparent;
 	}
-	.day.today, .day.current {
+	.day.today,
+	.day.current {
 		background: #000;
 		color: #fff;
 		border: 2px solid var(--border);
 		font-weight: 700;
 	}
-	.day.value, .day.selected {
+	.day.value,
+	.day.selected {
 		background: #000;
 		color: #fff;
 		font-weight: 700;
@@ -1195,7 +1215,8 @@ th,
 	}
 
 	/* MONTH / YEAR PICKER */
-	.month, .year {
+	.month,
+	.year {
 		background: var(--main);
 		color: var(--main-foreground);
 		border: 2px solid transparent;
@@ -1209,12 +1230,15 @@ th,
 		min-height: 28px;
 		transition: all 0.15s ease;
 	}
-	.month:hover, .year:hover {
+	.month:hover,
+	.year:hover {
 		border-color: var(--border);
 		background: transparent;
 	}
-	.month.value, .month.selected,
-	.year.value, .year.selected {
+	.month.value,
+	.month.selected,
+	.year.value,
+	.year.selected {
 		background: #000;
 		color: #fff;
 		border: 2px solid var(--border);
@@ -1233,8 +1257,10 @@ th,
 		transform: translateX(-50%);
 		border: none;
 	}
-	.day.today .journal-dot, .day.current .journal-dot,
-	.day.value .journal-dot, .day.selected .journal-dot {
+	.day.today .journal-dot,
+	.day.current .journal-dot,
+	.day.value .journal-dot,
+	.day.selected .journal-dot {
 		background: #fff;
 		opacity: 0.8;
 	}
@@ -1715,64 +1741,57 @@ object,
 }
 
 /* ============================================================
-   33. AI Chat
+   33. AI Chat — @scope
    ============================================================ */
 
-.orca-aichat-message-user-content,
-.orca-aichat-message-assistant {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-.orca-aichat-composer,
-.orca-aichat-chatbox {
-	background: transparent !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-.orca-aichat-chatbox-button {
-	color: var(--main) !important;
+@scope (.orca-aichat) {
+	.message-user-content, .message-assistant {
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+	}
+	.composer, .chatbox {
+		background: transparent;
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+	}
+	.chatbox-button {
+		color: var(--main);
+	}
 }
 
 /* ============================================================
-   35. Floating toolbars
+   35. Floating toolbars — @scope
    ============================================================ */
 
-.orca-block-editor-sidetools,
-.orca-math-toolbar,
-.orca-mermaid-toolbar,
-.orca-image-toolbar {
-	background: var(--main) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
-.orca-block-editor-sidetools svg,
-.orca-block-editor-sidetools i,
-.orca-block-editor-sidetools i::before,
-.orca-block-editor-sidetools .orca-button.plain {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-.orca-block-editor-sidetools .orca-button.plain:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	box-shadow: none !important;
+@scope (.orca-block-editor-sidetools, .orca-math-toolbar, .orca-mermaid-toolbar, .orca-image-toolbar) {
+	:scope {
+		background: var(--main);
+		color: var(--border);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		box-shadow: none;
+	}
+	svg, i, i::before, .orca-button.plain {
+		color: var(--border);
+		fill: var(--border);
+	}
+	.orca-button.plain:hover {
+		border-color: var(--border);
+		background: transparent;
+		box-shadow: none;
+	}
 }
 
 /* ============================================================
-   36. TOC, Plugin cards, Stats, About
+   36. TOC, Plugin cards, Stats, About — @scope
    ============================================================ */
 
-.orca-toc,
-.orca-plugin-marketplace,
-.orca-stats-content,
-.orca-about-dialog {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
+@scope (.orca-toc, .orca-plugin-marketplace, .orca-stats-content, .orca-about-dialog) {
+	:scope {
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		box-shadow: var(--shadow);
+	}
 }
 
 .orca-plugin-market-card {
@@ -1883,85 +1902,67 @@ object,
 }
 
 /* ============================================================
-   38. Vault / sidebar icons
+   38. Vault / sidebar icons — @scope
    ============================================================ */
 
-.orca-vault-icon,
-.orca-vault-selector-icon,
-#sidebar .orca-icon,
-#sidebar svg,
-#sidebar .orca-button svg {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
+@scope (#sidebar) {
+	.orca-vault-icon, .orca-vault-selector-icon,
+	.orca-icon, svg, .orca-button svg {
+		color: var(--foreground);
+		fill: var(--foreground);
+	}
 }
 /* ============================================================
-   39. Repo switcher — collapsible trigger style
-   ============================================================
+   39. Repo switcher — @scope
+   ============================================================ */
 
-   Reference: https://www.neobrutalism.dev/docs/collapsible
-     Trigger: bg-main border-2 border-border text-main-foreground
-              flex items-center px-4 py-2
-     Toggle button on right: bg-secondary-background text-foreground
-*/
-
-.orca-repo-switcher-button,
-.orca-select-button.orca-repo-switcher-button,
-#sidebar .orca-repo-switcher-button {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	display: flex !important;
-	align-items: center !important;
-	gap: 6px !important;
-	padding: 8px 10px !important;
-	width: auto !important;
-	box-shadow: none !important;
-	transition: none !important;
-	transform: none !important;
-	font-weight: var(--base-font-weight) !important;
-}
-
-/* Icon — book icon */
-.orca-repo-switcher-button svg,
-.orca-repo-switcher-button i,
-.orca-repo-switcher-button i::before,
-.orca-repo-switcher-button .orca-icon,
-.orca-repo-switcher-icon {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-}
-
-/* Text — flex grow */
-.orca-repo-switcher-button .orca-select-button-text {
-	flex: 1 !important;
-	color: var(--main-foreground) !important;
-}
-
-/* Selector dropdown arrow — neobrutalism no-shadow button style */
-.orca-repo-switcher-button .orca-select-button-selector {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	width: 24px !important;
-	height: 24px !important;
-	display: inline-flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	flex-shrink: 0 !important;
-	margin-left: auto !important;
-	font-size: 14px !important;
-	line-height: 1 !important;
-	padding: 0 !important;
-}
-.orca-repo-switcher-button i.orca-select-button-selector,
-.orca-repo-switcher-button i.orca-select-button-selector::before {
-	color: var(--foreground) !important;
-	stroke: var(--foreground) !important;
-	fill: var(--foreground) !important;
-	padding: 0 !important;
-	margin: 0 !important;
+@scope (.orca-repo-switcher-button) {
+	:scope {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 10px;
+		width: auto;
+		box-shadow: none;
+		transition: none;
+		transform: none;
+		font-weight: var(--base-font-weight);
+	}
+	svg, i, i::before, .orca-icon, .orca-repo-switcher-icon {
+		color: var(--main-foreground);
+		fill: var(--main-foreground);
+	}
+	.orca-select-button-text {
+		flex: 1;
+		color: var(--main-foreground);
+	}
+	.orca-select-button-selector {
+		background: var(--secondary-background);
+		color: var(--foreground);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		width: 24px;
+		height: 24px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		margin-left: auto;
+		font-size: 14px;
+		line-height: 1;
+		padding: 0;
+	}
+	i.orca-select-button-selector, i.orca-select-button-selector::before {
+		color: var(--foreground);
+		stroke: var(--foreground);
+		fill: var(--foreground);
+		padding: 0;
+		margin: 0;
+	}
 }
 
 /* ============================================================
