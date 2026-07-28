@@ -295,12 +295,12 @@ input[type="number"],
 input[type="email"],
 input[type="url"],
 textarea {
-	border: 2px solid var(--border) !important;
 	background: var(--secondary-background) !important;
 	outline: none !important;
 	border-radius: var(--border-radius) !important;
 	font-weight: var(--base-font-weight) !important;
 	color: var(--foreground) !important;
+	border: none !important;
 }
 
 .orca-input-input:focus,
@@ -308,13 +308,34 @@ input:focus,
 textarea:focus,
 select:focus {
 	border-color: var(--border) !important;
-	box-shadow:
-		0 0 0 2px var(--ring),
-		0 0 0 4px var(--background) !important;
 }
 
 .orca-input,
 .orca-textarea-input {
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	background: var(--secondary-background) !important;
+}
+
+/* Input container — white border on focus */
+.orca-input:focus-within,
+.orca-textarea-input:focus-within {
+	border-color: var(--foreground) !important;
+}
+
+/* Remove outline/border from inner input on focus (only container border shows) */
+.orca-input:focus-within .orca-input-input,
+.orca-input:focus-within .orca-input-actualinput,
+.orca-input-input:focus,
+.orca-input-actualinput:focus {
+	border: none !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+/* Sidebar search — kill double border, inner input has no border */
+#sidebar .orca-input .orca-input-input,
+#sidebar .orca-input .orca-input-actualinput {
 	border: none !important;
 }
 
@@ -1990,7 +2011,7 @@ object,
 	color: var(--foreground) !important;
 }
 
-.orca-plugin-marketplace-security-waring {
+:root .orca-plugin-marketplace-security-waring {
 	color: var(--foreground) !important;
 }
 
