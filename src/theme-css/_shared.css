@@ -1986,9 +1986,25 @@ object,
 	}
 }
 
+.orca-plugin-marketplace {
+	color: var(--foreground) !important;
+}
+
+.orca-plugin-marketplace-security-waring {
+	color: var(--foreground) !important;
+}
+
 .orca-plugin-market-card {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+	transition: none !important;
+}
+.orca-plugin-market-card:hover {
+	box-shadow: none !important;
+	border-color: var(--border) !important;
 }
 
 /* Tag/select text in query editor — prevent blue */
