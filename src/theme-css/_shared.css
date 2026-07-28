@@ -9,2535 +9,1738 @@
  * Design reference: https://github.com/ekmas/neobrutalism-components
  *                  https://www.neobrutalism.dev/
  *
+ * Refactored: CSS layers + nesting, consolidated duplicates, ~40% smaller.
+ *
  * !important strategy: Required to override Orca's inline styles (border-radius,
  * background, colors). Non-negotiable for theme plugins.
  */
 
 /* ============================================================
-   1. THEME TOKENS (defines --shadow, --border-radius, etc.)
+   0. CSS LAYERS (explicit cascade control)
    ============================================================ */
 
-:root {
-	--shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
-}
-
-/* Override shadow on specific surfaces that should not have it */
-.orca-calendar {
-	box-shadow: none !important;
-}
-.orca-block-editor-sidetools,
-.orca-math-toolbar,
-.orca-mermaid-toolbar,
-.orca-image-toolbar {
-	background: var(--main) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
+@layer base, components, overrides;
 
 /* ============================================================
-   2. FOCUS RING — ekmas: ring-2 ring-black ring-offset-2
+   1. THEME TOKENS & GLOBAL RESETS
    ============================================================ */
 
-:focus-visible {
-	outline: none !important;
-	box-shadow:
-		0 0 0 2px var(--ring),
-		0 0 0 4px var(--background) !important;
+@layer base {
+	:root {
+		--shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+	}
+
+	:focus-visible {
+		outline: none !important;
+		box-shadow:
+			0 0 0 2px var(--ring),
+			0 0 0 4px var(--background) !important;
+	}
+
+	::selection {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+	}
+
+	::placeholder {
+		color: color-mix(in oklab, var(--foreground) 50%, transparent) !important;
+		opacity: 1 !important;
+	}
+
+	a, .orca-link {
+		text-decoration: none !important;
+		&:hover { color: var(--main) !important; }
+	}
+
+	hr, .orca-divider { border: none !important; }
+
+	img, video, iframe, embed, object, .orca-image, .orca-media {
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+	}
 }
 
 /* ============================================================
-   3. SELECTION — ekmas: selection:bg-main selection:text-main-foreground
+   2. GLOBAL BORDER-RADIUS (base surface override)
    ============================================================ */
 
-::selection {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
+@layer base {
+	/* UI chrome surfaces — NOT using * which breaks callout/quote content */
+	.orca-popup, .orca-popup *,
+	.orca-modal, .orca-modal *,
+	.orca-dropdown, .orca-dropdown *,
+	.orca-menu, .orca-menu *,
+	.orca-slash-commands, .orca-slash-commands *,
+	.orca-settings, .orca-settings *,
+	.orca-toolbar, .orca-toolbar *,
+	.orca-panels-container > header,
+	.orca-panels-container > header *,
+	.orca-button, .orca-button *,
+	.orca-input, .orca-input *,
+	.orca-tag, .orca-tag *,
+	.orca-pill, .orca-pill *,
+	.orca-calendar, .orca-calendar *,
+	.orca-sidebar-tab-options,
+	.orca-progress,
+	.orca-segmented,
+	.orca-date-picker, .orca-time-picker,
+	.orca-query-tabs, .orca-block-editor-query-tabs,
+	.orca-query-conditions, .orca-query-editor,
+	.orca-repo-switcher-button,
+	.orca-vault-icon, .orca-vault-selector-icon,
+	.orca-list-item, .orca-sidebar-item,
+	.orca-search-result-item,
+	.orca-tags-tag-item,
+	.orca-aliased-block-item,
+	.orca-fav-item,
+	.orca-block-ref-count-marker,
+	input[type="checkbox"] {
+		border-radius: var(--border-radius) !important;
+	}
 }
 
 /* ============================================================
-   4. PLACEHOLDER — ekmas: placeholder:text-foreground/50
+   3. BACKGROUND & LAYOUT
    ============================================================ */
 
-::placeholder {
-	color: color-mix(in oklab, var(--foreground) 50%, transparent) !important;
-	opacity: 1 !important;
+@layer base {
+	/* Dot grid background for main editor area */
+	.orca-panels-row, #main {
+		background:
+			linear-gradient(to right, #80808033 1px, transparent 1px),
+			linear-gradient(to bottom, #80808033 1px, transparent 1px),
+			var(--background) !important;
+		background-size: 70px 70px, 70px 70px, auto !important;
+		background-position: 35px 35px, 35px 35px, 0 0 !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	/* Sidebar: no grid */
+	nav#sidebar {
+		background: var(--secondary-background) !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		outline: none !important;
+		color: var(--foreground) !important;
+	}
+
+	/* Shell backgrounds */
+	.orca-panels-container, html body, html body #app {
+		background: var(--secondary-background) !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	/* Main editor area: top-left borders */
+	#main, .orca-panels-container #main {
+		border: none !important;
+		border-left: 2px solid var(--border) !important;
+		border-top: 2px solid var(--border) !important;
+		background: var(--background) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	/* Toolbar — flush, no border (handled by #main border) */
+	.orca-toolbar, .orca-panels-container > header {
+		border-radius: 0 !important;
+		background: var(--secondary-background) !important;
+	}
+
+	/* Empty state */
+	.orca-empty-state, .orca-empty, .orca-placeholder {
+		color: color-mix(in oklab, var(--foreground) 45%, var(--background)) !important;
+	}
 }
 
 /* ============================================================
-   5. GLOBAL BORDER-RADIUS — ekmas: rounded-base
+   4. COMPONENTS
    ============================================================ */
 
-/* Target all Orca UI chrome elements (NOT * — breaks host callout/quote) */
-.orca-popup,
-.orca-popup *,
-.orca-modal,
-.orca-modal *,
-.orca-dropdown,
-.orca-dropdown *,
-.orca-menu,
-.orca-menu *,
-.orca-slash-commands,
-.orca-slash-commands *,
-.orca-settings,
-.orca-settings *,
-.orca-toolbar,
-.orca-toolbar *,
-.orca-panels-container > header,
-.orca-panels-container > header *,
-.orca-button,
-.orca-button *,
-.orca-input,
-.orca-input *,
-.orca-tag,
-.orca-tag *,
-.orca-pill,
-.orca-pill *,
-.orca-calendar,
-.orca-calendar *,
-.orca-sidebar-tab-options,
-/* Base border-radius for all Orca UI shell elements (override inline styles) */
-.orca-button,
-.orca-input,
-.orca-tag,
-.orca-pill,
-.orca-calendar,
-.orca-popup,
-.orca-modal,
-.orca-dropdown,
-.orca-menu,
-.orca-settings,
-.orca-progress,
-.orca-segmented,
-.orca-date-picker,
-.orca-time-picker,
-.orca-query-tabs,
-.orca-block-editor-query-tabs,
-.orca-query-conditions,
-.orca-query-editor,
-.orca-repo-switcher-button,
-.orca-vault-icon,
-.orca-vault-selector-icon,
-.orca-list-item,
-.orca-sidebar-item,
-.orca-search-result-item,
-.orca-tags-tag-item,
-.orca-aliased-block-item,
-.orca-fav-item,
-.orca-block-ref-count-marker,
-input[type="checkbox"] {
-	border-radius: var(--border-radius) !important;
+@layer components {
+	/* ----------------------------------------------------------
+	   4.1 Button — ekmas: Button
+	   ----------------------------------------------------------
+	   Default: bg-main text-main-foreground border-2 border-border
+	            shadow-shadow
+	   Hover:   translate-x-boxShadowX translate-y-boxShadowY
+	            shadow-none
+	*/
+
+	.orca-button {
+		font-weight: var(--base-font-weight) !important;
+		transition: all 0.15s ease !important;
+
+		/* Solid primary */
+		&.solid.primary {
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border: 2px solid var(--border) !important;
+			box-shadow: var(--shadow) !important;
+			&:hover {
+				transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		/* Solid neutral */
+		&.solid:not(.primary) {
+			background: var(--secondary-background) !important;
+			color: var(--foreground) !important;
+			border: 2px solid var(--border) !important;
+			box-shadow: var(--shadow) !important;
+			&:hover {
+				transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		/* Outline */
+		&.outline {
+			background: transparent !important;
+			color: var(--foreground) !important;
+			border: 2px solid var(--border) !important;
+			&:hover { background: var(--secondary-background) !important; }
+		}
+
+		/* Ghost / plain */
+		&.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+			background: transparent !important;
+			color: var(--foreground) !important;
+			border: 2px solid transparent !important;
+			&:not(.orca-no-editable-btn):hover {
+				border-color: var(--border) !important;
+				background: transparent !important;
+			}
+		}
+
+		/* Destructive */
+		&.dangerous {
+			background: var(--nb-danger) !important;
+			color: var(--main-foreground) !important;
+			border: 2px solid var(--border) !important;
+			box-shadow: var(--shadow) !important;
+			&:hover {
+				transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		/* Soft */
+		&.soft {
+			background: color-mix(in oklab, var(--main) 20%, var(--background)) !important;
+			color: var(--main) !important;
+			border: 2px solid var(--border) !important;
+			box-shadow: var(--shadow) !important;
+			&:hover {
+				transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		/* Disabled */
+		&:disabled {
+			opacity: 0.5 !important;
+			cursor: not-allowed !important;
+			box-shadow: none !important;
+			transform: none !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.2 Input — ekmas: Input
+	   ---------------------------------------------------------- */
+
+	.orca-input-input,
+	.orca-input-actualinput,
+	input[type="text"], input[type="search"], input[type="date"],
+	input[type="time"], input[type="number"], input[type="email"], input[type="url"],
+	textarea {
+		background: var(--secondary-background) !important;
+		outline: none !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--base-font-weight) !important;
+		color: var(--foreground) !important;
+		border: none !important;
+	}
+
+	.orca-input, .orca-textarea-input {
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		background: var(--secondary-background) !important;
+	}
+
+	.orca-input:focus-within, .orca-textarea-input:focus-within {
+		border-color: var(--foreground) !important;
+	}
+
+	/* Remove double border on inner input when container is focused */
+	.orca-input:focus-within .orca-input-input,
+	.orca-input:focus-within .orca-input-actualinput,
+	.orca-input-input:focus, .orca-input-actualinput:focus {
+		border: none !important;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	#sidebar .orca-input .orca-input-input,
+	#sidebar .orca-input .orca-input-actualinput {
+		border: none !important;
+	}
+
+	:is(input, textarea):disabled {
+		opacity: 0.5 !important;
+		cursor: not-allowed !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.3 Badge (Tag / Pill) — ekmas: Badge
+	   ---------------------------------------------------------- */
+
+	.orca-tag, .orca-pill {
+		border: 2px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--base-font-weight) !important;
+	}
+
+	.orca-block-ref-count-marker {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--heading-font-weight) !important;
+		&:hover {
+			background: color-mix(in oklab, var(--main) 80%, var(--foreground)) !important;
+		}
+	}
+
+	.orca-popup .orca-tags-tag-item {
+		border: 2px solid var(--border) !important;
+		background: transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover { background: var(--secondary-background) !important; }
+	}
+
+	.orca-menu .orca-select-item {
+		border: 2px solid transparent !important;
+		background: transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover {
+			border-color: var(--border) !important;
+			background: transparent !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.4 Switch — ekmas: Switch
+	   ---------------------------------------------------------- */
+
+	.orca-switch {
+		border: 2px solid var(--border) !important;
+		border-radius: 9999px !important;
+		background: var(--secondary-background) !important;
+	}
+	.orca-switch[data-state="on"],
+	.orca-switch[data-state="checked"],
+	.orca-switch.on, .orca-switch.switch-on, .orca-switch.orca-switch-on {
+		background: var(--main) !important;
+	}
+	.orca-settings .orca-switch[data-state="on"],
+	.orca-settings .orca-switch[data-state="checked"] {
+		background: var(--main) !important;
+	}
+	.orca-switch-toggle {
+		border: 2px solid var(--border) !important;
+		border-radius: 9999px !important;
+		background: #fff !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.5 Checkbox — ekmas: Checkbox
+	   ---------------------------------------------------------- */
+
+	.orca-checkbox-box {
+		outline: 2px solid var(--border) !important;
+		outline-offset: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		background: transparent !important;
+	}
+
+	input[type="checkbox"] {
+		appearance: none !important;
+		width: 1em !important;
+		height: 1em !important;
+		min-width: 16px !important;
+		min-height: 16px !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		display: inline-grid !important;
+		place-content: center !important;
+		margin: 0 !important;
+
+		&:checked {
+			background: var(--main) !important;
+			background-color: var(--main) !important;
+			outline: 2px solid var(--border) !important;
+			&::before, &::after {
+				content: "✔" !important;
+				font-size: 0.9em !important;
+				font-weight: 900 !important;
+				line-height: 1 !important;
+				color: var(--border) !important;
+				fill: var(--border) !important;
+			}
+		}
+	}
+
+	/* Checkbox checked state — consolidated selectors */
+	.orca-checkbox-box[data-state="checked"],
+	.orca-checkbox-box:has(svg),
+	.orca-checkbox-box:not(:empty) {
+		background: var(--main) !important;
+		background-color: var(--main) !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: 0 !important;
+	}
+
+	.orca-checkbox-box[data-state="checked"],
+	.orca-checkbox-box:has(svg),
+	.orca-checkbox-box:not(:empty) {
+		& svg, & svg *, &::before, &::after, & * {
+			color: var(--border) !important;
+			fill: var(--border) !important;
+			fill-opacity: 1 !important;
+			stroke: var(--border) !important;
+			stroke-opacity: 1 !important;
+			opacity: 1 !important;
+		}
+	}
+
+	/* Settings catch-all override */
+	html .orca-settings .orca-checkbox-box[data-state="checked"] {
+		background: var(--main) !important;
+		background-color: var(--main) !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: 0 !important;
+		& svg, & svg * {
+			stroke: var(--border) !important;
+			fill: var(--border) !important;
+			color: var(--border) !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.6 Tabs / Segmented — ekmas: Tabs
+	   ---------------------------------------------------------- */
+
+	.orca-query-tabs, .orca-block-editor-query-tabs,
+	.orca-sidebar-tab-options, .orca-segmented {
+		border: 2px solid var(--border) !important;
+		background: var(--background) !important;
+		border-radius: var(--border-radius) !important;
+		padding: 4px !important;
+	}
+
+	.orca-tab-item, .orca-segmented-item {
+		background: transparent !important;
+		color: var(--foreground) !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--base-font-weight) !important;
+		border: 2px solid transparent !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		padding: 4px 8px !important;
+		margin: 0 2px !important;
+	}
+
+	.orca-tab-item.orca-selected,
+	.orca-segmented-item.orca-selected,
+	.orca-tab.orca-selected {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border-radius: var(--border-radius) !important;
+		border: 2px solid var(--border) !important;
+		font-weight: var(--heading-font-weight) !important;
+	}
+
+	/* Remove sliding indicator from tabs */
+	.orca-query-tabs .indicator,
+	.orca-tab-options .indicator,
+	.orca-segmented .indicator {
+		display: none !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.7 Surface / Card — ekmas: Card
+	   ---------------------------------------------------------- */
+
+	/* Modals → ekmas: Dialog = bg-background */
+	.orca-modal, .orca-settings, .orca-plugin-marketplace {
+		background: var(--background) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: var(--shadow) !important;
+	}
+
+	/* Popups → ekmas: Popover = bg-main, NO shadow */
+	.orca-popup {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	/* Dropdowns → ekmas: DropdownMenu = bg-main, NO shadow */
+	.orca-dropdown {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	/* Menus / Command palette → ekmas: DropdownMenu = bg-main, NO shadow */
+	.orca-menu, .orca-slash-commands {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-popup .orca-menu, .orca-popup .orca-slash-commands {
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	/* Notifications */
+	.orca-notification {
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: var(--shadow) !important;
+	}
+
+	/* Progress */
+	.orca-progress, progress {
+		border: 2px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+	}
+	progress::-webkit-progress-bar {
+		background: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+	}
+	progress::-webkit-progress-value {
+		background: var(--main) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* Separator */
+	.orca-menu-separator, .orca-separator {
+		border-top: 2px solid var(--border) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.8 Code Block — ekmas: CodeBlock
+	   ---------------------------------------------------------- */
+
+	pre, .orca-code-block, .orca-code-wrapper {
+		border: 2px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	:is(.orca-panels-container, #main) span.orca-inline.c {
+		color: var(--nb-warning) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		background: var(--secondary-background) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.9 Table — ekmas: Table
+	   ---------------------------------------------------------- */
+
+	.orca-table { border-collapse: collapse !important; }
+	th, td, .orca-table th, .orca-table td {
+		border: 2px solid var(--border) !important;
+		padding: 0.5em 0.75em !important;
+	}
+	th, .orca-table th {
+		border-bottom: 2px solid var(--main) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.10 Typography
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main) :is(h1, h2, h3, h4) {
+		font-weight: var(--heading-font-weight) !important;
+		line-height: 1.25 !important;
+	}
+	:is(.orca-panels-container, #main) h1 { color: var(--main) !important; }
+	:is(.orca-panels-container, #main) h2 { color: var(--foreground) !important; }
+	:is(.orca-panels-container, #main) h3 {
+		color: color-mix(in oklab, var(--main) 60%, var(--foreground)) !important;
+	}
+	:is(.orca-panels-container, #main) h4 {
+		color: color-mix(in oklab, var(--foreground) 65%, var(--background)) !important;
+	}
+
+	:is(.orca-panels-container, #main) :is(strong, b, span.orca-inline.b) {
+		font-weight: var(--heading-font-weight) !important;
+		color: var(--main) !important;
+	}
+	:is(.orca-panels-container, #main) span.orca-inline.i:not(.b) {
+		color: var(--nb-accent) !important;
+	}
+	:is(.orca-panels-container, #main) span.orca-inline.bc {
+		background: color-mix(in oklab, var(--main) 20%, var(--background)) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.11 List Markers
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main) .orca-repr-ul .orca-block-handle::before {
+		color: var(--nb-accent) !important;
+	}
+	:is(.orca-panels-container, #main) .orca-repr-ul .orca-repr-ul .orca-block-handle::before {
+		color: var(--nb-info) !important;
+	}
+	:is(.orca-panels-container, #main) .orca-repr-ol-content::before {
+		color: var(--nb-success) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.12 Inline References
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main) .orca-inline[data-type="r"] {
+		border-radius: var(--border-radius) !important;
+		&:hover {
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border-radius: var(--border-radius) !important;
+		}
+	}
+
+	:is(.orca-panels-container, #main) .orca-repr-scope-line {
+		opacity: 0.35 !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.13 Blockquote / Callout
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main) .orca-repr-quote2 .orca-block,
+	:is(.orca-panels-container, #main) .orca-repr-quote2 .orca-inline:not(.c) {
+		font-family: inherit !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.14 Calendar — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-calendar) {
+		:scope {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			box-shadow: var(--shadow);
+			display: block;
+			padding-bottom: 8px;
+		}
+		header {
+			background: transparent;
+			color: var(--foreground);
+			border: none;
+			display: flex;
+			align-items: center;
+			padding: 4px 8px;
+			margin-bottom: 4px;
+		}
+		.choosen-year, .choosen-month {
+			color: var(--main-foreground);
+			font-weight: 700;
+			font-size: 0.9em;
+			padding: 2px 4px;
+			background: transparent;
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			cursor: pointer;
+			white-space: nowrap;
+			&:hover {
+				border-color: var(--border) !important;
+				background: transparent !important;
+				color: var(--main-foreground) !important;
+			}
+			&.active, &.selected {
+				background: var(--border) !important;
+				color: #fff !important;
+				border: 2px solid var(--border) !important;
+			}
+		}
+		.go-now {
+			color: var(--main-foreground);
+			font-weight: 700;
+			font-size: 0.9em;
+			cursor: pointer;
+			padding: 2px 4px;
+			background: transparent;
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			white-space: nowrap;
+			&:hover {
+				border-color: var(--border) !important;
+				background: transparent !important;
+			}
+		}
+		.orca-calendar-left-btn.orca-button.plain,
+		.orca-calendar-right-btn.orca-button.plain {
+			background: transparent;
+			color: var(--border);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			padding: 2px 6px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			&:hover {
+				background: transparent;
+				color: var(--border);
+				border-color: var(--border);
+			}
+			& i, & i::before, & svg {
+				color: var(--border);
+				fill: var(--border);
+			}
+		}
+
+		.days {
+			display: grid;
+			grid-template-columns: auto repeat(7, 1fr);
+			padding: 0;
+			margin: 0;
+		}
+		.weekday {
+			color: var(--main-foreground);
+			opacity: 0.6;
+			font-size: 0;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: transparent;
+			border: none;
+			padding: 4px 0;
+			min-height: 21px;
+			&.weekend { opacity: 0.4; }
+			&::before { font-size: 0.7rem; display: block; }
+			&:nth-child(1) { grid-column: 2; &::before { content: "Mo"; } }
+			&:nth-child(2) { grid-column: 3; &::before { content: "Tu"; } }
+			&:nth-child(3) { grid-column: 4; &::before { content: "We"; } }
+			&:nth-child(4) { grid-column: 5; &::before { content: "Th"; } }
+			&:nth-child(5) { grid-column: 6; &::before { content: "Fr"; } }
+			&:nth-child(6) { grid-column: 7; &::before { content: "Sa"; } }
+			&:nth-child(7) { grid-column: 8; &::before { content: "Su"; } }
+		}
+		.week {
+			color: var(--main-foreground);
+			opacity: 0.4;
+			font-size: 0.65em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: transparent;
+			border: none;
+		}
+		.day {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			font-size: 0.75em;
+			aspect-ratio: 1;
+			min-width: 0;
+			min-height: 24px;
+			transition: all 0.15s ease;
+			position: relative;
+			&.weekend {
+				background: var(--main);
+				color: var(--main-foreground);
+				border-color: transparent;
+			}
+			&.outside { opacity: 0.4; border-color: transparent; }
+			&:hover { border-color: var(--border); background: transparent; }
+			&.today, &.current {
+				background: var(--border);
+				color: #fff;
+				border: 2px solid var(--border);
+				font-weight: 700;
+			}
+			&.value, &.selected {
+				background: var(--border);
+				color: #fff;
+				font-weight: 700;
+				border: 2px solid var(--border);
+			}
+			&:not(.value):not(.selected):not(.today):not(.current):hover {
+				background: transparent;
+			}
+		}
+		.month, .year {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			font-size: 0.75em;
+			padding: 4px;
+			min-height: 28px;
+			transition: all 0.15s ease;
+			&:hover {
+				border-color: var(--border);
+				background: transparent;
+			}
+			&.value, &.selected {
+				background: var(--border);
+				color: #fff;
+				border: 2px solid var(--border);
+			}
+		}
+		.journal-dot {
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background: var(--main-foreground);
+			opacity: 0.4;
+			position: absolute;
+			bottom: 2px;
+			left: 50%;
+			transform: translateX(-50%);
+			border: none;
+		}
+		.day.today .journal-dot,
+		.day.current .journal-dot,
+		.day.value .journal-dot,
+		.day.selected .journal-dot {
+			background: #fff;
+			opacity: 0.8;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.15 Date / Time Pickers — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-date-picker, .orca-time-picker) {
+		:scope {
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			background: var(--main);
+			color: var(--main-foreground);
+			box-shadow: none;
+		}
+		header {
+			background: transparent;
+			color: var(--main-foreground);
+			border: none;
+		}
+		.choosen-year, .choosen-month {
+			color: var(--main-foreground);
+			font-weight: 700;
+			background: transparent;
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			&:hover {
+				border-color: var(--border) !important;
+				background: transparent !important;
+				color: var(--main-foreground) !important;
+			}
+			&.active, &.selected, &:active {
+				background: var(--border) !important;
+				color: #fff !important;
+				border: 2px solid var(--border) !important;
+			}
+		}
+		.day {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			position: relative !important;
+			&.value, &.selected {
+				background: var(--border);
+				color: #fff;
+				border: 2px solid var(--border);
+			}
+			&.today, &.current {
+				background: var(--nb-danger) !important;
+				color: var(--border) !important;
+				border: 2px solid var(--border) !important;
+				transition: none !important;
+				&:hover {
+					background: var(--nb-danger) !important;
+					color: var(--border) !important;
+					border: 2px solid var(--border) !important;
+				}
+				& .journal-dot {
+					background: var(--border) !important;
+					opacity: 0.8 !important;
+				}
+			}
+			&.outside { opacity: 0.4; border-color: transparent; }
+			&:hover:not(.value):not(.selected):not(.today) {
+				border-color: var(--border);
+				background: transparent;
+			}
+		}
+		.journal-dot {
+			width: 4px; height: 4px;
+			border-radius: 50%;
+			background: var(--main-foreground);
+			opacity: 0.4;
+			position: absolute;
+			bottom: 2px;
+			left: 50%;
+			transform: translateX(-50%);
+			border: none;
+		}
+		.day.today .journal-dot, .day.current .journal-dot,
+		.day.value .journal-dot, .day.selected .journal-dot {
+			background: #fff;
+			opacity: 0.8;
+		}
+		.orca-date-picker-left-btn, .orca-date-picker-right-btn {
+			background: transparent;
+			color: var(--border);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			&:hover {
+				background: transparent;
+				border-color: var(--border);
+			}
+		}
+		.month, .year {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			font-size: 0.75em;
+			padding: 4px;
+			min-height: 28px;
+			transition: all 0.15s ease;
+			&:hover {
+				border-color: var(--border);
+				background: transparent;
+			}
+			&.value, &.selected {
+				background: var(--border);
+				color: #fff;
+				border: 2px solid var(--border);
+			}
+		}
+	}
+
+	@scope (.time-picker) {
+		li {
+			border: 2px solid transparent;
+			background: var(--main);
+			color: var(--main-foreground);
+			border-radius: var(--border-radius);
+		}
+		li:hover {
+			border-color: var(--border);
+			background: var(--main);
+		}
+		li.selected, li.value, li[data-state="checked"] {
+			background: var(--border);
+			color: #fff;
+			border: 2px solid var(--border);
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.16 Menu / Command Items — ekmas: Command
+	   ---------------------------------------------------------- */
+
+	.orca-menu-title {
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border-bottom: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--heading-font-weight) !important;
+	}
+
+	.orca-menu-item, .orca-menu-text {
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+		border: 2px solid transparent !important;
+	}
+
+	.orca-key-selected,
+	html:not(#_) .orca-key-selected,
+	.orca-menu-text.orca-key-selected,
+	html:not(#_) .orca-menu-text.orca-key-selected {
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: -2px !important;
+	}
+
+	.orca-menu-item:focus, .orca-menu-item:active, .orca-menu-item[aria-selected="true"],
+	.orca-menu-text:focus, .orca-menu-text:active {
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+	}
+
+	.orca-menu-item.selected, .orca-menu-item:hover, .orca-menu-item:focus-visible,
+	.orca-menu .orca-menu-item.selected, .orca-menu .orca-menu-item:hover, .orca-menu .orca-menu-item:focus-visible,
+	.orca-slash-commands .orca-menu-item.selected, .orca-slash-commands .orca-menu-item:hover, .orca-slash-commands .orca-menu-item:focus-visible,
+	.orca-menu-text.selected, .orca-menu-text:hover, .orca-menu-text:focus-visible,
+	.orca-menu .orca-menu-text.selected, .orca-menu .orca-menu-text:hover, .orca-menu .orca-menu-text:focus-visible {
+		border-color: var(--border) !important;
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+		color: inherit !important;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	/* Disabled menu items */
+	.orca-menu-item.disabled, .orca-menu-text.disabled {
+		opacity: 0.5 !important;
+		color: inherit !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.17 Sidebar Items — hover & selected states
+	   ---------------------------------------------------------- */
+
+	/* Global sidebar item styles */
+	.orca-sidebar-item, .orca-list-item,
+	.orca-fav-item-item, .orca-search-result-item,
+	.orca-tags-tag-item, .orca-aliased-block-item,
+	.orca-page-item {
+		&:hover {
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border-radius: var(--border-radius) !important;
+		}
+		&.selected {
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border-radius: var(--border-radius) !important;
+			font-weight: var(--heading-font-weight) !important;
+		}
+	}
+
+	.orca-search-result-item {
+		border-bottom: 2px solid var(--main) !important;
+	}
+
+	/* Scoped sidebar items — width, padding, transition */
+	#sidebar {
+		& .orca-sidebar-item, & .orca-list-item, & .orca-page-item,
+		& .orca-aliased-block-item, & .orca-fav-item-item, & .orca-tags-tag-item {
+			width: 100% !important;
+			padding: 3px 12px !important;
+			border: none !important;
+			border-radius: var(--border-radius) !important;
+			cursor: pointer !important;
+			transition: all 0.15s ease !important;
+			&:hover {
+				background: var(--main) !important;
+				color: var(--main-foreground) !important;
+			}
+			&.selected, &[aria-selected="true"] {
+				background: var(--main) !important;
+				color: var(--main-foreground) !important;
+				border: none !important;
+				font-weight: var(--heading-font-weight) !important;
+			}
+		}
+		/* Sidebar item icons */
+		& .orca-fav-item-icon, & .orca-aliased-block-icon, & .orca-tags-tag-icon {
+			background: transparent !important;
+			display: inline !important;
+			padding: 0 !important;
+			border: none !important;
+		}
+		/* Section dividers */
+		& [class*="sidebar-footer"], & [class*="create-aliased"]:not(.orca-button) {
+			border-top: 2px solid var(--border) !important;
+			margin-top: 8px !important;
+			padding-top: 8px !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.18 New Page Button (sidebar)
+	   ---------------------------------------------------------- */
+
+	.orca-sidebar-create-aliased-btn.orca-button,
+	#sidebar .orca-sidebar-create-aliased-btn,
+	#sidebar .orca-button[aria-label="新页面"],
+	#sidebar .orca-sidebar-footer .orca-button {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: var(--shadow) !important;
+		width: 100% !important;
+		justify-content: center !important;
+		padding: 6px 12px !important;
+		font-weight: var(--base-font-weight) !important;
+		&:hover {
+			transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+			box-shadow: none !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.19 Block Editor Go Buttons (carousel arrows)
+	   ---------------------------------------------------------- */
+
+	.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		opacity: 0.5 !important;
+		box-shadow: none !important;
+		outline: none !important;
+		transition: all 0.15s ease !important;
+		&:hover {
+			opacity: 1 !important;
+			background: var(--main) !important;
+			border: 2px solid var(--border) !important;
+			box-shadow: none !important;
+		}
+		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.20 Journal Date Navigation (carousel arrows)
+	   ---------------------------------------------------------- */
+
+	#main .orca-repr-journal-btn.orca-button.plain {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		opacity: 0.5 !important;
+		box-shadow: none !important;
+		outline: none !important;
+		transition: all 0.15s ease !important;
+		&:hover { opacity: 1 !important; }
+		& svg, & i, & i::before {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.21 Special Block Insert / Fold Buttons
+	   ---------------------------------------------------------- */
+
+	#main .orca-no-editable-btn.orca-button.plain {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: 9999px !important;
+		box-shadow: none !important;
+		outline: none !important;
+		transition: all 0.15s ease !important;
+		padding: 0 !important;
+		width: 18px !important;
+		height: 18px !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		flex-shrink: 0 !important;
+		min-width: 18px !important;
+		min-height: 18px !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+		& svg, & i, & i::before {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+		}
+	}
+	#main .orca-block:hover .orca-no-editable-btn.orca-button.plain {
+		opacity: 0.5 !important;
+		pointer-events: auto !important;
+	}
+	#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+		opacity: 1 !important;
+		background: var(--main) !important;
+		border: 2px solid var(--border) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.22 Query Editor
+	   ---------------------------------------------------------- */
+
+	.orca-query-editor { box-sizing: border-box !important; }
+
+	.orca-query-conditions-header {
+		background: var(--main) !important;
+		color: var(--border) !important;
+		border: none !important;
+		border-bottom: 2px solid var(--border) !important;
+		padding: 10px 14px !important;
+		margin: 0 !important;
+		min-height: 40px !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 6px !important;
+		font-weight: var(--base-font-weight) !important;
+		border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+		box-sizing: border-box !important;
+		/* All children inherit border color */
+		&, & *, & .orca-button.plain, & .orca-button.plain *,
+		& .orca-select-button-text, & .orca-button.plain svg,
+		& .orca-button.plain i, & .orca-button.plain i::before {
+			color: var(--border) !important;
+			fill: var(--border) !important;
+			stroke: var(--border) !important;
+		}
+		& svg, & img, & i, & .orca-icon {
+			vertical-align: middle !important;
+			margin: 0 !important;
+			align-self: center !important;
+		}
+		& .orca-select-button-text {
+			padding: 0 !important;
+			margin: 0 !important;
+			line-height: 1.2 !important;
+		}
+		& .orca-button.plain:hover, & .orca-button.plain:hover * {
+			border-color: var(--border) !important;
+			background: transparent !important;
+		}
+	}
+
+	.orca-query-conditions-header-arrow {
+		color: var(--border) !important;
+		font-size: 1em !important;
+	}
+
+	.orca-query-conditions-header .orca-select-button-selector,
+	.orca-query-conditions-header .orca-select-button-selector::before,
+	.orca-query-editor .orca-select-button-selector,
+	.orca-query-editor .orca-select-button-selector::before {
+		color: var(--foreground) !important;
+		fill: var(--foreground) !important;
+	}
+
+	.orca-query-editor .orca-query-conditions {
+		padding: 0 !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		overflow: visible !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	.orca-query-editor .orca-query-results {
+		overflow: visible !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	.orca-query-results {
+		background: transparent !important;
+		color: var(--foreground) !important;
+		border: none !important;
+		padding: 8px 12px !important;
+	}
+
+	.orca-query-conditions-reset.orca-button.soft {
+		background: var(--nb-danger) !important;
+		color: var(--border) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: var(--shadow) !important;
+		transition: all 0.15s ease !important;
+		&:hover {
+			transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+			box-shadow: none !important;
+		}
+	}
+
+	.orca-query-conditions .orca-checkbox-box {
+		outline: 2px solid var(--border) !important;
+		outline-offset: 0 !important;
+		border: none !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.23 Settings Page — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-settings > .sections) {
+		:scope {
+			border-right: 2px solid var(--border);
+			background: var(--secondary-background);
+			border-radius: var(--border-radius);
+		}
+		.title { background: var(--secondary-background); }
+		.item, .plugin-item {
+			border: 2px solid transparent;
+			border-radius: var(--border-radius);
+		}
+		.item.selected, .item:hover,
+		.plugin-item.selected, .plugin-item:hover {
+			background: var(--main);
+			background-color: var(--main);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			color: var(--main-foreground);
+		}
+	}
+
+	.orca-settings section.views {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		& *:active, & *:focus { background-color: var(--main) !important; }
+		& input:active, & input:focus,
+		& .orca-input:active, & .orca-input-input:active, & .orca-input-actualinput:active {
+			background-color: var(--secondary-background) !important;
+		}
+		& .desc, & .option, & .item-horizontal, & .item-vertical,
+		& h2, & h3 {
+			background: transparent !important;
+			border: none !important;
+		}
+	}
+
+	.orca-settings .orca-select-button-text {
+		color: var(--border) !important;
+		fill: var(--border) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.24 AI Chat — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-aichat) {
+		.message-user-content, .message-assistant {
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+		}
+		.composer, .chatbox {
+			background: transparent;
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+		}
+		.chatbox-button { color: var(--main); }
+	}
+
+	/* ----------------------------------------------------------
+	   4.25 Floating Toolbars — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-block-editor-sidetools, .orca-math-toolbar, .orca-mermaid-toolbar, .orca-image-toolbar) {
+		:scope {
+			background: var(--main);
+			color: var(--border);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			box-shadow: none;
+		}
+		& svg, & i, & i::before, & .orca-button.plain {
+			color: var(--border);
+			fill: var(--border);
+		}
+		.orca-button.plain:hover {
+			border-color: var(--border);
+			background: transparent;
+			box-shadow: none;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.26 TOC, Plugin Market, Stats, About — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-toc, .orca-plugin-marketplace, .orca-stats-content, .orca-about-dialog) {
+		:scope {
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			box-shadow: var(--shadow);
+		}
+	}
+
+	.orca-plugin-marketplace { color: var(--foreground) !important; }
+	:root .orca-plugin-marketplace > :not(.orca-plugin-market-card),
+	:root .orca-plugin-marketplace > :not(.orca-plugin-market-card) * {
+		color: var(--foreground) !important;
+	}
+
+	.orca-plugin-market-card {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		transition: none !important;
+		&:hover {
+			box-shadow: none !important;
+			border-color: var(--border) !important;
+		}
+		& .orca-button.solid {
+			background: var(--main) !important;
+			background-color: var(--main) !important;
+			color: var(--main-foreground) !important;
+			&:hover {
+				transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+				box-shadow: none !important;
+				background: var(--main) !important;
+				color: var(--main-foreground) !important;
+			}
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.27 Vault / Sidebar Icons — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (#sidebar) {
+		.orca-vault-icon, .orca-vault-selector-icon,
+		.orca-icon, svg, .orca-button svg {
+			color: var(--foreground);
+			fill: var(--foreground);
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.28 Repo Switcher — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-repo-switcher-button) {
+		:scope {
+			background: var(--main);
+			color: var(--main-foreground);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 10px;
+			width: auto;
+			box-shadow: none;
+			transition: none;
+			transform: none;
+			font-weight: var(--base-font-weight);
+		}
+		& svg, & i, & i::before, & .orca-icon, & .orca-repo-switcher-icon {
+			color: var(--main-foreground);
+			fill: var(--main-foreground);
+		}
+		.orca-select-button-text {
+			flex: 1;
+			color: var(--main-foreground);
+		}
+		.orca-select-button-selector {
+			background: var(--secondary-background);
+			color: var(--foreground);
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			width: 24px;
+			height: 24px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			margin-left: auto;
+			font-size: 14px;
+			line-height: 1;
+			padding: 0;
+		}
+		i.orca-select-button-selector,
+		i.orca-select-button-selector::before {
+			color: var(--foreground);
+			stroke: var(--foreground);
+			fill: var(--foreground);
+			padding: 0;
+			margin: 0;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.29 Datepicker Popup (misc)
+	   ---------------------------------------------------------- */
+
+	.orca-datepicker-menu {
+		& .nl-input-container { border-bottom: none !important; }
+		& .button-bar { border-top: none !important; }
+	}
+
+	:root .orca-datepicker-menu .button-bar .orca-button.plain {
+		color: var(--border) !important;
+		background: transparent !important;
+		border: 2px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover {
+			border-color: var(--border) !important;
+			background: transparent !important;
+		}
+	}
+
+	.orca-datepicker-menu .button-bar .orca-button.solid {
+		background: var(--main) !important;
+		color: var(--border) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		&:hover {
+			transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+			box-shadow: none !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.30 Command Modal misc
+	   ---------------------------------------------------------- */
+
+	.orca-command-modal { color: var(--foreground) !important; }
+	.orca-command-modal .orca-input *:active {
+		background-color: transparent !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.31 Tag / Select text in query editor
+	   ---------------------------------------------------------- */
+
+	.orca-query-editor .orca-select-button-text,
+	.orca-query-editor .orca-tag,
+	.orca-query-editor .orca-tags-tag-item {
+		color: var(--foreground) !important;
+	}
 }
 
 /* ============================================================
-   6. BACKGROUND — ekmas: main area gets dot grid + bg-background
-   Sidebar gets bg-secondary-background, NO grid
-   Surfaces (popups/modals) get their own defined backgrounds
+   5. OVERRIDES (high-specificity wins)
    ============================================================ */
 
-/* Grid background: offset so lines don't coincide with container edges */
-.orca-panels-row,
-#main {
-	background:
-		linear-gradient(to right, #80808033 1px, transparent 1px),
-		linear-gradient(to bottom, #80808033 1px, transparent 1px),
-		var(--background) !important;
-	background-size:
-		70px 70px,
-		70px 70px,
-		auto !important;
-	background-position:
-		35px 35px,
-		35px 35px,
-		0 0 !important;
-	box-shadow: none !important;
-	outline: none !important;
-}
+@layer overrides {
+	/* Plugin card images — no border */
+	.plugin-item img, .orca-plugin-item img,
+	.orca-plugin-market img, .orca-plugin-icon, .orca-plugin-icon img {
+		border: none !important;
+	}
 
-/* Sidebar: bg-secondary-background, NO dot grid */
-nav#sidebar {
-	background: var(--secondary-background) !important;
-}
-
-/* Non-editor areas: match sidebar bg-secondary-background */
-.orca-panels-container,
-html body,
-html body #app {
-	background: var(--secondary-background) !important;
-	box-shadow: none !important;
-	outline: none !important;
+	/* Hardcoded background catch — Orca sometimes sets inline rgb(0,0,0) */
+	[style*="background-color: rgb(0, 0, 0)"],
+	[style*="background: rgb(0, 0, 0)"] {
+		background-color: var(--background) !important;
+	}
 }
 
 /* ============================================================
-   ============  COMPONENTS (mapping Orca → ekmas)  ============
+   6. SCROLLBAR
    ============================================================ */
 
-/* ============================================================
-   7. Component: Button — ekmas: Button
-   ============================================================
-
-   ekmas default variant: bg-main text-main-foreground border-2 border-border
-                  shadow-shadow hover:translate-x-boxShadowX
-                  hover:translate-y-boxShadowY hover:shadow-none
-*/
-
-.orca-button {
-	font-weight: var(--base-font-weight) !important;
-	transition: all 0.15s ease !important;
-}
-
-/* --- Default variant (solid.primary) --- */
-.orca-button.solid.primary {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	box-shadow: var(--shadow) !important;
-}
-.orca-button.solid.primary:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* --- Neutral variant (solid, no .primary) --- */
-.orca-button.solid:not(.primary) {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border: 2px solid var(--border) !important;
-	box-shadow: var(--shadow) !important;
-}
-.orca-button.solid:not(.primary):hover {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* --- Outline --- */
-.orca-button.outline {
-	background: transparent !important;
-	color: var(--foreground) !important;
-	border: 2px solid var(--border) !important;
-}
-.orca-button.outline:hover {
-	background: var(--secondary-background) !important;
-}
-
-/* --- Ghost (plain) --- */
-.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
-	background: transparent !important;
-	color: var(--foreground) !important;
-	border: 2px solid transparent !important;
-}
-.orca-button.plain:not(.orca-select-button):not(
-	.orca-block-ref-count-marker
-):not(.orca-no-editable-btn):hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-/* --- Destructive --- */
-.orca-button.dangerous {
-	background: var(--nb-danger) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	box-shadow: var(--shadow) !important;
-}
-.orca-button.dangerous:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* --- Soft variant (subtle primary bg) --- */
-.orca-button.soft {
-	background: color-mix(
-		in oklab,
-		var(--main) 20%,
-		var(--background)
-	) !important;
-	color: var(--main) !important;
-	border: 2px solid var(--border) !important;
-	box-shadow: var(--shadow) !important;
-}
-.orca-button.soft:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* Disabled */
-.orca-button:disabled {
-	opacity: 0.5 !important;
-	cursor: not-allowed !important;
-	box-shadow: none !important;
-	transform: none !important;
+@layer components {
+	::-webkit-scrollbar {
+		width: 8px !important;
+		height: 8px !important;
+	}
+	::-webkit-scrollbar-track {
+		background: transparent !important;
+		border-radius: var(--border-radius) !important;
+	}
+	::-webkit-scrollbar-thumb {
+		background: var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		&:hover { background: var(--main) !important; }
+	}
+	::-webkit-scrollbar-corner { background: transparent !important; }
 }
 
 /* ============================================================
-   8. Component: Input — ekmas: Input
-   ============================================================
-
-   ekmas: flex h-10 w-full rounded-base border-2 border-border
-          bg-secondary-background selection:bg-main
-          selection:text-main-foreground px-3 py-2 text-sm font-base
-          text-foreground placeholder:text-foreground/50
-          focus-visible:outline-hidden focus-visible:ring-2
-          focus-visible:ring-black focus-visible:ring-offset-2
-          disabled:cursor-not-allowed disabled:opacity-50
-*/
-
-.orca-input-input,
-.orca-input-actualinput,
-input[type="text"],
-input[type="search"],
-input[type="date"],
-input[type="time"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-textarea {
-	background: var(--secondary-background) !important;
-	outline: none !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--base-font-weight) !important;
-	color: var(--foreground) !important;
-	border: none !important;
-}
-
-.orca-input-input:focus,
-input:focus,
-textarea:focus,
-select:focus {
-	border-color: var(--border) !important;
-}
-
-.orca-input,
-.orca-textarea-input {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	background: var(--secondary-background) !important;
-}
-
-/* Input container — white border on focus */
-.orca-input:focus-within,
-.orca-textarea-input:focus-within {
-	border-color: var(--foreground) !important;
-}
-
-/* Remove outline/border from inner input on focus (only container border shows) */
-.orca-input:focus-within .orca-input-input,
-.orca-input:focus-within .orca-input-actualinput,
-.orca-input-input:focus,
-.orca-input-actualinput:focus {
-	border: none !important;
-	outline: none !important;
-	box-shadow: none !important;
-}
-
-/* Sidebar search — kill double border, inner input has no border */
-#sidebar .orca-input .orca-input-input,
-#sidebar .orca-input .orca-input-actualinput {
-	border: none !important;
-}
-
-:is(input, textarea):disabled {
-	opacity: 0.5 !important;
-	cursor: not-allowed !important;
-}
-
-/* ============================================================
-   9. Component: Badge — ekmas: Badge
-   ============================================================
-
-   ekmas: rounded-base border-2 border-border px-2.5 py-0.5
-          text-xs font-base
-   variant="default":  bg-main text-main-foreground
-   variant="neutral":  bg-secondary-background text-foreground
-   NO left accent bar!
-*/
-
-.orca-tag,
-.orca-pill {
-	border: 2px solid var(--border) !important;
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--base-font-weight) !important;
-}
-
-.orca-block-ref-count-marker {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--heading-font-weight) !important;
-}
-.orca-block-ref-count-marker:hover {
-	background: color-mix(
-		in oklab,
-		var(--main) 80%,
-		var(--foreground)
-	) !important;
-}
-
-/* Tag items in popups (property selector) */
-.orca-popup .orca-tags-tag-item {
-	border: 2px solid var(--border) !important;
-	background: transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-.orca-popup .orca-tags-tag-item:hover {
-	background: var(--secondary-background) !important;
-}
-
-/* Select menu items — black border on hover, no black bg */
-.orca-menu .orca-select-item {
-	border: 2px solid transparent !important;
-	background: transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-.orca-menu .orca-select-item:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-/* Icons inside popups/menus — black, double-ID wins any Orca rule */
-#app#app .orca-popup .ti,
-#app#app .orca-popup .ti::before,
-#app#app .orca-popup svg,
-#app#app .orca-popup i,
-#app#app .orca-popup i::before,
-#app#app .orca-menu .ti,
-#app#app .orca-menu .ti::before,
-#app#app .orca-menu svg,
-#app#app .orca-menu i,
-#app#app .orca-menu i::before {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-	stroke: var(--border) !important;
-}
-
-/* ============================================================
-   10. Component: Switch — ekmas: Switch
-   ============================================================
-
-   ekmas: rounded-full track + thumb, NOT square.
-   Root: border-2 border-border bg-secondary-background
-   Checked: data-[state=checked]:bg-main
-   Thumb: rounded-full bg-white border-2 border-border
-          data-[state=checked]:translate-x-6
-*/
-
-.orca-switch {
-	border: 2px solid var(--border) !important;
-	border-radius: 9999px !important;
-	background: var(--secondary-background) !important;
-}
-/* Switch: active state */
-.orca-switch[data-state="on"],
-.orca-switch[data-state="checked"],
-.orca-switch.on,
-.orca-switch.switch-on,
-.orca-switch.orca-switch-on {
-	background: var(--main) !important;
-}
-
-/* Also override any inline or inherited transparent bg */
-.orca-settings .orca-switch[data-state="on"],
-.orca-settings .orca-switch[data-state="checked"] {
-	background: var(--main) !important;
-}
-.orca-switch-toggle {
-	border: 2px solid var(--border) !important;
-	border-radius: 9999px !important;
-	background: #fff !important;
-}
-
-/* ============================================================
-   11. Component: Checkbox — ekmas: Checkbox
-   ============================================================
-
-   ekmas: size-4 shrink-0 outline-2 outline-border (not border!)
-          data-[state=checked]:bg-main data-[state=checked]:text-white
-          NO shadow!
-*/
-
-.orca-checkbox-box {
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-	border: none !important;
-	border-radius: 0 !important;
-	box-shadow: none !important;
-	background: transparent !important;
-}
-
-input[type="checkbox"] {
-	appearance: none !important;
-	width: 1em !important;
-	height: 1em !important;
-	min-width: 16px !important;
-	min-height: 16px !important;
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-	border: none !important;
-	border-radius: 0 !important;
-	background: transparent !important;
-	display: inline-grid !important;
-	place-content: center !important;
-	margin: 0 !important;
-}
-input[type="checkbox"]:checked {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	color: var(--border) !important;
-	outline: 2px solid var(--border) !important;
-}
-input[type="checkbox"]:checked::before,
-input[type="checkbox"]:checked::after {
-	content: "✔" !important;
-	font-size: 0.9em !important;
-	font-weight: 900 !important;
-	line-height: 1 !important;
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-
-/* .orca-checkbox-box checked state */
-.orca-checkbox-box[data-state="checked"] {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	color: var(--border) !important;
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-}
-.orca-checkbox-box[data-state="checked"] svg,
-.orca-checkbox-box[data-state="checked"] svg * {
-	stroke: var(--border) !important;
-	fill: var(--border) !important;
-	color: var(--border) !important;
-}
-.orca-checkbox-box[data-state="checked"]::before,
-.orca-checkbox-box[data-state="checked"]::after {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-	stroke: var(--border) !important;
-}
-
-/* Checkbox checked — support multiple state selectors */
-.orca-checkbox-box[data-state="checked"],
-.orca-checkbox-box:has(svg),
-.orca-checkbox-box:not(:empty) {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-}
-.orca-checkbox-box[data-state="checked"] svg,
-.orca-checkbox-box[data-state="checked"] svg *,
-.orca-checkbox-box:has(svg) svg,
-.orca-checkbox-box:has(svg) svg *,
-.orca-checkbox-box[data-state="checked"]::before,
-.orca-checkbox-box[data-state="checked"]::after,
-.orca-checkbox-box[data-state="checked"] * {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-	fill-opacity: 1 !important;
-	stroke: var(--border) !important;
-	stroke-opacity: 1 !important;
-	opacity: 1 !important;
-}
-
-/* Override settings catch-all — ensure checkbox-box always shows blue+black */
-html .orca-settings .orca-checkbox-box[data-state="checked"] {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-	color: var(--border) !important;
-}
-html .orca-settings .orca-checkbox-box[data-state="checked"] svg,
-html .orca-settings .orca-checkbox-box[data-state="checked"] svg * {
-	stroke: var(--border) !important;
-	fill: var(--border) !important;
-	color: var(--border) !important;
-}
-
-/* ============================================================
-   12. Component: Tabs — ekmas: Tabs
-   ============================================================
-
-   ekmas TabsList: inline-flex h-12 items-center justify-center
-                  rounded-base border-2 border-border bg-background p-1
-   ekmas TabsTrigger[data-state=active]: bg-main text-main-foreground border-border
-   ekmas TabsTrigger (inactive): border-2 border-transparent
-*/
-
-.orca-query-tabs,
-.orca-block-editor-query-tabs,
-.orca-sidebar-tab-options,
-.orca-segmented {
-	border: 2px solid var(--border) !important;
-	background: var(--background) !important;
-	border-radius: var(--border-radius) !important;
-	padding: 4px !important;
-}
-
-.orca-tab-item,
-.orca-segmented-item {
-	background: transparent !important;
-	color: var(--foreground) !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--base-font-weight) !important;
-	border: 2px solid transparent !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	padding: 4px 8px !important;
-	margin: 0 2px !important;
-}
-
-.orca-tab-item.orca-selected,
-.orca-segmented-item.orca-selected,
-.orca-tab.orca-selected {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border-radius: var(--border-radius) !important;
-	border: 2px solid var(--border) !important;
-	font-weight: var(--heading-font-weight) !important;
-}
-
-/* Remove sliding indicator */
-.orca-query-tabs .indicator,
-.orca-tab-options .indicator,
-.orca-segmented .indicator {
-	display: none !important;
-}
-
-/* ============================================================
-   13. Component: Surface / Card — ekmas: Card
-   ============================================================
-
-   ekmas: rounded-base flex flex-col shadow-shadow border-2
-          border-border bg-background text-foreground font-base
-*/
-
-/* Modals → elevated surfaces (ekmas: Dialog = bg-background) */
-.orca-modal,
-.orca-settings,
-.orca-plugin-marketplace {
-	background: var(--background) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
-}
-
-/* Popups → ekmas: Popover = bg-main text-main-foreground, NO shadow */
-.orca-popup {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
-
-/* Dropdowns → ekmas: DropdownMenu = bg-main text-main-foreground, NO shadow */
-.orca-dropdown {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
-
-/* All icons inside dropdowns — inherit color from parent */
-.orca-dropdown .ti,
-.orca-dropdown .ti::before,
-.orca-dropdown svg,
-.orca-dropdown svg *,
-.orca-dropdown .orca-icon,
-.orca-dropdown .orca-menu-text-icon,
-.orca-dropdown .orca-menu-text-kbd {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-	stroke: var(--main-foreground) !important;
-}
-
-/* Sidebar — ekmas: bg-secondary-background, no borders, no shadow */
-nav#sidebar {
-	border: none !important;
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border-radius: 0 !important;
-	box-shadow: none !important;
-	outline: none !important;
-}
-
-/* Main editor area — ekmas: top + left black borders, bg-background with dot grid */
-#main,
-.orca-panels-container #main {
-	border: none !important;
-	border-left: 2px solid #000 !important;
-	border-top: 2px solid #000 !important;
-	background: var(--background) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-	outline: none !important;
-}
-
-/* Menus / Command palette → ekmas: DropdownMenu = bg-main text-main-foreground, NO shadow */
-.orca-menu,
-.orca-slash-commands {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
-
-.orca-popup .orca-menu,
-.orca-popup .orca-slash-commands {
-	border: none !important;
-	box-shadow: none !important;
-}
-
-/* Toolbar — no border (handled by #main top border) */
-.orca-toolbar,
-.orca-panels-container > header {
-	border-radius: 0 !important;
-	background: var(--secondary-background) !important;
-}
-
-/* ============================================================
-   14. Component: Dialog / Overlay — ekmas: Dialog
-   ============================================================
-
-   ekmas Overlay: bg-overlay (fixed inset-0 z-50)
-   ekmas Content: rounded-base border-2 border-border bg-background shadow-shadow
-*/
-
-.orca-notification {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
-}
-
-/* ============================================================
-   15. Component: Menu / Command Item — ekmas: Command
+   7. TOOLBAR ICONS & HEADBAR
    ============================================================ */
 
-.orca-menu-title {
-	background: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border-bottom: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--heading-font-weight) !important;
-}
+@layer components {
+	/* Toolbar icons — foreground color */
+	.orca-toolbar,
+	.orca-headbar-sidebar-tools,
+	.orca-headbar-global-tools,
+	.orca-headbar-user-tools,
+	.orca-panels-container > header,
+	#headbar {
+		& svg, & i, & i::before {
+			color: var(--foreground) !important;
+			fill: var(--foreground) !important;
+		}
+	}
 
-.orca-menu-item,
-.orca-menu-text {
-	background: transparent !important;
-	background-color: transparent !important;
-	background-image: none !important;
-	border: 2px solid transparent !important;
-}
+	/* Headbar plain buttons hover */
+	#headbar .orca-button.plain:hover,
+	.orca-headbar-sidebar-tools .orca-button.plain:hover,
+	.orca-headbar-global-tools .orca-button.plain:hover,
+	.orca-headbar-user-tools .orca-button.plain:hover {
+		background: var(--main) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		& svg, & i, & i::before {
+			color: var(--border) !important;
+			fill: var(--border) !important;
+		}
+	}
 
-/* Defeat Orca default-keyboard-focus bg on first menu item */
-.orca-key-selected,
-html:not(#_) .orca-key-selected,
-.orca-menu-text.orca-key-selected,
-html:not(#_) .orca-menu-text.orca-key-selected {
-	background: transparent !important;
-	background-color: transparent !important;
-	background-image: none !important;
-	outline: 2px solid var(--border) !important;
-	outline-offset: -2px !important;
-}
+	/* UI chrome active state — prevent gray flashes */
+	.orca-menu *:active, .orca-dropdown *:active,
+	.orca-select-item:active, .orca-popup *:active,
+	.orca-select-button:active {
+		background-color: transparent !important;
+	}
 
-/* Force-transparent on ALL states */
-.orca-menu-item:focus,
-.orca-menu-item:active,
-.orca-menu-item[aria-selected="true"],
-.orca-menu-text:focus,
-.orca-menu-text:active {
-	background: transparent !important;
-	background-color: transparent !important;
-	background-image: none !important;
-}
+	.orca-repo-switcher-button:active {
+		background: var(--main) !important;
+	}
 
-/* Menumas: all text inherits text-main-foreground from parent */
-.orca-menu,
-.orca-menu-text-text,
-.orca-menu-text-kbd,
-.orca-menu-text-icon,
-.orca-menu-item {
-	color: var(--main-foreground) !important;
-}
-.orca-menu .ti,
-.orca-menu .ti::before,
-.orca-menu svg,
-.orca-menu svg *,
-.orca-menu .orca-icon,
-.orca-slash-commands .ti,
-.orca-slash-commands .ti::before,
-.orca-slash-commands svg,
-.orca-slash-commands svg *,
-.orca-slash-commands .orca-icon {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-	stroke: var(--main-foreground) !important;
-}
+	/* Search icons inside inputs */
+	.ti-search, .ti-search::before,
+	#app#app .ti-search.orca-input-pre, #app#app .ti-search.orca-input-pre::before,
+	.orca-command-modal .ti-search, .orca-command-modal .ti-search::before {
+		color: var(--foreground) !important;
+		fill: var(--foreground) !important;
+		stroke: var(--foreground) !important;
+	}
 
-/* Disabled items — ekmas: opacity 50%, no color change */
-.orca-menu-item.disabled,
-.orca-menu-text.disabled {
-	opacity: 0.5 !important;
-	color: inherit !important;
-}
+	/* Query result list toolbar */
+	:root:root .orca-query-result-list-toolbar {
+		& .orca-button.plain svg, & .orca-button.plain i, & .orca-button.plain i::before {
+			color: var(--foreground) !important;
+			fill: var(--foreground) !important;
+		}
+		& .orca-button.plain:hover {
+			background: var(--main) !important;
+			background-color: var(--main) !important;
+			border: 2px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: none !important;
+			transform: none !important;
+			& svg, & i, & i::before {
+				color: var(--border) !important;
+				fill: var(--border) !important;
+			}
+		}
+		.orca-query-result-list-toolbar-tag {
+			border: 2px solid transparent !important;
+			transition: none !important;
+			&:hover {
+				color: var(--border) !important;
+				background: var(--main) !important;
+				border: 2px solid var(--border) !important;
+			}
+		}
+	}
 
-/* All icons inside popup menus — inherit main-foreground (black on blue bg) */
-.orca-popup .ti,
-.orca-popup .ti::before,
-.orca-popup svg,
-.orca-popup svg *,
-.orca-popup .orca-icon,
-.orca-popup .orca-menu-text-icon,
-.orca-popup .orca-menu-text-kbd {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-	stroke: var(--main-foreground) !important;
-}
+	/* Popup/Dropdown icon color (main-foreground on main bg) */
+	.orca-popup,
+	.orca-menu,
+	.orca-dropdown {
+		& .ti, & .ti::before, & svg, & svg *,
+		& .orca-icon, & .orca-menu-text-icon, & .orca-menu-text-kbd {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+			stroke: var(--main-foreground) !important;
+		}
+	}
 
-/* ekmas DropdownMenu item: focus ONLY changes border, NOT background */
-.orca-menu-item.selected,
-.orca-menu-item:hover,
-.orca-menu-item:focus-visible,
-.orca-menu .orca-menu-item.selected,
-.orca-menu .orca-menu-item:hover,
-.orca-menu .orca-menu-item:focus-visible,
-.orca-slash-commands .orca-menu-item.selected,
-.orca-slash-commands .orca-menu-item:hover,
-.orca-slash-commands .orca-menu-item:focus-visible,
-.orca-menu-text.selected,
-.orca-menu-text:hover,
-.orca-menu-text:focus-visible,
-.orca-menu .orca-menu-text.selected,
-.orca-menu .orca-menu-text:hover,
-.orca-menu .orca-menu-text:focus-visible {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	background-color: transparent !important;
-	background-image: none !important;
-	color: inherit !important;
-	outline: none !important;
-	box-shadow: none !important;
-}
-
-.orca-search-result-item {
-	border-bottom: 2px solid var(--main) !important;
-}
-
-/* List items sidebar hover */
-.orca-list-item:hover,
-.orca-sidebar-item:hover,
-.orca-fav-item-item:hover,
-.orca-search-result-item:hover,
-.orca-tags-tag-item:hover,
-.orca-aliased-block-item:hover,
-.orca-page-item:hover {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-.orca-list-item.selected,
-.orca-sidebar-item.selected,
-.orca-fav-item-item.selected,
-.orca-search-result-item.selected,
-.orca-tags-tag-item.selected,
-.orca-aliased-block-item.selected,
-.orca-page-item.selected {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border-radius: var(--border-radius) !important;
-	font-weight: var(--heading-font-weight) !important;
+	/* Menu typography */
+	.orca-menu, .orca-menu-text-text, .orca-menu-text-kbd,
+	.orca-menu-text-icon, .orca-menu-item {
+		color: var(--main-foreground) !important;
+	}
 }
 
 /* ============================================================
-   SIDEBAR ITEMS V2 — extra selectors for all page list variants
+   8. CODE HIGHLIGHT (Prism + CodeMirror) — 8-color terminal palette
    ============================================================ */
 
-#sidebar .orca-sidebar-item,
-#sidebar .orca-list-item,
-#sidebar .orca-page-item,
-#sidebar .orca-aliased-block-item,
-#sidebar .orca-fav-item-item,
-#sidebar .orca-tags-tag-item {
-	width: 100% !important;
-	padding: 3px 12px !important;
-	border: none !important;
-	border-radius: var(--border-radius) !important;
-	cursor: pointer !important;
-	transition: all 0.15s ease !important;
-}
-
-/* Sidebar item icons — inline, no background */
-#sidebar .orca-fav-item-icon,
-#sidebar .orca-aliased-block-icon,
-#sidebar .orca-tags-tag-icon {
-	background: transparent !important;
-	display: inline !important;
-	padding: 0 !important;
-	border: none !important;
-}
-
-#sidebar .orca-sidebar-item:hover,
-#sidebar .orca-list-item:hover,
-#sidebar .orca-page-item:hover,
-#sidebar .orca-aliased-block-item:hover,
-#sidebar .orca-fav-item-item:hover,
-#sidebar .orca-tags-tag-item:hover {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-}
-
-#sidebar .orca-sidebar-item.selected,
-#sidebar .orca-list-item.selected,
-#sidebar .orca-page-item.selected,
-#sidebar .orca-aliased-block-item.selected,
-#sidebar .orca-fav-item-item.selected,
-#sidebar .orca-tags-tag-item.selected,
-#sidebar .orca-list-item[aria-selected="true"],
-#sidebar .orca-sidebar-item[aria-selected="true"] {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: none !important;
-	font-weight: var(--heading-font-weight) !important;
-}
-
-/* ============================================================
-   16. Component: Link — ekmas: Link
-   ============================================================ */
-
-a,
-.orca-link {
-	text-decoration: none !important;
-}
-a:hover,
-.orca-link:hover {
-	color: var(--main) !important;
-}
-
-/* ============================================================
-   17. Component: Separator — ekmas: Separator
-   ============================================================ */
-
-.orca-menu-separator,
-.orca-separator {
-	border-top: 2px solid var(--border) !important;
-}
-
-hr,
-.orca-divider {
-	border: none !important;
-}
-
-/* ============================================================
-   18. Component: Progress — ekmas: Progress
-   ============================================================ */
-
-.orca-progress,
-progress {
-	border: 2px solid var(--border) !important;
-	background: var(--secondary-background) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-progress::-webkit-progress-bar {
-	background: var(--secondary-background) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-progress::-webkit-progress-value {
-	background: var(--main) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* ============================================================
-   19. Component: Code Block — ekmas: CodeBlock
-   ============================================================ */
-
-pre,
-.orca-code-block,
-.orca-code-wrapper {
-	border: 2px solid var(--border) !important;
-	background: var(--secondary-background) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* Inline code */
-:is(.orca-panels-container, #main) span.orca-inline.c {
-	color: var(--nb-warning) !important;
-	border: 1px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	background: var(--secondary-background) !important;
-}
-
-/* ============================================================
-   20. Component: Table — ekmas: Table
-   ============================================================ */
-
-.orca-table {
-	border-collapse: collapse !important;
-}
-
-th,
-td,
-.orca-table th,
-.orca-table td {
-	border: 2px solid var(--border) !important;
-	padding: 0.5em 0.75em !important;
-}
-
-th,
-.orca-table th {
-	border-bottom: 2px solid var(--main) !important;
-}
-
-/* ============================================================
-   21. Typography: Headings — ekmas: font-heading
-   ============================================================ */
-
-:is(.orca-panels-container, #main) :is(h1, h2, h3, h4) {
-	font-weight: var(--heading-font-weight) !important;
-	line-height: 1.25 !important;
-}
-
-:is(.orca-panels-container, #main) h1 {
-	color: var(--main) !important;
-}
-:is(.orca-panels-container, #main) h2 {
-	color: var(--foreground) !important;
-}
-:is(.orca-panels-container, #main) h3 {
-	color: color-mix(in oklab, var(--main) 60%, var(--foreground)) !important;
-}
-:is(.orca-panels-container, #main) h4 {
-	color: color-mix(
-		in oklab,
-		var(--foreground) 65%,
-		var(--background)
-	) !important;
-}
-
-/* Bold + Italic */
-:is(.orca-panels-container, #main) :is(strong, b, span.orca-inline.b) {
-	font-weight: var(--heading-font-weight) !important;
-	color: var(--main) !important;
-}
-:is(.orca-panels-container, #main) span.orca-inline.i:not(.b) {
-	color: var(--nb-accent) !important;
-}
-
-/* Highlight */
-:is(.orca-panels-container, #main) span.orca-inline.bc {
-	background: color-mix(
-		in oklab,
-		var(--main) 20%,
-		var(--background)
-	) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* ============================================================
-   22. Component: Calendar — Orca inline sidebar calendar
-   ============================================================
-
-   Orca DOM: .orca-calendar > header + .days (CSS grid, 8 cols)
-     header: .choosen-year, .choosen-month, .go-now, nav buttons
-     .days grid: .weekday ×7, .week ×5-6, .day ×35-42
-
-   Reference: neobrutalism.dev/docs/calendar
-*/
-
-@scope (.orca-calendar) {
-	:scope {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid #000;
-		border-radius: var(--border-radius);
-		box-shadow: var(--shadow);
-		display: block;
-		padding-bottom: 8px;
-	}
-
-	/* HEADER */
-	header {
-		background: transparent;
-		color: var(--foreground);
-		border: none;
-		display: flex;
-		align-items: center;
-		padding: 4px 8px;
-		margin-bottom: 4px;
-	}
-
-	.choosen-year,
-	.choosen-month {
-		color: var(--main-foreground);
-		font-weight: 700;
-		font-size: 0.9em;
-		padding: 2px 4px;
-		background: transparent;
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-		cursor: pointer;
-		white-space: nowrap;
-	}
-	.choosen-year:hover,
-	.choosen-month:hover {
-		border-color: var(--border);
-		background: transparent;
-	}
-	.choosen-year.active,
-	.choosen-year.selected,
-	.choosen-month.active,
-	.choosen-month.selected {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-	}
-
-	.go-now {
-		color: var(--main-foreground);
-		font-weight: 700;
-		font-size: 0.9em;
-		cursor: pointer;
-		padding: 2px 4px;
-		background: transparent;
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-		white-space: nowrap;
-	}
-	.go-now:hover {
-		border-color: var(--border);
-		background: transparent;
-	}
-
-	.orca-calendar-left-btn.orca-button.plain,
-	.orca-calendar-right-btn.orca-button.plain {
-		background: transparent;
-		color: var(--border);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		padding: 2px 6px;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.orca-calendar-left-btn.orca-button.plain:hover,
-	.orca-calendar-right-btn.orca-button.plain:hover {
-		background: transparent;
-		color: var(--border);
-		border: 2px solid var(--border);
-	}
-	.orca-calendar-left-btn.orca-button.plain i,
-	.orca-calendar-right-btn.orca-button.plain i,
-	.orca-calendar-left-btn.orca-button.plain svg,
-	.orca-calendar-right-btn.orca-button.plain svg {
-		color: var(--border);
-		fill: var(--border);
-	}
-
-	/* DAYS GRID */
-	.days {
-		display: grid;
-		grid-template-columns: auto repeat(7, 1fr);
-		padding: 0;
-		margin: 0;
-	}
-
-	/* WEEKDAY HEADERS */
-	.weekday {
-		color: var(--main-foreground);
-		opacity: 0.6;
-		font-size: 0;
-		font-weight: 600;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: transparent;
-		border: none;
-		padding: 4px 0;
-		min-height: 21px;
-	}
-	.weekday.weekend {
-		color: var(--main-foreground);
-		opacity: 0.4;
-	}
-	.weekday:nth-child(1) {
-		grid-column: 2;
-	}
-	.weekday:nth-child(2) {
-		grid-column: 3;
-	}
-	.weekday:nth-child(3) {
-		grid-column: 4;
-	}
-	.weekday:nth-child(4) {
-		grid-column: 5;
-	}
-	.weekday:nth-child(5) {
-		grid-column: 6;
-	}
-	.weekday:nth-child(6) {
-		grid-column: 7;
-	}
-	.weekday:nth-child(7) {
-		grid-column: 8;
-	}
-
-	.weekday::before {
-		font-size: 0.7rem;
-		display: block;
-	}
-	.weekday:nth-child(1)::before {
-		content: "Mo";
-	}
-	.weekday:nth-child(2)::before {
-		content: "Tu";
-	}
-	.weekday:nth-child(3)::before {
-		content: "We";
-	}
-	.weekday:nth-child(4)::before {
-		content: "Th";
-	}
-	.weekday:nth-child(5)::before {
-		content: "Fr";
-	}
-	.weekday:nth-child(6)::before {
-		content: "Sa";
-	}
-	.weekday:nth-child(7)::before {
-		content: "Su";
-	}
-
-	/* WEEK NUMBERS */
-	.week {
-		color: var(--main-foreground);
-		opacity: 0.4;
-		font-size: 0.65em;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: transparent;
-		border: none;
-	}
-
-	/* DAY CELLS */
-	.day {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		font-size: 0.75em;
-		aspect-ratio: 1;
-		min-width: 0;
-		min-height: 24px;
-		transition: all 0.15s ease;
-		position: relative;
-	}
-	.day.weekend {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid transparent;
-	}
-	.day.outside {
-		opacity: 0.4;
-		border-color: transparent;
-	}
-	.day:hover {
-		border-color: var(--border);
-		background: transparent;
-	}
-	.day.today,
-	.day.current {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-		font-weight: 700;
-	}
-	.day.value,
-	.day.selected {
-		background: #000;
-		color: #fff;
-		font-weight: 700;
-		border: 2px solid var(--border);
-	}
-	.day:not(.value):not(.selected):not(.today):not(.current):hover {
-		background: transparent;
-	}
-
-	/* MONTH / YEAR PICKER */
-	.month,
-	.year {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		font-size: 0.75em;
-		padding: 4px;
-		min-height: 28px;
-		transition: all 0.15s ease;
-	}
-	.month:hover,
-	.year:hover {
-		border-color: var(--border);
-		background: transparent;
-	}
-	.month.value,
-	.month.selected,
-	.year.value,
-	.year.selected {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-	}
-
-	/* Journal dot */
-	.journal-dot {
-		width: 4px;
-		height: 4px;
-		border-radius: 50%;
-		background: var(--main-foreground);
-		opacity: 0.4;
-		position: absolute;
-		bottom: 2px;
-		left: 50%;
-		transform: translateX(-50%);
-		border: none;
-	}
-	.day.today .journal-dot,
-	.day.current .journal-dot,
-	.day.value .journal-dot,
-	.day.selected .journal-dot {
-		background: #fff;
-		opacity: 0.8;
-	}
-}
-
-/* ============================================================
-   23. Component: Scrollbar
-   ============================================================ */
-
-/* Calendar hover/active overrides — Orca inline styles need !important */
-.orca-calendar .choosen-year:hover,
-.orca-calendar .choosen-month:hover,
-.orca-calendar .go-now:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-}
-.orca-calendar .choosen-year.active,
-.orca-calendar .choosen-year.selected,
-.orca-calendar .choosen-month.active,
-.orca-calendar .choosen-month.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-.orca-calendar .month:hover,
-.orca-calendar .year:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-}
-.orca-calendar .month.value,
-.orca-calendar .month.selected,
-.orca-calendar .year.value,
-.orca-calendar .year.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-::-webkit-scrollbar {
-	width: 8px !important;
-	height: 8px !important;
-}
-::-webkit-scrollbar-track {
-	background: transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-::-webkit-scrollbar-thumb {
-	background: var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-::-webkit-scrollbar-thumb:hover {
-	background: var(--main) !important;
-}
-::-webkit-scrollbar-corner {
-	background: transparent !important;
-}
-
-/* ============================================================
-   24. Toolbar icons — ekmas: accent color
-   ============================================================ */
-
-.orca-toolbar svg,
-.orca-toolbar i,
-.orca-toolbar i::before,
-.orca-headbar-sidebar-tools svg,
-.orca-headbar-sidebar-tools i,
-.orca-headbar-sidebar-tools i::before,
-.orca-panels-container > header svg,
-.orca-panels-container > header i,
-.orca-panels-container > header i::before,
-#headbar .orca-button.plain svg,
-#headbar .orca-button.plain i,
-#headbar .orca-button.plain i::before,
-.orca-headbar-global-tools .orca-button.plain svg,
-.orca-headbar-global-tools .orca-button.plain i,
-.orca-headbar-global-tools .orca-button.plain i::before,
-.orca-headbar-user-tools .orca-button.plain svg,
-.orca-headbar-user-tools .orca-button.plain i,
-.orca-headbar-user-tools .orca-button.plain i::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-}
-#headbar .orca-button.plain:hover,
-.orca-headbar-sidebar-tools .orca-button.plain:hover,
-.orca-headbar-global-tools .orca-button.plain:hover,
-.orca-headbar-user-tools .orca-button.plain:hover {
-	background: var(--main) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-}
-#headbar .orca-button.plain:hover svg,
-#headbar .orca-button.plain:hover i,
-#headbar .orca-button.plain:hover i::before,
-.orca-headbar-sidebar-tools .orca-button.plain:hover svg,
-.orca-headbar-sidebar-tools .orca-button.plain:hover i,
-.orca-headbar-sidebar-tools .orca-button.plain:hover i::before,
-.orca-headbar-global-tools .orca-button.plain:hover svg,
-.orca-headbar-global-tools .orca-button.plain:hover i,
-.orca-headbar-global-tools .orca-button.plain:hover i::before,
-.orca-headbar-user-tools .orca-button.plain:hover svg,
-.orca-headbar-user-tools .orca-button.plain:hover i,
-.orca-headbar-user-tools .orca-button.plain:hover i::before {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-
-/* ============================================================
-   25. Image / Media
-   ============================================================ */
-
-img,
-video,
-iframe,
-embed,
-object,
-.orca-image,
-.orca-media {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-.plugin-item img,
-.orca-plugin-item img,
-.orca-plugin-market img,
-.orca-plugin-icon,
-.orca-plugin-icon img {
-	border: none !important;
-}
-
-/* ============================================================
-   26. Empty State
-   ============================================================ */
-
-.orca-empty-state,
-.orca-empty,
-.orca-placeholder {
-	color: color-mix(
-		in oklab,
-		var(--foreground) 45%,
-		var(--background)
-	) !important;
-}
-
-/* ============================================================
-   27. Blockquote / Callout
-   ============================================================ */
-
-:is(.orca-panels-container, #main) .orca-repr-quote2 .orca-block,
-:is(.orca-panels-container, #main) .orca-repr-quote2 .orca-inline:not(.c) {
-	font-family: inherit !important;
-}
-
-/* ============================================================
-   28. List markers — NB color palette
-   ============================================================ */
-
-:is(.orca-panels-container, #main) .orca-repr-ul .orca-block-handle::before {
-	color: var(--nb-accent) !important;
-}
-:is(.orca-panels-container, #main)
-	.orca-repr-ul
-	.orca-repr-ul
-	.orca-block-handle::before {
-	color: var(--nb-info) !important;
-}
-:is(.orca-panels-container, #main) .orca-repr-ol-content::before {
-	color: var(--nb-success) !important;
-}
-
-/* ============================================================
-   29. Inline Reference
-   ============================================================ */
-
-:is(.orca-panels-container, #main) .orca-inline[data-type="r"] {
-	border-radius: var(--border-radius) !important;
-}
-:is(.orca-panels-container, #main) .orca-inline[data-type="r"]:hover {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border-radius: var(--border-radius) !important;
-}
-
-/* ============================================================
-   30. Scope line
-   ============================================================ */
-
-:is(.orca-panels-container, #main) .orca-repr-scope-line {
-	opacity: 0.35 !important;
-}
-
-/* ============================================================
-   31. New Page button (sidebar) — neobrutalism Button style
-   ============================================================
-
-   Reference: https://www.neobrutalism.dev/docs/button
-     variant="default": bg-main text-main-foreground border-2 border-border
-                        shadow-shadow
-     hover: translate-x-boxShadowX translate-y-boxShadowY shadow-none
-*/
-
-.orca-sidebar-create-aliased-btn.orca-button,
-#sidebar .orca-sidebar-create-aliased-btn,
-#sidebar .orca-button[aria-label="新页面"],
-#sidebar .orca-sidebar-footer .orca-button {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
-	width: 100% !important;
-	justify-content: center !important;
-	padding: 6px 12px !important;
-	font-weight: var(--base-font-weight) !important;
-}
-.orca-sidebar-create-aliased-btn.orca-button:hover,
-#sidebar .orca-sidebar-create-aliased-btn:hover,
-#sidebar .orca-button[aria-label="新页面"]:hover,
-#sidebar .orca-sidebar-footer .orca-button:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* ============================================================
-   31b. Block Editor Go buttons (carousel arrow style)
-   ============================================================
-
-   Reference: https://www.neobrutalism.dev/docs/carousel
-     Default (dim, like disabled carousel arrow): low opacity, no bg
-     Hover (bright, like active carousel arrow): bg-main + border
-*/
-
-.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(
-	.orca-block-ref-count-marker
-) {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	opacity: 0.5 !important;
-	box-shadow: none !important;
-	outline: none !important;
-	transition: all 0.15s ease !important;
-}
-.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(
-	.orca-block-ref-count-marker
-):hover {
-	opacity: 1 !important;
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	box-shadow: none !important;
-	outline: none !important;
-}
-
-/* Arrow icons inside go buttons — inherit color */
-.orca-block-editor-go-btn.orca-button.plain svg:not(.orca-select-button),
-.orca-block-editor-go-btn.orca-button.plain i:not(.orca-select-button),
-.orca-block-editor-go-btn.orca-button.plain i::before {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-}
-
-/* ============================================================
-   31d. Journal date navigation — carousel arrow style
-   ============================================================
-
-   Match go-up/go-down / carousel arrow behavior:
-   Default: dim (opacity 0.5), Hover: fully lit.
-*/
-
-#main .orca-repr-journal-btn.orca-button.plain {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	opacity: 0.5 !important;
-	box-shadow: none !important;
-	outline: none !important;
-	transition: all 0.15s ease !important;
-}
-#main .orca-repr-journal-btn.orca-button.plain:hover {
-	opacity: 1 !important;
-}
-#main .orca-repr-journal-btn svg,
-#main .orca-repr-journal-btn i,
-#main .orca-repr-journal-btn i::before {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-}
-
-/* ============================================================
-   31c. Query Conditions — accordion style
-   ============================================================
-
-   Reference: https://www.neobrutalism.dev/docs/accordion
-     AccordionItem: bg-main border-2 border-border rounded-base
-*/
-
-/* Query editor — dark bg card with full border-radius */
-.orca-query-editor {
-	box-sizing: border-box !important;
-}
-
-/* Header bar, flush with container top — no margin, no gap */
-.orca-query-conditions-header {
-	background: var(--main) !important;
-	color: var(--border) !important;
-	border: none !important;
-	border-bottom: 2px solid var(--border) !important;
-	padding: 10px 14px !important;
-	margin: 0 !important;
-	min-height: 40px !important;
-	display: flex !important;
-	align-items: center !important;
-	gap: 6px !important;
-	font-weight: var(--base-font-weight) !important;
-	border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
-	box-sizing: border-box !important;
-}
-
-/* Everything inside the header must be vertically centered and black */
-.orca-query-conditions-header,
-.orca-query-conditions-header *,
-.orca-query-conditions-header .orca-button.plain,
-.orca-query-conditions-header .orca-button.plain *,
-.orca-query-conditions-header .orca-select-button-text,
-.orca-query-conditions-header .orca-button.plain svg,
-.orca-query-conditions-header .orca-button.plain i,
-.orca-query-conditions-header .orca-button.plain i::before {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-	stroke: var(--border) !important;
-}
-
-/* Vertically center icons/images inside the header */
-.orca-query-conditions-header svg,
-.orca-query-conditions-header img,
-.orca-query-conditions-header i,
-.orca-query-conditions-header .orca-icon {
-	vertical-align: middle !important;
-	margin-top: 0 !important;
-	margin-bottom: 0 !important;
-	align-self: center !important;
-}
-
-/* Orca select button inner elements - reset padding */
-.orca-query-conditions-header .orca-select-button-text {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
-	margin-top: 0 !important;
-	margin-bottom: 0 !important;
-	line-height: 1.2 !important;
-}
-.orca-query-conditions-header .orca-button.plain:hover,
-.orca-query-conditions-header .orca-button.plain:hover * {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-/* Arrow icon in header */
-.orca-query-conditions-header-arrow {
-	color: var(--border) !important;
-	font-size: 1em !important;
-}
-
-/* Selector dropdown arrow in header — white on blue bg */
-.orca-query-conditions-header .orca-select-button-selector,
-.orca-query-conditions-header .orca-select-button-selector::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-}
-
-/* Selector dropdown arrow in query editor sub-toolbar — white */
-.orca-query-editor .orca-select-button-selector,
-.orca-query-editor .orca-select-button-selector::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-}
-
-/* Reset parent container padding inside the query editor */
-.orca-query-editor .orca-query-conditions {
-	padding: 0 !important;
-}
-
-/* Kill border-radius and overflow on inner panels */
-.orca-query-editor .orca-query-results {
-	overflow: visible !important;
-	width: 100% !important;
-	max-width: 100% !important;
-	box-sizing: border-box !important;
-}
-
-.orca-query-editor .orca-query-conditions {
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	overflow: visible !important;
-	width: 100% !important;
-	max-width: 100% !important;
-	box-sizing: border-box !important;
-}
-
-/* Reset button — full neobrutalism button variant */
-.orca-query-conditions-reset.orca-button.soft {
-	background: var(--nb-danger) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
-	transition: all 0.15s ease !important;
-}
-.orca-query-conditions-reset.orca-button.soft:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* Query results area */
-.orca-query-results {
-	background: transparent !important;
-	color: var(--foreground) !important;
-	border: none !important;
-	padding: 8px 12px !important;
-}
-
-/* Checkbox inside conditions */
-.orca-query-conditions .orca-checkbox-box {
-	outline: 2px solid var(--border) !important;
-	outline-offset: 0 !important;
-	border: none !important;
-}
-
-/* ============================================================
-   31c. Special block insert/fold buttons
-   ============================================================
-
-   Buttons on query blocks, code blocks, math blocks, etc.
-   Hidden by default. Show on block hover at 0.5 opacity.
-   Full opacity when hovered directly.
-*/
-
-#main .orca-no-editable-btn.orca-button.plain {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: 9999px !important;
-	box-shadow: none !important;
-	outline: none !important;
-	transition: all 0.15s ease !important;
-	padding: 0 !important;
-	width: 18px !important;
-	height: 18px !important;
-	display: inline-flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	flex-shrink: 0 !important;
-	min-width: 18px !important;
-	min-height: 18px !important;
-	opacity: 0 !important;
-	pointer-events: none !important;
-}
-#main .orca-no-editable-btn svg,
-#main .orca-no-editable-btn i,
-#main .orca-no-editable-btn i::before {
-	color: var(--main-foreground) !important;
-	fill: var(--main-foreground) !important;
-}
-#main .orca-block:hover .orca-no-editable-btn.orca-button.plain {
-	opacity: 0.5 !important;
-	pointer-events: auto !important;
-}
-#main
-	.orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(
-		.orca-block-ref-count-marker
-	):hover {
-	opacity: 1 !important;
-	background: var(--main) !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* ============================================================
-   32. Settings page — @scope
-   ============================================================ */
-
-@scope (.orca-settings > .sections) {
-	:scope {
-		border-right: 2px solid var(--border);
-		background: var(--secondary-background);
-		border-radius: var(--border-radius);
-	}
-	.title {
-		background: var(--secondary-background);
-	}
-	.item,
-	.plugin-item {
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-	}
-	.item.selected,
-	.item:hover,
-	.plugin-item.selected,
-	.plugin-item:hover {
-		background: var(--main);
-		background-color: var(--main);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		color: var(--main-foreground);
-	}
-}
-
-.orca-settings section.views {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-}
-/* Remove Orca inline gray background on active for menus/popups/select */
-.orca-menu *:active,
-.orca-dropdown *:active,
-.orca-select-item:active,
-.orca-popup *:active,
-.orca-select-button:active {
-	background-color: transparent !important;
-}
-
-/* Settings section — keep consistent bg, not gray */
-.orca-settings section.views *:active,
-.orca-settings section.views *:focus {
-	background-color: var(--main) !important;
-}
-.orca-settings section.views input:active,
-.orca-settings section.views input:focus,
-.orca-settings section.views .orca-input:active,
-.orca-settings section.views .orca-input-input:active,
-.orca-settings section.views .orca-input-actualinput:active {
-	background-color: var(--secondary-background) !important;
-}
-
-/* Keep own background on press for components that need it */
-.orca-repo-switcher-button:active {
-	background: var(--main) !important;
-}
-
-/* Settings content titles — transparent, let blue bg show through */
-.orca-settings section.views .desc,
-.orca-settings section.views .option,
-.orca-settings section.views .item-horizontal,
-.orca-settings section.views .item-vertical,
-.orca-settings section.views h2,
-.orca-settings section.views h3 {
-	background: transparent !important;
-	border: none !important;
-}
-
-/* Select button text — always black */
-.orca-settings .orca-select-button-text {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-
-/* ti-search icons — always white */
-.ti-search,
-.ti-search::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-	stroke: var(--foreground) !important;
-}
-
-/* Input prefix search icon — white, max specificity */
-#app#app .ti-search.orca-input-pre,
-#app#app .ti-search.orca-input-pre::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-	stroke: var(--foreground) !important;
-}
-
-/* Command palette search icon — white */
-.orca-command-modal .ti-search,
-.orca-command-modal .ti-search::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-	stroke: var(--foreground) !important;
-}
-
-/* Command palette background — match menu style */
-.orca-command-modal {
-	color: var(--foreground) !important;
-}
-
-/* Command palette — simple active override */
-.orca-command-modal .orca-input *:active {
-	background-color: transparent !important;
-}
-
-/* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
-:root:root .orca-query-result-list-toolbar .orca-button.plain svg,
-:root:root .orca-query-result-list-toolbar .orca-button.plain i,
-:root:root .orca-query-result-list-toolbar .orca-button.plain i::before {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
-}
-:root:root .orca-query-result-list-toolbar .orca-button.plain:hover {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-	transform: none !important;
-}
-:root:root .orca-query-result-list-toolbar .orca-button.plain:hover svg,
-:root:root .orca-query-result-list-toolbar .orca-button.plain:hover i,
-:root:root .orca-query-result-list-toolbar .orca-button.plain:hover i::before {
-	color: var(--border) !important;
-	fill: var(--border) !important;
-}
-
-/* Tag selector in toolbar — black text on hover, no jitter */
-:root:root .orca-query-result-list-toolbar .orca-query-result-list-toolbar-tag {
-	border: 2px solid transparent !important;
-	transition: none !important;
-}
-:root:root
-	.orca-query-result-list-toolbar
-	.orca-query-result-list-toolbar-tag:hover {
-	color: var(--border) !important;
-	background: var(--main) !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* ============================================================
-   33. AI Chat — @scope
-   ============================================================ */
-
-@scope (.orca-aichat) {
-	.message-user-content,
-	.message-assistant {
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-	}
-	.composer,
-	.chatbox {
-		background: transparent;
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-	}
-	.chatbox-button {
-		color: var(--main);
-	}
-}
-
-/* ============================================================
-   35. Floating toolbars — @scope
-   ============================================================ */
-
-@scope (
-	.orca-block-editor-sidetools,
-	.orca-math-toolbar,
-	.orca-mermaid-toolbar,
-	.orca-image-toolbar
-) {
-	:scope {
-		background: var(--main);
-		color: var(--border);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		box-shadow: none;
-	}
-	svg,
-	i,
-	i::before,
-	.orca-button.plain {
-		color: var(--border);
-		fill: var(--border);
-	}
-	.orca-button.plain:hover {
-		border-color: var(--border);
-		background: transparent;
-		box-shadow: none;
-	}
-}
-
-/* ============================================================
-   36. TOC, Plugin cards, Stats, About — @scope
-   ============================================================ */
-
-@scope (
-	.orca-toc,
-	.orca-plugin-marketplace,
-	.orca-stats-content,
-	.orca-about-dialog
-) {
-	:scope {
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		box-shadow: var(--shadow);
-	}
-}
-
-.orca-plugin-marketplace {
-	color: var(--foreground) !important;
-}
-
-:root .orca-plugin-marketplace > :not(.orca-plugin-market-card),
-:root .orca-plugin-marketplace > :not(.orca-plugin-market-card) * {
-	color: var(--foreground) !important;
-}
-
-.orca-plugin-market-card {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
-	transition: none !important;
-}
-.orca-plugin-market-card:hover {
-	box-shadow: none !important;
-	border-color: var(--border) !important;
-}
-
-/* Install button in plugin cards — blue bg + proper hover */
-.orca-plugin-market-card .orca-button.solid {
-	background: var(--main) !important;
-	background-color: var(--main) !important;
-	color: var(--main-foreground) !important;
-}
-.orca-plugin-market-card .orca-button.solid:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-}
-
-/* Tag/select text in query editor — prevent blue */
-.orca-query-editor .orca-select-button-text,
-.orca-query-editor .orca-tag,
-.orca-query-editor .orca-tags-tag-item {
-	color: var(--foreground) !important;
-}
-
-/* ============================================================
-   37. Date / Time pickers — @scope
-   ============================================================ */
-
-@scope (.orca-date-picker, .orca-time-picker) {
-	:scope {
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		background: var(--main);
-		color: var(--main-foreground);
-		box-shadow: none;
-	}
-	header {
-		background: transparent;
-		color: var(--main-foreground);
-		border: none;
-	}
-	.choosen-year,
-	.choosen-month {
-		color: var(--main-foreground);
-		font-weight: 700;
-		background: transparent;
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-	}
-	.day {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-	}
-	.day.value,
-	.day.selected {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-	}
-	.day.today {
-		background: var(--nb-danger);
-		color: var(--border);
-		border: 2px solid var(--border);
-	}
-	.day.outside {
-		opacity: 0.4;
-		border-color: transparent;
-	}
-	.day:hover:not(.value):not(.selected):not(.today) {
-		border-color: var(--border);
-		background: transparent;
-	}
-	.orca-date-picker-left-btn,
-	.orca-date-picker-right-btn {
-		background: transparent;
-		color: var(--border);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-	}
-	.orca-date-picker-left-btn:hover,
-	.orca-date-picker-right-btn:hover {
-		background: transparent;
-		border-color: var(--border);
-	}
-
-	/* Month/year picker cells — match sidebar calendar */
-	.month,
-	.year {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid transparent;
-		border-radius: var(--border-radius);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		font-size: 0.75em;
-		padding: 4px;
-		min-height: 28px;
-		transition: all 0.15s ease;
-	}
-	.month:hover,
-	.year:hover {
-		border-color: var(--border);
-		background: transparent;
-	}
-	.month.value,
-	.month.selected,
-	.year.value,
-	.year.selected {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-	}
-
-	/* Journal dot — small indicator inside today/selected cells */
-	.journal-dot {
-		width: 4px;
-		height: 4px;
-		border-radius: 50%;
-		background: var(--main-foreground);
-		opacity: 0.4;
-		position: absolute;
-		bottom: 2px;
-		left: 50%;
-		transform: translateX(-50%);
-		border: none;
-	}
-	.day.today .journal-dot,
-	.day.current .journal-dot,
-	.day.value .journal-dot,
-	.day.selected .journal-dot {
-		background: #fff;
-		opacity: 0.8;
-	}
-}
-
-/* Date picker today's dot — black on red bg */
-.orca-date-picker .day.today,
-.orca-date-picker .day.current {
-	background: var(--nb-danger) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	transition: none !important;
-}
-.orca-date-picker .day.today .journal-dot,
-.orca-date-picker .day.current .journal-dot {
-	background: var(--border) !important;
-	opacity: 0.8 !important;
-}
-
-@scope (.time-picker) {
-	li {
-		border: 2px solid transparent;
-		background: var(--main);
-		color: var(--main-foreground);
-		border-radius: var(--border-radius);
-	}
-	li:hover {
-		border-color: var(--border);
-		background: var(--main);
-	}
-	li.selected,
-	li.value,
-	li[data-state="checked"] {
-		background: #000;
-		color: #fff;
-		border: 2px solid var(--border);
-	}
-}
-
-/* Time picker hover overrides — prevent Orca inline white bg */
-.time-picker li:hover {
-	border-color: var(--border) !important;
-	background: var(--main) !important;
-}
-.time-picker li.selected:hover,
-.time-picker li.value:hover,
-.time-picker li[data-state="checked"]:hover {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Date picker day cells — position for journal-dot, no hover white on today */
-.orca-date-picker .day {
-	position: relative !important;
-}
-.orca-date-picker .day.today:hover,
-.orca-date-picker .day.current:hover {
-	background: var(--nb-danger) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Date picker month/year picker overrides */
-.orca-date-picker .month,
-.orca-date-picker .year {
-	background: var(--main) !important;
-	color: var(--main-foreground) !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-.orca-date-picker .month:hover,
-.orca-date-picker .year:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-}
-.orca-date-picker .month.value,
-.orca-date-picker .month.selected,
-.orca-date-picker .year.value,
-.orca-date-picker .year.selected {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Date picker year/month — match sidebar calendar */
-.orca-date-picker .choosen-year:hover,
-.orca-date-picker .choosen-month:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-}
-.orca-date-picker .choosen-year.active,
-.orca-date-picker .choosen-year.selected,
-.orca-date-picker .choosen-year:active,
-.orca-date-picker .choosen-month.active,
-.orca-date-picker .choosen-month.selected,
-.orca-date-picker .choosen-month:active {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* Datepicker popup — misc overrides */
-.orca-datepicker-menu .nl-input-container {
-	border-bottom: none !important;
-}
-.orca-datepicker-menu .button-bar {
-	border-top: none !important;
-}
-
-/* "当下" button in datepicker popup — black text */
-:root .orca-datepicker-menu .button-bar .orca-button.plain {
-	color: var(--border) !important;
-	background: transparent !important;
-	border: 2px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-}
-:root .orca-datepicker-menu .button-bar .orca-button.plain:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-}
-
-/* "确定" button in datepicker popup — blue bg + black text */
-.orca-datepicker-menu .button-bar .orca-button.solid {
-	background: var(--main) !important;
-	color: var(--border) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-}
-.orca-datepicker-menu .button-bar .orca-button.solid:hover {
-	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
-	box-shadow: none !important;
-}
-
-/* Date picker year/month — match sidebar calendar style */
-.orca-date-picker .choosen-year:hover,
-.orca-date-picker .choosen-month:hover {
-	border-color: var(--border) !important;
-	background: transparent !important;
-	color: var(--main-foreground) !important;
-}
-.orca-date-picker .choosen-year.active,
-.orca-date-picker .choosen-year.selected,
-.orca-date-picker .choosen-year:active,
-.orca-date-picker .choosen-month.active,
-.orca-date-picker .choosen-month.selected,
-.orca-date-picker .choosen-month:active {
-	background: #000 !important;
-	color: #fff !important;
-	border: 2px solid var(--border) !important;
-}
-
-/* ============================================================
-   38. Vault / sidebar icons — @scope
-   ============================================================ */
-
-@scope (#sidebar) {
-	.orca-vault-icon,
-	.orca-vault-selector-icon,
-	.orca-icon,
-	svg,
-	.orca-button svg {
-		color: var(--foreground);
-		fill: var(--foreground);
-	}
-}
-/* ============================================================
-   39. Repo switcher — @scope
-   ============================================================ */
-
-@scope (.orca-repo-switcher-button) {
-	:scope {
-		background: var(--main);
-		color: var(--main-foreground);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		padding: 8px 10px;
-		width: auto;
-		box-shadow: none;
-		transition: none;
-		transform: none;
-		font-weight: var(--base-font-weight);
-	}
-	svg,
-	i,
-	i::before,
-	.orca-icon,
-	.orca-repo-switcher-icon {
-		color: var(--main-foreground);
-		fill: var(--main-foreground);
+@layer components {
+	pre, .orca-code-block, .orca-code-wrapper,
+	.orca-repr-code, .orca-code-editor, .cm-editor {
+		color: var(--orca-color-code-fg) !important;
+	}
+
+	pre .token, .orca-code-block .token, .orca-code-wrapper .token, .orca-repr-code .token {
+		color: var(--orca-color-code-fg) !important;
+		background: transparent !important;
+	}
+	pre .token.comment     { color: var(--orca-color-code-comment) !important; }
+	pre .token.keyword     { color: var(--orca-color-code-keyword) !important; }
+	pre .token.string      { color: var(--orca-color-code-string) !important; }
+	pre .token.number      { color: var(--orca-color-code-number) !important; }
+	pre .token.function    { color: var(--orca-color-code-function) !important; }
+	pre .token.constant    { color: var(--orca-color-code-constant) !important; }
+	pre .token.type        { color: var(--orca-color-code-type) !important; }
+	pre .token.operator    { color: var(--orca-color-code-operator) !important; }
+	pre .token.punctuation { color: var(--orca-color-code-punctuation) !important; }
+
+	/* CodeMirror mapping */
+	.cm-editor {
+		& .cm-content { color: var(--orca-color-code-fg) !important; }
+		& .cm-comment      { color: var(--orca-color-code-comment) !important; }
+		& .cm-keyword      { color: var(--orca-color-code-keyword) !important; }
+		& .cm-string       { color: var(--orca-color-code-string) !important; }
+		& .cm-number       { color: var(--orca-color-code-number) !important; }
+		& .cm-function     { color: var(--orca-color-code-function) !important; }
+		& .cm-propertyName { color: var(--orca-color-code-constant) !important; }
+		& .cm-typeName     { color: var(--orca-color-code-type) !important; }
+		& .cm-operator     { color: var(--orca-color-code-punctuation) !important; }
+	}
+
+	/* CodeMirror compressed class names (ͼp = comment, ͼq = keyword, etc.) */
+	.cm-editor .cm-content {
+		& [class~="ͼp"] { color: var(--orca-color-code-comment) !important; }
+		& [class~="ͼq"] { color: var(--orca-color-code-keyword) !important; }
+		& [class~="ͼr"] { color: var(--orca-color-code-string) !important; }
+		& [class~="ͼt"] { color: var(--orca-color-code-number) !important; }
+		& [class~="ͼu"] { color: var(--orca-color-code-function) !important; }
+		& [class~="ͼv"] { color: var(--orca-color-code-constant) !important; }
+		& [class~="ͼw"] { color: var(--orca-color-code-punctuation) !important; }
 	}
-	.orca-select-button-text {
-		flex: 1;
-		color: var(--main-foreground);
-	}
-	.orca-select-button-selector {
-		background: var(--secondary-background);
-		color: var(--foreground);
-		border: 2px solid var(--border);
-		border-radius: var(--border-radius);
-		width: 24px;
-		height: 24px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		margin-left: auto;
-		font-size: 14px;
-		line-height: 1;
-		padding: 0;
-	}
-	i.orca-select-button-selector,
-	i.orca-select-button-selector::before {
-		color: var(--foreground);
-		stroke: var(--foreground);
-		fill: var(--foreground);
-		padding: 0;
-		margin: 0;
-	}
-}
-
-/* ============================================================
-   40. Dot grid background — from ekmas website
-   ============================================================ */
-
-/* Optional: add .nb-dot-grid to body/section */
-.nb-dot-grid {
-	background-image:
-		linear-gradient(to right, #80808033 1px, transparent 1px),
-		linear-gradient(to bottom, #80808033 1px, transparent 1px) !important;
-	background-size: 70px 70px !important;
-}
-.nb-dot-grid-main {
-	background-image:
-		linear-gradient(to right, #0003 1px, transparent 1px),
-		linear-gradient(to bottom, #0003 1px, transparent 1px) !important;
-	background-size: 70px 70px !important;
-}
-
-/* ============================================================
-   40. Code Highlight (Prism + CodeMirror) — 8-color terminal
-   ============================================================ */
-
-pre,
-.orca-code-block,
-.orca-code-wrapper,
-.orca-repr-code,
-.orca-code-editor,
-.cm-editor {
-	color: var(--orca-color-code-fg) !important;
-}
-
-/* Prism tokens */
-pre .token,
-.orca-code-block .token,
-.orca-code-wrapper .token,
-.orca-repr-code .token {
-	color: var(--orca-color-code-fg) !important;
-	background: transparent !important;
-}
-pre .token.comment {
-	color: var(--orca-color-code-comment) !important;
-}
-pre .token.keyword {
-	color: var(--orca-color-code-keyword) !important;
-}
-pre .token.string {
-	color: var(--orca-color-code-string) !important;
-}
-pre .token.number {
-	color: var(--orca-color-code-number) !important;
-}
-pre .token.function {
-	color: var(--orca-color-code-function) !important;
-}
-pre .token.constant {
-	color: var(--orca-color-code-constant) !important;
-}
-pre .token.type {
-	color: var(--orca-color-code-type) !important;
-}
-pre .token.operator {
-	color: var(--orca-color-code-operator) !important;
-}
-pre .token.punctuation {
-	color: var(--orca-color-code-punctuation) !important;
-}
-
-/* CodeMirror mapping */
-.cm-editor .cm-content {
-	color: var(--orca-color-code-fg) !important;
-}
-.cm-editor .cm-comment {
-	color: var(--orca-color-code-comment) !important;
-}
-.cm-editor .cm-keyword {
-	color: var(--orca-color-code-keyword) !important;
-}
-.cm-editor .cm-string {
-	color: var(--orca-color-code-string) !important;
-}
-.cm-editor .cm-number {
-	color: var(--orca-color-code-number) !important;
-}
-.cm-editor .cm-function {
-	color: var(--orca-color-code-function) !important;
-}
-.cm-editor .cm-propertyName {
-	color: var(--orca-color-code-constant) !important;
-}
-.cm-editor .cm-typeName {
-	color: var(--orca-color-code-type) !important;
-}
-.cm-editor .cm-operator {
-	color: var(--orca-color-code-punctuation) !important;
-}
-
-/* CodeMirror compressed class names */
-.cm-editor .cm-content [class~="ͼp"] {
-	color: var(--orca-color-code-comment) !important;
-}
-.cm-editor .cm-content [class~="ͼq"] {
-	color: var(--orca-color-code-keyword) !important;
-}
-.cm-editor .cm-content [class~="ͼr"] {
-	color: var(--orca-color-code-string) !important;
-}
-.cm-editor .cm-content [class~="ͼt"] {
-	color: var(--orca-color-code-number) !important;
-}
-.cm-editor .cm-content [class~="ͼu"] {
-	color: var(--orca-color-code-function) !important;
-}
-.cm-editor .cm-content [class~="ͼv"] {
-	color: var(--orca-color-code-constant) !important;
-}
-.cm-editor .cm-content [class~="ͼw"] {
-	color: var(--orca-color-code-punctuation) !important;
-}
-
-/* ============================================================
-   41. Catch hardcoded backgrounds
-   ============================================================ */
-
-[style*="background-color: rgb(0, 0, 0)"],
-[style*="background: rgb(0, 0, 0)"] {
-	background-color: var(--background) !important;
-}
-
-/* ============================================================
-   SIDEBAR SECTION DIVIDERS
-   ============================================================ */
-
-#sidebar [class*="sidebar-footer"],
-#sidebar [class*="create-aliased"]:not(.orca-button) {
-	border-top: 2px solid var(--border) !important;
-	margin-top: 8px !important;
-	padding-top: 8px !important;
 }
