@@ -21,6 +21,21 @@
 	--shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
 }
 
+/* Override shadow on specific surfaces that should not have it */
+.orca-calendar {
+	box-shadow: none !important;
+}
+.orca-block-editor-sidetools,
+.orca-math-toolbar,
+.orca-mermaid-toolbar,
+.orca-image-toolbar {
+	background: var(--main) !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+}
+
 /* ============================================================
    2. FOCUS RING — ekmas: ring-2 ring-black ring-offset-2
    ============================================================ */
@@ -1267,6 +1282,37 @@ th,
    23. Component: Scrollbar
    ============================================================ */
 
+/* Calendar hover/active overrides — Orca inline styles need !important */
+.orca-calendar .choosen-year:hover,
+.orca-calendar .choosen-month:hover,
+.orca-calendar .go-now:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+}
+.orca-calendar .choosen-year.active,
+.orca-calendar .choosen-year.selected,
+.orca-calendar .choosen-month.active,
+.orca-calendar .choosen-month.selected {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+.orca-calendar .month:hover,
+.orca-calendar .year:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+}
+.orca-calendar .month.value,
+.orca-calendar .month.selected,
+.orca-calendar .year.value,
+.orca-calendar .year.selected {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
 ::-webkit-scrollbar {
 	width: 8px !important;
 	height: 8px !important;
@@ -1727,14 +1773,30 @@ object,
 	}
 }
 
-@scope (.orca-settings > section.views) {
-	:scope {
-		background: var(--main);
-		color: var(--main-foreground);
-	}
-	*:active {
-		background: var(--main);
-	}
+.orca-settings section.views {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+}
+.orca-settings section.views *:active {
+	background: none !important;
+	background-color: transparent !important;
+}
+
+/* Settings content titles — transparent, let blue bg show through */
+.orca-settings section.views .desc,
+.orca-settings section.views .option,
+.orca-settings section.views .item-horizontal,
+.orca-settings section.views .item-vertical,
+.orca-settings section.views h2,
+.orca-settings section.views h3 {
+	background: transparent !important;
+	border: none !important;
+}
+
+/* Select button text — always black */
+.orca-settings .orca-select-button-text {
+	color: var(--border) !important;
+	fill: var(--border) !important;
 }
 
 /* ============================================================
@@ -1742,11 +1804,13 @@ object,
    ============================================================ */
 
 @scope (.orca-aichat) {
-	.message-user-content, .message-assistant {
+	.message-user-content,
+	.message-assistant {
 		border: 2px solid var(--border);
 		border-radius: var(--border-radius);
 	}
-	.composer, .chatbox {
+	.composer,
+	.chatbox {
 		background: transparent;
 		border: 2px solid var(--border);
 		border-radius: var(--border-radius);
@@ -1760,7 +1824,12 @@ object,
    35. Floating toolbars — @scope
    ============================================================ */
 
-@scope (.orca-block-editor-sidetools, .orca-math-toolbar, .orca-mermaid-toolbar, .orca-image-toolbar) {
+@scope (
+	.orca-block-editor-sidetools,
+	.orca-math-toolbar,
+	.orca-mermaid-toolbar,
+	.orca-image-toolbar
+) {
 	:scope {
 		background: var(--main);
 		color: var(--border);
@@ -1768,7 +1837,10 @@ object,
 		border-radius: var(--border-radius);
 		box-shadow: none;
 	}
-	svg, i, i::before, .orca-button.plain {
+	svg,
+	i,
+	i::before,
+	.orca-button.plain {
 		color: var(--border);
 		fill: var(--border);
 	}
@@ -1783,7 +1855,12 @@ object,
    36. TOC, Plugin cards, Stats, About — @scope
    ============================================================ */
 
-@scope (.orca-toc, .orca-plugin-marketplace, .orca-stats-content, .orca-about-dialog) {
+@scope (
+	.orca-toc,
+	.orca-plugin-marketplace,
+	.orca-stats-content,
+	.orca-about-dialog
+) {
 	:scope {
 		border: 2px solid var(--border);
 		border-radius: var(--border-radius);
@@ -1880,6 +1957,37 @@ object,
 	}
 }
 
+/* Time picker hover overrides — prevent Orca inline white bg */
+.time-picker li:hover {
+	border-color: var(--border) !important;
+	background: var(--main) !important;
+}
+.time-picker li.selected:hover,
+.time-picker li.value:hover,
+.time-picker li[data-state="checked"]:hover {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
+/* Date picker year/month — match sidebar calendar */
+.orca-date-picker .choosen-year:hover,
+.orca-date-picker .choosen-month:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+}
+.orca-date-picker .choosen-year.active,
+.orca-date-picker .choosen-year.selected,
+.orca-date-picker .choosen-year:active,
+.orca-date-picker .choosen-month.active,
+.orca-date-picker .choosen-month.selected,
+.orca-date-picker .choosen-month:active {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
 /* Datepicker popup — misc overrides */
 .orca-datepicker-menu .nl-input-container {
 	border-bottom: none !important;
@@ -1898,13 +2006,34 @@ object,
 	background: transparent !important;
 }
 
+/* Date picker year/month — match sidebar calendar style */
+.orca-date-picker .choosen-year:hover,
+.orca-date-picker .choosen-month:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+}
+.orca-date-picker .choosen-year.active,
+.orca-date-picker .choosen-year.selected,
+.orca-date-picker .choosen-year:active,
+.orca-date-picker .choosen-month.active,
+.orca-date-picker .choosen-month.selected,
+.orca-date-picker .choosen-month:active {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
 /* ============================================================
    38. Vault / sidebar icons — @scope
    ============================================================ */
 
 @scope (#sidebar) {
-	.orca-vault-icon, .orca-vault-selector-icon,
-	.orca-icon, svg, .orca-button svg {
+	.orca-vault-icon,
+	.orca-vault-selector-icon,
+	.orca-icon,
+	svg,
+	.orca-button svg {
 		color: var(--foreground);
 		fill: var(--foreground);
 	}
@@ -1929,7 +2058,11 @@ object,
 		transform: none;
 		font-weight: var(--base-font-weight);
 	}
-	svg, i, i::before, .orca-icon, .orca-repo-switcher-icon {
+	svg,
+	i,
+	i::before,
+	.orca-icon,
+	.orca-repo-switcher-icon {
 		color: var(--main-foreground);
 		fill: var(--main-foreground);
 	}
@@ -1953,7 +2086,8 @@ object,
 		line-height: 1;
 		padding: 0;
 	}
-	i.orca-select-button-selector, i.orca-select-button-selector::before {
+	i.orca-select-button-selector,
+	i.orca-select-button-selector::before {
 		color: var(--foreground);
 		stroke: var(--foreground);
 		fill: var(--foreground);
