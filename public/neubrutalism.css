@@ -1906,12 +1906,17 @@ object,
 	stroke: var(--foreground) !important;
 }
 
-/* Command palette search icon — white */
-#app#app .orca-command-modal .ti-search,
-#app#app .orca-command-modal .ti-search::before {
+/* Command palette search icon — white, triple ID to beat menu icon rule */
+#app#app#app .orca-command-modal .ti-search,
+#app#app#app .orca-command-modal .ti-search::before {
 	color: var(--foreground) !important;
 	fill: var(--foreground) !important;
 	stroke: var(--foreground) !important;
+}
+
+/* Command palette — no active blue bg */
+.orca-command-modal *:active {
+	background-color: transparent !important;
 }
 
 /* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
