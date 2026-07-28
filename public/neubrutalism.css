@@ -1914,8 +1914,11 @@ object,
 	stroke: var(--foreground) !important;
 }
 
-/* Command palette — prevent Orca inline bg on active only */
-.orca-command-modal *:active {
+/* Command palette — prevent Orca inline bg on interact */
+.orca-command-modal *:active,
+.orca-command-modal *:focus,
+.orca-command-modal .orca-input:focus-within,
+.orca-command-modal .orca-input-actualinput:focus {
 	background-color: transparent !important;
 }
 
