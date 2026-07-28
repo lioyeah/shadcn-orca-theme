@@ -1839,6 +1839,15 @@ object,
 .ti-search::before {
 	color: var(--foreground) !important;
 	fill: var(--foreground) !important;
+	stroke: var(--foreground) !important;
+}
+
+/* Input prefix search icon — white, max specificity */
+#app#app .ti-search.orca-input-pre,
+#app#app .ti-search.orca-input-pre::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+	stroke: var(--foreground) !important;
 }
 
 /* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
@@ -1948,6 +1957,13 @@ object,
 .orca-plugin-market-card {
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
+}
+
+/* Tag/select text in query editor — prevent blue */
+.orca-query-editor .orca-select-button-text,
+.orca-query-editor .orca-tag,
+.orca-query-editor .orca-tags-tag-item {
+	color: var(--foreground) !important;
 }
 
 /* ============================================================
