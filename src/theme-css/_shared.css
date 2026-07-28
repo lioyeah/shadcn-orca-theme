@@ -1903,17 +1903,21 @@ object,
 	stroke: var(--foreground) !important;
 }
 
-/* Command palette search icon — white, triple ID to beat menu icon rule */
-#app#app#app .orca-command-modal .ti-search,
-#app#app#app .orca-command-modal .ti-search::before {
+/* Command palette search icon — white */
+.orca-command-modal .ti-search,
+.orca-command-modal .ti-search::before {
 	color: var(--foreground) !important;
 	fill: var(--foreground) !important;
 	stroke: var(--foreground) !important;
 }
 
-/* Command palette — no active blue bg */
-.orca-command-modal *:active {
+/* Command palette — block all bg changes on interact */
+.orca-command-modal .orca-input:focus-within,
+.orca-command-modal .orca-input:focus-within *,
+.orca-command-modal *:active,
+.orca-command-modal *:focus {
 	background-color: transparent !important;
+	background: none !important;
 }
 
 /* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
