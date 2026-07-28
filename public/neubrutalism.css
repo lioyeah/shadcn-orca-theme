@@ -2014,7 +2014,8 @@ object,
 	color: var(--foreground) !important;
 }
 
-:root .orca-plugin-marketplace-security-waring {
+:root .orca-plugin-marketplace > :not(.orca-plugin-market-card),
+:root .orca-plugin-marketplace > :not(.orca-plugin-market-card) * {
 	color: var(--foreground) !important;
 }
 
