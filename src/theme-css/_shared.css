@@ -1903,6 +1903,14 @@ object,
 	stroke: var(--foreground) !important;
 }
 
+/* Command palette search icon — white */
+#app#app .orca-command-modal .ti-search,
+#app#app .orca-command-modal .ti-search::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+	stroke: var(--foreground) !important;
+}
+
 /* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
 :root:root .orca-query-result-list-toolbar .orca-button.plain svg,
 :root:root .orca-query-result-list-toolbar .orca-button.plain i,
