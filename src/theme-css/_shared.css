@@ -1911,6 +1911,11 @@ object,
 	stroke: var(--foreground) !important;
 }
 
+/* Command palette background — match menu style */
+.orca-command-modal {
+	background: var(--background) !important;
+}
+
 /* Command palette — simple active override */
 .orca-command-modal .orca-input *:active {
 	background-color: transparent !important;
