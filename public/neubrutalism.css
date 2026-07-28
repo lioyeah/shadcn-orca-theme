@@ -469,19 +469,24 @@ input[type="checkbox"] {
 }
 input[type="checkbox"]:checked {
 	background: var(--main) !important;
+	background-color: var(--main) !important;
 	color: var(--border) !important;
+	outline: 2px solid var(--border) !important;
 }
+input[type="checkbox"]:checked::before,
 input[type="checkbox"]:checked::after {
 	content: "✔" !important;
 	font-size: 0.9em !important;
 	font-weight: 900 !important;
 	line-height: 1 !important;
 	color: var(--border) !important;
+	fill: var(--border) !important;
 }
 
 /* .orca-checkbox-box checked state */
 .orca-checkbox-box[data-state="checked"] {
 	background: var(--main) !important;
+	background-color: var(--main) !important;
 	color: var(--border) !important;
 	outline: 2px solid var(--border) !important;
 	outline-offset: 0 !important;
@@ -491,6 +496,34 @@ input[type="checkbox"]:checked::after {
 	stroke: var(--border) !important;
 	fill: var(--border) !important;
 	color: var(--border) !important;
+}
+.orca-checkbox-box[data-state="checked"]::before,
+.orca-checkbox-box[data-state="checked"]::after {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+	stroke: var(--border) !important;
+}
+
+/* All checked span-based checkboxes — blue bg + black checkmark */
+.orca-checkbox-box[data-state="checked"],
+.orca-checkbox-box-checked,
+.orca-checkbox-box[data-checked="true"],
+.orca-checkbox-box[aria-checked="true"],
+.orca-checkbox-box.checked,
+.orca-checkbox-box[class*=" checked"] {
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	outline: 2px solid var(--border) !important;
+	outline-offset: 0 !important;
+	color: var(--border) !important;
+}
+.orca-checkbox-box[data-state="checked"]::before,
+.orca-checkbox-box[data-state="checked"]::after,
+.orca-checkbox-box-checked::before,
+.orca-checkbox-box-checked::after {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+	stroke: var(--border) !important;
 }
 
 /* Override settings catch-all — ensure checkbox-box always shows blue+black */
