@@ -1678,12 +1678,8 @@ object,
 
 /* Reset button — full neobrutalism button variant */
 .orca-query-conditions-reset.orca-button.soft {
-	background: color-mix(
-		in oklab,
-		var(--main) 20%,
-		var(--secondary-background)
-	) !important;
-	color: var(--foreground) !important;
+	background: var(--nb-danger) !important;
+	color: var(--border) !important;
 	border: 2px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
 	box-shadow: var(--shadow) !important;
@@ -1864,6 +1860,19 @@ object,
 	fill: var(--border) !important;
 }
 
+/* Tag selector in toolbar — black text on hover, no jitter */
+:root:root .orca-query-result-list-toolbar .orca-query-result-list-toolbar-tag {
+	border: 2px solid transparent !important;
+	transition: none !important;
+}
+:root:root
+	.orca-query-result-list-toolbar
+	.orca-query-result-list-toolbar-tag:hover {
+	color: var(--border) !important;
+	background: var(--main) !important;
+	border: 2px solid var(--border) !important;
+}
+
 /* ============================================================
    33. AI Chat — @scope
    ============================================================ */
@@ -1976,8 +1985,8 @@ object,
 		border: 2px solid var(--border);
 	}
 	.day.today {
-		background: #000;
-		color: #fff;
+		background: var(--nb-danger);
+		color: var(--border);
 		border: 2px solid var(--border);
 	}
 	.day.outside {
@@ -2053,6 +2062,20 @@ object,
 	}
 }
 
+/* Date picker today's dot — black on red bg */
+.orca-date-picker .day.today,
+.orca-date-picker .day.current {
+	background: var(--nb-danger) !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
+	transition: none !important;
+}
+.orca-date-picker .day.today .journal-dot,
+.orca-date-picker .day.current .journal-dot {
+	background: var(--border) !important;
+	opacity: 0.8 !important;
+}
+
 @scope (.time-picker) {
 	li {
 		border: 2px solid transparent;
@@ -2086,9 +2109,15 @@ object,
 	border: 2px solid var(--border) !important;
 }
 
-/* Date picker day cells — position relative for journal-dot */
+/* Date picker day cells — position for journal-dot, no hover white on today */
 .orca-date-picker .day {
 	position: relative !important;
+}
+.orca-date-picker .day.today:hover,
+.orca-date-picker .day.current:hover {
+	background: var(--nb-danger) !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
 }
 
 /* Date picker month/year picker overrides */
@@ -2139,6 +2168,8 @@ object,
 .orca-datepicker-menu .button-bar {
 	border-top: none !important;
 }
+
+/* "当下" button in datepicker popup — black text */
 :root .orca-datepicker-menu .button-bar .orca-button.plain {
 	color: var(--border) !important;
 	background: transparent !important;
@@ -2148,6 +2179,18 @@ object,
 :root .orca-datepicker-menu .button-bar .orca-button.plain:hover {
 	border-color: var(--border) !important;
 	background: transparent !important;
+}
+
+/* "确定" button in datepicker popup — blue bg + black text */
+.orca-datepicker-menu .button-bar .orca-button.solid {
+	background: var(--main) !important;
+	color: var(--border) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+}
+.orca-datepicker-menu .button-bar .orca-button.solid:hover {
+	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+	box-shadow: none !important;
 }
 
 /* Date picker year/month — match sidebar calendar style */
