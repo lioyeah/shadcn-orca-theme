@@ -1643,6 +1643,20 @@ object,
 	font-size: 1em !important;
 }
 
+/* Selector dropdown arrow in header — white on blue bg */
+.orca-query-conditions-header .orca-select-button-selector,
+.orca-query-conditions-header .orca-select-button-selector::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+}
+
+/* Selector dropdown arrow in query editor sub-toolbar — white */
+.orca-query-editor .orca-select-button-selector,
+.orca-query-editor .orca-select-button-selector::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+}
+
 /* Reset parent container padding inside the query editor */
 .orca-query-editor .orca-query-conditions {
 	padding: 0 !important;
@@ -1780,9 +1794,31 @@ object,
 	background: var(--main) !important;
 	color: var(--main-foreground) !important;
 }
-.orca-settings section.views *:active {
-	background: none !important;
+/* Remove Orca inline gray background on active for menus/popups/select */
+.orca-menu *:active,
+.orca-dropdown *:active,
+.orca-select-item:active,
+.orca-popup *:active,
+.orca-select-button:active {
 	background-color: transparent !important;
+}
+
+/* Settings section — keep consistent bg, not gray */
+.orca-settings section.views *:active,
+.orca-settings section.views *:focus {
+	background-color: var(--main) !important;
+}
+.orca-settings section.views input:active,
+.orca-settings section.views input:focus,
+.orca-settings section.views .orca-input:active,
+.orca-settings section.views .orca-input-input:active,
+.orca-settings section.views .orca-input-actualinput:active {
+	background-color: var(--secondary-background) !important;
+}
+
+/* Keep own background on press for components that need it */
+.orca-repo-switcher-button:active {
+	background: var(--main) !important;
 }
 
 /* Settings content titles — transparent, let blue bg show through */
@@ -1798,6 +1834,35 @@ object,
 
 /* Select button text — always black */
 .orca-settings .orca-select-button-text {
+	color: var(--border) !important;
+	fill: var(--border) !important;
+}
+
+/* ti-search icons — always white */
+.ti-search,
+.ti-search::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+}
+
+/* Query result list toolbar — white icons, hover blue bg + black border + invert to black */
+:root:root .orca-query-result-list-toolbar .orca-button.plain svg,
+:root:root .orca-query-result-list-toolbar .orca-button.plain i,
+:root:root .orca-query-result-list-toolbar .orca-button.plain i::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+}
+:root:root .orca-query-result-list-toolbar .orca-button.plain:hover {
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	border: 2px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+	transform: none !important;
+}
+:root:root .orca-query-result-list-toolbar .orca-button.plain:hover svg,
+:root:root .orca-query-result-list-toolbar .orca-button.plain:hover i,
+:root:root .orca-query-result-list-toolbar .orca-button.plain:hover i::before {
 	color: var(--border) !important;
 	fill: var(--border) !important;
 }
@@ -1938,6 +2003,57 @@ object,
 		background: transparent;
 		border-color: var(--border);
 	}
+
+	/* Month/year picker cells — match sidebar calendar */
+	.month,
+	.year {
+		background: var(--main);
+		color: var(--main-foreground);
+		border: 2px solid transparent;
+		border-radius: var(--border-radius);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		font-size: 0.75em;
+		padding: 4px;
+		min-height: 28px;
+		transition: all 0.15s ease;
+	}
+	.month:hover,
+	.year:hover {
+		border-color: var(--border);
+		background: transparent;
+	}
+	.month.value,
+	.month.selected,
+	.year.value,
+	.year.selected {
+		background: #000;
+		color: #fff;
+		border: 2px solid var(--border);
+	}
+
+	/* Journal dot — small indicator inside today/selected cells */
+	.journal-dot {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--main-foreground);
+		opacity: 0.4;
+		position: absolute;
+		bottom: 2px;
+		left: 50%;
+		transform: translateX(-50%);
+		border: none;
+	}
+	.day.today .journal-dot,
+	.day.current .journal-dot,
+	.day.value .journal-dot,
+	.day.selected .journal-dot {
+		background: #fff;
+		opacity: 0.8;
+	}
 }
 
 @scope (.time-picker) {
@@ -1968,6 +2084,34 @@ object,
 .time-picker li.selected:hover,
 .time-picker li.value:hover,
 .time-picker li[data-state="checked"]:hover {
+	background: #000 !important;
+	color: #fff !important;
+	border: 2px solid var(--border) !important;
+}
+
+/* Date picker day cells — position relative for journal-dot */
+.orca-date-picker .day {
+	position: relative !important;
+}
+
+/* Date picker month/year picker overrides */
+.orca-date-picker .month,
+.orca-date-picker .year {
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+}
+.orca-date-picker .month:hover,
+.orca-date-picker .year:hover {
+	border-color: var(--border) !important;
+	background: transparent !important;
+	color: var(--main-foreground) !important;
+}
+.orca-date-picker .month.value,
+.orca-date-picker .month.selected,
+.orca-date-picker .year.value,
+.orca-date-picker .year.selected {
 	background: #000 !important;
 	color: #fff !important;
 	border: 2px solid var(--border) !important;
