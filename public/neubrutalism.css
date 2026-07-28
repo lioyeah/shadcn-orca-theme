@@ -1916,7 +1916,6 @@ object,
 
 /* Command palette background — match menu style */
 .orca-command-modal {
-	background: var(--secondary-background) !important;
 	color: var(--foreground) !important;
 }
 
