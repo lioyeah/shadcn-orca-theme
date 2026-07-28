@@ -2032,6 +2032,19 @@ object,
 	border-color: var(--border) !important;
 }
 
+/* Install button in plugin cards — blue bg + proper hover */
+.orca-plugin-market-card .orca-button.solid {
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	color: var(--main-foreground) !important;
+}
+.orca-plugin-market-card .orca-button.solid:hover {
+	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
+	box-shadow: none !important;
+	background: var(--main) !important;
+	color: var(--main-foreground) !important;
+}
+
 /* Tag/select text in query editor — prevent blue */
 .orca-query-editor .orca-select-button-text,
 .orca-query-editor .orca-tag,
