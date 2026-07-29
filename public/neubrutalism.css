@@ -1121,44 +1121,50 @@
 	   4.28 Repo Switcher (Fix 13: centered dropdown) — @scope
 	   ---------------------------------------------------------- */
 
-	@scope (.orca-repo-switcher-button) {
-		:scope {
-			background: var(--main) !important;
-			color: var(--main-foreground) !important;
-			border: 2px solid var(--border) !important;
-			border-radius: var(--border-radius) !important;
-			display: flex; align-items: center; gap: 6px;
-			padding: 4px 8px; width: auto !important;
-			box-shadow: none; transition: none; transform: none;
-			font-weight: var(--base-font-weight);
-		}
-		& svg, & i, & i::before, & .orca-icon, & .orca-repo-switcher-icon { color: var(--main-foreground); fill: var(--main-foreground); }
-		.orca-select-button-text { flex: 1; color: var(--main-foreground); }
-		.orca-select-button-selector {
-			background: var(--secondary-background);
-			color: var(--foreground);
-			border: 2px solid var(--border);
-			border-radius: var(--border-radius);
-			width: 20px; height: 20px;
-			display: flex; align-items: center; justify-content: center;
-			flex-shrink: 0; margin-left: auto;
-			font-size: 12px;
-			padding: 0; box-sizing: border-box;
-			overflow: hidden;
-			line-height: 0;
-		}
-		i.orca-select-button-selector {
-			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
-			padding: 0; margin: 0;
-			display: flex !important;
-			align-items: center !important;
-			justify-content: center !important;
-			width: 100% !important;
-			height: 100% !important;
-		}
-		i.orca-select-button-selector::before {
-			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
-		}
+		/* Repo switcher button — direct selectors (no @scope) */
+	.orca-repo-switcher-button {
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		display: flex; align-items: center; gap: 6px;
+		padding: 4px 8px; width: 100% !important;
+		box-shadow: none; transition: none; transform: none;
+		font-weight: var(--base-font-weight);
+	}
+	.orca-repo-switcher-button svg,
+	.orca-repo-switcher-button i,
+	.orca-repo-switcher-button i::before,
+	.orca-repo-switcher-button .orca-icon,
+	.orca-repo-switcher-button .orca-repo-switcher-icon {
+		color: var(--main-foreground); fill: var(--main-foreground);
+	}
+	.orca-repo-switcher-button .orca-select-button-text {
+		flex: 1; color: var(--main-foreground);
+	}
+	.orca-repo-switcher-button .orca-select-button-selector {
+		background: var(--secondary-background);
+		color: var(--foreground);
+		border: 2px solid var(--border);
+		border-radius: var(--border-radius);
+		width: 20px; height: 20px;
+		display: inline-flex; align-items: center; justify-content: center;
+		flex-shrink: 0; margin-left: auto;
+		font-size: 12px;
+		padding: 0; box-sizing: border-box;
+		overflow: hidden; line-height: 0;
+	}
+	.orca-repo-switcher-button i.orca-select-button-selector {
+		color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
+		padding: 0; margin: 0;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		width: 100% !important;
+		height: 100% !important;
+	}
+	.orca-repo-switcher-button i.orca-select-button-selector::before {
+		color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
 	}
 
 	/* ----------------------------------------------------------
