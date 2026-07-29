@@ -53,8 +53,6 @@
 	.orca-modal, .orca-modal *,
 	.orca-dropdown, .orca-dropdown *,
 	.orca-menu, .orca-menu *,
-	.orca-select-menu, .orca-select-menu *,
-	.orca-repo-switcher-modal, .orca-repo-switcher-modal *,
 	.orca-slash-commands, .orca-slash-commands *,
 	.orca-settings, .orca-settings *,
 	.orca-toolbar, .orca-toolbar *,
@@ -379,7 +377,7 @@
 		color: var(--foreground) !important;
 	}
 
-	.orca-popup, .orca-dropdown, .orca-menu, .orca-select-menu, .orca-repo-switcher-modal, .orca-slash-commands {
+	.orca-popup, .orca-dropdown, .orca-menu, .orca-slash-commands {
 		background: var(--main) !important;
 		color: var(--main-foreground) !important;
 		border: 2px solid var(--border) !important;
@@ -387,19 +385,13 @@
 		box-shadow: none !important;
 	}
 	.orca-popup .orca-menu, .orca-popup .orca-slash-commands { border: none !important; box-shadow: none !important; }
-	.orca-repo-switcher-modal .orca-select-item,
-	.orca-select-menu .orca-select-item { background: transparent !important; }
-	.orca-repo-switcher-modal .orca-select-item:hover,
-	.orca-select-menu .orca-select-item:hover { border-color: var(--border) !important; background: transparent !important; }
 
 	.orca-tooltip {
 		background: var(--main) !important; color: var(--main-foreground) !important;
-		border-radius: var(--border-radius) !important;
-	}
-	/* Tooltip border: use html prefix to beat both Orca inline and our own */
-	html .orca-tooltip {
 		border: none !important;
-		box-shadow: 0 0 0 1px var(--border) !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: -1px !important;
+		border-radius: var(--border-radius) !important;
 	}
 
 
@@ -1150,22 +1142,12 @@
 			width: 24px; height: 24px;
 			display: inline-flex; align-items: center; justify-content: center;
 			flex-shrink: 0; margin-left: auto;
-			font-size: 14px;
+			font-size: 14px; line-height: 1;
 			padding: 0; box-sizing: border-box;
-			line-height: 0;
-			overflow: hidden;
 		}
-		i.orca-select-button-selector {
+		i.orca-select-button-selector, i.orca-select-button-selector::before {
 			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
 			padding: 0; margin: 0;
-			display: flex !important;
-			align-items: center !important;
-			justify-content: center !important;
-			width: 100%;
-			height: 100%;
-		}
-		i.orca-select-button-selector::before {
-			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
 		}
 	}
 
