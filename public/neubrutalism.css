@@ -1142,8 +1142,9 @@
 			width: 20px; height: 20px;
 			display: flex; align-items: center; justify-content: center;
 			flex-shrink: 0; margin-left: auto;
-			font-size: 14px;
+			font-size: 12px;
 			padding: 0; box-sizing: border-box;
+			overflow: hidden;
 			line-height: 0;
 		}
 		i.orca-select-button-selector {
