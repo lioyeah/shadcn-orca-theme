@@ -958,34 +958,37 @@
 	   Fix 15: category headers = black bg + white text, table headers = blue transparent + white text
 	   ---------------------------------------------------------- */
 
-	@scope (.orca-settings > .sections) {
-		:scope {
+			/* Settings left panel: bg=sidebar-bg, text=white, hover=blue+black-border */
+		html .orca-settings > .sections,
+		html .orca-settings > .sections * {
+			color: var(--foreground) !important;
+		}
+		html .orca-settings > .sections {
 			border-right: 2px solid var(--border);
 			background: var(--secondary-background) !important;
 			border-radius: var(--border-radius);
-			color: var(--main-foreground);
 		}
-		& * {
-			color: var(--main-foreground) !important;
-		}
-		.title {
+		html .orca-settings > .sections .title {
 			background: var(--secondary-background) !important;
-			font-weight: var(--heading-font-weight) !important;
+			font-weight: var(--heading-font-weight);
 		}
-		.item, .plugin-item {
+		html .orca-settings > .sections .item,
+		html .orca-settings > .sections .plugin-item {
 			border: 2px solid transparent;
 			border-radius: var(--border-radius);
 			background: transparent !important;
+			color: var(--foreground) !important;
 		}
-		.item.selected, .item:hover,
-		.plugin-item.selected, .plugin-item:hover {
+		html .orca-settings > .sections .item.selected,
+		html .orca-settings > .sections .item:hover,
+		html .orca-settings > .sections .plugin-item.selected,
+		html .orca-settings > .sections .plugin-item:hover {
 			background: var(--main) !important;
 			background-color: var(--main) !important;
-			border: 2px solid var(--border);
+			border: 2px solid var(--border) !important;
 			border-radius: var(--border-radius);
 			color: var(--main-foreground) !important;
 		}
-	}
 
 	.orca-settings section.views {
 		background: var(--main) !important;
