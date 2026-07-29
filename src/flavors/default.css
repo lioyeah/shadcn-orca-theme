@@ -22,6 +22,14 @@
 	--ring: oklch(0% 0 0deg);
 	--overlay: oklch(0% 0 0deg / 80%);
 
+	/*
+	   Dual muted text:
+	   --text-muted  → hints on dark/neutral surfaces (echoes white, not confused with it)
+	   --main-muted  → hints on --main surfaces (weakened black, readable on blue)
+	*/
+	--text-muted: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	--main-muted: color-mix(in oklab, var(--main-foreground) 58%, var(--main));
+
 	/* Layout tokens (shared across modes) */
 	--border-radius: 5px;
 	--box-shadow-x: 4px;
@@ -43,7 +51,7 @@
 	--orca-color-bg-2: var(--secondary-background);
 	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
 	--orca-color-text-1: var(--foreground);
-	--orca-color-text-2: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	--orca-color-text-2: var(--text-muted);
 	--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
 	--orca-color-border: var(--border);
 	--orca-color-border-2: var(--ring);
@@ -127,6 +135,9 @@ html.t-light {
 	--border: oklch(0% 0 0deg);
 	--ring: oklch(0% 0 0deg);
 	--overlay: oklch(0% 0 0deg / 80%);
+	/* Light: muted still echoes black primary; on-main muted stays black-into-main */
+	--text-muted: color-mix(in oklab, var(--foreground) 55%, var(--background));
+	--main-muted: color-mix(in oklab, var(--main-foreground) 58%, var(--main));
 	--orca-color-bg-0: var(--secondary-background);
 	--orca-color-bg-1: var(--background);
 	--orca-color-bg-2: var(--secondary-background);
@@ -144,7 +155,7 @@ html.t-light {
 	--orca-color-bg-2: var(--secondary-background);
 	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
 	--orca-color-text-1: var(--foreground);
-	--orca-color-text-2: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	--orca-color-text-2: var(--text-muted);
 	--orca-color-border: var(--border);
 	--orca-color-primary-5: var(--main);
 	--orca-color-menu-highlight: color-mix(in oklab, var(--main) 15%, var(--background));
