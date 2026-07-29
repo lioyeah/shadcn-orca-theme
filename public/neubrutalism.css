@@ -276,6 +276,7 @@
 	.orca-switch {
 		min-width: 36px !important;
 		width: auto !important;
+		height: 24px !important;
 	}
 	/* Force capsule shape everywhere, including settings */
 	.orca-switch,
@@ -384,13 +385,13 @@
 
 	.orca-tooltip {
 		background: var(--main) !important; color: var(--main-foreground) !important;
-		border: 2px solid var(--border) !important; border-radius: var(--border-radius) !important;
+		border: none !important;
+		outline: 2px solid var(--border) !important;
+		outline-offset: -1px !important;
+		border-radius: var(--border-radius) !important;
 		box-shadow: var(--shadow) !important;
 	}
-	/* Prevent Orca's own tooltip from adding a second border */
-	.orca-tooltip[style*="background"] {
-		border: 2px solid var(--border) !important;
-	}
+
 
 	.orca-notification {
 		border: 2px solid var(--border) !important;
@@ -919,7 +920,7 @@
 		&, & *, & .orca-button.plain, & .orca-button.plain *,
 		& .orca-select-button-text, & .orca-button.plain svg,
 		& .orca-button.plain i, & .orca-button.plain i::before {
-			color: var(--foreground) !important; fill: var(--foreground) !important; stroke: var(--foreground) !important;
+			color: var(--border) !important; fill: var(--border) !important; stroke: var(--border) !important;
 		}
 		& svg, & img, & i, & .orca-icon { vertical-align: middle !important; margin: 0 !important; align-self: center !important; }
 		& .orca-select-button-text { padding: 0 !important; margin: 0 !important; line-height: 1.2 !important; }
@@ -1050,19 +1051,18 @@
 	@scope (.orca-toc, .orca-plugin-marketplace) {
 		:scope { border: 2px solid var(--border); border-radius: var(--border-radius); box-shadow: var(--shadow); }
 	}
-	@scope (.orca-stats-content, .orca-about-dialog) {
-		:scope {
+	/* Stats + About: neobrutalism style */
+		.orca-stats-content {
+			display: block !important;
 			background: var(--secondary-background) !important;
-			border: 2px solid var(--border);
-			border-radius: var(--border-radius);
-			box-shadow: var(--shadow);
+			border: 2px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: var(--shadow) !important;
 			color: var(--foreground) !important;
 		}
-		/* Stats cards: neobrutalism card style */
-		& .orca-stats-content-card,
-		& [class*="stat-card"],
-		& [class*="StatCard"],
-		& section > div {
+		/* Stats inner cards: blue bg, black border, hard shadow */
+		.orca-stats-content section > div,
+		.orca-stats-content div[class] {
 			background: var(--main) !important;
 			color: var(--main-foreground) !important;
 			border: 2px solid var(--border) !important;
@@ -1070,22 +1070,24 @@
 			box-shadow: var(--shadow) !important;
 			padding: 16px !important;
 		}
-		/* Card text elements */
-		& h2, & h3, & h4 {
+		.orca-stats-content h2, .orca-stats-content h3 {
 			color: var(--main-foreground) !important;
-			font-weight: var(--heading-font-weight) !important;
 		}
-		& svg, & i, & i::before,
-		& [class*="chart"], & [class*="Chart"] {
+		.orca-stats-content canvas,
+		.orca-stats-content svg,
+		.orca-stats-content [class] {
 			color: var(--main-foreground) !important;
 			fill: var(--main-foreground) !important;
 			stroke: var(--main-foreground) !important;
 		}
-		/* Progress bars in stats */
-		& progress, & [class*="progress"] {
-			border-color: var(--border) !important;
+		/* About dialog — match stats bg */
+		.orca-about-dialog {
+			background: var(--secondary-background) !important;
+			border: 2px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: var(--shadow) !important;
+			color: var(--foreground) !important;
 		}
-	}
 
 
 	.orca-plugin-marketplace { color: var(--foreground) !important; }
