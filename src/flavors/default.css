@@ -95,7 +95,7 @@
 	--orca-color-scrollbar: var(--border);
 	--orca-color-scrollbar-hover: color-mix(in oklab, var(--foreground) 45%, var(--background));
 	--orca-color-selection: var(--main);
-	--orca-color-scope-line: var(--ring);
+	--orca-color-scope-line: color-mix(in oklab, var(--foreground) 45%, transparent);
 	--orca-color-separator: var(--border);
 	--orca-color-tab: var(--border);
 	--orca-color-mirror: var(--secondary-background);

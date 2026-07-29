@@ -78,7 +78,7 @@
 	.orca-toolbar *:not(.orca-switch):not(.orca-switch-toggle),
 	.orca-panels-container > header,
 	.orca-panels-container > header *:not(.orca-switch):not(.orca-switch-toggle),
-	.orca-button:not(.orca-switch),
+	.orca-button:not(.orca-switch):not(.orca-no-editable-btn),
 	.orca-button *:not(.orca-switch-toggle),
 	.orca-input, .orca-input *,
 	.orca-tag, .orca-tag *,
@@ -106,6 +106,14 @@
 	.orca-settings .orca-switch,
 	.orca-settings .orca-switch-toggle {
 		border-radius: 9999px !important;
+	}
+
+	/* Special-block hover buttons: circle (must live in base — !important
+	   reverses layer order, so components cannot beat the radius reset) */
+	.orca-no-editable-btn,
+	.orca-no-editable-btn.orca-button,
+	.orca-no-editable-btn.orca-button.plain {
+		border-radius: 50% !important;
 	}
 }
 
@@ -666,7 +674,7 @@
 
 	/* ----------------------------------------------------------
 	   4.7b Block search modal (Ctrl+Shift+F / 块搜索)
-	   Left list = sidebar (--secondary-background)
+	   Left list = blue chrome (--main, black type)
 	   Right preview = main editor (--background + grid)
 	   ---------------------------------------------------------- */
 
@@ -684,11 +692,20 @@
 		background: var(--secondary-background) !important;
 	}
 
+	/* Left: blue shell like menus / toolbars */
 	.orca-search-modal-result-list,
 	.orca-search-modal-no-result,
 	.orca-search-modal-syntax-tips {
-		background: var(--secondary-background) !important;
-		color: var(--foreground) !important;
+		background: var(--main) !important;
+		color: var(--main-foreground) !important;
+		/* Keep text-1/2 distinct — don't collapse both to the same muted black */
+		--orca-color-text-1: var(--main-foreground);
+		--orca-color-text-2: color-mix(in oklab, var(--main-foreground) 40%, var(--main));
+		--orca-color-text-3: color-mix(in oklab, var(--main-foreground) 32%, var(--main));
+		--orca-color-placeholder: color-mix(in oklab, var(--main-foreground) 45%, var(--main));
+		--orca-color-gray-5: color-mix(in oklab, var(--main-foreground) 55%, var(--main));
+		--orca-color-gray-6: color-mix(in oklab, var(--main-foreground) 48%, var(--main));
+		--orca-color-gray-7: color-mix(in oklab, var(--main-foreground) 40%, var(--main));
 	}
 
 	/* Match .orca-panels-row / #main editor canvas */
@@ -701,6 +718,14 @@
 		background-position: 35px 35px, 35px 35px, 0 0 !important;
 		color: var(--foreground) !important;
 		border-left: 2px solid var(--border) !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		/* Scope / handles must read on dark navy (native --ring is black) */
+		--orca-color-scope-line: color-mix(in oklab, var(--foreground) 55%, transparent);
+		--orca-border-scope: 1px solid var(--orca-color-scope-line);
+		--orca-block-handle-passive-color: var(--orca-color-gray-6);
 	}
 
 	.orca-search-modal-result-preview .orca-block-editor,
@@ -718,51 +743,43 @@
 		border-top: 2px solid var(--border) !important;
 	}
 
-	/*
-	   List + preview sit on dark surfaces — force readable tokens.
-	   (Popup menu remaps text/icons to black; that wins without this.)
-	*/
-	.orca-search-modal,
-	.orca-popup:has(.orca-search-modal) {
-		--orca-color-text-1: var(--foreground);
-		--orca-color-text-2: var(--text-muted);
-		--orca-color-text-3: var(--text-muted);
-		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
-		--orca-color-gray-5: var(--text-muted);
-		--orca-color-gray-6: var(--text-muted);
-		--orca-color-gray-7: var(--text-muted);
-		color: var(--foreground) !important;
-	}
-
 	.orca-search-modal-block-item {
 		border: 2px solid transparent !important;
 		border-radius: var(--border-radius) !important;
-		color: var(--foreground) !important;
+		color: var(--main-foreground) !important;
 		cursor: pointer !important;
 		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 
-		& .orca-search-modal-result-label,
-		& .orca-search-modal-result-breadcrumb,
-		& .orca-search-modal-result-breadcrumb-segment {
-			color: var(--foreground) !important;
+		/* Hierarchy like default theme: icon ≠ breadcrumb ≠ body */
+		& .orca-search-modal-result-label {
+			color: var(--main-foreground) !important; /* body — strongest */
 		}
 		& .orca-search-modal-result-breadcrumb,
-		& .orca-search-modal-result-breadcrumb-segment {
-			color: var(--text-muted) !important;
+		& .orca-search-modal-result-breadcrumb-segment,
+		& .orca-search-modal-result-breadcrumb .ti,
+		& .orca-search-modal-result-breadcrumb .ti::before,
+		& .orca-search-modal-result-breadcrumb svg {
+			color: color-mix(in oklab, var(--main-foreground) 40%, var(--main)) !important;
+			fill: color-mix(in oklab, var(--main-foreground) 40%, var(--main)) !important;
+			stroke: color-mix(in oklab, var(--main-foreground) 40%, var(--main)) !important;
 		}
 		& .orca-search-modal-result-icon,
-		& .ti, & .ti::before, & svg, & .orca-icon {
-			color: var(--foreground) !important;
-			fill: var(--foreground) !important;
-			stroke: var(--foreground) !important;
+		& .orca-search-modal-result-icon .ti,
+		& .orca-search-modal-result-icon .ti::before,
+		& .orca-search-modal-result-icon svg,
+		& .orca-search-modal-result-icon svg * {
+			color: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
+			fill: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
+			stroke: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
 		}
 
+		/* On blue list: darker blue + black border (not same-blue fill) */
 		&:hover,
 		&.selected,
 		&[aria-selected="true"],
 		&.orca-key-selected {
-			background: var(--main) !important;
-			background-color: var(--main) !important;
+			background: color-mix(in oklab, var(--main) 72%, black) !important;
+			background-color: color-mix(in oklab, var(--main) 72%, black) !important;
 			color: var(--main-foreground) !important;
 			border: 2px solid var(--border) !important;
 			border-radius: var(--border-radius) !important;
@@ -772,18 +789,26 @@
 			--orca-color-text-2: var(--main-muted);
 			--orca-color-text-3: var(--main-muted);
 
-			& .orca-search-modal-result-label,
+			& .orca-search-modal-result-label {
+				color: var(--main-foreground) !important;
+			}
 			& .orca-search-modal-result-breadcrumb,
 			& .orca-search-modal-result-breadcrumb-segment,
+			& .orca-search-modal-result-breadcrumb .ti,
+			& .orca-search-modal-result-breadcrumb .ti::before,
+			& .orca-search-modal-result-breadcrumb svg {
+				color: var(--main-muted) !important;
+				fill: var(--main-muted) !important;
+				stroke: var(--main-muted) !important;
+			}
 			& .orca-search-modal-result-icon,
-			& .ti, & .ti::before, & svg, & .orca-icon {
+			& .orca-search-modal-result-icon .ti,
+			& .orca-search-modal-result-icon .ti::before,
+			& .orca-search-modal-result-icon svg,
+			& .orca-search-modal-result-icon svg * {
 				color: var(--main-foreground) !important;
 				fill: var(--main-foreground) !important;
 				stroke: var(--main-foreground) !important;
-			}
-			& .orca-search-modal-result-breadcrumb,
-			& .orca-search-modal-result-breadcrumb-segment {
-				color: var(--main-muted) !important;
 			}
 		}
 	}
@@ -791,7 +816,7 @@
 	.orca-search-modal-result-preview,
 	.orca-search-modal-result-preview .orca-block-editor,
 	.orca-search-modal-result-preview .orca-block,
-	.orca-search-modal-result-preview .orca-inline,
+	.orca-search-modal-result-preview .orca-inline:not(.c),
 	.orca-search-modal-result-preview a,
 	.orca-search-modal-result-preview .orca-link {
 		color: var(--foreground) !important;
@@ -800,6 +825,47 @@
 	.orca-search-modal-result-preview .orca-placeholder,
 	.orca-search-modal-result-preview .orca-empty-state {
 		color: var(--text-muted) !important;
+	}
+
+	/* Preview chrome: breadcrumbs, scope lines, block markers — lift contrast */
+	.orca-search-modal-result-preview .orca-breadcrumb,
+	.orca-search-modal-result-preview .orca-breadcrumb-item,
+	.orca-search-modal-result-preview .orca-breadcrumb-dots,
+	.orca-search-modal-result-preview .orca-block-breadcrumb-segment,
+	.orca-search-modal-result-preview .orca-search-modal-result-breadcrumb,
+	.orca-search-modal-result-preview .orca-search-modal-result-breadcrumb-segment {
+		color: var(--text-muted) !important;
+	}
+	.orca-search-modal-result-preview .orca-breadcrumb .ti,
+	.orca-search-modal-result-preview .orca-breadcrumb .ti::before,
+	.orca-search-modal-result-preview .orca-breadcrumb svg,
+	.orca-search-modal-result-preview .orca-breadcrumb svg * {
+		color: var(--text-muted) !important;
+		fill: var(--text-muted) !important;
+		stroke: var(--text-muted) !important;
+		opacity: 1 !important;
+	}
+	.orca-search-modal-result-preview .orca-repr-scope-line,
+	.orca-search-modal-result-preview .orca-repr-scope-line::before {
+		opacity: 0.7 !important;
+		--orca-color-scope-line: color-mix(in oklab, var(--foreground) 55%, transparent);
+		--orca-border-scope: 1px solid var(--orca-color-scope-line);
+		border-color: var(--orca-color-scope-line) !important;
+		background-color: transparent !important;
+	}
+	.orca-search-modal-result-preview .orca-block-handle,
+	.orca-search-modal-result-preview .orca-block-handle::before {
+		color: var(--orca-color-gray-6) !important;
+		opacity: 1 !important;
+	}
+	.orca-search-modal-result-preview .orca-repr-ul .orca-block-handle::before {
+		color: var(--nb-accent) !important;
+	}
+	.orca-search-modal-result-preview .orca-repr-ul .orca-repr-ul .orca-block-handle::before {
+		color: var(--nb-info) !important;
+	}
+	.orca-search-modal-result-preview .orca-repr-ol-content::before {
+		color: var(--nb-success) !important;
 	}
 
 	/* Single neo border — kill native soft shadow (reads as second border) */
@@ -909,7 +975,11 @@
 		border-radius: var(--border-radius) !important;
 		&:hover { background: var(--main) !important; color: var(--main-foreground) !important; border-radius: var(--border-radius) !important; }
 	}
-	:is(.orca-panels-container, #main) .orca-repr-scope-line { opacity: 0.35 !important; }
+	:is(.orca-panels-container, #main) .orca-repr-scope-line {
+		opacity: 0.55 !important;
+		--orca-color-scope-line: color-mix(in oklab, var(--foreground) 50%, transparent);
+		--orca-border-scope: 1px solid var(--orca-color-scope-line);
+	}
 
 	/* ----------------------------------------------------------
 	   4.13 Blockquote / Callout
@@ -1413,20 +1483,33 @@
 	   4.21 Special Block Insert / Fold Buttons (Fix 7: round)
 	   ---------------------------------------------------------- */
 
-	#main .orca-no-editable-btn.orca-button.plain {
+	#main .orca-no-editable-btn.orca-button.plain,
+	.orca-panels-container .orca-no-editable-btn.orca-button.plain {
 		background: var(--main) !important; color: var(--main-foreground) !important;
 		border: 2px solid var(--border) !important;
-		border-radius: 9999px !important;
+		border-radius: 50% !important;
 		box-shadow: none !important; outline: none !important;
 		transition: all 0.15s ease !important;
 		padding: 0 !important; width: 18px !important; height: 18px !important;
 		display: inline-flex !important; align-items: center !important; justify-content: center !important;
 		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;
+		aspect-ratio: 1 !important;
 		opacity: 0 !important; pointer-events: none !important;
 		& svg, & i, & i::before { color: var(--main-foreground) !important; fill: var(--main-foreground) !important; }
 	}
-	#main .orca-block:hover .orca-no-editable-btn.orca-button.plain { opacity: 0.5 !important; pointer-events: auto !important; }
-	#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover { opacity: 1 !important; border: 2px solid var(--border) !important; }
+	/* Match native: only the hovered block's content — NOT .orca-block:hover
+	   (ancestor :hover would reveal every nested special-block button). */
+	#main .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain,
+	.orca-panels-container .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain {
+		opacity: 0.5 !important;
+		pointer-events: auto !important;
+	}
+	#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover,
+	.orca-panels-container .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+		opacity: 1 !important;
+		border: 2px solid var(--border) !important;
+		border-radius: 50% !important;
+	}
 
 	/* ----------------------------------------------------------
 	   4.22 Query Editor
@@ -1531,6 +1614,14 @@
 			border-radius: var(--border-radius);
 			color: var(--main-foreground) !important;
 		}
+		/* Beat `.sections * { color: foreground }` so icon + label stay black on blue */
+		html .orca-settings > .sections .item.selected *,
+		html .orca-settings > .sections .item:hover *,
+		html .orca-settings > .sections .plugin-item.selected *,
+		html .orca-settings > .sections .plugin-item:hover * {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+		}
 
 	.orca-settings section.views {
 		background: var(--main) !important;
@@ -1618,6 +1709,8 @@
 		background: transparent !important;
 		border: none !important;
 		box-shadow: none !important;
+		display: flex !important;
+		align-items: stretch !important;
 	}
 
 	/* Nested dark field — same pairing as find-replace inputs */
@@ -1648,29 +1741,56 @@
 		border: 2px solid #000 !important;
 	}
 
-	/* Match .orca-button.solid (neo hard shadow) — sits on blue composer */
-	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button {
-		background: var(--secondary-background) !important;
-		background-color: var(--secondary-background) !important;
-		color: var(--foreground) !important;
-		border: 2px solid var(--border) !important;
+	/*
+	   Send button is variant="plain" → .orca-button.plain gets
+	   border:transparent + background:transparent (spec 0,4,0).
+	   Must include .plain + :not() to beat that rule.
+	*/
+	.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+	.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+		align-self: stretch !important;
+		flex: 0 0 auto !important;
+		height: auto !important;
+		min-height: 100% !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		box-sizing: border-box !important;
+		margin: 0 !important;
+		padding-block: 0 !important;
+		background: var(--main) !important;
+		background-color: var(--main) !important;
+		background-image: none !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid #000 !important;
+		border-width: 2px !important;
+		border-style: solid !important;
+		border-color: #000 !important;
 		border-radius: var(--border-radius) !important;
-		box-shadow: var(--shadow) !important;
+		outline: none !important;
+		box-shadow: var(--box-shadow-x) var(--box-shadow-y) 0 0 #000 !important;
 	}
 
-	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button:hover {
+	.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):not(.orca-no-editable-btn):hover,
+	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover,
+	.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
 		transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
 		box-shadow: none !important;
-		background: var(--secondary-background) !important;
-		color: var(--foreground) !important;
+		background: var(--main) !important;
+		background-color: var(--main) !important;
+		color: var(--main-foreground) !important;
+		border: 2px solid #000 !important;
+		border-color: #000 !important;
 	}
 
-	.orca-aichat-composer .orca-aichat-chatbox-button i,
-	.orca-aichat-composer .orca-aichat-chatbox-button i::before,
-	.orca-aichat-composer .orca-aichat-chatbox-button svg,
-	.orca-aichat-composer .orca-aichat-chatbox-button-label {
-		color: var(--foreground) !important;
-		fill: var(--foreground) !important;
+	.orca-aichat-chatbox-button.orca-button.plain i,
+	.orca-aichat-chatbox-button.orca-button.plain i::before,
+	.orca-aichat-chatbox-button.orca-button.plain svg,
+	.orca-aichat-chatbox-button.orca-button.plain .orca-aichat-chatbox-button-label,
+	.orca-aichat-chatbox-button-label {
+		color: var(--main-foreground) !important;
+		fill: var(--main-foreground) !important;
 	}
 
 	/* ----------------------------------------------------------
@@ -2169,11 +2289,36 @@
 
 	/* ----------------------------------------------------------
 	   4.31 Tag / Select text in query editor
+	   Default label = light on dark body; hover (blue) = black like icons.
 	   ---------------------------------------------------------- */
 
 	.orca-query-editor .orca-select-button-text,
 	.orca-query-editor .orca-tag,
 	.orca-query-editor .orca-tags-tag-item { color: var(--foreground) !important; }
+
+	.orca-query-editor .orca-select-button:hover,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-text,
+	.orca-query-editor .orca-select-button:hover .orca-tag,
+	.orca-query-editor .orca-select-button:hover .orca-tags-tag-item,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-selector,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-selector::before,
+	.orca-query-editor .orca-select-button:hover .ti,
+	.orca-query-editor .orca-select-button:hover .ti::before,
+	.orca-query-editor .orca-select-button:hover i,
+	.orca-query-editor .orca-select-button:hover i::before,
+	.orca-query-editor .orca-select-button:hover svg {
+		color: var(--main-foreground) !important;
+		fill: var(--main-foreground) !important;
+	}
+
+	/* Header is always on --main — keep labels black (beats rule above) */
+	.orca-query-conditions-header .orca-select-button-text,
+	.orca-query-conditions-header .orca-tag,
+	.orca-query-conditions-header .orca-select-button-selector,
+	.orca-query-conditions-header .orca-select-button-selector::before {
+		color: var(--main-foreground) !important;
+		fill: var(--main-foreground) !important;
+	}
 }
 
 /* ============================================================
@@ -2244,21 +2389,15 @@
 		}
 	}
 
-	/* Block search is a dark-surface popup — undo menu black paint */
-	.orca-popup:has(.orca-search-modal) .ti,
-	.orca-popup:has(.orca-search-modal) .ti::before,
-	.orca-popup:has(.orca-search-modal) svg,
-	.orca-popup:has(.orca-search-modal) svg *,
-	.orca-popup:has(.orca-search-modal) .orca-icon,
-	.orca-search-modal .ti,
-	.orca-search-modal .ti::before,
-	.orca-search-modal svg,
-	.orca-search-modal svg *,
-	.orca-search-modal .orca-icon {
-		color: var(--foreground) !important;
-		fill: var(--foreground) !important;
-		stroke: var(--foreground) !important;
-	}
+	/* Block search: left list icon/breadcrumb hierarchy; preview needs light icons */
+	.orca-search-modal-result-preview .ti,
+	.orca-search-modal-result-preview .ti::before,
+	.orca-search-modal-result-preview svg,
+	.orca-search-modal-result-preview svg *,
+	.orca-search-modal-result-preview .orca-icon,
+	.orca-search-modal > .orca-input .ti,
+	.orca-search-modal > .orca-input .ti::before,
+	.orca-search-modal > .orca-input svg,
 	.orca-search-modal .ti-search,
 	.orca-search-modal .ti-search::before,
 	.orca-search-modal .orca-input-pre,
@@ -2267,26 +2406,32 @@
 		fill: var(--foreground) !important;
 		stroke: var(--foreground) !important;
 	}
-	.orca-search-modal-block-item:hover .ti,
-	.orca-search-modal-block-item:hover .ti::before,
-	.orca-search-modal-block-item:hover svg,
-	.orca-search-modal-block-item:hover svg *,
-	.orca-search-modal-block-item:hover .orca-icon,
-	.orca-search-modal-block-item.selected .ti,
-	.orca-search-modal-block-item.selected .ti::before,
-	.orca-search-modal-block-item.selected svg,
-	.orca-search-modal-block-item.selected svg *,
-	.orca-search-modal-block-item.selected .orca-icon,
-	.orca-search-modal-block-item[aria-selected="true"] .ti,
-	.orca-search-modal-block-item[aria-selected="true"] .ti::before,
-	.orca-search-modal-block-item[aria-selected="true"] svg,
-	.orca-search-modal-block-item[aria-selected="true"] svg *,
-	.orca-search-modal-block-item[aria-selected="true"] .orca-icon,
-	.orca-search-modal-block-item.orca-key-selected .ti,
-	.orca-search-modal-block-item.orca-key-selected .ti::before,
-	.orca-search-modal-block-item.orca-key-selected svg,
-	.orca-search-modal-block-item.orca-key-selected svg *,
-	.orca-search-modal-block-item.orca-key-selected .orca-icon {
+	/* Icons only — don't paint breadcrumb/label the same */
+	.orca-search-modal-result-list .orca-search-modal-result-icon .ti,
+	.orca-search-modal-result-list .orca-search-modal-result-icon .ti::before,
+	.orca-search-modal-result-list .orca-search-modal-result-icon svg,
+	.orca-search-modal-result-list .orca-search-modal-result-icon svg *,
+	.orca-search-modal-result-list .orca-search-modal-result-icon .orca-icon {
+		color: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
+		fill: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
+		stroke: color-mix(in oklab, var(--main-foreground) 55%, var(--nb-info)) !important;
+	}
+	.orca-search-modal-block-item:hover .orca-search-modal-result-icon .ti,
+	.orca-search-modal-block-item:hover .orca-search-modal-result-icon .ti::before,
+	.orca-search-modal-block-item:hover .orca-search-modal-result-icon svg,
+	.orca-search-modal-block-item:hover .orca-search-modal-result-icon svg *,
+	.orca-search-modal-block-item.selected .orca-search-modal-result-icon .ti,
+	.orca-search-modal-block-item.selected .orca-search-modal-result-icon .ti::before,
+	.orca-search-modal-block-item.selected .orca-search-modal-result-icon svg,
+	.orca-search-modal-block-item.selected .orca-search-modal-result-icon svg *,
+	.orca-search-modal-block-item[aria-selected="true"] .orca-search-modal-result-icon .ti,
+	.orca-search-modal-block-item[aria-selected="true"] .orca-search-modal-result-icon .ti::before,
+	.orca-search-modal-block-item[aria-selected="true"] .orca-search-modal-result-icon svg,
+	.orca-search-modal-block-item[aria-selected="true"] .orca-search-modal-result-icon svg *,
+	.orca-search-modal-block-item.orca-key-selected .orca-search-modal-result-icon .ti,
+	.orca-search-modal-block-item.orca-key-selected .orca-search-modal-result-icon .ti::before,
+	.orca-search-modal-block-item.orca-key-selected .orca-search-modal-result-icon svg,
+	.orca-search-modal-block-item.orca-key-selected .orca-search-modal-result-icon svg * {
 		color: var(--main-foreground) !important;
 		fill: var(--main-foreground) !important;
 		stroke: var(--main-foreground) !important;
@@ -2611,26 +2756,57 @@ html.t-light .orca-aichat-chatbox-input:focus-within {
 	border: 2px solid #000 !important;
 }
 
-.orca-aichat-composer .orca-aichat-chatbox-button.orca-button {
-	background: var(--secondary-background) !important;
-	background-color: var(--secondary-background) !important;
-	color: var(--foreground) !important;
-	border: 2px solid var(--border) !important;
-	border-radius: var(--border-radius) !important;
-	box-shadow: var(--shadow) !important;
+.orca-aichat-chatbox {
+	display: flex !important;
+	align-items: stretch !important;
 }
 
-.orca-aichat-composer .orca-aichat-chatbox-button.orca-button:hover {
+/* Beat .orca-button.plain { border:transparent; background:transparent } (spec 0,4,0) */
+.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+	align-self: stretch !important;
+	flex: 0 0 auto !important;
+	height: auto !important;
+	min-height: 100% !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
+	padding-block: 0 !important;
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	background-image: none !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid #000 !important;
+	border-width: 2px !important;
+	border-style: solid !important;
+	border-color: #000 !important;
+	border-radius: var(--border-radius) !important;
+	outline: none !important;
+	box-shadow: var(--box-shadow-x) var(--box-shadow-y) 0 0 #000 !important;
+}
+
+.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):not(.orca-no-editable-btn):hover,
+.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover,
+.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
 	transform: translate(var(--box-shadow-x), var(--box-shadow-y)) !important;
 	box-shadow: none !important;
+	background: var(--main) !important;
+	background-color: var(--main) !important;
+	color: var(--main-foreground) !important;
+	border: 2px solid #000 !important;
+	border-color: #000 !important;
 }
 
-.orca-aichat-composer .orca-aichat-chatbox-button i,
-.orca-aichat-composer .orca-aichat-chatbox-button i::before,
-.orca-aichat-composer .orca-aichat-chatbox-button svg,
-.orca-aichat-composer .orca-aichat-chatbox-button-label {
-	color: var(--foreground) !important;
-	fill: var(--foreground) !important;
+.orca-aichat-chatbox-button.orca-button.plain i,
+.orca-aichat-chatbox-button.orca-button.plain i::before,
+.orca-aichat-chatbox-button.orca-button.plain svg,
+.orca-aichat-chatbox-button.orca-button.plain .orca-aichat-chatbox-button-label,
+.orca-aichat-chatbox-button-label {
+	color: var(--main-foreground) !important;
+	fill: var(--main-foreground) !important;
 }
 
 .orca-aichat-context-chip {
