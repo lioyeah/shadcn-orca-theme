@@ -124,7 +124,7 @@
 	}
 
 	.orca-empty-state, .orca-empty, .orca-placeholder {
-		color: color-mix(in oklab, var(--foreground) 45%, var(--background)) !important;
+		color: color-mix(in oklab, var(--foreground) 65%, var(--background)) !important;
 	}
 }
 
@@ -199,10 +199,11 @@
 	}
 
 	/* Fix 9: remove input focus shadow (double-border) */
-	.orca-input:focus-within, .orca-textarea-input:focus-within {
-		border-color: var(--foreground) !important;
-		box-shadow: none !important;
-	}
+	.orca-input:focus-within, .orca-textarea-input:focus-within, 
+		html .orca-input:focus-within, html .orca-textarea-input:focus-within {
+			border-color: var(--border) !important;
+			box-shadow: none !important;
+		}
 
 	.orca-input:focus-within .orca-input-input,
 	.orca-input:focus-within .orca-input-actualinput,
@@ -271,6 +272,18 @@
 		width: 16px !important;
 		height: 16px !important;
 	}
+	/* Fix: prevent switch toggle from looking larger than track */
+	.orca-switch {
+		min-width: 36px !important;
+		width: auto !important;
+	}
+	/* Force capsule shape everywhere, including settings */
+	.orca-switch,
+	.orca-settings .orca-switch,
+	html .orca-switch {
+		border-radius: 9999px !important;
+	}
+
 
 	/* ----------------------------------------------------------
 	   4.5 Checkbox
@@ -373,6 +386,10 @@
 		background: var(--main) !important; color: var(--main-foreground) !important;
 		border: 2px solid var(--border) !important; border-radius: var(--border-radius) !important;
 		box-shadow: var(--shadow) !important;
+	}
+	/* Prevent Orca's own tooltip from adding a second border */
+	.orca-tooltip[style*="background"] {
+		border: 2px solid var(--border) !important;
 	}
 
 	.orca-notification {
@@ -902,7 +919,7 @@
 		&, & *, & .orca-button.plain, & .orca-button.plain *,
 		& .orca-select-button-text, & .orca-button.plain svg,
 		& .orca-button.plain i, & .orca-button.plain i::before {
-			color: var(--border) !important; fill: var(--border) !important; stroke: var(--border) !important;
+			color: var(--foreground) !important; fill: var(--foreground) !important; stroke: var(--foreground) !important;
 		}
 		& svg, & img, & i, & .orca-icon { vertical-align: middle !important; margin: 0 !important; align-self: center !important; }
 		& .orca-select-button-text { padding: 0 !important; margin: 0 !important; line-height: 1.2 !important; }
@@ -946,24 +963,27 @@
 			border-right: 2px solid var(--border);
 			background: var(--secondary-background) !important;
 			border-radius: var(--border-radius);
-			color: var(--border);
+			color: var(--main-foreground);
 		}
-		/* Fix 5: top title = white text */
+		& * {
+			color: var(--main-foreground) !important;
+		}
 		.title {
 			background: var(--secondary-background) !important;
-			color: var(--main-foreground) !important;
+			font-weight: var(--heading-font-weight) !important;
 		}
 		.item, .plugin-item {
 			border: 2px solid transparent;
 			border-radius: var(--border-radius);
-			color: var(--border);
+			background: transparent !important;
 		}
 		.item.selected, .item:hover,
 		.plugin-item.selected, .plugin-item:hover {
-			background: var(--main);
+			background: var(--main) !important;
+			background-color: var(--main) !important;
 			border: 2px solid var(--border);
 			border-radius: var(--border-radius);
-			color: var(--main-foreground);
+			color: var(--main-foreground) !important;
 		}
 	}
 
@@ -1024,9 +1044,46 @@
 	   4.26 TOC, Plugin Market, Stats, About — @scope
 	   ---------------------------------------------------------- */
 
-	@scope (.orca-toc, .orca-plugin-marketplace, .orca-stats-content, .orca-about-dialog) {
+	@scope (.orca-toc, .orca-plugin-marketplace) {
 		:scope { border: 2px solid var(--border); border-radius: var(--border-radius); box-shadow: var(--shadow); }
 	}
+	@scope (.orca-stats-content, .orca-about-dialog) {
+		:scope {
+			background: var(--secondary-background) !important;
+			border: 2px solid var(--border);
+			border-radius: var(--border-radius);
+			box-shadow: var(--shadow);
+			color: var(--foreground) !important;
+		}
+		/* Stats cards: neobrutalism card style */
+		& .orca-stats-content-card,
+		& [class*="stat-card"],
+		& [class*="StatCard"],
+		& section > div {
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border: 2px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: var(--shadow) !important;
+			padding: 16px !important;
+		}
+		/* Card text elements */
+		& h2, & h3, & h4 {
+			color: var(--main-foreground) !important;
+			font-weight: var(--heading-font-weight) !important;
+		}
+		& svg, & i, & i::before,
+		& [class*="chart"], & [class*="Chart"] {
+			color: var(--main-foreground) !important;
+			fill: var(--main-foreground) !important;
+			stroke: var(--main-foreground) !important;
+		}
+		/* Progress bars in stats */
+		& progress, & [class*="progress"] {
+			border-color: var(--border) !important;
+		}
+	}
+
 
 	.orca-plugin-marketplace { color: var(--foreground) !important; }
 	:root .orca-plugin-marketplace > :not(.orca-plugin-market-card),
