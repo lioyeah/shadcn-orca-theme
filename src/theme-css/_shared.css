@@ -245,43 +245,49 @@
 	}
 
 	/* ----------------------------------------------------------
-	   4.4 Switch — capsule track + round thumb
-	   ---------------------------------------------------------- */
 
 	.orca-switch {
-		border: 2px solid var(--border) !important;
+		border: none !important;
 		border-radius: 9999px !important;
-		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		min-width: 38px !important;
+		height: 20px !important;
+		padding: 2px !important;
 	}
 	.orca-switch[data-state="on"],
 	.orca-switch[data-state="checked"],
 	.orca-switch.on, .orca-switch.switch-on, .orca-switch.orca-switch-on {
-		background: var(--main) !important;
+		background-color: var(--main) !important;
 	}
 	.orca-settings .orca-switch[data-state="on"],
 	.orca-settings .orca-switch[data-state="checked"] {
-		background: var(--main) !important;
+		background-color: var(--main) !important;
 	}
 	.orca-switch-toggle {
 		border: 2px solid var(--border) !important;
-		border-radius: 9999px !important;
-		background: #fff !important;
-		width: 16px !important;
-		height: 16px !important;
-	}
-	/* Fix: prevent switch toggle from looking larger than track */
-	.orca-switch {
-		min-width: 36px !important;
+		border-radius: 50% !important;
+		background-color: #fff !important;
 		width: auto !important;
-		height: 24px !important;
+		height: 100% !important;
+		aspect-ratio: 1 !important;
 	}
-	/* Force capsule shape everywhere, including settings */
-	.orca-switch,
-	.orca-settings .orca-switch,
-	html .orca-switch {
+	/* Toggle ON position — match Orca's translate property */
+	.orca-switch-on .orca-switch-toggle,
+	.orca-switch[data-state="on"] .orca-switch-toggle {
+		translate: 16px !important;
+	}
+	/* Settings switch — force all overrides */
+	html .orca-settings .orca-switch {
 		border-radius: 9999px !important;
+		border: none !important;
+		padding: 2px !important;
 	}
-
+	html .orca-settings .orca-switch-toggle {
+		border-radius: 50% !important;
+		aspect-ratio: 1 !important;
+		height: 100% !important;
+		width: auto !important;
+	}
 
 	/* ----------------------------------------------------------
 	   4.5 Checkbox
@@ -386,7 +392,6 @@
 		outline: 2px solid var(--border) !important;
 		outline-offset: -1px !important;
 		border-radius: var(--border-radius) !important;
-		box-shadow: var(--shadow) !important;
 	}
 
 
@@ -1238,11 +1243,14 @@
 		color: var(--border) !important; fill: var(--border) !important; stroke: var(--border) !important;
 	}
 
-	/* Fix 14: Search icons — black */
+	/* General search icon — black (visible on light backgrounds) */
 	.ti-search, .ti-search::before,
-	#app#app .ti-search.orca-input-pre, #app#app .ti-search.orca-input-pre::before,
-	.orca-command-modal .ti-search, .orca-command-modal .ti-search::before {
+	#app#app .ti-search.orca-input-pre, #app#app .ti-search.orca-input-pre::before {
 		color: var(--border) !important; fill: var(--border) !important; stroke: var(--border) !important;
+	}
+	/* Command palette search icon — white on dark popup bg */
+	.orca-command-modal .ti-search, .orca-command-modal .ti-search::before {
+		color: var(--foreground) !important; fill: var(--foreground) !important; stroke: var(--foreground) !important;
 	}
 
 	:root:root .orca-query-result-list-toolbar {
