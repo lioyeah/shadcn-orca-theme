@@ -380,7 +380,7 @@
 		color: var(--foreground) !important;
 	}
 
-	.orca-popup, .orca-dropdown, .orca-menu, .orca-slash-commands {
+	.orca-popup, .orca-dropdown, .orca-menu, .orca-select-menu, .orca-repo-switcher-modal, .orca-slash-commands {
 		background: var(--main) !important;
 		color: var(--main-foreground) !important;
 		border: 2px solid var(--border) !important;
@@ -391,9 +391,7 @@
 
 	.orca-tooltip {
 		background: var(--main) !important; color: var(--main-foreground) !important;
-		border: none !important;
-		outline: 2px solid var(--border) !important;
-		outline-offset: -1px !important;
+		border: 2px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 	}
 
@@ -1126,10 +1124,10 @@
 
 	@scope (.orca-repo-switcher-button) {
 		:scope {
-			background: var(--main);
-			color: var(--main-foreground);
-			border: 2px solid var(--border);
-			border-radius: var(--border-radius);
+			background: var(--main) !important;
+			color: var(--main-foreground) !important;
+			border: 2px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
 			display: flex; align-items: center; gap: 6px;
 			padding: 8px 10px; width: auto;
 			box-shadow: none; transition: none; transform: none;
@@ -1143,14 +1141,23 @@
 			border: 2px solid var(--border);
 			border-radius: var(--border-radius);
 			width: 24px; height: 24px;
-			display: inline-flex; align-items: center; justify-content: center;
+			display: flex; align-items: center; justify-content: center;
 			flex-shrink: 0; margin-left: auto;
-			font-size: 14px; line-height: 1;
+			font-size: 14px;
 			padding: 0; box-sizing: border-box;
+			line-height: 0;
 		}
-		i.orca-select-button-selector, i.orca-select-button-selector::before {
+		i.orca-select-button-selector {
 			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
 			padding: 0; margin: 0;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			width: 100% !important;
+			height: 100% !important;
+		}
+		i.orca-select-button-selector::before {
+			color: var(--foreground); stroke: var(--foreground); fill: var(--foreground);
 		}
 	}
 
