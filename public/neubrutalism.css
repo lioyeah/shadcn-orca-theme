@@ -391,7 +391,6 @@
 
 	.orca-tooltip {
 		background: var(--main) !important; color: var(--main-foreground) !important;
-		border: 2px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 	}
 
@@ -1129,7 +1128,7 @@
 			border: 2px solid var(--border) !important;
 			border-radius: var(--border-radius) !important;
 			display: flex; align-items: center; gap: 6px;
-			padding: 8px 10px; width: auto;
+			padding: 4px 8px; width: auto !important;
 			box-shadow: none; transition: none; transform: none;
 			font-weight: var(--base-font-weight);
 		}
@@ -1140,7 +1139,7 @@
 			color: var(--foreground);
 			border: 2px solid var(--border);
 			border-radius: var(--border-radius);
-			width: 24px; height: 24px;
+			width: 20px; height: 20px;
 			display: flex; align-items: center; justify-content: center;
 			flex-shrink: 0; margin-left: auto;
 			font-size: 14px;
