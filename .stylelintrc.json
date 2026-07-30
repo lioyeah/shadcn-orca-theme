@@ -11,6 +11,7 @@
     "comment-empty-line-before": null,
     "rule-empty-line-before": null,
     "at-rule-empty-line-before": null,
+    "declaration-block-single-line-max-declarations": null,
     "selector-not-notation": null,
     "no-duplicate-selectors": null,
     "custom-property-empty-line-before": null,

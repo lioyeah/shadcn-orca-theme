@@ -928,7 +928,7 @@
 		border-bottom: 2px solid var(--border) !important;
 	}
 
-	.orca-block-preview:after {
+	.orca-block-preview::after {
 		display: none !important;
 	}
 
