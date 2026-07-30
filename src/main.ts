@@ -10,28 +10,30 @@ import { subscribe } from "valtio";
 const THEME_NAME = "Neubrutalism";
 const THEME_CLASS = "t-neubrutalism";
 const LIGHT_CLASS = "t-light";
-let pluginName: string;
+const THEME_FILE = "neubrutalism.css";
 let themeModeUnsub: (() => void) | null = null;
 
 function syncThemeMode() {
-	const isLight = (orca.state as any).themeMode === "light";
+	const state = orca.state as { themeMode?: string };
+	const isLight = state.themeMode === "light";
 	document.documentElement.classList.toggle(LIGHT_CLASS, isLight);
 }
 
 export async function load(name: string) {
-	pluginName = name;
+	themeModeUnsub?.();
 
-	if ((orca.state as any).themes?.[THEME_NAME] == null) {
-		orca.themes.register(pluginName, THEME_NAME, "neubrutalism.css");
+	const state = orca.state as {
+		themes?: Record<string, unknown>;
+	};
+	if (state.themes?.[THEME_NAME] == null) {
+		orca.themes.register(name, THEME_NAME, THEME_FILE);
 	}
 
 	document.documentElement.classList.add(THEME_CLASS);
 
 	// Sync with Orca's built-in light/dark toggle
 	syncThemeMode();
-	themeModeUnsub = subscribe(orca.state, () => {
-		syncThemeMode();
-	});
+	themeModeUnsub = subscribe(orca.state, syncThemeMode);
 }
 
 export async function unload() {
@@ -40,6 +42,5 @@ export async function unload() {
 		themeModeUnsub = null;
 	}
 	orca.themes.unregister(THEME_NAME);
-	document.documentElement.classList.remove(THEME_CLASS);
-	document.documentElement.classList.remove(LIGHT_CLASS);
+	document.documentElement.classList.remove(THEME_CLASS, LIGHT_CLASS);
 }
