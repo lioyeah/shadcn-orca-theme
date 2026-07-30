@@ -1,28 +1,15 @@
-import react from "@vitejs/plugin-react-swc";
-import externalGlobals from "rollup-plugin-external-globals";
 import { defineConfig } from "vite";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
-  return {
-    define: {
-      "process.env": {
-        NODE_ENV: JSON.stringify(
-          command === "build" ? "production" : "development",
-        ),
-      },
+export default defineConfig({
+  build: {
+    minify: false,
+    lib: {
+      entry: "src/main.ts",
+      fileName: "index",
+      formats: ["es"],
     },
-    build: {
-      minify: false,
-      lib: {
-        entry: "src/main.ts",
-        fileName: "index",
-        formats: ["es"],
-      },
-      rollupOptions: {
-        external: ["react", "valtio"],
-      },
+    rollupOptions: {
+      external: ["valtio"],
     },
-    plugins: [react(), externalGlobals({ react: "React", valtio: "Valtio" })],
-  };
+  },
 });

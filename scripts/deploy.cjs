@@ -6,7 +6,10 @@
 const fs = require("fs");
 const path = require("path");
 
-const DEPLOY_DIR = "/home/ilio/Documents/orca/plugins/Neubrutalism";
+const DEFAULT_DEPLOY_DIR = "/home/ilio/Documents/orca/plugins/Neubrutalism";
+const DEPLOY_DIR = process.env.ORCA_PLUGINS_DIR
+	? path.join(process.env.ORCA_PLUGINS_DIR, "Neubrutalism")
+	: DEFAULT_DEPLOY_DIR;
 
 const ROOT_FILES = ["package.json", "icon.png", "LICENSE", "README.md"];
 
@@ -19,7 +22,7 @@ function copy(src, dest) {
 	const destDir = path.dirname(dest);
 	if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
 	fs.copyFileSync(src, dest);
-	console.log(`  ✅ ${path.basename(src)} → ${dest}`);
+	console.log(`  ${path.basename(src)} → ${dest}`);
 }
 
 function ensureDir(dir) {
@@ -47,8 +50,8 @@ for (const file of DIST_FILES) {
 	if (fs.existsSync(src)) {
 		copy(src, path.join(DEPLOY_DIR, "dist", file));
 	} else {
-		console.log(`  ⚠️  ${file} not found in dist/, skipping`);
+		throw new Error(`${file} not found in dist/. Run npm run build first.`);
 	}
 }
 
-console.log(`\n✅ Deploy complete: ${DEPLOY_DIR}\n`);
+console.log(`\nDeploy complete: ${DEPLOY_DIR}\n`);

@@ -37,8 +37,6 @@ ensureDir(publicDir);
 fs.writeFileSync(path.join(publicDir, outputName), combined, "utf8");
 console.log(`Built ${path.join(publicDir, outputName)}`);
 
-if (fs.existsSync(distDir)) {
-	ensureDir(distDir);
-	fs.writeFileSync(path.join(distDir, outputName), combined, "utf8");
-	console.log(`Copied ${outputName} → dist/`);
-}
+ensureDir(distDir);
+fs.writeFileSync(path.join(distDir, outputName), combined, "utf8");
+console.log(`Copied ${outputName} → dist/`);
