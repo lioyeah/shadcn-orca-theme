@@ -9,6 +9,8 @@
     "dev": "npm run build:css && vite",
     "build": "cross-env NODE_ENV=production tsc && vite build && npm run build:css",
     "deploy": "npm run build && node scripts/deploy.cjs",
+    "audit:css": "node scripts/audit-theme-css.cjs",
+    "audit:css:write": "node scripts/audit-theme-css.cjs --write docs/superpowers/baselines/2026-07-30-css-baseline.json",
     "lint:css": "stylelint \"src/theme-css/**/*.css\" \"src/flavors/**/*.css\"",
     "check": "npm run build && npm run lint:css",
     "preview": "vite preview"
