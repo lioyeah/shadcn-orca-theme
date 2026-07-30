@@ -893,6 +893,18 @@ html.t-light {
 		color: var(--sidebar-foreground) !important;
 	}
 
+	html.t-light nav#sidebar {
+		margin-inline-start: 0 !important;
+		margin-inline-end: 0 !important;
+	}
+
+	html.t-light #headbar,
+	html.t-light .orca-panels-container > header {
+		background: var(--sidebar) !important;
+		background-color: var(--sidebar) !important;
+		color: var(--sidebar-foreground) !important;
+	}
+
 	.orca-panels-container, html body, html body #app {
 		background: var(--secondary-background) !important;
 		box-shadow: none !important; outline: none !important;
@@ -5775,6 +5787,10 @@ html .orca-search-modal {
 	background: var(--secondary-background) !important;
 	background-color: var(--secondary-background) !important;
 	color: var(--foreground) !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+	overflow: hidden !important;
 }
 
 /* Main editor — SidebarInset card (beat native #main flat chrome) */
@@ -5895,6 +5911,33 @@ html .orca-search-modal-footer .orca-search-modal-footer-item {
    Editor preview panes — unlayered escape hatch.
    Reinjects typeset tokens where layered §4.10/§4.11b loses to Orca native CSS.
 */
+
+/* Search panel — the visible panel owns the single border; popup is positioning-only. */
+@layer base {
+	html.t-shadcn .orca-modal-overlay > .orca-popup:has(.orca-search-modal),
+	html.t-shadcn .orca-modal-overlay > .orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal) {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+	}
+
+	html.t-shadcn .orca-modal-overlay > .orca-menu.orca-search-modal,
+	html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		overflow: hidden !important;
+		box-shadow: none !important;
+	}
+
+	html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal > .orca-command-modal-footer,
+	html.t-shadcn .orca-modal-overlay > .orca-menu.orca-search-modal > .orca-search-modal-footer {
+		border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+	}
+
+	html.t-shadcn .orca-modal-overlay > .orca-menu.orca-search-modal > .orca-search-modal-syntax-tips {
+		border-radius: 0 !important;
+	}
+}
 
 html .orca-menu.orca-search-modal .orca-search-modal-result-preview,
 html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor,
@@ -6290,15 +6333,15 @@ html .orca-settings section.views i.orca-select-button-selector {
 }
 
 /* Settings shell — one rounded rect; column panes square at inner seam */
-:root:root html .orca-settings {
+html:root:root .orca-settings {
 	border-radius: var(--radius-lg) !important;
 	overflow: hidden !important;
 }
 
-:root:root html .orca-settings > .sections,
-:root:root html .orca-settings > .views,
-:root:root html .orca-settings > section.views,
-:root:root html .orca-settings section.views {
+html:root:root .orca-settings > .sections,
+html:root:root .orca-settings > .views,
+html:root:root .orca-settings > section.views,
+html:root:root .orca-settings section.views {
 	border-radius: 0 !important;
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
@@ -6332,33 +6375,35 @@ html .orca-settings > .sections .item > i.ti::before {
 	line-height: 1 !important;
 }
 
-/* Menu category headers — flat full-bleed divider (counter .orca-menu padding) */
-html .orca-menu:not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-block-preview):not(.orca-block-preview-popup) .orca-menu-title {
-	margin-inline: -0.3rem !important;
-	padding-inline: calc(0.3rem + 0.75rem) !important;
-	border-radius: 0 !important;
-	border-bottom-left-radius: 0 !important;
-	border-bottom-right-radius: 0 !important;
-	border-top-left-radius: 0 !important;
-	border-top-right-radius: 0 !important;
-}
+@layer base {
+	/* Menu category headers — flat full-bleed divider (counter .orca-menu padding) */
+	html .orca-menu:not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-block-preview):not(.orca-block-preview-popup) .orca-menu-title {
+		margin-inline: -0.3rem !important;
+		padding-inline: calc(0.3rem + 0.75rem) !important;
+		border-radius: 0 !important;
+		border-bottom-left-radius: 0 !important;
+		border-bottom-right-radius: 0 !important;
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+	}
 
-html .orca-menu-title:not(.orca-command-modal-command-header) {
-	border-radius: 0 !important;
-}
+	html .orca-menu-title:not(.orca-command-modal-command-header) {
+		border-radius: 0 !important;
+	}
 
-/* Command palette group labels — flat muted bar, no divider */
-html .orca-command-modal .orca-command-modal-command-header,
-html .orca-command-modal-command-header.orca-menu-title {
-	border-radius: 0 !important;
-	border: none !important;
-	border-bottom: none !important;
-	background: var(--muted) !important;
-	background-color: var(--muted) !important;
-	color: var(--foreground) !important;
-	position: sticky !important;
-	top: 0 !important;
-	z-index: 1 !important;
+	/* Command palette group labels — flat muted bar, no divider */
+	html .orca-command-modal .orca-command-modal-command-header,
+	html .orca-command-modal-command-header.orca-menu-title {
+		border-radius: 0 !important;
+		border: none !important;
+		border-bottom: none !important;
+		background: var(--muted) !important;
+		background-color: var(--muted) !important;
+		color: var(--foreground) !important;
+		position: sticky !important;
+		top: 0 !important;
+		z-index: 1 !important;
+	}
 }
 
 html .orca-query-conditions > .orca-query-conditions-header,
@@ -6487,9 +6532,9 @@ html .orca-plugin-market-card .orca-plugin-market-card-icon i {
 }
 
 /* Plugin market — controls hover (unlayered) */
-:root:root html .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover,
-:root:root html .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover,
-:root:root html .orca-plugin-marketplace-controls .orca-select-button:hover {
+html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover,
+html:root:root .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover,
+html:root:root .orca-plugin-marketplace-controls .orca-select-button:hover {
 	background: var(--accent) !important;
 	background-color: var(--accent) !important;
 	background-image: none !important;
@@ -6500,8 +6545,8 @@ html .orca-plugin-market-card .orca-plugin-market-card-icon i {
 	transform: none !important;
 }
 
-:root:root html .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *,
-:root:root html .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover *,
+html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *,
+html:root:root .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover *,
 html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	color: inherit !important;
 	fill: currentColor !important;
@@ -6512,27 +6557,27 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
    Command palette + menu dividers — max-specificity escape hatch.
    Beats Orca native .orca-menu padding/radius loaded after theme CSS.
 */
-:root:root html .orca-command-modal.orca-menu,
-:root:root html .orca-command-modal.orca-popup.orca-menu,
-:root:root html .orca-popup.orca-command-modal.orca-menu {
+html:root:root .orca-command-modal.orca-menu,
+html:root:root .orca-command-modal.orca-popup.orca-menu,
+html:root:root .orca-popup.orca-command-modal.orca-menu {
 	padding: 0 !important;
 	overflow: hidden !important;
 	border-radius: var(--border-radius) !important;
 	box-shadow: none !important;
 }
 
-:root:root html .orca-command-modal .orca-command-modal-command-list {
+html:root:root .orca-command-modal .orca-command-modal-command-list {
 	border-radius: 0 !important;
 }
 
-:root:root html .orca-command-modal .orca-command-modal-footer {
+html:root:root .orca-command-modal .orca-command-modal-footer {
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
 	border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
 }
 
-:root:root html .orca-command-modal .orca-command-modal-command-header,
-:root:root html .orca-command-modal .orca-menu-title.orca-command-modal-command-header {
+html:root:root .orca-command-modal .orca-command-modal-command-header,
+html:root:root .orca-command-modal .orca-menu-title.orca-command-modal-command-header {
 	border-radius: 0 !important;
 	border: none !important;
 	border-bottom: none !important;
@@ -6544,15 +6589,15 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	z-index: 1 !important;
 }
 
-:root:root html .orca-menu:not(.orca-command-modal):not(.orca-search-modal) .orca-menu-title {
+html:root:root .orca-menu:not(.orca-command-modal):not(.orca-search-modal) .orca-menu-title {
 	margin-inline: -0.3rem !important;
 	padding-inline: calc(0.3rem + 0.75rem) !important;
 	border-radius: 0 !important;
 }
 
 /* Self-fold + embedded AI chat rows — beat native square segmented chrome */
-:root:root html .orca-repr-self-fold-container,
-:root:root html .orca-query-list-block-block .orca-repr-self-fold-container {
+html:root:root .orca-repr-self-fold-container,
+html:root:root .orca-query-list-block-block .orca-repr-self-fold-container {
 	background: var(--card) !important;
 	background-color: var(--card) !important;
 	color: var(--muted-foreground) !important;
@@ -6562,7 +6607,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	overflow: hidden !important;
 }
 
-:root:root html .orca-aichat-collapsible {
+html:root:root .orca-aichat-collapsible {
 	border: 1px solid var(--border) !important;
 	border-radius: var(--radius-md) !important;
 	background: var(--card) !important;
@@ -6573,14 +6618,14 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 }
 
 /* Query embed expanded AI chat — beat native + §3 flat .orca-aichat-container canvas */
-:root:root html :is(
+html:root:root :is(
 	.orca-query-results,
 	.orca-query-editor,
 	.orca-query-result-list,
 	.orca-query-list-block,
 	.orca-query-list-block-block
 ) .orca-aichat-collapsible,
-:root:root html :is(
+html:root:root :is(
 	.orca-query-results,
 	.orca-query-editor,
 	.orca-query-result-list,
@@ -6602,7 +6647,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	min-height: 0 !important;
 }
 
-:root:root html :is(
+html:root:root :is(
 	.orca-query-results,
 	.orca-query-editor,
 	.orca-query-result-list,
@@ -6618,7 +6663,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	overflow: hidden !important;
 }
 
-:root:root html :is(
+html:root:root :is(
 	.orca-query-results,
 	.orca-query-editor,
 	.orca-query-result-list,
@@ -6632,7 +6677,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	max-width: none !important;
 }
 
-:root:root html :is(
+html:root:root :is(
 	.orca-query-results,
 	.orca-query-editor,
 	.orca-query-result-list,
@@ -6645,13 +6690,13 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	box-shadow: none !important;
 }
 
-:root:root html .orca-query-list-block::before {
+html:root:root .orca-query-list-block::before {
 	background-color: var(--card) !important;
 	border-radius: var(--radius-lg) !important;
 }
 
 /* Self-fold header expands to wrap embedded AI chat */
-:root:root html .orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) {
+html:root:root .orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) {
 	display: flex !important;
 	flex-direction: column !important;
 	align-items: stretch !important;
@@ -6662,7 +6707,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	box-shadow: var(--shadow-sm) !important;
 }
 
-:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) {
+html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) {
 	border: none !important;
 	border-radius: 0 !important;
 	box-shadow: none !important;
@@ -6676,7 +6721,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	overflow: hidden !important;
 }
 
-:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
+html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
 	background: var(--background) !important;
 	background-color: var(--background) !important;
 	border-radius: 0 !important;
@@ -6684,7 +6729,7 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	max-width: none !important;
 }
 
-:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
+html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
 	border: none !important;
 	border-top: 1px solid var(--border) !important;
 	border-radius: 0 !important;
@@ -6692,24 +6737,24 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 }
 
 /* Sidebar collapsed — #app.sidebar-closed (class on #app, not body) */
-:root:root html body #app.sidebar-closed #main,
-:root:root html body #app.sidebar-closed > #main,
+html:root:root body #app.sidebar-closed #main,
+html:root:root body #app.sidebar-closed > #main,
 :root:root #app.sidebar-closed > #main.orca-panels-container,
 :root:root #app.sidebar-closed #main.orca-panels-container {
 	margin-inline-start: 0.5rem !important;
 }
 
 /* Tag properties accordion — per-tag accent via --orca-repr-tag-props-color */
-:root:root html .orca-repr-tag-props {
+html:root:root .orca-repr-tag-props {
 	margin-block-start: 1rem !important;
 	border-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 45%, var(--border)) !important;
 }
 
-:root:root html .orca-repr-tag-props-group {
+html:root:root .orca-repr-tag-props-group {
 	border-bottom-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 55%, var(--border)) !important;
 }
 
-:root:root html .orca-repr-tag-props-title {
+html:root:root .orca-repr-tag-props-title {
 	border-top: none !important;
 	margin-top: 0 !important;
 	padding-top: 1rem !important;
@@ -6717,18 +6762,18 @@ html .orca-plugin-marketplace-controls .orca-select-button:hover * {
 	font-weight: 500 !important;
 }
 
-:root:root html .orca-repr-tag-props-title::before,
-:root:root html .orca-repr-tag-props .orca-tag-data-propicon,
-:root:root html .orca-repr-tag-props .orca-tag-data-name {
+html:root:root .orca-repr-tag-props-title::before,
+html:root:root .orca-repr-tag-props .orca-tag-data-propicon,
+html:root:root .orca-repr-tag-props .orca-tag-data-name {
 	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
 }
 
-:root:root html .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
+html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
 	border-bottom-color: var(--orca-repr-tag-props-color, var(--border)) !important;
 }
 
-:root:root html .orca-repr-tag-props .orca-select-button:has(.orca-select-button-text:not(:empty)):hover,
-:root:root html .orca-repr-tag-props .orca-datepicker-btn:not(:has(.placeholder)):hover {
+html:root:root .orca-repr-tag-props .orca-select-button:has(.orca-select-button-text:not(:empty)):hover,
+html:root:root .orca-repr-tag-props .orca-datepicker-btn:not(:has(.placeholder)):hover {
 	background: color-mix(in oklab, var(--accent) 12%, transparent) !important;
 	color: var(--foreground) !important;
 }

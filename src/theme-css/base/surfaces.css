@@ -91,6 +91,18 @@
 		color: var(--sidebar-foreground) !important;
 	}
 
+	html.t-light nav#sidebar {
+		margin-inline-start: 0 !important;
+		margin-inline-end: 0 !important;
+	}
+
+	html.t-light #headbar,
+	html.t-light .orca-panels-container > header {
+		background: var(--sidebar) !important;
+		background-color: var(--sidebar) !important;
+		color: var(--sidebar-foreground) !important;
+	}
+
 	.orca-panels-container, html body, html body #app {
 		background: var(--secondary-background) !important;
 		box-shadow: none !important; outline: none !important;
