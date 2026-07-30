@@ -5,6 +5,8 @@
 > **日期:** 2026-07-24  
 <!-- > **设计来源:** neobrutalism-components (ekmas) × TUI-minimal × shadcn/ui CSS 变量标准化 -->
 
+> **实现说明（2026-07-30）:** 本文描述的是目标架构，不是当前插件能力清单。当前实现将 `_shared.css` 与 `flavors/default.css` 构建为单个 `neubrutalism.css`，由 `main.ts` 注册；动态 flavor 切换、`features/` 和 `plugin-styles/` 目录尚未实现。
+
 ---
 
 ## 1. 设计哲学
@@ -484,7 +486,7 @@ html.t-light {
 
 ## 8. 目录结构（基于 TUI-minimal 改造）
 
-### 8.1 完整项目结构
+### 8.1 目标项目结构（部分尚未落地）
 
 ```
 src/
@@ -492,7 +494,7 @@ src/
 │   ├── orca.themes.register()     # 注册 Neubrutalism 主题
 │   ├── document.documentElement.classList.add(THEME_CLASS)
 │   ├── syncThemeMode()            # 监听 orca.state.themeMode → 切换 html.t-light
-│   └── injectCSSResource()        # 加载 _shared.css + flavor.css + features/ + plugin-styles/
+│   └── register()                 # 注册构建后的 neubrutalism.css
 │
 ├── orca.d.ts                      # Orca API 类型声明（与 TUI-minimal 共享）
 │
@@ -513,14 +515,14 @@ src/
 │           └── 列出未使用的 --orca-color-* 变量
 │
 ├── flavors/                       # 配色层（每个文件仅含变量覆盖）
-│   ├── default.css                # Brutal Yellow（默认）
+│   ├── default.css                # Blue（当前默认）
 │   ├── pink.css                   # Brutal Pink
 │   ├── cyan.css                   # Brutal Cyan
 │   ├── green.css                  # Brutal Lime
 │   ├── violet.css                 # Brutal Purple
 │   └── red.css                    # Brutal Red
 │
-├── features/                      # 可选特性（结构层 + 配色层分离）
+├── features/                      # 未来可选特性（当前不存在）
 │   ├── _pixel-decorations.css     # 像素装饰元素（复古指针、像素分隔线）
 │   ├── _strikethrough-checkboxes.css  # 待办已完成 = 删除线
 │   └── _typewriter-cursor.css     # 打字机光标动画
@@ -532,14 +534,11 @@ src/
 │   └── orca-whiteboard.css        # 白板插件
 │
 └── scripts/
-    ├── build-theme-css.cjs        # CSS 拼接脚本（开发构建用）
-    │   ├── 读取 _shared.css
-    │   ├── 读取选中的 flavor.css
-    │   ├── 读取 features/ 中的激活项
-    │   ├── 读取 plugin-styles/ 中的必需项
-    │   └── 拼接为单个 theme.css 输出
-    └── generate-flavors.cjs       # 从 JSON 配置生成 flavor CSS 文件（可选）
+    └── build-theme-css.cjs        # 拼接 shared + default flavor，输出 public/ 和 dist/
 ```
+
+当前仓库没有 `features/`、`plugin-styles/` 或 `generate-flavors.cjs`。这些目录
+仍可作为未来扩展方向，但不应被当前构建、lint 或部署流程引用。
 
 ### 8.2 文件职责分离
 
@@ -553,7 +552,7 @@ src/
 ### 8.3 main.ts 核心逻辑
 
 ```typescript
-// === src/main.ts ===
+// === 目标架构示例（当前实现不包含动态 flavor 注入） ===
 // Neubrutalism Orca Theme — Entry Point
 // Based on TUI-minimal architecture
 
