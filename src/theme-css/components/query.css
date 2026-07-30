@@ -1,0 +1,214 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.22 Query Editor — accordion.tsx (Card + Borders variant)
+	   .orca-query-conditions = AccordionItem in card shell
+	   .orca-query-conditions-header = AccordionTrigger
+	   .orca-query-conditions-body = AccordionContent
+	   Ref: https://ui.shadcn.com/docs/components/base/accordion
+	   ---------------------------------------------------------- */
+
+	.orca-query-editor { box-sizing: border-box !important; margin-block-start: 0 !important; }
+
+	/* Card shell */
+	.orca-query-editor .orca-query-conditions,
+	.orca-query-editor > .orca-query-conditions-header-non-editable {
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		padding: 0 !important;
+		margin-block-end: 0 !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		font-size: 0.875rem !important;
+	}
+
+	.orca-query-editor .orca-query-conditions {
+		margin-block-start: 0 !important;
+	}
+
+	/* Standalone preset shell (当日创建) — single header row card, keep border */
+	.orca-query-editor > .orca-query-conditions-header-non-editable {
+		min-block-size: 2.75rem !important;
+		block-size: 2.75rem !important;
+		max-block-size: 2.75rem !important;
+		flex-shrink: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.75rem !important;
+		padding: 0.75rem 1rem !important;
+		margin: 0 !important;
+		cursor: pointer !important;
+		overflow: hidden !important;
+		font-weight: 500 !important;
+		line-height: 1.25rem !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		background: var(--card) !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Accordion trigger row inside .orca-query-conditions card */
+	.orca-query-conditions > .orca-query-conditions-header,
+	.orca-query-conditions > .orca-query-conditions-header-non-editable {
+		height: auto !important;
+		min-block-size: 2.75rem !important;
+		block-size: 2.75rem !important;
+		max-block-size: 2.75rem !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		background: transparent !important;
+		color: var(--foreground) !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0.75rem 1rem !important;
+		margin: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.75rem !important;
+		font-size: 0.875rem !important;
+		font-weight: 500 !important;
+		line-height: 1.25rem !important;
+		border-radius: 0 !important;
+		box-sizing: border-box !important;
+		cursor: pointer !important;
+		transition: color 0.15s ease !important;
+		flex-shrink: 0 !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--muted-foreground);
+		--orca-color-text-3: var(--muted-foreground);
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		&, & .orca-button.plain, & .orca-button.plain *,
+		& .orca-select-button-text, & .orca-button.plain svg,
+		& .orca-button.plain i, & .orca-button.plain i::before,
+		& .orca-select-button-selector, & .orca-select-button-selector::before {
+			color: var(--foreground) !important;
+			fill: var(--foreground) !important;
+			stroke: var(--foreground) !important;
+		}
+		& svg, & img, & i, & .orca-icon { vertical-align: middle !important; margin: 0 !important; align-self: center !important; }
+		& .orca-select-button-text { padding: 0 !important; margin: 0 !important; line-height: 1.25rem !important; }
+		& .orca-button.plain:hover, & .orca-button.plain:hover * {
+			border-color: transparent !important; background: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+		}
+	}
+
+	/* Preset tabs — summary header only; hide expanded body / orphan shells */
+	.orca-query-conditions:has(> .orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) > .orca-query-conditions-body,
+	.orca-query-conditions:has(.orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) > .orca-query-conditions-body,
+	.orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions-body,
+	.orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions > .orca-query-conditions-body,
+	.orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions:not(:has(> .orca-query-conditions-header)) {
+		display: none !important;
+	}
+
+	/* Preset card — only non-editable header row (当日创建) */
+	.orca-query-conditions:has(> .orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) {
+		padding: 0 !important;
+		min-block-size: 2.75rem !important;
+		block-size: auto !important;
+		max-block-size: 2.75rem !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		background: var(--card) !important;
+		overflow: hidden !important;
+	}
+
+	/* Nested non-editable inside editable header — content row only */
+	.orca-query-conditions-header .orca-query-conditions-header-non-editable {
+		flex: 1 1 auto !important;
+		min-inline-size: 0 !important;
+		height: auto !important;
+		min-block-size: 0 !important;
+		block-size: auto !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		cursor: inherit !important;
+		gap: 0.5rem !important;
+	}
+
+	.orca-query-conditions > .orca-query-conditions-header-non-editable .orca-query-conditions-cap,
+	.orca-query-conditions-header .orca-query-conditions-cap,
+	.orca-query-conditions-header-non-editable .orca-query-conditions-cap {
+		flex: 1 1 auto !important;
+		min-inline-size: 0 !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
+		white-space: nowrap !important;
+		margin-inline-end: 0 !important;
+		color: var(--foreground) !important;
+		font-weight: 500 !important;
+	}
+
+	.orca-query-conditions-header-non-editable .orca-query-conditions-header-arrow,
+	.orca-query-conditions > .orca-query-conditions-header-non-editable .orca-query-conditions-header-arrow {
+		flex: 0 0 auto !important;
+		margin-inline-end: 0 !important;
+	}
+
+	.orca-query-conditions-header .orca-query-conditions-ref-filter,
+	.orca-query-conditions-header .orca-query-conditions-views,
+	.orca-query-conditions-header .orca-query-conditions-solo,
+	.orca-query-conditions-header .orca-query-conditions-use-ref-date {
+		flex: 0 0 auto !important;
+	}
+
+	.orca-query-conditions-header .orca-query-conditions-ref-filter {
+		margin-inline-start: auto !important;
+		margin-inline-end: 0.5rem !important;
+	}
+
+	.orca-query-conditions-header .orca-query-conditions-views {
+		margin-inline-end: 0.5rem !important;
+	}
+
+	.orca-query-conditions-header .orca-query-conditions-use-ref-date {
+		margin-inline: 0.75rem !important;
+	}
+
+	.orca-query-conditions-header * {
+		flex: 0 0 auto !important;
+	}
+
+	.orca-query-conditions-header .orca-query-conditions-cap {
+		flex: 1 1 auto !important;
+		min-inline-size: 0 !important;
+	}
+
+	.orca-query-conditions-header-arrow {
+		color: var(--muted-foreground) !important;
+		font-size: 1rem !important;
+		line-height: 1 !important;
+		flex-shrink: 0 !important;
+		transition: transform 0.2s ease !important;
+	}
+	.orca-query-conditions-header .orca-select-button-selector,
+	.orca-query-conditions-header .orca-select-button-selector::before,
+	.orca-query-conditions-header-non-editable .orca-select-button-selector,
+	.orca-query-conditions-header-non-editable .orca-select-button-selector::before {
+		color: var(--foreground) !important;
+		fill: var(--foreground) !important;
+	}
+	.orca-query-editor .orca-select-button-selector,
+	.orca-query-editor .orca-select-button-selector::before {
+		color: var(--foreground) !important; fill: var(--foreground) !important;
+	}
+
+	.orca-query-conditions-body {
+		margin-top: 0 !important;
+		padding: 0 1rem 1rem 1rem !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+		overflow: hidden !important;
+	}
+
+}

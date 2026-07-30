@@ -1,0 +1,842 @@
+/*
+   Editor preview panes — unlayered escape hatch.
+   Reinjects typeset tokens where layered §4.10/§4.11b loses to Orca native CSS.
+*/
+
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview,
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor,
+html .orca-block-popup-preview .orca-block-editor,
+html .orca-inline-reference-preview .orca-block-editor,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor,
+html .orca-block-preview,
+html .orca-block-preview .orca-block-editor {
+	color: var(--typeset-fg) !important;
+	font-size: var(--typeset-size) !important;
+	line-height: var(--typeset-leading) !important;
+	--orca-color-text-1: var(--typeset-fg);
+	--orca-color-text-2: var(--typeset-fg-muted);
+	--orca-color-text-3: var(--typeset-fg-subtle);
+	--orca-color-gray-4: var(--typeset-border);
+	--orca-color-gray-5: var(--typeset-handle-passive);
+	--orca-color-gray-6: var(--typeset-handle-passive);
+	--orca-color-gray-7: var(--typeset-handle-active);
+	--orca-block-handle-passive-color: var(--typeset-handle-passive);
+	--orca-color-scope-line: var(--typeset-scope-line);
+	--orca-border-scope: 1px solid var(--typeset-scope-line);
+	--orca-repr-tag-props-color: var(--typeset-tag-props);
+}
+
+/* Collapsed fold dot — unlayered so ring wins over Orca native fill */
+html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored),
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored),
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored),
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored),
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored),
+html .orca-block-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored) {
+	background-color: transparent !important;
+	inline-size: 12px !important;
+	block-size: 12px !important;
+	border: 1.5px solid var(--muted-foreground) !important;
+	box-sizing: border-box !important;
+	top: calc((var(--orca-block-line-height) * 0.5 - 6px)) !important;
+}
+
+html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before,
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before,
+html .orca-block-preview .orca-block-editor .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before {
+	inline-size: 4px !important;
+	block-size: 4px !important;
+	box-shadow: none !important;
+}
+
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle,
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle,
+html .orca-block-preview .orca-block-editor .orca-block-handle {
+	--orca-color-gray-6: var(--typeset-handle-passive) !important;
+	--orca-block-handle-passive-color: var(--typeset-handle-passive) !important;
+}
+
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props-group,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props-group,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props-group,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props-group,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props-group {
+	--orca-color-text-2: var(--typeset-tag-props) !important;
+}
+
+/* Breadcrumb icons */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search),
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search)::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-breadcrumb .ti,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-breadcrumb .ti::before,
+html .orca-block-popup-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search),
+html .orca-block-popup-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search)::before,
+html .orca-block-popup-preview .orca-block-editor .orca-block-breadcrumb .ti,
+html .orca-block-popup-preview .orca-block-editor .orca-block-breadcrumb .ti::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search),
+html .orca-inline-reference-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search)::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-breadcrumb .ti,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-breadcrumb .ti::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search),
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search)::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-breadcrumb .ti,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-breadcrumb .ti::before,
+html .orca-block-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search),
+html .orca-block-preview .orca-block-editor .orca-breadcrumb .ti:not(.orca-input-pre):not(.ti-search)::before,
+html .orca-block-preview .orca-block-editor .orca-block-breadcrumb .ti,
+html .orca-block-preview .orca-block-editor .orca-block-breadcrumb .ti::before {
+	color: var(--typeset-breadcrumb) !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+/* Body block handles — default passive (Orca only tints ::before on :hover) */
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored),
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored),
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored),
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored),
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored),
+html .orca-block-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored) {
+	color: var(--typeset-handle-passive) !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before,
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before,
+html .orca-block-preview .orca-block-editor .orca-block-handle:not(.orca-block-handle-colored)::before {
+	color: var(--typeset-handle-passive) !important;
+}
+
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block-handle[data-icon]::before,
+html .orca-block-popup-preview .orca-block-editor .orca-block-handle[data-icon]::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-block-handle[data-icon]::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block-handle[data-icon]::before,
+html .orca-block-preview .orca-block-editor .orca-block-handle[data-icon]::before {
+	color: inherit !important;
+}
+
+/* Preview: show handles without row hover (read-only pane) */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-main > .orca-repr-main-none-editable > .orca-block-handle,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-main > .orca-repr-main-none-editable > .orca-block-handle,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-main > .orca-repr-main-none-editable > .orca-block-handle,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-main > .orca-repr-main-none-editable > .orca-block-handle,
+html .orca-block-preview .orca-block-editor .orca-repr-main > .orca-repr-main-none-editable > .orca-block-handle {
+	opacity: 1 !important;
+}
+
+/* List markers — same as §4.11 */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-block-handle::before,
+html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before {
+	color: var(--typeset-list-marker) !important;
+}
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before,
+html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before {
+	color: var(--typeset-list-marker-nested) !important;
+}
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-ol-content::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-ol-content::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-ol-content::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ol-content::before,
+html .orca-block-preview .orca-block-editor .orca-repr-ol-content::before {
+	color: var(--foreground) !important;
+}
+
+/* Tag-property icons + section chevrons — break text-2 chain at icon element */
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-menu.orca-search-modal .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon::before,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props-title::before,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props .orca-tag-data-propicon::before {
+	--orca-color-text-2: var(--text-muted) !important;
+	color: var(--orca-repr-tag-props-color, var(--text-muted)) !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+/* Prop row action icons (chevrons, etc.) */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon),
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon)::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon),
+html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon)::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon),
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon)::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon),
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon)::before,
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon),
+html .orca-block-preview .orca-block-editor .orca-repr-tag-props .ti:not(.orca-tag-data-propicon)::before {
+	--orca-color-text-2: var(--text-muted) !important;
+	color: var(--orca-repr-tag-props-color, var(--text-muted)) !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+/* Scope / hierarchy lines — passive border on ::before (Orca only highlights bar on :hover) */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line {
+	--orca-color-scope-line: color-mix(in oklab, var(--foreground) 45%, transparent) !important;
+	--orca-border-scope: 1px solid var(--orca-color-scope-line) !important;
+}
+
+/* Hierarchy / scope guides — beat Orca display:none!important */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line {
+	display: block !important;
+	opacity: 0.55 !important;
+	--orca-color-scope-line: color-mix(in oklab, var(--foreground) 50%, transparent);
+	--orca-border-scope: 1px solid var(--orca-color-scope-line);
+}
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line::before,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line::before {
+	border-left: var(--orca-border-scope) !important;
+	border-color: var(--orca-color-scope-line) !important;
+	opacity: 1 !important;
+}
+
+/* Lock / chrome buttons in preview body — match #main plain buttons */
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain,
+html .orca-block-popup-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain,
+html .orca-inline-reference-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-no-editable-btn.orca-button.plain,
+html .orca-block-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain svg,
+html .orca-block-popup-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti,
+html .orca-block-popup-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti,
+html .orca-inline-reference-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti::before,
+html .orca-block-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti,
+html .orca-block-preview .orca-block-editor .orca-no-editable-btn.orca-button.plain .ti::before {
+	color: var(--foreground) !important;
+	fill: var(--foreground) !important;
+	stroke: var(--foreground) !important;
+}
+
+/* Popup shell — unlayered; strip nested/double frames on menus & selects */
+html .orca-popup:has(> .orca-menu:not(.orca-command-modal)),
+html .orca-popup:has(> .orca-select-menu),
+html .orca-popup:has(> .orca-dropdown),
+html .orca-popup:has(> .orca-slash-commands),
+html .orca-popup:has(> .orca-inline-reference:not(.orca-inline-reference-with-preview)),
+html .orca-popup:has(> .orca-block-preview),
+html .orca-popup.orca-block-preview-popup,
+html .orca-select-menu .orca-popup,
+html .orca-select-popup .orca-popup,
+html .orca-menu .orca-popup:not(.orca-command-modal):not(.orca-search-modal),
+html .orca-dropdown .orca-popup,
+html .orca-repo-switcher-modal .orca-popup,
+html .orca-settings .orca-select-menu .orca-popup,
+html .orca-query-editor .orca-select-menu .orca-popup,
+html .orca-query-conditions .orca-select-menu .orca-popup,
+html .orca-block-editor-query .orca-select-menu .orca-popup,
+html #headbar .orca-popup:has(> .orca-menu),
+html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+/* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
+html .orca-popup:has(.orca-block-popup),
+html .orca-popup:has(.orca-inline-reference-with-preview),
+html .orca-popup.orca-block-popup,
+html .orca-popup.orca-inline-reference-with-preview {
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+}
+
+html .orca-popup:has(> .orca-inline-reference:not(.orca-inline-reference-with-preview)),
+html .orca-popup:has(> .orca-block-preview),
+html .orca-popup.orca-block-preview-popup,
+html .orca-popup.orca-block-preview-popup.orca-menu {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+html .orca-block-popup.orca-menu,
+html .orca-inline-reference.orca-menu,
+html .orca-block-popup,
+html .orca-inline-reference.orca-inline-reference-with-preview {
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	padding: 0 !important;
+}
+
+html .orca-block-popup-results,
+html .orca-inline-reference-results {
+	background: var(--background) !important;
+	background-color: var(--background) !important;
+	color: var(--foreground) !important;
+}
+
+html .orca-popup .orca-block-popup-preview,
+html .orca-popup .orca-inline-reference-preview,
+html .orca-menu .orca-block-popup-preview,
+html .orca-menu .orca-inline-reference-preview,
+html .orca-block-popup .orca-block-popup-preview,
+html .orca-inline-reference .orca-inline-reference-preview,
+html .orca-block-popup-preview,
+html .orca-inline-reference-preview,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview),
+html .orca-inline-reference:not(.orca-inline-reference-with-preview).orca-menu,
+html .orca-popup > .orca-inline-reference:not(.orca-inline-reference-with-preview),
+html .orca-menu .orca-inline-reference:not(.orca-inline-reference-with-preview) {
+	background-color: var(--background) !important;
+	background-image: none !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	color: var(--foreground) !important;
+}
+
+html .orca-block-preview,
+html .orca-block-preview.orca-menu,
+html .orca-menu.orca-block-preview,
+html .orca-popup .orca-block-preview,
+html .orca-popup > .orca-block-preview,
+html .orca-popup.orca-block-preview-popup .orca-block-preview,
+html .orca-popup.orca-block-preview-popup > .orca-block-preview {
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	background-image: none !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--border-radius) !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+}
+
+html .orca-popup.orca-block-preview-popup,
+html .orca-popup.orca-block-preview-popup.orca-menu,
+html .orca-popup:has(> .orca-block-preview) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+/*
+   Settings → Keyboard shortcuts table (unlayered).
+   Column labels = .orca-table-header-cell; category rows = .orca-settings-shortcuts-header.
+*/
+html .orca-settings section.views .shortcut-table .orca-table-header-cell {
+	background: transparent !important;
+	background-color: transparent !important;
+	color: var(--muted-foreground) !important;
+	border-bottom: none !important;
+}
+
+html .orca-settings section.views .shortcut-table .orca-settings-shortcuts-header {
+	background: var(--muted) !important;
+	background-color: var(--muted) !important;
+	color: var(--foreground) !important;
+	grid-column: 1 / -1 !important;
+}
+
+html .orca-settings section.views .desc,
+html .orca-settings section.views .plugins-section {
+	color: var(--muted-foreground) !important;
+}
+
+html .orca-settings section.views .orca-select-button-selector,
+html .orca-settings section.views .orca-select-button-selector::before,
+html .orca-settings section.views i.orca-select-button-selector {
+	color: var(--muted-foreground) !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+/* Settings shell — one rounded rect; column panes square at inner seam */
+:root:root html .orca-settings {
+	border-radius: var(--radius-lg) !important;
+	overflow: hidden !important;
+}
+
+:root:root html .orca-settings > .sections,
+:root:root html .orca-settings > .views,
+:root:root html .orca-settings > section.views,
+:root:root html .orca-settings section.views {
+	border-radius: 0 !important;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
+/* Settings left nav — icon vertical center (unlayered; not .orca-menu-*) */
+html .orca-settings > .sections .item {
+	align-items: center !important;
+}
+
+html .orca-settings > .sections .item > i,
+html .orca-settings > .sections .item > i.ti {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	align-self: center !important;
+	flex: 0 0 1rem !important;
+	inline-size: 1rem !important;
+	block-size: 1rem !important;
+	margin-block: 0 !important;
+	margin-top: 0 !important;
+	font-size: 1rem !important;
+	line-height: 1 !important;
+}
+
+html .orca-settings > .sections .item > i::before,
+html .orca-settings > .sections .item > i.ti::before {
+	display: block !important;
+	line-height: 1 !important;
+}
+
+/* Menu category headers — flat full-bleed divider (counter .orca-menu padding) */
+html .orca-menu:not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-block-preview):not(.orca-block-preview-popup) .orca-menu-title {
+	margin-inline: -0.3rem !important;
+	padding-inline: calc(0.3rem + 0.75rem) !important;
+	border-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+
+html .orca-menu-title:not(.orca-command-modal-command-header) {
+	border-radius: 0 !important;
+}
+
+/* Command palette group labels — flat muted bar, no divider */
+html .orca-command-modal .orca-command-modal-command-header,
+html .orca-command-modal-command-header.orca-menu-title {
+	border-radius: 0 !important;
+	border: none !important;
+	border-bottom: none !important;
+	background: var(--muted) !important;
+	background-color: var(--muted) !important;
+	color: var(--foreground) !important;
+	position: sticky !important;
+	top: 0 !important;
+	z-index: 1 !important;
+}
+
+html .orca-query-conditions > .orca-query-conditions-header,
+html .orca-query-conditions > .orca-query-conditions-header-non-editable {
+	height: auto !important;
+	min-block-size: 2.75rem !important;
+	block-size: 2.75rem !important;
+	max-block-size: 2.75rem !important;
+	overflow-x: auto !important;
+	overflow-y: hidden !important;
+	padding: 0.75rem 1rem !important;
+	display: flex !important;
+	align-items: center !important;
+	box-sizing: border-box !important;
+	border: none !important;
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+html .orca-query-conditions:has(> .orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) > .orca-query-conditions-body,
+html .orca-query-conditions:has(.orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) > .orca-query-conditions-body,
+html .orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions-body,
+html .orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions > .orca-query-conditions-body,
+html .orca-query-editor > .orca-query-conditions-header-non-editable + .orca-query-conditions:not(:has(> .orca-query-conditions-header)) {
+	display: none !important;
+}
+
+html .orca-query-conditions:has(> .orca-query-conditions-header-non-editable):not(:has(> .orca-query-conditions-header)) {
+	padding: 0 !important;
+	min-block-size: 2.75rem !important;
+	block-size: auto !important;
+	max-block-size: 2.75rem !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	background: var(--card) !important;
+	overflow: hidden !important;
+}
+
+html .orca-query-editor > .orca-query-conditions-header-non-editable {
+	min-block-size: 2.75rem !important;
+	block-size: 2.75rem !important;
+	max-block-size: 2.75rem !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	background: var(--card) !important;
+	overflow: hidden !important;
+	padding: 0.75rem 1rem !important;
+	box-sizing: border-box !important;
+}
+
+html .orca-query-editor .orca-query-conditions,
+html .orca-block-editor-query .orca-query-conditions {
+	margin-block-start: 0 !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	background: var(--card) !important;
+	padding: 0 !important;
+}
+
+html .orca-query-conditions-header .orca-query-conditions-header-non-editable {
+	flex: 1 1 auto !important;
+	min-block-size: 0 !important;
+	block-size: auto !important;
+	height: auto !important;
+	padding: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+html .orca-query-editor .orca-query-conditions,
+html .orca-block-editor-query .orca-query-conditions {
+	margin-block-start: 0 !important;
+}
+
+html .orca-block-editor-query .orca-query-editor > .orca-segmented {
+	flex-shrink: 0 !important;
+	margin-block-end: 0.5rem !important;
+	min-block-size: 2.25rem !important;
+	block-size: 2.25rem !important;
+	box-sizing: border-box !important;
+}
+
+html .orca-block-editor-query .orca-query-editor > :is(.orca-query-conditions, .orca-query-conditions-header-non-editable):first-child {
+	margin-block-start: calc(2.25rem + 0.5rem) !important;
+}
+
+html .orca-block-editor-query .orca-query-editor > .orca-segmented + :is(.orca-query-conditions, .orca-query-conditions-header-non-editable) {
+	margin-block-start: 0 !important;
+}
+
+html .orca-block-editor-query-tabs-container {
+	margin-block-end: 0.75rem !important;
+}
+
+html .orca-block-editor-query-tabs.orca-segmented {
+	flex-shrink: 0 !important;
+	min-block-size: 2.25rem !important;
+	block-size: 2.25rem !important;
+	margin-block-end: 0 !important;
+	box-sizing: border-box !important;
+}
+
+html .orca-block-editor-query-views,
+html .orca-block-editor-query .orca-query-editor {
+	margin-block-start: 0 !important;
+	padding-block-start: 0 !important;
+}
+
+/* Plugin market cards — card token pairing */
+html .orca-plugin-market-card,
+html .orca-plugin-market-card .orca-plugin-market-card-title,
+html .orca-plugin-market-card .orca-plugin-market-card-id,
+html .orca-plugin-market-card .orca-plugin-market-card-version {
+	color: var(--card-foreground) !important;
+}
+
+html .orca-plugin-market-card .orca-plugin-market-card-author,
+html .orca-plugin-market-card .orca-plugin-market-card-desc,
+html .orca-plugin-market-card .orca-plugin-market-card-version-local,
+html .orca-plugin-market-card .orca-plugin-market-card-icon i {
+	color: var(--muted-foreground) !important;
+}
+
+/* Plugin market — controls hover (unlayered) */
+:root:root html .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover,
+:root:root html .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover,
+:root:root html .orca-plugin-marketplace-controls .orca-select-button:hover {
+	background: var(--accent) !important;
+	background-color: var(--accent) !important;
+	background-image: none !important;
+	color: var(--accent-foreground) !important;
+	border: 1px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+	transform: none !important;
+}
+
+:root:root html .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *,
+:root:root html .orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover *,
+html .orca-plugin-marketplace-controls .orca-select-button:hover * {
+	color: inherit !important;
+	fill: currentColor !important;
+	stroke: currentColor !important;
+}
+
+/*
+   Command palette + menu dividers — max-specificity escape hatch.
+   Beats Orca native .orca-menu padding/radius loaded after theme CSS.
+*/
+:root:root html .orca-command-modal.orca-menu,
+:root:root html .orca-command-modal.orca-popup.orca-menu,
+:root:root html .orca-popup.orca-command-modal.orca-menu {
+	padding: 0 !important;
+	overflow: hidden !important;
+	border-radius: var(--border-radius) !important;
+	box-shadow: none !important;
+}
+
+:root:root html .orca-command-modal .orca-command-modal-command-list {
+	border-radius: 0 !important;
+}
+
+:root:root html .orca-command-modal .orca-command-modal-footer {
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+}
+
+:root:root html .orca-command-modal .orca-command-modal-command-header,
+:root:root html .orca-command-modal .orca-menu-title.orca-command-modal-command-header {
+	border-radius: 0 !important;
+	border: none !important;
+	border-bottom: none !important;
+	background: var(--muted) !important;
+	background-color: var(--muted) !important;
+	color: var(--foreground) !important;
+	position: sticky !important;
+	top: 0 !important;
+	z-index: 1 !important;
+}
+
+:root:root html .orca-menu:not(.orca-command-modal):not(.orca-search-modal) .orca-menu-title {
+	margin-inline: -0.3rem !important;
+	padding-inline: calc(0.3rem + 0.75rem) !important;
+	border-radius: 0 !important;
+}
+
+/* Self-fold + embedded AI chat rows — beat native square segmented chrome */
+:root:root html .orca-repr-self-fold-container,
+:root:root html .orca-query-list-block-block .orca-repr-self-fold-container {
+	background: var(--card) !important;
+	background-color: var(--card) !important;
+	color: var(--muted-foreground) !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	overflow: hidden !important;
+}
+
+:root:root html .orca-aichat-collapsible {
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--card) !important;
+	background-color: var(--card) !important;
+	box-shadow: var(--shadow-sm) !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+}
+
+/* Query embed expanded AI chat — beat native + §3 flat .orca-aichat-container canvas */
+:root:root html :is(
+	.orca-query-results,
+	.orca-query-editor,
+	.orca-query-result-list,
+	.orca-query-list-block,
+	.orca-query-list-block-block
+) .orca-aichat-collapsible,
+:root:root html :is(
+	.orca-query-results,
+	.orca-query-editor,
+	.orca-query-result-list,
+	.orca-query-list-block,
+	.orca-query-list-block-block
+) .orca-aichat-container:not(.orca-maximized) {
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--card) !important;
+	background-color: var(--card) !important;
+	background-image: none !important;
+	box-shadow: var(--shadow-sm) !important;
+	overflow: hidden !important;
+	margin-block: 0.5rem !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	height: auto !important;
+	max-height: 85cqh !important;
+	min-height: 0 !important;
+}
+
+:root:root html :is(
+	.orca-query-results,
+	.orca-query-editor,
+	.orca-query-result-list,
+	.orca-query-list-block,
+	.orca-query-list-block-block
+) .orca-aichat-collapsible > .orca-aichat-container:not(.orca-maximized) {
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	margin: 0 !important;
+	height: auto !important;
+	max-height: 85cqh !important;
+	overflow: hidden !important;
+}
+
+:root:root html :is(
+	.orca-query-results,
+	.orca-query-editor,
+	.orca-query-result-list,
+	.orca-query-list-block,
+	.orca-query-list-block-block
+) .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
+	background: var(--background) !important;
+	background-color: var(--background) !important;
+	border-radius: 0 !important;
+	margin-inline: 0 !important;
+	max-width: none !important;
+}
+
+:root:root html :is(
+	.orca-query-results,
+	.orca-query-editor,
+	.orca-query-result-list,
+	.orca-query-list-block,
+	.orca-query-list-block-block
+) .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
+	border: none !important;
+	border-top: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+
+:root:root html .orca-query-list-block::before {
+	background-color: var(--card) !important;
+	border-radius: var(--radius-lg) !important;
+}
+
+/* Self-fold header expands to wrap embedded AI chat */
+:root:root html .orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: stretch !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+}
+
+:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) {
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	margin: 0 !important;
+	width: 100% !important;
+	height: auto !important;
+	max-height: 85cqh !important;
+	background: var(--card) !important;
+	background-color: var(--card) !important;
+	background-image: none !important;
+	overflow: hidden !important;
+}
+
+:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
+	background: var(--background) !important;
+	background-color: var(--background) !important;
+	border-radius: 0 !important;
+	margin-inline: 0 !important;
+	max-width: none !important;
+}
+
+:root:root html .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
+	border: none !important;
+	border-top: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+
+/* Sidebar collapsed — #app.sidebar-closed (class on #app, not body) */
+:root:root html body #app.sidebar-closed #main,
+:root:root html body #app.sidebar-closed > #main,
+:root:root #app.sidebar-closed > #main.orca-panels-container,
+:root:root #app.sidebar-closed #main.orca-panels-container {
+	margin-inline-start: 0.5rem !important;
+}
+
+/* Tag properties accordion — per-tag accent via --orca-repr-tag-props-color */
+:root:root html .orca-repr-tag-props {
+	margin-block-start: 1rem !important;
+	border-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 45%, var(--border)) !important;
+}
+
+:root:root html .orca-repr-tag-props-group {
+	border-bottom-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 55%, var(--border)) !important;
+}
+
+:root:root html .orca-repr-tag-props-title {
+	border-top: none !important;
+	margin-top: 0 !important;
+	padding-top: 1rem !important;
+	color: var(--orca-repr-tag-props-color, var(--foreground)) !important;
+	font-weight: 500 !important;
+}
+
+:root:root html .orca-repr-tag-props-title::before,
+:root:root html .orca-repr-tag-props .orca-tag-data-propicon,
+:root:root html .orca-repr-tag-props .orca-tag-data-name {
+	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+}
+
+:root:root html .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
+	border-bottom-color: var(--orca-repr-tag-props-color, var(--border)) !important;
+}
+
+:root:root html .orca-repr-tag-props .orca-select-button:has(.orca-select-button-text:not(:empty)):hover,
+:root:root html .orca-repr-tag-props .orca-datepicker-btn:not(:has(.placeholder)):hover {
+	background: color-mix(in oklab, var(--accent) 12%, transparent) !important;
+	color: var(--foreground) !important;
+}
+

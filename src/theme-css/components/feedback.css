@@ -1,0 +1,336 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.26 TOC, Plugin Market, Stats, About
+	   Stats = shadcn card pattern (multiple cards):
+	   1 hero + 3 metric cards + journal (horizontal bars) + creative (columns)
+	   Ref: shadcn card.tsx + chart tokens
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-toc, .orca-plugin-marketplace) {
+		:scope { border: 1px solid var(--border); border-radius: var(--border-radius); box-shadow: none; }
+	}
+
+	/*
+	   Stats / About shells: ONLY strip blue popup chrome.
+	   Do NOT touch .orca-modal-overlay or position/display.
+	*/
+	.orca-stats-modal,
+	.orca-popup:has(> .orca-stats-content),
+	.orca-about-modal,
+	.orca-popup:has(> .orca-about-dialog) {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	/* Outer panel behind the 6 cards — dark surface like sidebar, not blue */
+	.orca-stats-content {
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 16px !important;
+		padding: 20px !important;
+		width: 560px !important;
+		max-width: min(560px, 90vw) !important;
+		box-sizing: border-box !important;
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	/* —— 1. Large number card (fig 3) —— */
+	.orca-stats-content .orca-stats-hero {
+		text-align: center !important;
+		padding: 28px 20px !important;
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-lg) !important;
+		box-shadow: var(--shadow-sm) !important;
+	}
+	.orca-stats-content .orca-stats-hero-value {
+		font-size: 3rem !important;
+		font-weight: var(--heading-font-weight) !important;
+		line-height: 1.1 !important;
+		color: var(--card-foreground) !important;
+		margin-bottom: 6px !important;
+	}
+	.orca-stats-content .orca-stats-hero-label {
+		font-size: 0.95rem !important;
+		font-weight: var(--heading-font-weight) !important;
+		color: var(--card-foreground) !important;
+	}
+	.orca-stats-content .orca-stats-hero-subtitle {
+		font-size: 0.75rem !important;
+		color: var(--muted-foreground) !important;
+		margin-top: 8px !important;
+		opacity: 1 !important;
+	}
+
+	/* —— 2–4. Small number cards (fig 4) —— */
+	.orca-stats-content .orca-stats-grid {
+		display: grid !important;
+		grid-template-columns: repeat(3, 1fr) !important;
+		gap: 12px !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+	.orca-stats-content .orca-stats-card {
+		display: flex !important;
+		flex-direction: column !important;
+		justify-content: center !important;
+		align-items: center !important;
+		text-align: center !important;
+		gap: 4px !important;
+		padding: 16px 10px !important;
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-lg) !important;
+		box-shadow: var(--shadow-sm) !important;
+	}
+	.orca-stats-content .orca-stats-card:hover {
+		background: var(--card) !important;
+		border-color: var(--border) !important;
+		transform: none !important;
+	}
+	.orca-stats-content .orca-stats-card-label {
+		font-size: 0.75rem !important;
+		font-weight: var(--base-font-weight) !important;
+		margin-top: 0 !important;
+		order: -1 !important;
+		color: var(--muted-foreground) !important;
+		opacity: 1 !important;
+	}
+	.orca-stats-content .orca-stats-card-value {
+		font-size: 1.5rem !important;
+		font-weight: var(--heading-font-weight) !important;
+		line-height: 1.2 !important;
+		color: var(--card-foreground) !important;
+	}
+
+	/* —— 5–6. Chart cards (fig 2): dark shell, blue bars + black stroke —— */
+	.orca-stats-content .orca-stats-section {
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		padding: 16px 18px !important;
+		border-top: 1px solid var(--border) !important;
+	}
+	.orca-stats-content .orca-stats-section-title {
+		font-size: 0.95rem !important;
+		font-weight: var(--heading-font-weight) !important;
+		margin: 0 0 14px !important;
+		color: var(--foreground) !important;
+		text-transform: none !important;
+		letter-spacing: 0 !important;
+	}
+
+	/* Journal = horizontal bar chart */
+	.orca-stats-content .orca-stats-journal-chart {
+		display: grid !important;
+		grid-template-columns: auto 1fr auto !important;
+		align-items: center !important;
+		gap: 12px 14px !important;
+		max-height: 240px !important;
+		overflow-y: auto !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+	.orca-stats-content .orca-stats-journal-year,
+	.orca-stats-content .orca-stats-journal-count {
+		font-size: 0.8rem !important;
+		color: var(--foreground) !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+	.orca-stats-content .orca-stats-journal-count {
+		text-align: right !important;
+		opacity: 0.75 !important;
+	}
+	.orca-stats-content .orca-stats-journal-bar-track {
+		position: relative !important;
+		height: 18px !important;
+		background: color-mix(in oklab, var(--foreground) 10%, var(--secondary-background)) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		overflow: hidden !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+	.orca-stats-content .orca-stats-journal-bar-fill {
+		position: absolute !important;
+		inset: 0 !important;
+		background: var(--main) !important;
+		opacity: 1 !important;
+		border: none !important;
+		box-shadow: none !important;
+		border-radius: 0 !important;
+		padding: 0 !important;
+	}
+
+	/* Creative hours = vertical column chart (rounded rects, not capsules).
+	   .orca-popup * sets border-radius:5px which turns narrow bars into pills. */
+	.orca-stats-content .orca-stats-chart {
+		height: 160px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		overflow: hidden !important;
+		min-height: 0 !important;
+	}
+	.orca-stats-content .orca-stats-chart svg {
+		flex: 1 1 auto !important;
+		width: 100% !important;
+		min-height: 0 !important;
+		color: var(--main) !important;
+		fill: var(--main) !important;
+		margin-bottom: 6px !important;
+		overflow: hidden !important;
+	}
+	.orca-stats-content .orca-stats-chart-bar,
+	.orca-stats-content .orca-stats-chart rect.orca-stats-chart-bar,
+	.orca-popup .orca-stats-chart-bar,
+	.orca-popup .orca-stats-chart rect {
+		fill: var(--main) !important;
+		stroke: var(--border) !important;
+		stroke-width: 2px !important;
+		paint-order: stroke fill !important;
+		/* small corner radius only — keep rectangular body */
+		border-radius: 2px !important;
+		rx: 2 !important;
+		ry: 2 !important;
+		transition: opacity 0.15s ease !important;
+	}
+	.orca-stats-content .orca-stats-chart-bar:hover { opacity: 0.85 !important; }
+	.orca-stats-content .orca-stats-chart-labels {
+		display: flex !important;
+		justify-content: space-between !important;
+		flex: 0 0 auto !important;
+		font-size: 0.7rem !important;
+		color: color-mix(in oklab, var(--foreground) 70%, transparent) !important;
+		padding: 0 2px !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		opacity: 1 !important;
+	}
+
+	/* Chart card clips children; keep labels inside */
+	.orca-stats-content .orca-stats-section:has(.orca-stats-chart) {
+		overflow: hidden !important;
+	}
+
+	.orca-stats-content h2,
+	.orca-stats-content h3 {
+		color: var(--foreground) !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	/* About — match sidebar (secondary), not stats main blue */
+	.orca-about-dialog {
+		background: var(--secondary-background) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		color: var(--foreground) !important;
+	}
+	.orca-about-dialog .orca-about-title {
+		color: var(--foreground) !important;
+	}
+	.orca-about-dialog .orca-about-subtitle,
+	.orca-about-dialog .orca-about-subtitle-link {
+		color: color-mix(in oklab, var(--foreground) 70%, transparent) !important;
+	}
+
+	.orca-plugin-marketplace { color: var(--foreground) !important; }
+	/* Shell chrome only — grid/card innards use on-main pairing below */
+	.orca-plugin-marketplace > :not(.orca-plugin-marketplace-grid),
+	.orca-plugin-marketplace > :not(.orca-plugin-marketplace-grid) * {
+		color: var(--foreground) !important;
+	}
+
+	.orca-plugin-market-card {
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		--orca-color-text-1: var(--card-foreground);
+		--orca-color-text-2: var(--muted-foreground);
+		--orca-color-gray-4: var(--muted-foreground);
+		--orca-color-gray-5: var(--muted-foreground);
+		--orca-color-gray-6: var(--muted-foreground);
+		--orca-color-primary-5: var(--card-foreground);
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: var(--shadow-sm) !important;
+		transition: none !important;
+		&:hover { box-shadow: var(--shadow-sm) !important; border-color: var(--border) !important; }
+		& .orca-plugin-market-card-title,
+		& .orca-plugin-market-card-id,
+		& .orca-plugin-market-card-version {
+			color: var(--card-foreground) !important;
+		}
+		& .orca-plugin-market-card-author,
+		& .orca-plugin-market-card-desc,
+		& .orca-plugin-market-card-version-local {
+			color: var(--muted-foreground) !important;
+		}
+		& .orca-plugin-market-card-icon i {
+			color: var(--muted-foreground) !important;
+		}
+		& .orca-button.solid {
+			background: var(--primary) !important;
+			background-color: var(--primary) !important;
+			color: var(--primary-foreground) !important;
+			&:hover { opacity: 0.9 !important; }
+		}
+	}
+
+	/*
+	   Controls row — sort select + refresh/update plain buttons (ghost hover).
+	*/
+	.orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button),
+	.orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain,
+	.orca-plugin-marketplace-controls .orca-select-button {
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover,
+	.orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover,
+	.orca-plugin-marketplace-controls .orca-select-button:hover {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		background-image: none !important;
+		color: var(--accent-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		transform: none !important;
+	}
+
+	.orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *,
+	.orca-plugin-marketplace-controls .orca-plugin-marketplace-refresh.orca-button.plain:hover *,
+	.orca-plugin-marketplace-controls .orca-select-button:hover * {
+		color: inherit !important;
+		fill: currentColor !important;
+		stroke: currentColor !important;
+	}
+
+}

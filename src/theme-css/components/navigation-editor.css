@@ -1,0 +1,359 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.16 Menu / Command Items
+	   ---------------------------------------------------------- */
+
+	.orca-menu-title:not(.orca-command-modal-command-header) {
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border-bottom: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		font-weight: var(--heading-font-weight) !important;
+	}
+
+	.orca-command-modal-command-header.orca-menu-title {
+		border-radius: 0 !important;
+		border: none !important;
+		border-bottom: none !important;
+		background: var(--muted) !important;
+		background-color: var(--muted) !important;
+		color: var(--foreground) !important;
+		position: sticky !important;
+		top: 0 !important;
+		z-index: 1 !important;
+	}
+
+	.orca-menu-item, .orca-menu-text {
+		background: transparent !important;
+		background-color: transparent !important;
+		background-image: none !important;
+		border: 1px solid transparent !important;
+		align-items: center !important;
+	}
+
+	/* Menu leading icons — dropdown-menu.tsx: items-center, icon size-4 (1rem) */
+	.orca-menu-text-icon,
+	.orca-menu-text-pre,
+	.orca-menu-item > .ti,
+	.orca-menu-item > .orca-icon,
+	.orca-menu-text > .ti:first-child {
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		align-self: center !important;
+		flex: 0 0 1rem !important;
+		inline-size: 1rem !important;
+		block-size: 1rem !important;
+		margin-block: 0 !important;
+		margin-top: 0 !important;
+		font-size: 1rem !important;
+		line-height: 1 !important;
+	}
+
+	.orca-menu-text-icon .ti,
+	.orca-menu-text-pre .ti,
+	.orca-menu-item > .ti,
+	.orca-menu-text > .ti:first-child {
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		inline-size: 1rem !important;
+		block-size: 1rem !important;
+		font-size: 1rem !important;
+		line-height: 1 !important;
+	}
+
+	.orca-menu-text-icon .ti::before,
+	.orca-menu-text-pre .ti::before,
+	.orca-menu-item > .ti::before,
+	.orca-menu-text > .ti:first-child::before {
+		display: block !important;
+		line-height: 1 !important;
+	}
+
+	.orca-key-selected,
+	html:not(#_) .orca-key-selected,
+	.orca-menu-text.orca-key-selected,
+	html:not(#_) .orca-menu-text.orca-key-selected {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		background-image: none !important;
+		color: var(--accent-foreground) !important;
+		outline: none !important;
+
+		& .ti,
+		& .ti::before,
+		& .orca-icon,
+		& .orca-menu-text-icon,
+		& svg,
+		& svg * {
+			color: inherit !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+
+	.orca-menu-item:focus, .orca-menu-item:active, .orca-menu-item[aria-selected="true"],
+	.orca-menu-text:focus, .orca-menu-text:active {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		background-image: none !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-menu-item.selected, .orca-menu-item:hover, .orca-menu-item:focus-visible,
+	.orca-menu .orca-menu-item.selected, .orca-menu .orca-menu-item:hover, .orca-menu .orca-menu-item:focus-visible,
+	.orca-slash-commands .orca-menu-item.selected, .orca-slash-commands .orca-menu-item:hover, .orca-slash-commands .orca-menu-item:focus-visible,
+	.orca-menu-text.selected, .orca-menu-text:hover, .orca-menu-text:focus-visible,
+	.orca-menu .orca-menu-text.selected, .orca-menu .orca-menu-text:hover, .orca-menu .orca-menu-text:focus-visible {
+		border-color: transparent !important;
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		background-image: none !important;
+		color: var(--accent-foreground) !important;
+		outline: none !important;
+		box-shadow: none !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+
+		& .ti,
+		& .ti::before,
+		& .orca-icon,
+		& .orca-menu-text-icon,
+		& svg,
+		& svg * {
+			color: inherit !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+
+	.orca-menu-item.disabled, .orca-menu-text.disabled { opacity: 0.5 !important; color: inherit !important; }
+
+	/* ----------------------------------------------------------
+	   4.17 Sidebar Items
+	   ---------------------------------------------------------- */
+
+	.orca-sidebar-item, .orca-list-item,
+	.orca-fav-item-item, .orca-search-result-item,
+	.orca-aliased-block-item,
+	.orca-page-item {
+		border: 1px solid transparent !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+		&:hover, &.selected {
+			background: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+			border-color: transparent !important;
+			--orca-color-text-1: var(--accent-foreground);
+			--orca-color-text-2: var(--muted-foreground);
+			--orca-color-text-3: var(--muted-foreground);
+		}
+		&.selected {
+			font-weight: var(--heading-font-weight) !important;
+		}
+		&:hover .orca-aliased-block-backcount,
+		&.selected .orca-aliased-block-backcount {
+			color: var(--muted-foreground) !important;
+		}
+		&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji),
+		&:hover .orca-fav-item-icon,
+		&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji),
+		&.selected .orca-fav-item-icon,
+		&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti,
+		&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti::before,
+		&:hover .orca-fav-item-icon .ti,
+		&:hover .orca-fav-item-icon .ti::before,
+		&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti,
+		&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti::before,
+		&.selected .orca-fav-item-icon .ti,
+		&.selected .orca-fav-item-icon .ti::before {
+			color: var(--accent-foreground) !important;
+			fill: var(--accent-foreground) !important;
+		}
+	}
+
+	.orca-tags-tag-item {
+		border: 1px solid transparent !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+		&:hover, &.selected {
+			background: var(--accent) !important;
+			border-color: transparent !important;
+			--orca-color-text-1: var(--accent-foreground);
+			--orca-color-text-2: var(--muted-foreground);
+			--orca-color-text-3: var(--muted-foreground);
+		}
+		&:hover .orca-tags-tag-name,
+		&.selected .orca-tags-tag-name {
+			color: var(--accent-foreground) !important;
+		}
+		&.selected {
+			font-weight: var(--heading-font-weight) !important;
+		}
+		&:hover .orca-tags-tag-backcount,
+		&.selected .orca-tags-tag-backcount {
+			color: var(--muted-foreground) !important;
+		}
+	}
+
+	#sidebar {
+		& .orca-sidebar-item, & .orca-list-item, & .orca-page-item,
+		& .orca-aliased-block-item, & .orca-fav-item-item {
+			width: 100% !important; padding: 3px 12px !important;
+			border: 1px solid transparent !important;
+			border-radius: calc(var(--radius) - 4px) !important;
+			cursor: pointer !important; transition: all 0.15s ease !important;
+			&:hover, &.selected, &[aria-selected="true"] {
+				background: var(--sidebar-accent) !important;
+				color: var(--sidebar-accent-foreground) !important;
+				border-color: transparent !important;
+				--orca-color-text-1: var(--sidebar-accent-foreground);
+				--orca-color-text-2: var(--muted-foreground);
+				--orca-color-text-3: var(--muted-foreground);
+			}
+			&.selected, &[aria-selected="true"] {
+				font-weight: var(--heading-font-weight) !important;
+			}
+			&:hover .orca-aliased-block-backcount,
+			&.selected .orca-aliased-block-backcount,
+			&[aria-selected="true"] .orca-aliased-block-backcount {
+				color: var(--muted-foreground) !important;
+			}
+			&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji),
+			&:hover .orca-fav-item-icon,
+			&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji),
+			&.selected .orca-fav-item-icon,
+			&[aria-selected="true"] .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji),
+			&[aria-selected="true"] .orca-fav-item-icon,
+			&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti,
+			&:hover .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti::before,
+			&:hover .orca-fav-item-icon .ti,
+			&:hover .orca-fav-item-icon .ti::before,
+			&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti,
+			&.selected .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti::before,
+			&.selected .orca-fav-item-icon .ti,
+			&.selected .orca-fav-item-icon .ti::before,
+			&[aria-selected="true"] .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti,
+			&[aria-selected="true"] .orca-aliased-block-icon:not(.orca-aliased-block-icon-emoji) .ti::before,
+			&[aria-selected="true"] .orca-fav-item-icon .ti,
+			&[aria-selected="true"] .orca-fav-item-icon .ti::before {
+				color: var(--sidebar-accent-foreground) !important;
+				fill: var(--sidebar-accent-foreground) !important;
+			}
+		}
+		& .orca-tags-tag-item {
+			width: 100% !important; padding: 3px 12px !important;
+			border: 1px solid transparent !important;
+			border-radius: calc(var(--radius) - 4px) !important;
+			cursor: pointer !important; transition: all 0.15s ease !important;
+			&:hover, &.selected, &[aria-selected="true"] {
+				background: var(--sidebar-accent) !important;
+				border-color: transparent !important;
+				--orca-color-text-1: var(--sidebar-accent-foreground);
+				--orca-color-text-2: var(--muted-foreground);
+				--orca-color-text-3: var(--muted-foreground);
+			}
+			&:hover .orca-tags-tag-name,
+			&.selected .orca-tags-tag-name,
+			&[aria-selected="true"] .orca-tags-tag-name {
+				color: var(--sidebar-accent-foreground) !important;
+			}
+			&.selected, &[aria-selected="true"] {
+				font-weight: var(--heading-font-weight) !important;
+			}
+			&:hover .orca-tags-tag-backcount,
+			&.selected .orca-tags-tag-backcount,
+			&[aria-selected="true"] .orca-tags-tag-backcount {
+				color: var(--muted-foreground) !important;
+			}
+		}
+		& .orca-fav-item-icon, & .orca-aliased-block-icon {
+			background: transparent !important; display: inline !important; padding: 0 !important; border: none !important;
+		}
+		& .orca-tags-tag-icon,
+		& .orca-tags-tag-icon-emoji {
+			background: transparent !important;
+			background-color: transparent !important;
+			display: inline-flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			padding: 0 !important;
+			border: none !important;
+		}
+		& [class*="sidebar-footer"], & [class*="create-aliased"]:not(.orca-button) {
+			margin-top: 8px !important; padding-top: 8px !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.18 New Page Button (sidebar)
+	   ---------------------------------------------------------- */
+
+	.orca-sidebar-create-aliased-btn.orca-button,
+	#sidebar .orca-sidebar-create-aliased-btn,
+	#sidebar .orca-button[aria-label="新页面"],
+	#sidebar .orca-sidebar-footer .orca-button {
+		background: var(--btn-primary-bg) !important; color: var(--btn-primary-fg) !important;
+		border: 1px solid transparent !important; border-radius: var(--radius-md) !important;
+		box-shadow: none !important; width: 100% !important; justify-content: center !important;
+		padding: 6px 12px !important; font-weight: var(--base-font-weight) !important;
+		&:hover { opacity: 0.9 !important; }
+	}
+
+	/* ----------------------------------------------------------
+	   4.19 Block Editor Go Buttons
+	   ---------------------------------------------------------- */
+
+	.orca-block-editor-go-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
+		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
+		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
+		transition: all 0.15s ease !important;
+		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
+		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before { color: inherit !important; fill: currentColor !important; }
+	}
+
+	/* ----------------------------------------------------------
+	   4.20 Journal Date Navigation
+	   ---------------------------------------------------------- */
+
+	#main .orca-repr-journal-btn.orca-button.plain {
+		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
+		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
+		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
+		transition: all 0.15s ease !important;
+		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; }
+		& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
+	}
+
+	/* ----------------------------------------------------------
+	   4.21 Special Block Insert / Fold Buttons (Fix 7: round)
+	   ---------------------------------------------------------- */
+
+	#main .orca-no-editable-btn.orca-button.plain,
+	.orca-panels-container .orca-no-editable-btn.orca-button.plain {
+		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: 50% !important;
+		box-shadow: none !important; outline: none !important;
+		transition: all 0.15s ease !important;
+		padding: 0 !important; width: 18px !important; height: 18px !important;
+		display: inline-flex !important; align-items: center !important; justify-content: center !important;
+		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;
+		aspect-ratio: 1 !important;
+		opacity: 0 !important; pointer-events: none !important;
+		& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
+	}
+	/* Match native: only the hovered block's content — NOT .orca-block:hover
+	   (ancestor :hover would reveal every nested special-block button). */
+	#main .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain,
+	.orca-panels-container .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain {
+		opacity: 0.5 !important;
+		pointer-events: auto !important;
+	}
+	#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover,
+	.orca-panels-container .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+		opacity: 1 !important;
+		border: 1px solid var(--border) !important;
+		border-radius: 50% !important;
+	}
+
+}

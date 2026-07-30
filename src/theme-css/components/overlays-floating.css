@@ -1,0 +1,171 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.25 Floating Toolbars — popover-style chrome
+	   ---------------------------------------------------------- */
+
+	@scope (.orca-block-editor-sidetools, .orca-math-toolbar, .orca-mermaid-toolbar, .orca-image-toolbar) {
+		:scope {
+			background: var(--popover) !important;
+			color: var(--popover-foreground) !important;
+			border: 1px solid var(--border) !important;
+			border-radius: var(--radius-md) !important;
+			box-shadow: var(--shadow-md) !important;
+		}
+		& svg, & i, & i::before, & .orca-button.plain {
+			color: var(--popover-foreground);
+			fill: currentColor;
+		}
+		.orca-button.plain:hover {
+			background: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+			border-color: transparent !important;
+			box-shadow: none !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.25b Find/Replace (Ctrl+F) — blue shell like floating toolbars
+	   (Icon colors for in-input prev/next are in §7 — must beat popup .ti)
+	   ---------------------------------------------------------- */
+
+	/* Popup is a transparent positioning shell; single border on .orca-find-replace */
+	.orca-popup:has(.orca-find-replace),
+	.orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(> .orca-find-replace) {
+		border: none !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		outline: none !important;
+		padding: 0 !important;
+	}
+
+	@scope (.orca-find-replace) {
+		:scope {
+			background: var(--secondary-background) !important;
+			background-color: var(--secondary-background) !important;
+			color: var(--foreground) !important;
+			border: 1px solid var(--border) !important;
+			border-radius: var(--border-radius) !important;
+			--orca-shadow-findreplace: none;
+			--orca-color-text-1: var(--foreground);
+			--orca-color-text-2: var(--text-muted);
+			--orca-color-text-3: color-mix(in oklab, var(--foreground) 42%, var(--background));
+			--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+			box-shadow: none !important;
+			outline: none !important;
+		}
+
+		&:focus,
+		&:focus-visible,
+		&:focus-within {
+			outline: none !important;
+			box-shadow: none !important;
+		}
+
+		/* Shell chrome — foreground on secondary panel */
+		& .orca-find-replace-drag-handle,
+		& .orca-find-replace-replace-toggle,
+		& > .orca-button.plain {
+			color: var(--foreground) !important;
+		}
+		& .orca-find-replace-stat {
+			color: var(--text-muted) !important;
+		}
+		& .orca-find-replace-drag-handle svg,
+		& .orca-find-replace-drag-handle i,
+		& .orca-find-replace-drag-handle i::before,
+		& .orca-find-replace-replace-toggle svg,
+		& .orca-find-replace-replace-toggle i,
+		& .orca-find-replace-replace-toggle i::before,
+		& > .orca-button.plain svg,
+		& > .orca-button.plain i,
+		& > .orca-button.plain i::before {
+			color: var(--foreground) !important;
+			fill: var(--foreground) !important;
+			stroke: var(--foreground) !important;
+		}
+
+		/* Nested input-group fields inside find/replace shell */
+		& .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button),
+		& .orca-find-replace-input {
+			display: flex !important;
+			align-items: center !important;
+			min-block-size: 2.25rem !important;
+			border: 1px solid var(--input) !important;
+			border-radius: var(--border-radius) !important;
+			background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+			box-shadow: var(--shadow-xs) !important;
+		}
+
+		& .orca-find-replace-input:focus-within,
+		& .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button):focus-within {
+			border-color: var(--input) !important;
+			box-shadow: var(--shadow-xs) !important;
+			outline: none !important;
+		}
+
+		/* Nested fields — token remap; backgrounds split by plain vs input-group below */
+		& .orca-input,
+		& .orca-find-replace-input,
+		& .orca-input-input,
+		& .orca-input-actualinput {
+			--orca-color-text-1: var(--foreground);
+			--orca-color-text-2: var(--text-muted);
+			--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
+			--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+			color: var(--foreground) !important;
+		}
+
+		& .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button),
+		& .orca-find-replace-input:has(.orca-button, .ti-search, .orca-input-pre),
+		& .orca-find-replace-input .orca-input-input:has(.orca-button) {
+			background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+			background-color: color-mix(in oklab, var(--input) 30%, transparent) !important;
+		}
+
+		& .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button) .orca-input-input,
+		& .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button) .orca-input-actualinput,
+		& .orca-find-replace-input .orca-input-input,
+		& .orca-find-replace-input .orca-input-actualinput {
+			background: transparent !important;
+			background-color: transparent !important;
+			border: none !important;
+			box-shadow: none !important;
+		}
+
+		& .orca-input:not(:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button)) {
+			background: var(--secondary-background) !important;
+			background-color: var(--secondary-background) !important;
+		}
+
+		& .orca-input-input:not(:has(.orca-input-pre, .ti-search, .orca-button)) {
+			background: var(--secondary-background) !important;
+			background-color: var(--secondary-background) !important;
+		}
+
+		& .orca-input ::placeholder,
+		& .orca-find-replace-input ::placeholder {
+			color: var(--text-muted) !important;
+		}
+
+		& .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):has(.ti-arrow-up),
+		& .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):has(.ti-arrow-down),
+		& .orca-find-replace-input .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+		& .orca-input .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+			background: transparent !important;
+			background-color: transparent !important;
+			border: 1px solid transparent !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: none !important;
+
+			&:hover {
+				background: var(--accent) !important;
+				background-color: var(--accent) !important;
+				color: var(--accent-foreground) !important;
+				border-color: transparent !important;
+				box-shadow: none !important;
+				transform: none !important;
+			}
+		}
+	}
+
+}

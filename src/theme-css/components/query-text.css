@@ -1,0 +1,239 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.30 Command Modal
+	   ---------------------------------------------------------- */
+
+	/* Beat .orca-menu padding so footer can full-bleed like search modal */
+	.orca-command-modal,
+	.orca-command-modal.orca-menu {
+		padding: 0 !important;
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		overflow: hidden !important;
+		--orca-shadow-menu: none;
+	}
+	.orca-command-modal .orca-input *:active { background-color: transparent !important; }
+
+	.orca-command-modal-command-list {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		color: var(--foreground) !important;
+		border-radius: 0 !important;
+	}
+
+	/* Footer: square top, rounded bottom (match block-search footer) */
+	.orca-command-modal-footer {
+		width: 100% !important;
+		box-sizing: border-box !important;
+		margin: 0 !important;
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--text-muted) !important;
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+		border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+	}
+
+	.orca-command-modal-command-header.orca-menu-title {
+		border-radius: 0 !important;
+		border: none !important;
+		border-bottom: none !important;
+		background: var(--muted) !important;
+		background-color: var(--muted) !important;
+		color: var(--foreground) !important;
+		position: sticky !important;
+		top: 0 !important;
+		z-index: 1 !important;
+	}
+
+	.orca-command-modal-footer i,
+	.orca-command-modal-footer i::before,
+	.orca-command-modal-footer .ti,
+	.orca-command-modal-footer .ti::before,
+	.orca-command-modal-footer svg {
+		color: var(--foreground) !important;
+		fill: currentColor !important;
+		stroke: currentColor !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.31 Tag / Select text in query editor
+	   ---------------------------------------------------------- */
+
+	.orca-query-editor .orca-select-button-text,
+	.orca-query-editor .orca-tag,
+	.orca-query-editor .orca-tags-tag-item { color: var(--foreground) !important; }
+
+	.orca-query-editor .orca-select-button:hover,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-text,
+	.orca-query-editor .orca-select-button:hover .orca-tag,
+	.orca-query-editor .orca-select-button:hover .orca-tags-tag-item,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-selector,
+	.orca-query-editor .orca-select-button:hover .orca-select-button-selector::before,
+	.orca-query-editor .orca-select-button:hover .ti,
+	.orca-query-editor .orca-select-button:hover .ti::before,
+	.orca-query-editor .orca-select-button:hover i,
+	.orca-query-editor .orca-select-button:hover i::before,
+	.orca-query-editor .orca-select-button:hover svg {
+		color: var(--accent-foreground) !important;
+		fill: var(--accent-foreground) !important;
+	}
+
+	.orca-query-conditions-header .orca-select-button-text,
+	.orca-query-conditions-header .orca-tag,
+	.orca-query-conditions-header .orca-select-button-selector,
+	.orca-query-conditions-header .orca-select-button-selector::before,
+	.orca-query-conditions-header-non-editable .orca-select-button-selector,
+	.orca-query-conditions-header-non-editable .orca-select-button-selector::before {
+		color: var(--foreground) !important;
+		fill: var(--foreground) !important;
+	}
+}
+
+/* ============================================================
+   5. OVERRIDES
+   ============================================================ */
+
+@layer overrides {
+	.orca-plugin-item img,
+	.orca-plugin-market img, .orca-plugin-icon, .orca-plugin-icon img { border: none !important; }
+
+	[style*="background-color: rgb(0, 0, 0)"],
+	[style*="background: rgb(0, 0, 0)"] { background-color: var(--background) !important; }
+}
+
+/* ============================================================
+   6. SCROLLBAR
+   ============================================================ */
+
+@layer components {
+	::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+	::-webkit-scrollbar-track { background: transparent !important; border-radius: var(--border-radius) !important; }
+	::-webkit-scrollbar-thumb { background: var(--border) !important; border-radius: var(--border-radius) !important; &:hover { background: var(--muted-foreground) !important; } }
+	::-webkit-scrollbar-corner { background: transparent !important; }
+}
+
+/* ============================================================
+   7. TOOLBAR ICONS & HEADBAR
+   ============================================================ */
+
+@layer components {
+	.orca-toolbar, .orca-headbar-sidebar-tools, .orca-headbar-global-tools,
+	.orca-headbar-user-tools, .orca-panels-container > header, #headbar {
+		& svg, & i, & i::before { color: var(--foreground) !important; fill: var(--foreground) !important; }
+	}
+
+	#headbar .orca-button.plain:hover,
+	.orca-headbar-sidebar-tools .orca-button.plain:hover,
+	.orca-headbar-global-tools .orca-button.plain:hover,
+	.orca-headbar-user-tools .orca-button.plain:hover {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
+	}
+
+	.orca-menu *:active:not(.orca-menu-item):not(.orca-menu-text):not(.orca-select-item),
+	.orca-dropdown *:active:not(.orca-menu-item):not(.orca-menu-text):not(.orca-select-item),
+	.orca-popup *:active:not(.orca-menu-item):not(.orca-menu-text):not(.orca-select-item),
+	.orca-select-button:active { background-color: transparent !important; }
+
+	/* Preview canvas: ancestors also match :active while pressing — keep navy+grid */
+	.orca-popup .orca-search-modal-result-preview:active,
+	.orca-search-modal-result-preview:active,
+	.orca-block-popup-preview:active,
+	.orca-inline-reference-preview:active,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview):active {
+		background-color: var(--background) !important;
+		background-image: none !important;
+	}
+	.orca-block-preview:active {
+		background-color: var(--secondary-background) !important;
+		background-image: none !important;
+	}
+	.orca-popup .orca-search-modal-result-preview .orca-block-editor:active,
+	.orca-popup .orca-search-modal-result-preview #main:active,
+	.orca-popup .orca-search-modal-result-preview .orca-panels-row:active,
+	.orca-block-popup-preview .orca-block-editor:active,
+	.orca-inline-reference-preview .orca-block-editor:active,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor:active,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview):active .orca-block-editor,
+	.orca-block-preview .orca-block-editor:active,
+	.orca-block-preview:active .orca-block-editor {
+		background: transparent !important;
+		background-color: transparent !important;
+	}
+
+	:root:root .orca-query-result-list-toolbar {
+		& .orca-button.plain svg, & .orca-button.plain i, & .orca-button.plain i::before { color: var(--foreground) !important; fill: var(--foreground) !important; }
+		& .orca-button.plain:hover {
+			background: var(--accent) !important;
+			background-color: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+			border: 1px solid transparent !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: none !important;
+			transform: none !important;
+			& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
+		}
+		.orca-query-result-list-toolbar-tag {
+			border: 1px solid transparent !important;
+			transition: none !important;
+			&:hover {
+				color: var(--accent-foreground) !important;
+				background: var(--accent) !important;
+				border: 1px solid transparent !important;
+			}
+		}
+	}
+}
+
+/* ============================================================
+   8. CODE HIGHLIGHT (Prism + CodeMirror)
+   ============================================================ */
+
+@layer components {
+	pre, .orca-code-block, .orca-code-wrapper,
+	.orca-repr-code, .orca-code-editor, .cm-editor { color: var(--orca-color-code-fg) !important; }
+
+	pre .token, .orca-code-block .token, .orca-code-wrapper .token, .orca-repr-code .token {
+		color: var(--orca-color-code-fg) !important; background: transparent !important;
+	}
+	pre .token.comment     { color: var(--orca-color-code-comment) !important; }
+	pre .token.keyword     { color: var(--orca-color-code-keyword) !important; }
+	pre .token.string      { color: var(--orca-color-code-string) !important; }
+	pre .token.number      { color: var(--orca-color-code-number) !important; }
+	pre .token.function    { color: var(--orca-color-code-function) !important; }
+	pre .token.constant    { color: var(--orca-color-code-constant) !important; }
+	pre .token.type        { color: var(--orca-color-code-type) !important; }
+	pre .token.operator    { color: var(--orca-color-code-operator) !important; }
+	pre .token.punctuation { color: var(--orca-color-code-punctuation) !important; }
+
+	.cm-editor {
+		& .cm-content { color: var(--orca-color-code-fg) !important; }
+		& .cm-comment      { color: var(--orca-color-code-comment) !important; }
+		& .cm-keyword      { color: var(--orca-color-code-keyword) !important; }
+		& .cm-string       { color: var(--orca-color-code-string) !important; }
+		& .cm-number       { color: var(--orca-color-code-number) !important; }
+		& .cm-function     { color: var(--orca-color-code-function) !important; }
+		& .cm-propertyName { color: var(--orca-color-code-constant) !important; }
+		& .cm-typeName     { color: var(--orca-color-code-type) !important; }
+		& .cm-operator     { color: var(--orca-color-code-punctuation) !important; }
+	}
+
+	.cm-editor .cm-content {
+		& [class~="ͼp"] { color: var(--orca-color-code-comment) !important; }
+		& [class~="ͼq"] { color: var(--orca-color-code-keyword) !important; }
+		& [class~="ͼr"] { color: var(--orca-color-code-string) !important; }
+		& [class~="ͼt"] { color: var(--orca-color-code-number) !important; }
+		& [class~="ͼu"] { color: var(--orca-color-code-function) !important; }
+		& [class~="ͼv"] { color: var(--orca-color-code-constant) !important; }
+		& [class~="ͼw"] { color: var(--orca-color-code-punctuation) !important; }
+	}
+}

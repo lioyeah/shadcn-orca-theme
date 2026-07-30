@@ -1,0 +1,134 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.27 Vault / Sidebar Icons — @scope
+	   ---------------------------------------------------------- */
+
+	@scope (#sidebar) {
+		.orca-vault-icon, .orca-vault-selector-icon,
+		.orca-icon, svg, .orca-button svg { color: var(--foreground); fill: var(--foreground); }
+	}
+
+	/* ----------------------------------------------------------
+	   4.28 Repo Switcher — sidebar.tsx SidebarHeader + SidebarMenuButton
+	   Ref: SidebarMenuButton default (hover sidebar-accent, no filled chrome)
+	   ---------------------------------------------------------- */
+
+	.orca-sidebar-header {
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 0.5rem !important;
+		padding: 0.5rem !important;
+	}
+
+	.orca-repo-switcher-button {
+		background: transparent !important;
+		color: var(--sidebar-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-md) !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		padding: 0.5rem !important;
+		min-height: 2rem !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+		box-shadow: none !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+		font-weight: var(--base-font-weight) !important;
+		min-width: 0 !important;
+		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+		transform: none !important;
+		&:hover,
+		&:active,
+		&[aria-expanded="true"],
+		&[data-state="open"] {
+			background: var(--sidebar-accent) !important;
+			color: var(--sidebar-accent-foreground) !important;
+			border-color: transparent !important;
+			box-shadow: none !important;
+		}
+		&:focus-visible {
+			outline: none !important;
+			box-shadow: 0 0 0 2px var(--sidebar-ring) !important;
+		}
+	}
+	.orca-repo-switcher-button svg,
+	.orca-repo-switcher-button i,
+	.orca-repo-switcher-button i::before,
+	.orca-repo-switcher-button .orca-icon {
+		color: inherit !important;
+		fill: currentColor !important;
+	}
+	.orca-repo-switcher-button .orca-repo-switcher-icon,
+	.orca-repo-switcher-button .orca-vault-icon,
+	.orca-repo-switcher-button .orca-vault-selector-icon {
+		width: 1.25rem !important;
+		height: 1.25rem !important;
+		flex: 0 0 1.25rem !important;
+	}
+	.orca-repo-switcher-button .orca-select-button-text {
+		flex: 1 1 auto !important;
+		min-width: 0 !important;
+		color: inherit !important;
+		white-space: nowrap !important;
+		overflow: hidden !important;
+		text-overflow: ellipsis !important;
+		flex-wrap: nowrap !important;
+	}
+	/* Chevron = plain trailing icon (ml-auto), not a nested select box */
+	.orca-repo-switcher-button .orca-select-button-selector,
+	.orca-repo-switcher-button i.orca-select-button-selector {
+		background: transparent !important;
+		color: inherit !important;
+		stroke: currentColor !important;
+		fill: currentColor !important;
+		border: none !important;
+		border-radius: 0 !important;
+		width: 1rem !important;
+		height: 1rem !important;
+		min-width: 1rem !important;
+		max-width: 1rem !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		flex: 0 0 1rem !important;
+		margin-left: auto !important;
+		padding: 0 !important;
+		box-sizing: border-box !important;
+		overflow: hidden !important;
+		line-height: 0 !important;
+		font-size: 1rem !important;
+		opacity: 0.72 !important;
+	}
+	.orca-repo-switcher-button:hover .orca-select-button-selector,
+	.orca-repo-switcher-button[aria-expanded="true"] .orca-select-button-selector,
+	.orca-repo-switcher-button i.orca-select-button-selector::before {
+		color: inherit !important;
+		stroke: currentColor !important;
+		fill: currentColor !important;
+		opacity: 1 !important;
+	}
+
+	/* Dropdown panel — dropdown-menu.tsx items inside repo switcher */
+	.orca-repo-switcher-modal .orca-repo-panel,
+	.orca-repo-switcher-modal.orca-menu {
+		padding: 0.25rem !important;
+	}
+	.orca-repo-switcher-modal .orca-repo-item,
+	.orca-repo-switcher-modal .orca-menu-item,
+	.orca-repo-switcher-modal .orca-menu-text {
+		border-radius: calc(var(--radius) - 4px) !important;
+		color: var(--popover-foreground) !important;
+	}
+	.orca-repo-switcher-modal .orca-repo-item:hover,
+	.orca-repo-switcher-modal .orca-repo-item.selected,
+	.orca-repo-switcher-modal .orca-repo-item[aria-selected="true"],
+	.orca-repo-switcher-modal .orca-menu-item:hover,
+	.orca-repo-switcher-modal .orca-menu-item.selected,
+	.orca-repo-switcher-modal .orca-menu-item[aria-selected="true"] {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+}

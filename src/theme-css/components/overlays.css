@@ -1,0 +1,535 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.7 Surface / Card
+	   ---------------------------------------------------------- */
+
+	.orca-modal, .orca-settings {
+		background: var(--background) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-lg) !important;
+		box-shadow: var(--shadow-lg) !important;
+	}
+
+	.orca-settings {
+		overflow: hidden !important;
+	}
+
+	.orca-plugin-marketplace {
+		background: var(--secondary-background) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		color: var(--foreground) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.7 Menus / dropdowns / selects — shadcn popover + dropdown-menu
+	   .orca-popup = positioning shell (transparent, no border).
+	   ---------------------------------------------------------- */
+
+	/* Positioning shell — default for all popups */
+	.orca-popup {
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+
+	/* Panel chrome — exactly one border on the visible panel */
+	.orca-dropdown,
+	.orca-menu:not(.orca-block-popup):not(.orca-inline-reference):not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-preview):not(.orca-block-preview-popup),
+	.orca-select-menu,
+	.orca-select-popup,
+	.orca-repo-switcher-modal,
+	.orca-slash-commands,
+	.orca-datepicker-menu,
+	.orca-block-select-popup {
+		background: var(--popover) !important;
+		color: var(--popover-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-md) !important;
+
+		& .ti:not(.orca-input-pre):not(.ti-search),
+		& .ti:not(.orca-input-pre):not(.ti-search)::before,
+		& .orca-icon,
+		& .orca-menu-text-icon,
+		& svg:not(.orca-input-pre),
+		& svg:not(.orca-input-pre) * {
+			color: inherit !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+
+	/* Nested popup portal inside panel — never a second frame */
+	.orca-select-menu .orca-popup,
+	.orca-select-popup .orca-popup,
+	.orca-menu .orca-popup:not(.orca-command-modal):not(.orca-search-modal),
+	.orca-dropdown .orca-popup,
+	.orca-repo-switcher-modal .orca-popup {
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+
+	/* Command palette is .orca-menu — kill menu padding so footer is edge-to-edge */
+	.orca-command-modal.orca-menu,
+	.orca-popup .orca-command-modal.orca-menu,
+	html .orca-command-modal {
+		padding: 0 !important;
+	}
+
+	/*
+	   Match block-search shell architecture:
+	   dark secondary chrome + blue list + dark footer (full-bleed).
+	   Beats .orca-menu { background: var(--main) } (0,1,0).
+	*/
+	.orca-command-modal.orca-menu,
+	.orca-command-modal.orca-popup.orca-menu,
+	html .orca-command-modal.orca-menu {
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		overflow: hidden !important;
+		--orca-shadow-menu: none;
+	}
+
+	.orca-command-modal-command-list {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		color: var(--foreground) !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--muted-foreground);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 42%, var(--background));
+		flex: 1 1 auto !important;
+		min-height: 0 !important;
+		border-radius: 0 !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.7b Block search modal (Ctrl+Shift+F / 块搜索)
+	   Left list = sidebar chrome; right preview = main editor (--background)
+	   ---------------------------------------------------------- */
+
+	.orca-popup:has(.orca-search-modal),
+	.orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal),
+	.orca-popup:has(.orca-block-popup),
+	.orca-popup:has(.orca-inline-reference-with-preview),
+	.orca-popup.orca-block-popup,
+	.orca-popup.orca-inline-reference-with-preview {
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
+	.orca-search-modal,
+	.orca-search-modal.orca-menu {
+		padding: 0 !important;
+		color: var(--foreground) !important;
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	/* Left: blue shell like menus / toolbars */
+	.orca-search-modal-result-list,
+	.orca-search-modal-no-result,
+	.orca-search-modal-syntax-tips {
+		background: var(--background) !important;
+		color: var(--foreground) !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 42%, var(--background));
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--background));
+		--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--background));
+		--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	}
+
+	/* Right preview = editor island (canvas grid from §3; typography from :is(..., preview)).
+	   Remap Orca tokens on .orca-block-editor — same gray/handle scale as flavor :root. */
+	.orca-search-modal-result-preview,
+	.orca-block-popup-preview,
+	.orca-inline-reference-preview,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview),
+	.orca-search-modal-result-preview .orca-block-editor,
+	.orca-block-popup-preview .orca-block-editor,
+	.orca-inline-reference-preview .orca-block-editor,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor {
+		color: var(--foreground) !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		--orca-color-scope-line: color-mix(in oklab, var(--foreground) 45%, transparent);
+		--orca-border-scope: 1px solid var(--orca-color-scope-line);
+		--orca-color-gray-4: color-mix(in oklab, var(--secondary-background) 50%, var(--border));
+		--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--background));
+		--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--background));
+		--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--background));
+		--orca-block-handle-passive-color: var(--orca-color-gray-6);
+	}
+
+	.orca-search-modal-result-preview,
+	.orca-block-popup-preview,
+	.orca-inline-reference-preview {
+		border-left: 1px solid var(--border) !important;
+	}
+
+	.orca-block-popup-preview,
+	.orca-inline-reference-preview {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* Beat .orca-menu { background: --main } when preview sits inside menu shell */
+	.orca-menu .orca-block-popup-preview,
+	.orca-menu .orca-inline-reference-preview,
+	.orca-block-popup .orca-block-popup-preview,
+	.orca-inline-reference .orca-inline-reference-preview,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview),
+	.orca-menu .orca-inline-reference:not(.orca-inline-reference-with-preview) {
+		background-color: var(--background) !important;
+		background-image: none !important;
+	}
+
+	.orca-search-modal-result-preview .orca-block-editor,
+	.orca-search-modal-result-preview .orca-block-editor #main,
+	.orca-search-modal-result-preview #main,
+	.orca-search-modal-result-preview .orca-panels-row,
+	.orca-block-popup-preview .orca-block-editor,
+	.orca-block-popup-preview .orca-block-editor #main,
+	.orca-block-popup-preview #main,
+	.orca-block-popup-preview .orca-panels-row,
+	.orca-inline-reference-preview .orca-block-editor,
+	.orca-inline-reference-preview .orca-block-editor #main,
+	.orca-inline-reference-preview #main,
+	.orca-inline-reference-preview .orca-panels-row,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor #main,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) #main,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-panels-row {
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.7d Block hover preview (.orca-block-preview) — existing ref hover
+	   Orca uses .orca-block-preview, NOT .orca-inline-reference, for hover.
+	   Sidebar surface (not main editor grid) — distinct from #main behind it.
+	   ---------------------------------------------------------- */
+
+	.orca-block-preview,
+	.orca-block-preview.orca-menu,
+	.orca-menu.orca-block-preview,
+	.orca-popup .orca-block-preview,
+	.orca-popup.orca-block-preview-popup > .orca-block-preview {
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		background-image: none !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+
+		& .ti:not(.orca-input-pre):not(.ti-search),
+		& .ti:not(.orca-input-pre):not(.ti-search)::before,
+		& .orca-icon,
+		& .orca-menu-text-icon,
+		& svg:not(.orca-input-pre),
+		& svg:not(.orca-input-pre) *,
+		& i,
+		& i::before {
+			color: inherit !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+	.orca-popup.orca-block-preview-popup,
+	.orca-popup.orca-block-preview-popup.orca-menu,
+	.orca-popup:has(> .orca-block-preview) {
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+
+	.orca-block-preview,
+	.orca-block-preview .orca-block-editor {
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--secondary-background));
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		--orca-color-scope-line: color-mix(in oklab, var(--foreground) 45%, transparent);
+		--orca-border-scope: 1px solid var(--orca-color-scope-line);
+		--orca-color-gray-4: color-mix(in oklab, var(--secondary-background) 50%, var(--border));
+		--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--secondary-background));
+		--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--secondary-background));
+		--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--secondary-background));
+		--orca-block-handle-passive-color: var(--orca-color-gray-6);
+	}
+
+	.orca-block-preview .orca-block-editor,
+	.orca-block-preview .orca-block-editor #main,
+	.orca-block-preview #main,
+	.orca-block-preview .orca-panels-row,
+	.orca-block-preview .orca-panel {
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+	}
+
+	.orca-block-preview-hint {
+		background: transparent !important;
+		color: var(--text-muted) !important;
+		border-bottom: 1px solid var(--border) !important;
+	}
+
+	.orca-block-preview::after {
+		display: none !important;
+	}
+
+	.orca-block-preview-interactive {
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.7c Block reference popups — same split as block search
+	   .orca-block-popup (insert) + .orca-inline-reference (hover)
+	   ---------------------------------------------------------- */
+
+	.orca-block-popup,
+	.orca-inline-reference.orca-inline-reference-with-preview {
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+
+	.orca-block-popup-results,
+	.orca-inline-reference-results {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		color: var(--foreground) !important;
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 42%, var(--background));
+	}
+
+	.orca-block-popup .orca-menu-title,
+	.orca-block-popup .orca-menu-text-title,
+	.orca-inline-reference .orca-menu-title,
+	.orca-inline-reference .orca-menu-text-title {
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-block-popup-input .orca-input {
+		inline-size: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	.orca-block-popup-input > .orca-input-input,
+	.orca-block-popup-input .orca-input-input {
+		background: transparent !important;
+		color: var(--foreground) !important;
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+	}
+
+	.orca-block-popup-results .orca-menu-text,
+	.orca-inline-reference-results .orca-menu-text {
+		color: var(--foreground) !important;
+	}
+
+	.orca-block-popup-results .orca-menu-text:hover,
+	.orca-block-popup-results .orca-key-selected,
+	.orca-inline-reference-results .orca-menu-text:hover,
+	.orca-inline-reference-results .orca-key-selected {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	.orca-search-modal-footer {
+		background: var(--secondary-background) !important;
+		color: var(--text-muted) !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+
+		& .ti:not(.orca-input-pre):not(.ti-search),
+		& .ti:not(.orca-input-pre):not(.ti-search)::before,
+		& i,
+		& i::before,
+		& svg {
+			color: var(--foreground) !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+
+	.orca-search-modal-block-item {
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		color: var(--foreground) !important;
+		cursor: pointer !important;
+		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+
+		& .orca-search-modal-result-label {
+			color: var(--foreground) !important;
+		}
+		& .orca-search-modal-result-label .highlight,
+		& .highlight {
+			background: var(--surface-active) !important;
+			background-color: var(--surface-active) !important;
+			color: var(--surface-active-fg) !important;
+			border-radius: 2px !important;
+		}
+		& .orca-search-modal-result-breadcrumb,
+		& .orca-search-modal-result-breadcrumb-segment,
+		& .orca-search-modal-result-breadcrumb .ti,
+		& .orca-search-modal-result-breadcrumb .ti::before,
+		& .orca-search-modal-result-breadcrumb svg {
+			color: var(--text-muted) !important;
+			fill: var(--text-muted) !important;
+			stroke: var(--text-muted) !important;
+		}
+		& .orca-search-modal-result-icon,
+		& .orca-search-modal-result-icon .ti,
+		& .orca-search-modal-result-icon .ti::before,
+		& .orca-search-modal-result-icon svg,
+		& .orca-search-modal-result-icon svg * {
+			color: var(--foreground) !important;
+			fill: var(--foreground) !important;
+			stroke: var(--foreground) !important;
+		}
+
+		&:hover,
+		&.selected,
+		&[aria-selected="true"],
+		&.orca-key-selected {
+			background: var(--accent) !important;
+			background-color: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+			border: 1px solid transparent !important;
+			border-radius: var(--border-radius) !important;
+			box-shadow: none !important;
+			outline: none !important;
+
+			& .orca-search-modal-result-label,
+			& .orca-search-modal-result-breadcrumb,
+			& .orca-search-modal-result-breadcrumb-segment,
+			& .orca-search-modal-result-icon,
+			& .orca-search-modal-result-icon .ti,
+			& .orca-search-modal-result-icon .ti::before,
+			& .orca-search-modal-result-icon svg,
+			& .orca-search-modal-result-icon svg *,
+			& .orca-search-modal-result-breadcrumb .ti,
+			& .orca-search-modal-result-breadcrumb .ti::before,
+			& .orca-search-modal-result-breadcrumb svg {
+				color: inherit !important;
+				fill: currentColor !important;
+				stroke: currentColor !important;
+			}
+		}
+	}
+
+	.orca-search-modal-result-preview .highlight,
+	.orca-block-popup-preview .highlight,
+	.orca-inline-reference-preview .highlight,
+	.orca-block-preview .highlight {
+		background: var(--orca-color-result-highlight) !important;
+		background-color: var(--orca-color-result-highlight) !important;
+		color: var(--foreground) !important;
+		border-radius: 2px !important;
+	}
+
+	/* Single border — shadcn tooltip.tsx (inverted) */
+	.orca-tooltip {
+		background: var(--foreground) !important;
+		color: var(--background) !important;
+		border: none !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: none !important;
+		--orca-shadow-md: none;
+		--orca-shadow-menu: none;
+		--orca-shadow-popup: none;
+		--orca-color-text-1: var(--background);
+		--orca-color-text-2: color-mix(in oklab, var(--background) 75%, var(--foreground));
+		--orca-color-gray-4: color-mix(in oklab, var(--background) 75%, var(--foreground));
+		--orca-color-gray-5: color-mix(in oklab, var(--background) 75%, var(--foreground));
+	}
+	.orca-tooltip .orca-tooltip-shortcut {
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		block-size: 1.25rem !important;
+		min-inline-size: 1.25rem !important;
+		padding-inline: 0.25rem !important;
+		margin-inline-start: 0.5rem !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+		background: color-mix(in oklab, var(--background) 20%, transparent) !important;
+		color: var(--background) !important;
+		font-size: 0.75rem !important;
+		font-weight: 500 !important;
+		line-height: 1 !important;
+		user-select: none !important;
+		white-space: nowrap !important;
+	}
+
+	html:not(.t-light) .orca-tooltip .orca-tooltip-shortcut {
+		background: color-mix(in oklab, var(--background) 10%, transparent) !important;
+	}
+	/* Tooltip often mounts as .orca-popup — strip extra popup chrome */
+	.orca-popup:has(.orca-tooltip),
+	.orca-popup.orca-tooltip {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+	}
+
+
+	.orca-notification {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-progress, progress {
+		border: 1px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+	}
+	progress::-webkit-progress-bar { background: var(--secondary-background) !important; border-radius: var(--border-radius) !important; }
+	progress::-webkit-progress-value { background: var(--primary) !important; border-radius: var(--border-radius) !important; }
+
+}

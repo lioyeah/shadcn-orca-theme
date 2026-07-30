@@ -33,7 +33,11 @@
 ```
 src/flavors/default.css          ← shadcn neutral tokens + Orca 别名
 src/theme-css/shadcn-primitives.css  ← 从官方组件翻译的语义模式
-src/theme-css/_shared.css        ← Orca 类名 → shadcn 皮肤（!important 覆盖内联）
+src/theme-css/manifest.cjs       ← 显式控制 source layer 顺序
+src/theme-css/base/              ← reset、surface、layout
+src/theme-css/components/        ← 按 Orca 组件拆分的映射规则
+src/theme-css/context-overrides.css ← preview/context 专用规则
+src/theme-css/native-precedence.css ← 击败 Orca late-loaded CSS 的补丁
         ↓ build-theme-css.cjs
 public/shadcn.css / dist/shadcn.css
         ↓ main.ts
@@ -107,6 +111,8 @@ npm run build:css      # 仅 CSS
 npm run build          # CSS + TS
 npm run deploy         # 构建并复制到 Orca plugins 目录
 npm run build:deploy   # 同 deploy
+npm run audit:css      # 输出 CSS selector/token 审计
+npm run audit:css:write # 写入当前基线
 ```
 
 修改 CSS 后需 `build:deploy`；Orca 可能缓存 `?_t=`，切换主题或重载插件以生效。

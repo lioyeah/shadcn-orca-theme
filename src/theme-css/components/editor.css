@@ -1,0 +1,205 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.8 Code Block
+	   ---------------------------------------------------------- */
+
+	pre, .orca-code-block, .orca-code-wrapper {
+		border: 1px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.c {
+		color: var(--typeset-fg) !important;
+		border: 1px solid var(--typeset-border) !important;
+		border-radius: var(--border-radius) !important;
+		background: var(--typeset-code-bg) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.9 Table
+	   ---------------------------------------------------------- */
+
+	.orca-table { border-collapse: collapse !important; }
+	th, td, .orca-table th, .orca-table td {
+		border: 1px solid var(--border) !important; padding: 0.5em 0.75em !important;
+	}
+	th, .orca-table th { border-bottom: 1px solid var(--border) !important; font-weight: var(--heading-font-weight) !important; }
+
+	/* ----------------------------------------------------------
+	   4.10 Typeset — editor body prose (shadcn/typeset)
+	   Scope: main editor + block-search / inline-ref preview panes.
+	   Colors via --typeset-* tokens in default.css; no inline color-mix.
+	   ---------------------------------------------------------- */
+
+	#main,
+	.orca-panels-container #main,
+	.orca-search-modal-result-preview,
+	.orca-search-modal-result-preview .orca-block-editor,
+	.orca-block-popup-preview,
+	.orca-block-popup-preview .orca-block-editor,
+	.orca-inline-reference-preview,
+	.orca-inline-reference-preview .orca-block-editor,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview),
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor,
+	.orca-block-preview,
+	.orca-block-preview .orca-block-editor {
+		color: var(--typeset-fg) !important;
+		font-size: var(--typeset-size) !important;
+		line-height: var(--typeset-leading) !important;
+		--orca-color-text-1: var(--typeset-fg);
+		--orca-color-text-2: var(--typeset-fg-muted);
+		--orca-color-text-3: var(--typeset-fg-subtle);
+		--orca-color-heading-1: var(--typeset-fg);
+		--orca-color-heading-2: var(--typeset-fg);
+		--orca-color-heading-3: var(--typeset-fg);
+		--orca-color-heading-4: var(--typeset-fg-muted);
+		--orca-color-placeholder: var(--typeset-placeholder);
+		--orca-color-scope-line: var(--typeset-scope-line);
+		--orca-color-gray-4: var(--typeset-border);
+		--orca-color-gray-5: var(--typeset-handle-passive);
+		--orca-color-gray-6: var(--typeset-handle-passive);
+		--orca-color-gray-7: var(--typeset-handle-active);
+		--orca-block-handle-passive-color: var(--typeset-handle-passive);
+		--orca-border-scope: 1px solid var(--typeset-scope-line);
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) :is(h1, h2, h3, h4) {
+		font-weight: var(--typeset-heading-weight) !important;
+		line-height: 1.25 !important;
+		color: var(--typeset-fg) !important;
+		margin-block-start: var(--typeset-flow) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h4 {
+		color: var(--typeset-fg-muted) !important;
+		font-weight: var(--typeset-h4-weight) !important;
+	}
+
+	.orca-block-preview h4 {
+		color: var(--typeset-fg-muted) !important;
+		font-weight: var(--typeset-h4-weight) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) :is(strong, b, span.orca-inline.b) {
+		font-weight: var(--typeset-strong-weight) !important;
+		color: var(--typeset-fg) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.i:not(.b) {
+		color: var(--typeset-fg) !important;
+		font-style: italic !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.bc {
+		background: var(--typeset-mark-bg) !important;
+		color: var(--typeset-fg) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.11 List Markers
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ul .orca-block-handle::before { color: var(--typeset-list-marker) !important; }
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ul .orca-repr-ul .orca-block-handle::before { color: var(--typeset-list-marker-nested) !important; }
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ol-content::before { color: var(--typeset-list-marker) !important; }
+
+	/* ----------------------------------------------------------
+	   4.11b Editor canvas chrome — breadcrumbs, handles, guides
+	   Main panels + block-search preview share one skin.
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview .orca-block-editor, .orca-block-popup-preview .orca-block-editor, .orca-inline-reference-preview .orca-block-editor, .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor, .orca-block-preview .orca-block-editor) {
+		& .orca-block-breadcrumb,
+		& .orca-breadcrumb,
+		& .orca-block-breadcrumb-segment,
+		& .orca-breadcrumb-item,
+		& .orca-breadcrumb-dots,
+		& .orca-breadcrumb-sep {
+			color: var(--typeset-breadcrumb) !important;
+		}
+		& .orca-block-breadcrumb-segment:hover,
+		& .orca-breadcrumb-item:hover,
+		& .orca-breadcrumb-dots:hover {
+			color: var(--typeset-breadcrumb-hover) !important;
+		}
+		& .orca-breadcrumb .ti,
+		& .orca-breadcrumb .ti::before,
+		& .orca-block-breadcrumb .ti,
+		& .orca-block-breadcrumb .ti::before {
+			color: var(--typeset-breadcrumb) !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+		& .orca-breadcrumb-item:hover .ti,
+		& .orca-breadcrumb-item:hover .ti::before,
+		& .orca-block-breadcrumb-segment:hover .ti,
+		& .orca-block-breadcrumb-segment:hover .ti::before {
+			color: var(--typeset-breadcrumb-hover) !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+
+		/* Block-type labels (H1/H2/data-icon) — inherit inline tagColor on handle */
+		& .orca-block-handle[data-icon]::before {
+			color: inherit !important;
+		}
+		& .orca-repr-main:hover > .orca-repr-main-none-editable > .orca-block-handle::before {
+			color: var(--typeset-handle-passive) !important;
+		}
+
+		/* Collapsed fold dot — thin ring, no filled outer disc */
+		& .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored) {
+			background-color: transparent !important;
+			inline-size: 12px !important;
+			block-size: 12px !important;
+			border: 1.5px solid var(--muted-foreground) !important;
+			box-sizing: border-box !important;
+			top: calc((var(--orca-block-line-height) * 0.5 - 6px)) !important;
+		}
+		& .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before {
+			inline-size: 4px !important;
+			block-size: 4px !important;
+			box-shadow: none !important;
+		}
+
+		/* Tag-property row icons — per-tag color from Orca (--orca-repr-tag-props-color) */
+		& .orca-repr-tag-props .orca-tag-data-propicon {
+			color: var(--orca-repr-tag-props-color, var(--typeset-tag-props)) !important;
+		}
+
+		& .orca-repr-scope-line {
+			opacity: 0.55 !important;
+			--orca-color-scope-line: var(--typeset-scope-line);
+			--orca-border-scope: 1px solid var(--typeset-scope-line);
+		}
+		& .orca-repr-scope-line::before {
+			border-color: var(--typeset-scope-line) !important;
+		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.12 Inline References
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline[data-type="r"] {
+		border-radius: var(--border-radius) !important;
+		&:hover { background: var(--accent) !important; color: var(--accent-foreground) !important; border-radius: var(--border-radius) !important; }
+	}
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-scope-line {
+		opacity: 0.55 !important;
+		--orca-color-scope-line: var(--typeset-scope-line);
+		--orca-border-scope: 1px solid var(--typeset-scope-line);
+	}
+
+	/* ----------------------------------------------------------
+	   4.13 Blockquote / Callout
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2 .orca-block,
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2 .orca-inline:not(.c) {
+		font-family: inherit !important;
+	}
+
+}

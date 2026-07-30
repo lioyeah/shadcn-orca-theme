@@ -1,0 +1,425 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.24 AI Chat — MessageScroller + Message + composer
+	   message-scroller.tsx, message.tsx, bubble.tsx, marker.tsx
+	   ---------------------------------------------------------- */
+
+	/* MessageScroller Root */
+	.orca-aichat-container {
+		position: relative !important;
+		display: flex !important;
+		flex-flow: column nowrap !important;
+		width: 100% !important;
+		height: 85cqh !important;
+		min-height: 0 !important;
+		overflow: hidden !important;
+		user-select: text !important;
+	}
+
+	.orca-aichat-container.orca-maximized {
+		align-items: center !important;
+		height: 100% !important;
+		padding-inline: 1.5rem !important;
+		padding-block-end: 1.5rem !important;
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+	}
+
+	.orca-aichat-maximized-header {
+		flex: 0 0 auto !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: space-between !important;
+		gap: 0.75rem !important;
+		width: 100% !important;
+		max-width: 56.25rem !important;
+		margin-inline: auto !important;
+		padding-block: 0.5rem !important;
+		border-bottom: 1px solid var(--border) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-aichat-maximized-title {
+		font-size: 0.875rem !important;
+		font-weight: 500 !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-aichat-maximized-actions .orca-button.plain,
+	.orca-aichat-maximized-actions .orca-button.plain i,
+	.orca-aichat-maximized-actions .orca-button.plain svg {
+		color: var(--foreground) !important;
+		fill: var(--foreground) !important;
+	}
+
+	.orca-aichat-collapsible-header {
+		font-size: 0.875rem !important;
+		font-weight: 500 !important;
+		color: var(--foreground) !important;
+		padding: 0.75rem 1rem 0.5rem !important;
+	}
+
+	.orca-aichat-drop-overlay {
+		background: color-mix(in oklab, var(--primary) 12%, transparent) !important;
+		color: var(--foreground) !important;
+		border-radius: var(--radius-md) !important;
+	}
+
+	.orca-aichat-drop-overlay span {
+		background: var(--background) !important;
+		border: 1px solid var(--border) !important;
+		box-shadow: var(--shadow-md) !important;
+		border-radius: var(--radius-md) !important;
+		color: var(--foreground) !important;
+	}
+
+	/* MessageScrollerViewport + MessageScrollerContent (combined on .orca-aichat-messages) */
+	.orca-aichat-messages {
+		flex: 1 1 auto !important;
+		min-height: 0 !important;
+		min-width: 0 !important;
+		width: 100% !important;
+		overflow-y: auto !important;
+		overscroll-behavior: contain !important;
+		scrollbar-width: thin !important;
+		scrollbar-gutter: stable !important;
+		padding-inline-end: 0 !important;
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 2rem !important;
+		font-size: 0.875rem !important;
+		line-height: 1.625 !important;
+	}
+
+	.orca-aichat-container.orca-maximized .orca-aichat-messages,
+	.orca-aichat-container.orca-maximized .orca-aichat-composer {
+		max-width: 56.25rem !important;
+		margin-inline: auto !important;
+		width: 100% !important;
+	}
+
+	/* MessageScrollerItem */
+	.orca-aichat-message-user,
+	.orca-aichat-message-assistant {
+		min-width: 0 !important;
+		flex-shrink: 0 !important;
+	}
+
+	/* Message align=end + Bubble default (user) */
+	.orca-aichat-message-user {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		gap: 0.625rem !important;
+		margin-block-start: 0 !important;
+		width: 100% !important;
+	}
+
+	.orca-aichat-message-user-content {
+		width: fit-content !important;
+		max-width: 80% !important;
+		min-width: 0 !important;
+		padding: 0.5rem 0.75rem !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-xl) !important;
+		background: var(--primary) !important;
+		background-color: var(--primary) !important;
+		color: var(--primary-foreground) !important;
+		font-size: 0.875rem !important;
+		line-height: 1.625 !important;
+		white-space: pre-wrap !important;
+		overflow-wrap: break-word !important;
+	}
+
+	.orca-aichat-message-user-context,
+	.orca-aichat-message-user-images {
+		max-width: 80% !important;
+	}
+
+	/* Message align=start + Bubble ghost (assistant) */
+	.orca-aichat-message-assistant {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		gap: 0.625rem !important;
+		margin-block: 0 !important;
+		padding: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		background-color: transparent !important;
+		max-width: 100% !important;
+		width: 100% !important;
+	}
+
+	.orca-aichat-message-content {
+		width: fit-content !important;
+		max-width: 100% !important;
+		min-width: 0 !important;
+		padding: 0 !important;
+		border: none !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		color: var(--foreground) !important;
+		font-size: 0.875rem !important;
+		line-height: 1.625 !important;
+		white-space: normal !important;
+		overflow-wrap: break-word !important;
+	}
+
+	.orca-aichat-message-assistant pre {
+		background: var(--muted) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+	}
+
+	/* Marker — reasoning / search / tool status rows */
+	.orca-aichat-reasoning-header,
+	.orca-aichat-message-tool,
+	.orca-aichat-tool-process {
+		position: relative !important;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		width: 100% !important;
+		min-height: 1rem !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-aichat-reasoning-toggle.orca-button,
+	.orca-aichat-searching-toggle.orca-button {
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		width: 100% !important;
+		justify-content: flex-start !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		border: none !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		color: var(--muted-foreground) !important;
+		font-size: 0.875rem !important;
+		font-weight: 400 !important;
+	}
+
+	.orca-aichat-reasoning-toggle.orca-button:not(.orca-no-editable-btn):hover,
+	.orca-aichat-searching-toggle.orca-button:not(.orca-no-editable-btn):hover {
+		background: transparent !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-aichat-message-reasoning {
+		border: none !important;
+		padding-inline-start: 0 !important;
+		margin-block: 0.5rem !important;
+		font-size: 0.875rem !important;
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-aichat-message-reasoning-streaming,
+	.orca-aichat-tool-process-streaming {
+		max-height: 12.5rem !important;
+		overflow-y: auto !important;
+		overscroll-behavior: contain !important;
+	}
+
+	/* MarkerContent + shimmer while streaming (role=status equivalent) */
+	.orca-aichat-message-reasoning-streaming .orca-aichat-reasoning-toggle.orca-button,
+	.orca-aichat-reasoning-streaming.orca-aichat-reasoning-toggle.orca-button,
+	.orca-aichat-tool-process-streaming .orca-aichat-tool-step-name {
+		--_spread: var(--shimmer-spread, calc(3ch + 40px));
+		--_base: currentColor;
+		--_highlight: var(
+			--shimmer-color,
+			oklch(from currentColor l c h / calc(alpha * 0.2))
+		);
+		background-image: linear-gradient(
+			calc(90deg + var(--shimmer-angle, 20deg)),
+			var(--_base) calc(50% - var(--_spread)),
+			color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+				calc(50% - var(--_spread) * 0.5),
+			var(--_highlight) 50%,
+			color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+				calc(50% + var(--_spread) * 0.5),
+			var(--_base) calc(50% + var(--_spread))
+		) !important;
+		background-repeat: no-repeat !important;
+		background-size: calc(200% + var(--_spread) * 2) 100% !important;
+		background-position: 0 0 !important;
+		background-clip: text !important;
+		-webkit-background-clip: text !important;
+		-webkit-text-fill-color: transparent !important;
+		animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite !important;
+	}
+
+	.dark .orca-aichat-message-reasoning-streaming .orca-aichat-reasoning-toggle.orca-button,
+	.dark .orca-aichat-reasoning-streaming.orca-aichat-reasoning-toggle.orca-button,
+	.dark .orca-aichat-tool-process-streaming .orca-aichat-tool-step-name {
+		--_highlight: var(
+			--shimmer-color,
+			oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4))
+		);
+	}
+
+	.orca-aichat-tool-step {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--muted) !important;
+		padding: 0.5rem 0.75rem !important;
+	}
+
+	.orca-aichat-tool-step-header {
+		color: var(--muted-foreground) !important;
+		font-size: 0.75rem !important;
+	}
+
+	.orca-aichat-tool-step-name {
+		font-weight: 500 !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-aichat-tool-step-args {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-aichat-message-toolbar {
+		margin-block: 0.5rem !important;
+	}
+
+	.orca-aichat-message-btn.orca-button {
+		color: var(--muted-foreground) !important;
+		font-size: 0.875rem !important;
+		gap: 0.25rem !important;
+		border-radius: var(--radius-md) !important;
+	}
+
+	.orca-aichat-message-btn.orca-button:not(.orca-no-editable-btn):hover {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	/* Composer — pinned below MessageScroller viewport */
+	.orca-aichat-composer {
+		flex: 0 0 auto !important;
+		width: 100% !important;
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		background-image: none !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-lg) !important;
+		box-shadow: var(--shadow-sm) !important;
+		outline: none !important;
+		--orca-shadow-findreplace: none;
+		--orca-color-text-1: var(--card-foreground);
+		--orca-color-text-2: var(--muted-foreground);
+		--orca-color-text-3: var(--muted-foreground);
+		--orca-color-placeholder: color-mix(in oklab, var(--card-foreground) 50%, transparent);
+	}
+
+	.orca-aichat-composer.orca-aichat-responding {
+		border: 1px solid var(--border) !important;
+		background: var(--card) !important;
+		background-image: none !important;
+		animation: none !important;
+	}
+
+	.orca-aichat-context-bar .orca-button.plain,
+	.orca-aichat-context-bar .orca-button.plain i,
+	.orca-aichat-context-bar .orca-button.plain i::before,
+	.orca-aichat-context-bar .orca-button.plain svg {
+		color: var(--card-foreground) !important;
+		fill: var(--card-foreground) !important;
+	}
+
+	.orca-aichat-context-chip {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--muted) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-aichat-context-chip-remove {
+		color: var(--muted-foreground) !important;
+		border-radius: var(--radius-md) !important;
+	}
+
+	.orca-aichat-chatbox {
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		display: flex !important;
+		align-items: stretch !important;
+	}
+
+	/* Nested dark field — same pairing as find-replace inputs */
+	.orca-aichat-chatbox-input.orca-textarea,
+	.orca-aichat-chatbox-input {
+		--orca-color-text-1: var(--foreground);
+		--orca-color-text-2: var(--text-muted);
+		--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
+		--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
+		background: var(--secondary-background) !important;
+		background-color: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	.orca-aichat-chatbox-input.orca-textarea:focus-within,
+	.orca-aichat-chatbox-input:focus-within {
+		border-color: var(--border) !important;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker),
+	.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker) {
+		align-self: stretch !important;
+		flex: 0 0 auto !important;
+		height: auto !important;
+		min-height: 100% !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		box-sizing: border-box !important;
+		margin: 0 !important;
+		padding-block: 0 !important;
+		background: var(--primary) !important;
+		background-color: var(--primary) !important;
+		background-image: none !important;
+		color: var(--primary-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-md) !important;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	.orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):not(.orca-no-editable-btn):hover,
+	.orca-aichat-composer .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover,
+	.orca-aichat-chatbox .orca-aichat-chatbox-button.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover {
+		transform: none !important;
+		box-shadow: none !important;
+		background: var(--primary) !important;
+		background-color: var(--primary) !important;
+		color: var(--primary-foreground) !important;
+		border: 1px solid transparent !important;
+		opacity: 0.9 !important;
+	}
+
+	.orca-aichat-chatbox-button.orca-button.plain i,
+	.orca-aichat-chatbox-button.orca-button.plain i::before,
+	.orca-aichat-chatbox-button.orca-button.plain svg,
+	.orca-aichat-chatbox-button.orca-button.plain .orca-aichat-chatbox-button-label,
+	.orca-aichat-chatbox-button-label {
+		color: var(--primary-foreground) !important;
+		fill: var(--primary-foreground) !important;
+	}
+
+}

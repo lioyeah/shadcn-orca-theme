@@ -1,0 +1,148 @@
+/* ============================================================
+   2. GLOBAL BORDER-RADIUS
+   ============================================================ */
+
+@layer base {
+	.orca-popup, .orca-popup *:not(.orca-stats-chart-bar),
+	.orca-modal, .orca-modal *,
+	.orca-dropdown, .orca-dropdown *,
+	.orca-menu, .orca-menu *,
+	.orca-slash-commands, .orca-slash-commands *,
+	.orca-settings *:not(.orca-switch):not(.orca-switch-toggle):not(.sections):not(.views),
+	.orca-toolbar,
+	.orca-toolbar *:not(.orca-switch):not(.orca-switch-toggle),
+	.orca-panels-container > header,
+	.orca-panels-container > header *:not(.orca-switch):not(.orca-switch-toggle),
+	.orca-button:not(.orca-switch):not(.orca-no-editable-btn),
+	.orca-button *:not(.orca-switch-toggle),
+	.orca-input, .orca-input *,
+	.orca-tag, .orca-tag *,
+	.orca-pill, .orca-pill *,
+	.orca-calendar, .orca-calendar *,
+	.orca-sidebar-tab-options,
+	.orca-progress, .orca-segmented,
+	.orca-date-picker, .orca-time-picker,
+	.orca-query-tabs, .orca-block-editor-query-tabs,
+	.orca-query-conditions, .orca-query-editor,
+	.orca-repo-switcher-button,
+	.orca-vault-icon, .orca-vault-selector-icon,
+	.orca-list-item, .orca-sidebar-item,
+	.orca-search-result-item,
+	.orca-tags-tag-item, .orca-aliased-block-item,
+	.orca-fav-item,
+	.orca-block-ref-count-marker,
+	input[type="checkbox"] {
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* Switch track: always fully rounded */
+	.orca-switch,
+	.orca-switch-toggle,
+	.orca-settings .orca-switch,
+	.orca-settings .orca-switch-toggle {
+		border-radius: 9999px !important;
+	}
+
+	/* Special-block hover buttons: circle (must live in base — !important
+	   reverses layer order, so components cannot beat the radius reset) */
+	.orca-no-editable-btn,
+	.orca-no-editable-btn.orca-button,
+	.orca-no-editable-btn.orca-button.plain {
+		border-radius: 50% !important;
+	}
+
+	/* Settings — outer shell only is rounded; column panes stay square at the seam */
+	.orca-settings {
+		border-radius: var(--radius-lg) !important;
+		overflow: hidden !important;
+	}
+
+	.orca-settings > .sections,
+	.orca-settings > .views,
+	.orca-settings > section.views {
+		border-radius: 0 !important;
+	}
+}
+
+/* ============================================================
+   3. BACKGROUND & LAYOUT
+   ============================================================ */
+
+@layer base {
+	/* Editor canvas grid — main panels, AI chat, block-search preview */
+	.orca-panels-row,
+	#main,
+	.orca-panels-container #main,
+	.orca-aichat-container,
+	.orca-aichat-container.orca-maximized,
+	.orca-search-modal-result-preview,
+	.orca-block-popup-preview,
+	.orca-inline-reference-preview,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) {
+		background: var(--background) !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	nav#sidebar {
+		background: var(--sidebar) !important;
+		border: none !important; border-radius: 0 !important;
+		box-shadow: none !important; outline: none !important;
+		color: var(--sidebar-foreground) !important;
+	}
+
+	.orca-panels-container, html body, html body #app {
+		background: var(--secondary-background) !important;
+		box-shadow: none !important; outline: none !important;
+	}
+
+	/* Preview / embedded editors — flat canvas, no inset chrome */
+	.orca-search-modal-result-preview #main,
+	.orca-block-popup-preview #main,
+	.orca-inline-reference-preview #main,
+	.orca-inline-reference:not(.orca-inline-reference-with-preview) #main,
+	.orca-block-preview #main {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+		overflow: visible !important;
+		outline: none !important;
+	}
+
+	/*
+	   App shell — sidebar.tsx SidebarInset (inset variant):
+	   bordered card on secondary shell; flush to sidebar when open,
+	   symmetric inset when sidebar collapsed (#app.sidebar-closed).
+	*/
+	html body #app #main,
+	html body #main,
+	html body #main.orca-panels-container,
+	#main.orca-panels-container {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-xl) !important;
+		box-shadow: var(--shadow-sm) !important;
+		margin-block-end: 0.5rem !important;
+		margin-inline-end: 0.5rem !important;
+		margin-inline-start: 0 !important;
+		overflow: hidden !important;
+		box-sizing: border-box !important;
+		outline: none !important;
+	}
+
+	html body #app.sidebar-closed #main,
+	html body #app.sidebar-closed > #main,
+	#app.sidebar-closed > #main.orca-panels-container,
+	#app.sidebar-closed #main.orca-panels-container {
+		margin-inline-start: 0.5rem !important;
+	}
+
+	.orca-toolbar, .orca-panels-container > header {
+		border-radius: 0 !important;
+		background: var(--secondary-background) !important;
+	}
+
+	.orca-empty-state, .orca-empty, .orca-placeholder {
+		color: var(--text-muted) !important;
+	}
+}

@@ -1,0 +1,137 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.23 Settings Page
+	   ---------------------------------------------------------- */
+
+			/* Settings left nav — sidebar surface + accent hover */
+		html .orca-settings > .sections,
+		html .orca-settings > .sections * {
+			color: var(--foreground) !important;
+		}
+		html .orca-settings > .sections {
+			background: var(--secondary-background) !important;
+		}
+		html .orca-settings > .sections .title {
+			background: var(--secondary-background) !important;
+			font-weight: var(--heading-font-weight);
+		}
+		html .orca-settings > .sections .item,
+		html .orca-settings > .sections .plugin-item {
+			border: 1px solid transparent;
+			border-radius: var(--border-radius);
+			background: transparent !important;
+			color: var(--foreground) !important;
+		}
+		html .orca-settings > .sections .item.selected,
+		html .orca-settings > .sections .item:hover,
+		html .orca-settings > .sections .plugin-item.selected,
+		html .orca-settings > .sections .plugin-item:hover {
+			background: var(--accent) !important;
+			background-color: var(--accent) !important;
+			border: 1px solid transparent !important;
+			border-radius: var(--border-radius);
+			color: var(--accent-foreground) !important;
+		}
+		html .orca-settings > .sections .item.selected *,
+		html .orca-settings > .sections .item:hover * {
+			color: var(--accent-foreground) !important;
+			fill: var(--accent-foreground) !important;
+		}
+		html .orca-settings > .sections .plugin-item.selected *:not(.orca-image):not(img),
+		html .orca-settings > .sections .plugin-item:hover *:not(.orca-image):not(img) {
+			color: var(--accent-foreground) !important;
+			fill: var(--accent-foreground) !important;
+		}
+
+		/* Settings left nav icons — see unlayered block (beats Orca @scope i rules) */
+
+	.orca-settings section.views,
+	html .orca-settings > section.views,
+	html .orca-settings > .views {
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		--orca-color-gray-4: var(--muted-foreground);
+		& *:active, & *:focus { background-color: transparent !important; }
+		& input:active, & input:focus,
+		& .orca-input:active, & .orca-input-input:active, & .orca-input-actualinput:active {
+			background-color: var(--secondary-background) !important;
+		}
+		& .desc,
+		& .plugins-section {
+			color: var(--muted-foreground) !important;
+			font-size: 0.75rem !important;
+			line-height: 1.25rem !important;
+		}
+		& .item-horizontal .title,
+		& .item-vertical .title,
+		& h2, & h3 {
+			color: var(--card-foreground) !important;
+			background: transparent !important;
+			border: none !important;
+		}
+		& .option,
+		& .item-horizontal,
+		& .item-vertical { background: transparent !important; border: none !important; }
+	}
+
+	/* Fix 15: Settings shortcuts table — column labels vs category rows */
+	.orca-settings section.views .shortcut-table .orca-table-header-cell {
+		background: transparent !important;
+		background-color: transparent !important;
+		color: var(--muted-foreground) !important;
+		border-bottom: none !important;
+	}
+	.orca-settings section.views .shortcut-table .orca-settings-shortcuts-header {
+		background: var(--muted) !important;
+		background-color: var(--muted) !important;
+		color: var(--foreground) !important;
+		grid-column: 1 / -1 !important;
+	}
+
+	.orca-settings .orca-select-button-text { color: var(--foreground) !important; fill: var(--foreground) !important; }
+
+	/* Inline/contextual selects — keep native plain picker chrome */
+	:is(
+		.orca-query-editor,
+		.orca-query-conditions,
+		.orca-query-condition-item,
+		.orca-block-editor-query,
+		.orca-repr-tag-props,
+		.orca-tag-props-editor,
+		.orca-panels-container #main,
+		.orca-block-editor
+	) .orca-select-button.orca-button {
+		min-block-size: unset !important;
+		min-inline-size: unset !important;
+		padding-inline: unset !important;
+		border: none !important;
+		box-shadow: none !important;
+		background: transparent !important;
+		font-size: inherit !important;
+		font-weight: inherit !important;
+	}
+
+	:is(
+		.orca-query-editor,
+		.orca-query-conditions,
+		.orca-query-condition-item,
+		.orca-block-editor-query,
+		.orca-repr-tag-props,
+		.orca-tag-props-editor,
+		.orca-panels-container #main,
+		.orca-block-editor
+	) .orca-select-button-selector,
+	:is(
+		.orca-query-editor,
+		.orca-query-conditions,
+		.orca-query-condition-item,
+		.orca-block-editor-query,
+		.orca-repr-tag-props,
+		.orca-tag-props-editor,
+		.orca-panels-container #main,
+		.orca-block-editor
+	) .orca-select-button-selector::before {
+		margin-inline-start: unset !important;
+	}
+
+}

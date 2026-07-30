@@ -74,11 +74,13 @@ function audit(filePath) {
 }
 
 function createReport() {
+	const manifest = require(path.join(rootDir, "src", "theme-css", "manifest.cjs"));
 	const sourceFiles = [
-		"src/flavors/default.css",
-		"src/theme-css/shadcn-primitives.css",
-		"src/theme-css/_shared.css",
-	].map((filePath) => path.join(rootDir, filePath));
+		...manifest.prelude,
+		...manifest.base,
+		...manifest.components,
+		...manifest.overrides,
+	].map((filePath) => path.join(rootDir, "src", filePath));
 
 	return {
 		generated: audit(outputPath),

@@ -1,0 +1,42 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.29 Datepicker Popup
+	   ---------------------------------------------------------- */
+
+	.orca-datepicker-menu {
+		box-sizing: border-box !important;
+		min-inline-size: 0 !important;
+
+		& .orca-date-picker {
+			inline-size: fit-content !important;
+			width: auto !important;
+			flex: 0 0 auto !important;
+			border: none !important;
+			box-shadow: none !important;
+			padding: 0 !important;
+			background: transparent !important;
+		}
+
+		& .nl-input-container { border-bottom: none !important; }
+		& .button-bar { border-top: none !important; }
+	}
+	:root .orca-datepicker-menu .button-bar .orca-button.plain {
+		color: var(--foreground) !important;
+		background: transparent !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover {
+			background: var(--accent) !important;
+			color: var(--accent-foreground) !important;
+			border-color: transparent !important;
+		}
+	}
+	.orca-datepicker-menu .button-bar .orca-button.solid {
+		background: var(--primary) !important;
+		color: var(--primary-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover { opacity: 0.9 !important; }
+	}
+
+}

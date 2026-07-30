@@ -61,7 +61,11 @@
 |------|------|
 | `src/flavors/default.css` | Token + Orca `--orca-color-*` 映射 |
 | `src/theme-css/shadcn-primitives.css` | 可复用 shadcn 模式（ring、popover surface 等） |
-| `src/theme-css/_shared.css` | Orca 具体选择器与 `!important` 覆盖 |
+| `src/theme-css/manifest.cjs` | 显式 source layer 顺序，最终仍生成单一 `shadcn.css` |
+| `src/theme-css/base/` | 全局 reset、surface、布局和 shell 规则 |
+| `src/theme-css/components/` | 按组件职责拆分的 Orca 选择器映射 |
+| `src/theme-css/context-overrides.css` | 搜索、引用、预览等上下文规则 |
+| `src/theme-css/native-precedence.css` | 需要击败 Orca 原生加载顺序的高特异性补丁 |
 
 ## 不应再出现的 Neo 模式
 

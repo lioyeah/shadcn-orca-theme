@@ -1,0 +1,405 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.3 Badge (Tag / Pill)
+	   ---------------------------------------------------------- */
+
+	.orca-tag, .orca-pill {
+		border: 1px solid var(--border) !important;
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		border-radius: var(--border-radius) !important;
+		font-weight: var(--base-font-weight) !important;
+	}
+
+	.orca-block-ref-count-marker {
+		background: var(--sidebar) !important;
+		background-color: var(--sidebar) !important;
+		color: var(--muted-foreground) !important;
+		border: none !important;
+		border-radius: var(--radius-md) !important;
+		font-weight: 500 !important;
+		box-shadow: none !important;
+		&:hover {
+			background: var(--sidebar-accent) !important;
+			color: var(--muted-foreground) !important;
+		}
+	}
+
+	.orca-block-ref-count-marker.orca-block-ref-count-marker-overflow {
+		font-size: 0.625rem !important;
+		padding: 0.125rem 0.25rem !important;
+	}
+
+	.orca-popup .orca-tags-tag-item {
+		border: 1px solid var(--border) !important; background: transparent !important;
+		border-radius: var(--border-radius) !important;
+		&:hover { background: var(--secondary-background) !important; }
+	}
+
+	/* Select list items — dropdown-menu hover (not plain inline pickers) */
+	.orca-select-menu .orca-select-item:not(.disabled),
+	.orca-menu .orca-select-item:not(.disabled) {
+		border: 1px solid transparent !important;
+		background: transparent !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+	}
+
+	.orca-select-menu .orca-select-item:not(.disabled):hover,
+	.orca-select-menu .orca-select-item.selected,
+	.orca-select-menu .orca-select-item[aria-selected="true"],
+	.orca-select-menu .orca-select-item.orca-key-selected,
+	.orca-menu .orca-select-item:not(.disabled):hover,
+	.orca-menu .orca-select-item.selected,
+	.orca-menu .orca-select-item[aria-selected="true"],
+	.orca-menu .orca-select-item.orca-key-selected {
+		border-color: transparent !important;
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	/* Orca clears hover bg when keyboard selection exists — keep accent on mouse hover */
+	.orca-menu:has(.orca-key-selected) .orca-select-item:not(.disabled):hover,
+	.orca-menu:has(.orca-key-selected) .orca-menu-item:hover,
+	.orca-menu:has(.orca-key-selected) .orca-menu-text:not(.orca-menu-text-disabled):hover {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.4 Switch — shadcn switch.tsx
+	   Default (settings): w-8 h-[1.15rem], thumb size-4 (16px)
+	   Sm (body/tag props): w-6 h-3.5, thumb size-3 (12px)
+	   ---------------------------------------------------------- */
+
+	.orca-switch {
+		display: inline-flex !important;
+		align-items: center !important;
+		box-sizing: border-box !important;
+		min-width: 2rem !important;
+		width: 2rem !important;
+		height: 1.15rem !important;
+		padding: 0 !important;
+		border: 1px solid transparent !important;
+		border-radius: 9999px !important;
+		background: var(--input) !important;
+		background-color: var(--input) !important;
+		box-shadow: var(--shadow-xs) !important;
+		vertical-align: middle !important;
+		align-self: center !important;
+		cursor: pointer !important;
+		transition: background-color 0.15s ease, border-color 0.15s ease !important;
+	}
+
+	html:not(.t-light) .orca-switch:not(.orca-switch-on):not(.orca-switch.orca-switch-on) {
+		background: color-mix(in oklab, var(--input) 80%, transparent) !important;
+		background-color: color-mix(in oklab, var(--input) 80%, transparent) !important;
+	}
+
+	.orca-switch.orca-switch-on,
+	.orca-switch-on {
+		background: var(--primary) !important;
+		background-color: var(--primary) !important;
+		border-color: transparent !important;
+	}
+
+	.orca-switch-toggle {
+		display: block !important;
+		box-sizing: border-box !important;
+		width: 1rem !important;
+		height: 1rem !important;
+		min-width: 1rem !important;
+		min-height: 1rem !important;
+		aspect-ratio: 1 !important;
+		border: none !important;
+		border-radius: 9999px !important;
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		box-shadow: none !important;
+		flex-shrink: 0 !important;
+		transition: translate 0.15s ease-in-out !important;
+		translate: 0 !important;
+	}
+
+	html:not(.t-light) .orca-switch-on .orca-switch-toggle,
+	html:not(.t-light) .orca-switch.orca-switch-on .orca-switch-toggle {
+		background: var(--primary-foreground) !important;
+		background-color: var(--primary-foreground) !important;
+	}
+
+	html:not(.t-light) .orca-switch:not(.orca-switch-on) .orca-switch-toggle {
+		background: var(--foreground) !important;
+		background-color: var(--foreground) !important;
+	}
+
+	.orca-switch-on .orca-switch-toggle,
+	.orca-switch.orca-switch-on .orca-switch-toggle {
+		translate: calc(2rem - 1rem - 2px) !important;
+	}
+
+	.orca-switch-readonly,
+	.orca-switch-unset {
+		opacity: 0.5 !important;
+	}
+	.orca-switch-readonly {
+		cursor: default !important;
+	}
+
+	.orca-switch:focus-visible {
+		border-color: var(--ring) !important;
+		box-shadow: var(--shadcn-ring) !important;
+		outline: none !important;
+	}
+
+	/* Body / tag-property — switch size=sm */
+	#main .orca-switch,
+	.orca-block-editor .orca-switch,
+	.orca-repr-tag-props .orca-switch,
+	.orca-tag-value-switch.orca-switch {
+		min-width: 1.5rem !important;
+		width: 1.5rem !important;
+		height: 0.875rem !important;
+		box-shadow: var(--shadow-xs) !important;
+		vertical-align: middle !important;
+		align-self: center !important;
+		margin-block: 0 !important;
+		line-height: 0 !important;
+	}
+	#main .orca-switch-toggle,
+	.orca-block-editor .orca-switch-toggle,
+	.orca-repr-tag-props .orca-switch-toggle,
+	.orca-tag-value-switch .orca-switch-toggle {
+		width: 0.75rem !important;
+		height: 0.75rem !important;
+		min-width: 0.75rem !important;
+		min-height: 0.75rem !important;
+	}
+	#main .orca-switch-on .orca-switch-toggle,
+	.orca-block-editor .orca-switch-on .orca-switch-toggle,
+	.orca-repr-tag-props .orca-switch-on .orca-switch-toggle,
+	.orca-tag-value-switch.orca-switch-on .orca-switch-toggle {
+		translate: calc(1.5rem - 0.75rem - 2px) !important;
+	}
+
+	/* Tag props layout — see §4.22b accordion card */
+
+	/* Settings — default size; vertically centered with label row */
+	html .orca-settings .orca-switch {
+		flex-shrink: 0 !important;
+		margin-block: 0 !important;
+		vertical-align: middle !important;
+		align-self: center !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.5 Checkbox
+	   ---------------------------------------------------------- */
+
+	.orca-checkbox-box {
+		outline: none !important;
+		border: 1px solid var(--input) !important;
+		border-radius: 4px !important;
+		box-shadow: var(--shadow-xs) !important;
+		background: transparent !important;
+	}
+
+	input[type="checkbox"] {
+		appearance: none !important; width: 1em !important; height: 1em !important;
+		min-width: 16px !important; min-height: 16px !important;
+		border: 1px solid var(--input) !important;
+		border-radius: 4px !important;
+		box-shadow: var(--shadow-xs) !important;
+		background: transparent !important;
+		display: inline-grid !important; place-content: center !important; margin: 0 !important;
+		&:checked {
+			background: var(--primary) !important; background-color: var(--primary) !important;
+			border-color: var(--primary) !important;
+			&::before, &::after { content: "✔" !important; font-size: 0.9em !important; font-weight: 900 !important; line-height: 1 !important; color: var(--primary-foreground) !important; fill: var(--primary-foreground) !important; }
+		}
+	}
+
+	.orca-checkbox-box[data-state="checked"],
+	.orca-checkbox-box:has(svg), .orca-checkbox-box:not(:empty) {
+		background: var(--primary) !important; background-color: var(--primary) !important;
+		border-color: var(--primary) !important;
+		& svg, & svg *, &::before, &::after, & * {
+			color: var(--primary-foreground) !important; fill: var(--primary-foreground) !important;
+			fill-opacity: 1 !important; stroke: var(--primary-foreground) !important;
+			stroke-opacity: 1 !important; opacity: 1 !important;
+		}
+	}
+
+	html .orca-settings .orca-checkbox-box[data-state="checked"] {
+		background: var(--primary) !important; background-color: var(--primary) !important;
+		border-color: var(--primary) !important;
+		& svg, & svg * { stroke: var(--primary-foreground) !important; fill: var(--primary-foreground) !important; color: var(--primary-foreground) !important; }
+	}
+
+	/* ----------------------------------------------------------
+	   4.6 Tabs / Segmented — tabs.tsx TabsList + TabsTrigger (default)
+	   List: bg-muted rounded-lg p-[3px] h-9 text-muted-foreground
+	   Trigger: text-foreground/60 → hover:text-foreground
+	   Active: bg-background text-foreground shadow-sm
+	   Dark active: border-input bg-input/30
+	   ---------------------------------------------------------- */
+
+	.orca-query-tabs,
+	.orca-block-editor-query-tabs,
+	.orca-sidebar-tab-options,
+	.orca-tab-options,
+	.orca-tabs,
+	.orca-segmented {
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		inline-size: fit-content !important;
+		max-inline-size: 100% !important;
+		box-sizing: border-box !important;
+		background: var(--muted) !important;
+		color: var(--muted-foreground) !important;
+		border: none !important;
+		border-radius: var(--radius-lg) !important;
+		padding: 3px !important;
+		min-block-size: 2.25rem !important;
+		box-shadow: none !important;
+	}
+
+	.orca-sidebar-tab-options,
+	.orca-tab-options.orca-sidebar-tab-options {
+		inline-size: 100% !important;
+	}
+
+	.orca-tab-item,
+	.orca-segmented-item,
+	.orca-tab,
+	.orca-query-tab,
+	.orca-sidebar-tab {
+		flex: 1 1 0 !important;
+		background: transparent !important;
+		color: color-mix(in oklab, var(--foreground) 60%, transparent) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-md) !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+		font-weight: var(--base-font-weight) !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 0.375rem !important;
+		padding: 0.25rem 0.5rem !important;
+		margin: 0 !important;
+		min-block-size: calc(100% - 1px) !important;
+		white-space: nowrap !important;
+		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		&:hover { color: var(--foreground) !important; }
+		&:focus-visible {
+			border-color: var(--ring) !important;
+			box-shadow: var(--shadcn-ring) !important;
+			outline: none !important;
+		}
+		& svg, & i, & i::before, & .orca-icon {
+			inline-size: 1rem !important;
+			block-size: 1rem !important;
+			flex-shrink: 0 !important;
+			color: inherit !important;
+			fill: currentColor !important;
+		}
+	}
+
+	.orca-tab-item.orca-selected,
+	.orca-segmented-item.orca-selected,
+	.orca-tab.orca-selected,
+	.orca-query-tab.orca-selected,
+	.orca-sidebar-tab.orca-selected {
+		background: var(--background) !important;
+		color: var(--foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		font-weight: 500 !important;
+	}
+
+	html:not(.t-light) .orca-tab-item.orca-selected,
+	html:not(.t-light) .orca-segmented-item.orca-selected,
+	html:not(.t-light) .orca-tab.orca-selected,
+	html:not(.t-light) .orca-query-tab.orca-selected,
+	html:not(.t-light) .orca-sidebar-tab.orca-selected {
+		border-color: var(--input) !important;
+		background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+	}
+
+	.orca-query-tabs .indicator,
+	.orca-tab-options .indicator,
+	.orca-segmented .indicator { display: none !important; }
+
+	/*
+	   Query block — fixed top tab strip + stable gap before view content.
+	   Only the block-level tab bar (.orca-block-editor-query-tabs) gets the
+	   reserved height/gap; inner .orca-segmented inside a view must not add
+	   extra offset (引用 vs 当日创建 would otherwise misalign).
+	*/
+	.orca-block-editor-query-tabs-container {
+		margin-block-end: 0.75rem !important;
+	}
+
+	.orca-block-editor-query-tabs.orca-segmented {
+		flex-shrink: 0 !important;
+		min-block-size: 2.25rem !important;
+		block-size: 2.25rem !important;
+		margin-block-end: 0 !important;
+		box-sizing: border-box !important;
+	}
+
+	.orca-block-editor-query-tabs .orca-segmented-item,
+	.orca-block-editor-query-tabs .orca-tab-item,
+	.orca-block-editor-query-tabs .orca-query-tab {
+		flex: 0 1 auto !important;
+		font-weight: 500 !important;
+		min-block-size: calc(2.25rem - 6px) !important;
+		block-size: calc(2.25rem - 6px) !important;
+		box-sizing: border-box !important;
+	}
+
+	.orca-block-editor-query-tabs .orca-segmented-item.orca-selected,
+	.orca-block-editor-query-tabs .orca-tab-item.orca-selected,
+	.orca-block-editor-query-tabs .orca-query-tab.orca-selected {
+		box-shadow: var(--shadow-sm) !important;
+	}
+
+	html:not(.t-light) .orca-block-editor-query-tabs .orca-segmented-item.orca-selected,
+	html:not(.t-light) .orca-block-editor-query-tabs .orca-tab-item.orca-selected,
+	html:not(.t-light) .orca-block-editor-query-tabs .orca-query-tab.orca-selected {
+		border: 1px solid var(--input) !important;
+	}
+
+	.orca-block-editor-query-views,
+	.orca-block-editor-query-views > .orca-hideable,
+	.orca-block-editor-query .orca-query-editor {
+		margin-block-start: 0 !important;
+		padding-block-start: 0 !important;
+	}
+
+	/* Inner view segmented (e.g. 引用 view picker) — fixed strip + gap to conditions */
+	.orca-block-editor-query .orca-query-editor > .orca-segmented {
+		flex-shrink: 0 !important;
+		margin-block-end: 0.5rem !important;
+		min-block-size: 2.25rem !important;
+		block-size: 2.25rem !important;
+		inline-size: fit-content !important;
+		box-sizing: border-box !important;
+	}
+
+	/*
+	   Preset views (当日创建) often skip inner segmented; editable views (引用)
+	   include one. Pad first conditions row so both align with block tabs.
+	*/
+	.orca-block-editor-query .orca-query-editor > :is(.orca-query-conditions, .orca-query-conditions-header-non-editable):first-child {
+		margin-block-start: calc(2.25rem + 0.5rem) !important;
+	}
+
+	.orca-block-editor-query .orca-query-editor > .orca-segmented + :is(.orca-query-conditions, .orca-query-conditions-header-non-editable) {
+		margin-block-start: 0 !important;
+	}
+
+}

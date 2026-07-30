@@ -17,10 +17,15 @@ src/
   flavors/default.css     # shadcn neutral tokens
   theme-css/
     shadcn-primitives.css   # translated shadcn patterns
-    _shared.css             # Orca selector overrides
+    manifest.cjs             # ordered CSS source groups
+    base/                    # resets, surfaces, and layout
+    components/              # focused Orca component mappings
+    context-overrides.css    # preview/context-specific rules
+    native-precedence.css    # late-loading Orca precedence patches
     reference/              # Orca native CSS docs + 15-shadcn-mapping.md
 scripts/
-  build-theme-css.cjs     # → public/shadcn.css
+  build-theme-css.cjs     # manifest → public/shadcn.css
+  audit-theme-css.cjs     # CSS inventory baseline/comparison
   deploy.cjs              # → ~/Documents/orca/plugins/shadcn
 DESIGN_SPEC.md            # design & architecture (中文)
 ```

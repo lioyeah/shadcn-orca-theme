@@ -1,0 +1,68 @@
+/**
+ * Orca Theme — Shared Structure (shadcn/ui neutral)
+ *
+ * Color tokens from flavor CSS (--background, --foreground, --border, etc.).
+ * Visual language follows shadcn default: 1px borders, no hard offset shadow,
+ * 0.625rem radius, accent-based hover/selection.
+ *
+ * !important: required to override Orca inline styles.
+ */
+
+/* ============================================================
+   0. CSS LAYERS
+   ============================================================ */
+
+@layer base, components, overrides;
+
+/* ============================================================
+   1. THEME TOKENS & GLOBAL RESETS
+   ============================================================ */
+
+@layer base {
+	:root { --shadow: none; }
+
+	/* focus-visible:ring-[3px] ring-ring/50 (shadcn button/input pattern) */
+	:focus-visible:not(input):not(textarea):not(select):not(.orca-input):not(.orca-input-input):not(.orca-input-actualinput):not(.orca-textarea-input):not(.orca-textarea):not(.orca-find-replace):not(:has(> .orca-find-replace)) {
+		outline: none !important;
+		box-shadow: var(--shadcn-ring) !important;
+	}
+	.orca-find-replace:focus-visible,
+	.orca-popup:has(> .orca-find-replace):focus-visible {
+		outline: none !important;
+		box-shadow: none !important;
+	}
+	input:focus-visible,
+	textarea:focus-visible,
+	.orca-input:focus-visible,
+	.orca-input :focus-visible,
+	.orca-input-input:focus-visible,
+	.orca-input-actualinput:focus-visible,
+	.orca-textarea-input:focus-visible,
+	.orca-textarea-input :focus-visible,
+	.orca-textarea:focus-visible {
+		outline: none !important;
+		box-shadow: none !important;
+	}
+	::selection { background: var(--orca-color-selection) !important; color: var(--foreground) !important; }
+	::placeholder { color: var(--typeset-placeholder) !important; opacity: 1 !important; }
+
+	a, .orca-link {
+		color: var(--orca-color-link) !important;
+		text-decoration: underline !important;
+		text-underline-offset: 0.15em !important;
+		&:hover { color: var(--orca-color-link-hover) !important; }
+	}
+
+		img, video, iframe, embed, object, .orca-image, .orca-media {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+	}
+
+	/* Settings plugin list icons — host owns chrome */
+	.orca-settings > .sections .plugin-item .orca-image,
+	.orca-settings > .sections .plugin-item img {
+		border: revert !important;
+		border-radius: revert !important;
+	}
+}
+

@@ -1,0 +1,309 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.22b Tag properties — accordion.tsx (Card + Borders)
+	   .orca-repr-tag-props = card shell + accordion root
+	   .orca-repr-tag-props-group = AccordionItem (border-b)
+	   .orca-repr-tag-props-title = AccordionTrigger
+	   prop rows = AccordionContent (px-4 pb-4)
+	   Ref: https://ui.shadcn.com/docs/components/base/accordion
+	   ---------------------------------------------------------- */
+
+	.orca-repr-tag-props {
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		margin-block: 1rem 0.75rem !important;
+		padding: 0 !important;
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 45%, var(--border)) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+	}
+
+	.orca-repr-tag-props-group {
+		display: grid !important;
+		grid-template-columns: auto max-content 1fr auto !important;
+		grid-column: unset !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		width: 100% !important;
+		border-bottom: 1px solid color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 55%, var(--border)) !important;
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.orca-repr-tag-props-group:last-child {
+		border-bottom: none !important;
+	}
+
+	.orca-repr-tag-props-title {
+		grid-column: 1 / -1 !important;
+		display: flex !important;
+		flex-direction: row !important;
+		align-items: center !important;
+		justify-content: space-between !important;
+		gap: 0.75rem !important;
+		width: 100% !important;
+		padding: 1rem !important;
+		margin: 0 !important;
+		border: none !important;
+		border-top: none !important;
+		border-bottom: none !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		color: var(--orca-repr-tag-props-color, var(--foreground)) !important;
+		font-size: 0.875rem !important;
+		font-weight: 500 !important;
+		line-height: 1.25rem !important;
+		cursor: pointer !important;
+		transition: color 0.15s ease !important;
+		-webkit-font-smoothing: antialiased !important;
+	}
+
+	.orca-repr-tag-props-title::before {
+		order: 2 !important;
+		flex-shrink: 0 !important;
+		margin: 0 !important;
+		margin-inline-start: auto !important;
+		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+		font-size: 1rem !important;
+		line-height: 1 !important;
+		transition: transform 0.2s ease !important;
+	}
+
+	.orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
+		transform: rotate(180deg) !important;
+	}
+
+	.orca-repr-tag-props-group:has(> .orca-repr-tag-props-title.orca-repr-tag-props-collapsed) > :not(.orca-repr-tag-props-title) {
+		display: none !important;
+	}
+
+	.orca-repr-tag-props-group > :not(.orca-repr-tag-props-title) {
+		padding-inline: 1rem !important;
+	}
+
+	.orca-repr-tag-props-group > :not(.orca-repr-tag-props-title):last-child {
+		padding-block-end: 1rem !important;
+	}
+
+	.orca-repr-tag-props .orca-tag-data-propicon,
+	.orca-repr-tag-props .orca-tag-data-name {
+		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+	}
+
+	.orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input) {
+		border: 0 !important;
+		border-bottom: 1px solid var(--orca-repr-tag-props-color, var(--border)) !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		padding: 0 0.5rem 0.25rem !important;
+	}
+
+	.orca-repr-tag-props :is(.orca-datepicker-btn, .orca-select-button) {
+		border: 0 !important;
+		border-bottom: 1px solid var(--orca-repr-tag-props-color, var(--border)) !important;
+		padding: 0.5rem !important;
+		border-radius: 0 !important;
+	}
+
+	/* Filled values — standard hover (not tag color) */
+	.orca-repr-tag-props .orca-select-button:has(.orca-select-button-text:not(:empty)):hover,
+	.orca-repr-tag-props .orca-datepicker-btn:not(:has(.placeholder)):hover {
+		background: color-mix(in oklab, var(--accent) 12%, transparent) !important;
+		color: var(--foreground) !important;
+	}
+
+	/* Empty placeholder — tag accent hint on hover */
+	.orca-repr-tag-props .orca-select-button:has(.orca-select-button-placeholder):not(:has(.orca-select-button-text:not(:empty))):hover,
+	.orca-repr-tag-props .orca-datepicker-btn:has(.placeholder):hover {
+		background: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--accent)) 12%, transparent) !important;
+		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+	}
+
+	.orca-query-editor .orca-query-results {
+		overflow: visible !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important;
+	}
+	.orca-query-results { background: transparent !important; color: var(--foreground) !important; border: none !important; padding: 8px 12px !important; }
+
+	/* Self-fold blocks (query list AI chat rows, foldable embeds) — card.tsx */
+	.orca-repr-self-fold-container {
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		color: var(--muted-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+		margin-block: 0.5rem !important;
+		padding: 0.75rem 1rem !important;
+	}
+
+	.orca-query-list-block-block .orca-repr-self-fold-container {
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+	}
+
+	.orca-repr-self-fold {
+		color: var(--foreground) !important;
+		background: transparent !important;
+	}
+
+	/* Self-fold expands in-place — outer container stays the card shell */
+	.orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: stretch !important;
+		padding: 0 !important;
+		overflow: hidden !important;
+	}
+
+	.orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) .orca-repr-self-fold-actions,
+	.orca-repr-self-fold-container:has(.orca-aichat-container:not(.orca-maximized)) > .orca-repr-self-fold {
+		padding: 0.75rem 1rem 0 !important;
+	}
+
+	.orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+		width: 100% !important;
+		height: auto !important;
+		max-height: 85cqh !important;
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		overflow: hidden !important;
+	}
+
+	.orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		border-radius: 0 !important;
+		margin-inline: 0 !important;
+		max-width: none !important;
+		padding: 0.75rem 1rem !important;
+	}
+
+	.orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
+		border: none !important;
+		border-top: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+	}
+
+	.orca-aichat-collapsible {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+		margin-block: 0.5rem !important;
+		padding: 0 !important;
+	}
+
+	.orca-aichat-collapsible-header {
+		padding: 0.75rem 1rem 0.5rem !important;
+	}
+
+	/*
+	   Query embed — expanded AI chat card shell (any nesting depth).
+	   Do not use `>` — .orca-aichat-container usually lives under .orca-repr-children.
+	*/
+	:is(
+		.orca-query-results,
+		.orca-query-editor,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) .orca-aichat-collapsible,
+	:is(
+		.orca-query-results,
+		.orca-query-editor,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) .orca-aichat-container:not(.orca-maximized) {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--card) !important;
+		background-color: var(--card) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+		margin-block: 0.5rem !important;
+		padding: 0 !important;
+		box-sizing: border-box !important;
+		height: auto !important;
+		max-height: 85cqh !important;
+		min-height: 0 !important;
+	}
+
+	:is(
+		.orca-query-results,
+		.orca-query-editor,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) .orca-aichat-collapsible > .orca-aichat-container:not(.orca-maximized) {
+		border: none !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+		height: auto !important;
+		max-height: 85cqh !important;
+		overflow: hidden !important;
+	}
+
+	:is(
+		.orca-query-results,
+		.orca-query-editor,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) .orca-aichat-container:not(.orca-maximized) .orca-aichat-messages {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
+		border-radius: 0 !important;
+		padding: 0.75rem 1rem !important;
+		margin-inline: 0 !important;
+		max-width: none !important;
+	}
+
+	:is(
+		.orca-query-results,
+		.orca-query-editor,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) .orca-aichat-container:not(.orca-maximized) .orca-aichat-composer {
+		border: none !important;
+		border-top: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		margin: 0 !important;
+	}
+
+	.orca-query-conditions-reset.orca-button.soft {
+		background: color-mix(in oklab, var(--foreground) 12%, var(--background)) !important; color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		transition: all 0.15s ease !important;
+		padding: 0.25rem 0.625rem !important;
+		min-block-size: 1.75rem !important;
+		align-self: center !important;
+		&:hover { opacity: 0.9 !important; }
+	}
+	.orca-query-conditions .orca-checkbox-box { outline: 1px solid var(--border) !important; outline-offset: 0 !important; border: none !important; }
+
+}
