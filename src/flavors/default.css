@@ -102,7 +102,7 @@
 	--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
 	--orca-color-win-scrollbar: var(--border);
 	--orca-color-menu-highlight: var(--orca-color-bg-3);
-	--orca-color-result-highlight: color-mix(in oklab, var(--background) 90%, var(--foreground));
+	--orca-color-result-highlight: var(--nb-danger);
 	--orca-color-heading-1-dim: color-mix(in oklab, var(--main) 50%, var(--background));
 	--orca-color-heading-2-dim: color-mix(in oklab, var(--foreground) 50%, var(--background));
 	--orca-color-heading-3-dim: color-mix(in oklab, var(--main) 30%, var(--background));
