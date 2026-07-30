@@ -23,6 +23,7 @@
 | [12-aichat-system.md](./12-aichat-system.md) | AI 聊天组件 |
 | [13-calendar-datepicker.md](./13-calendar-datepicker.md) | 日历与日期选择器 |
 | [14-editor-block-system.md](./14-editor-block-system.md) | 编辑器与块系统 |
+| [15-shadcn-mapping.md](./15-shadcn-mapping.md) | shadcn/ui 组件与 Orca 类名映射 |
 
 ## 统计概览
 

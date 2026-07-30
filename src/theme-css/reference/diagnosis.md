@@ -66,7 +66,7 @@
 
 其他 flavor CSS（cyan/pink/green/red/violet）仅定义 `--main` 和 `--background` 两个变量，其他变量继承 default.css — 这个模式是正确的，无需改动。
 
-`neubrutalism-vignette.css` 和 `neubrutalism-task-planner.css` 是特色/插件 CSS，结构独立，暂不重构。
+`vignette.css` 和 `task-planner.css` 等第三方插件 CSS 结构独立，不在本主题 `_shared.css` 内重构。
 
 ## 4. 重构目标
 

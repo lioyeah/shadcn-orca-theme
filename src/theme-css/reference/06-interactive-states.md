@@ -3,7 +3,7 @@
 > Orca 中主要的状态类和数据属性约定。
 >
 > ⚠️ 核心 CSS 经过 minify，`.orca-sidebar-item`、`.orca-list-item` 等在 minified CSS
-> 中不作为独立选择器出现，但 Neubrutalism 主题 CSS 及运行时 JS 会使用它们。
+> 中不作为独立选择器出现，但 shadcn 主题 CSS 及运行时 JS 会使用它们。
 
 ## 1. 通用状态
 
@@ -64,7 +64,7 @@
 | `.orca-search-result-item.selected` | 选中 | ✅ 核心 CSS 确认 |
 
 > `.orca-sidebar-item` 和 `.orca-list-item` 不在 minified 核心 CSS 中，
-> 但 Neubrutalism 主题 CSS 定义了它们（见 `_shared.css`）。
+> 但 shadcn 主题 CSS 定义了它们（见 `_shared.css`）。
 
 ## 5. 开关 (Switch) 状态
 
@@ -74,7 +74,7 @@
 | `.orca-switch-toggle` | 滑块 | ✅ 核心 CSS 确认 |
 
 > `[data-state="on"]` 不在 minified 核心 CSS 中直接出现，
-> 但由 Switch 组件运行时设置，Neubrutalism 主题 CSS 中使用。
+> 但由 Switch 组件运行时设置，shadcn 主题 CSS 中使用。
 
 ## 6. 复选框 (Checkbox) 状态
 
@@ -84,7 +84,7 @@
 | `input[type="checkbox"]:checked` | 原生选中 | ✅ 核心 CSS 确认 |
 
 > `[data-state="checked"]` 不在 minified 核心 CSS 中直接出现，
-> 但由 Checkbox 组件运行时设置，Neubrutalism 主题 CSS 中使用。
+> 但由 Checkbox 组件运行时设置，shadcn 主题 CSS 中使用。
 
 ## 7. 选项卡 (Tab) 状态
 

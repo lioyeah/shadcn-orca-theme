@@ -6,16 +6,16 @@
 const fs = require("fs");
 const path = require("path");
 
-const DEFAULT_DEPLOY_DIR = "/home/ilio/Documents/orca/plugins/Neubrutalism";
+const DEFAULT_DEPLOY_DIR = "/home/ilio/Documents/orca/plugins/shadcn";
 const DEPLOY_DIR = process.env.ORCA_PLUGINS_DIR
-	? path.join(process.env.ORCA_PLUGINS_DIR, "Neubrutalism")
+	? path.join(process.env.ORCA_PLUGINS_DIR, "shadcn")
 	: DEFAULT_DEPLOY_DIR;
 
 const ROOT_FILES = ["package.json", "icon.png", "LICENSE", "README.md"];
 
 const DIST_FILES = [
 	"index.js",
-	"neubrutalism.css",
+	"shadcn.css",
 ];
 
 function copy(src, dest) {
@@ -51,6 +51,16 @@ for (const file of DIST_FILES) {
 		copy(src, path.join(DEPLOY_DIR, "dist", file));
 	} else {
 		throw new Error(`${file} not found in dist/. Run npm run build first.`);
+	}
+}
+
+// 3. Remove stale artifacts from previous theme name
+const STALE_DIST_FILES = ["neubrutalism.css"];
+for (const file of STALE_DIST_FILES) {
+	const stale = path.join(DEPLOY_DIR, "dist", file);
+	if (fs.existsSync(stale)) {
+		fs.unlinkSync(stale);
+		console.log(`  🗑️  removed stale dist/${file}`);
 	}
 }
 

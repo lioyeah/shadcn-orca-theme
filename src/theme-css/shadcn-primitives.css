@@ -1,0 +1,439 @@
+/**
+ * shadcn/ui primitive patterns (CSS translation)
+ *
+ * Source: apps/v4/registry/new-york-v4/ui/*.tsx
+ * Docs: https://ui.shadcn.com/docs/theming
+ *
+ * These are semantic defaults Orca selectors inherit via _shared.css.
+ * Do not add Orca-specific class names here.
+ */
+
+@layer base {
+	/* focus-visible:ring-[3px] focus-visible:ring-ring/50 (button, input, switch, checkbox) */
+	:root {
+		--shadcn-ring: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+		--shadcn-ring-offset: 0 0 0 2px var(--background);
+		/* input.tsx / input-group.tsx — focus: same border as rest (no brighten) */
+		--shadcn-input-focus-shadow: var(--shadow-xs);
+	}
+}
+
+@layer components {
+	/* dropdown-menu.tsx / popover.tsx — content panel */
+	.shadcn-popover-surface {
+		background: var(--popover);
+		color: var(--popover-foreground);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-md);
+	}
+
+	/* dropdown-menu.tsx — DropdownMenuItem */
+	.shadcn-menu-item {
+		border-radius: calc(var(--radius) - 4px);
+		padding: 0.375rem 0.5rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		outline: none;
+	}
+
+	.shadcn-menu-item:hover,
+	.shadcn-menu-item:focus,
+	.shadcn-menu-item[aria-selected="true"],
+	.shadcn-menu-item.selected {
+		background: var(--accent);
+		color: var(--accent-foreground);
+	}
+
+	/* tooltip.tsx — TooltipContent */
+	.shadcn-tooltip-surface {
+		background: var(--foreground);
+		color: var(--background);
+		border: none;
+		border-radius: var(--radius-md);
+		box-shadow: none;
+		padding: 0.375rem 0.75rem;
+		font-size: 0.75rem;
+	}
+
+	/* switch.tsx — default + sm sizes */
+	.shadcn-switch-track {
+		border: 1px solid transparent;
+		border-radius: 9999px;
+		box-shadow: var(--shadow-xs);
+		background: var(--input);
+	}
+
+	.shadcn-switch-track-on {
+		background: var(--primary);
+		border-color: transparent;
+	}
+
+	.shadcn-switch-thumb {
+		background: var(--background);
+		border-radius: 9999px;
+	}
+
+	/* input.tsx */
+	.shadcn-input-shell {
+		border: 1px solid var(--input);
+		border-radius: var(--radius-md);
+		background: transparent;
+		box-shadow: var(--shadow-xs);
+	}
+
+	.shadcn-input-shell:focus-within {
+		border-color: var(--input);
+		box-shadow: var(--shadcn-input-focus-shadow);
+	}
+
+	/* typeset.tsx — editor body prose rhythm + semantic colors */
+	.shadcn-typeset {
+		color: var(--typeset-fg);
+		font-size: var(--typeset-size);
+		line-height: var(--typeset-leading);
+	}
+
+	.shadcn-typeset :where(h1, h2, h3, h4, h5, h6) {
+		color: var(--typeset-fg);
+		font-weight: var(--typeset-heading-weight);
+		line-height: 1.25;
+		margin-block-start: var(--typeset-flow);
+	}
+
+	.shadcn-typeset :where(h4) {
+		color: var(--typeset-fg-muted);
+		font-weight: var(--typeset-h4-weight);
+	}
+
+	.shadcn-typeset :where(p, li, blockquote) {
+		margin-block-start: var(--typeset-flow);
+	}
+
+	/* calendar.tsx — day cell states */
+	.shadcn-calendar-day-today {
+		background: var(--calendar-today-bg);
+		color: var(--calendar-today-fg);
+		border-radius: var(--radius-md);
+	}
+
+	.shadcn-calendar-day-selected {
+		background: var(--calendar-selected-bg);
+		color: var(--calendar-selected-fg);
+		border-radius: var(--radius-md);
+	}
+
+	.shadcn-input-group {
+		display: flex;
+		align-items: center;
+		min-block-size: 2.25rem;
+		min-inline-size: 0;
+		border: 1px solid var(--input);
+		border-radius: var(--radius-md);
+		background: transparent;
+		box-shadow: var(--shadow-xs);
+		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	.shadcn-input-group:focus-within {
+		border-color: var(--input);
+		box-shadow: var(--shadcn-input-focus-shadow);
+	}
+
+	.shadcn-input-group-addon {
+		display: inline-flex;
+		align-items: center;
+		flex-shrink: 0;
+		color: var(--muted-foreground);
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		user-select: none;
+	}
+
+	.shadcn-input-group-addon-inline-start {
+		order: -1;
+		padding-inline-start: 0.75rem;
+	}
+
+	.shadcn-input-group-addon-inline-end {
+		order: 1;
+		padding-inline-end: 0.75rem;
+	}
+
+	.shadcn-input-group-control {
+		flex: 1 1 auto;
+		min-inline-size: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		outline: none;
+	}
+
+	/* dialog.tsx — DialogContent */
+	.shadcn-dialog-surface {
+		background: var(--background);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* sidebar.tsx — Sidebar */
+	.shadcn-sidebar-surface {
+		background: var(--sidebar);
+		color: var(--sidebar-foreground);
+		border-color: var(--sidebar-border);
+	}
+
+	.shadcn-sidebar-item:hover,
+	.shadcn-sidebar-item.selected,
+	.shadcn-sidebar-item[aria-selected="true"] {
+		background: var(--sidebar-accent);
+		color: var(--sidebar-accent-foreground);
+	}
+
+	/* tabs.tsx — TabsList (default) + TabsTrigger */
+	.shadcn-tabs-list {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: fit-content;
+		max-inline-size: 100%;
+		background: var(--muted);
+		color: var(--muted-foreground);
+		border-radius: var(--radius-lg);
+		padding: 3px;
+		min-block-size: 2.25rem;
+	}
+
+	.shadcn-tabs-trigger {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+		border: 1px solid transparent;
+		border-radius: var(--radius-md);
+		padding: 0.25rem 0.5rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
+		white-space: nowrap;
+		color: color-mix(in oklab, var(--foreground) 60%, transparent);
+		background: transparent;
+		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	.shadcn-tabs-trigger:hover {
+		color: var(--foreground);
+	}
+
+	.shadcn-tabs-trigger-active {
+		color: var(--foreground);
+		background: var(--background);
+		box-shadow: var(--shadow-sm);
+	}
+
+	/* checkbox.tsx — checked */
+	.shadcn-checkbox-checked {
+		background: var(--primary);
+		border-color: var(--primary);
+		color: var(--primary-foreground);
+	}
+
+	/* separator.tsx — horizontal / vertical */
+	.shadcn-separator-horizontal {
+		flex-shrink: 0;
+		border: none;
+		background-color: var(--border);
+		block-size: 1px;
+		inline-size: 100%;
+		min-block-size: 1px;
+	}
+
+	.shadcn-separator-vertical {
+		flex-shrink: 0;
+		border: none;
+		background-color: var(--border);
+		inline-size: 1px;
+		min-inline-size: 1px;
+		block-size: 100%;
+		align-self: stretch;
+	}
+
+	/* dropdown-menu.tsx — DropdownMenuSeparator */
+	.shadcn-menu-separator {
+		flex-shrink: 0;
+		border: none;
+		background-color: var(--border);
+		block-size: 1px;
+		min-block-size: 1px;
+		margin-block: 0.25rem;
+		margin-inline: -0.25rem;
+	}
+
+	/* kbd.tsx — Kbd */
+	.shadcn-kbd {
+		pointer-events: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.25rem;
+		block-size: 1.25rem;
+		min-inline-size: 1.25rem;
+		inline-size: fit-content;
+		padding-inline: 0.25rem;
+		border-radius: calc(var(--radius) - 4px);
+		background: var(--muted);
+		color: var(--muted-foreground);
+		font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1;
+		user-select: none;
+		white-space: nowrap;
+	}
+
+	/* kbd.tsx — KbdGroup */
+	.shadcn-kbd-group {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	/* kbd.tsx — inside inverted tooltip */
+	.shadcn-kbd-in-tooltip {
+		background: color-mix(in oklab, var(--background) 20%, transparent);
+		color: var(--background);
+	}
+
+	/* marker.tsx — inline status row (Thinking…, tool activity) */
+	.shadcn-marker {
+		position: relative;
+		display: flex;
+		min-height: 1rem;
+		width: 100%;
+		align-items: center;
+		gap: 0.5rem;
+		text-align: start;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		color: var(--muted-foreground);
+	}
+
+	/* bubble.tsx — BubbleContent surface */
+	.shadcn-bubble-content {
+		width: fit-content;
+		max-width: 100%;
+		min-width: 0;
+		overflow: hidden;
+		border-radius: var(--radius-xl);
+		border: 1px solid transparent;
+		padding: 0.5rem 0.75rem;
+		font-size: 0.875rem;
+		line-height: 1.625;
+		overflow-wrap: break-word;
+	}
+}
+
+/* shimmer utility — packages/shadcn/src/tailwind.css */
+@property --shimmer-angle {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 20deg;
+}
+
+@keyframes tw-shimmer {
+	from {
+		background-position: 100% 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
+
+.shadcn-shimmer {
+	--_spread: var(--shimmer-spread, calc(3ch + 40px));
+	--_base: currentColor;
+	--_highlight: var(
+		--shimmer-color,
+		oklch(from currentColor l c h / calc(alpha * 0.2))
+	);
+	background-image: linear-gradient(
+		calc(90deg + var(--shimmer-angle)),
+		var(--_base) calc(50% - var(--_spread)),
+		color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+			calc(50% - var(--_spread) * 0.5),
+		var(--_highlight) 50%,
+		color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+			calc(50% + var(--_spread) * 0.5),
+		var(--_base) calc(50% + var(--_spread))
+	);
+	background-repeat: no-repeat;
+	background-size: calc(200% + var(--_spread) * 2) 100%;
+	background-position: 0 0;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+}
+
+.dark .shadcn-shimmer {
+	--_highlight: var(
+		--shimmer-color,
+		oklch(from currentColor max(0.8, calc(l + 0.4)) c h / calc(alpha + 0.4))
+	);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.shadcn-shimmer {
+		animation: none;
+		background-image: none;
+		-webkit-text-fill-color: currentColor;
+	}
+}
+
+/* scroll-fade-b — packages/shadcn/src/tailwind.css (MessageScrollerViewport) */
+@property --scroll-fade-b {
+	syntax: "<length-percentage>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes scroll-fade-reveal-b {
+	from {
+		--scroll-fade-b: var(--_scroll-fade-size-b, min(12%, 2.5rem));
+	}
+	to {
+		--scroll-fade-b: 0px;
+	}
+}
+
+.shadcn-scroll-fade-b {
+	--_scroll-fade-size-b: var(--scroll-fade-b-size, min(12%, 2.5rem));
+	--scroll-fade-mask: linear-gradient(
+		to bottom,
+		#000 0,
+		#000 calc(100% - var(--scroll-fade-b, 0px)),
+		transparent 100%
+	);
+	-webkit-mask-image: var(--scroll-fade-mask);
+	mask-image: var(--scroll-fade-mask);
+	-webkit-mask-composite: source-in;
+	mask-composite: intersect;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+@supports (animation-timeline: scroll()) {
+	.shadcn-scroll-fade-b {
+		animation: scroll-fade-reveal-b 1ms ease-in-out;
+		animation-timeline: scroll(self y);
+		animation-range: calc(100% - 6rem) 100%;
+		animation-fill-mode: both;
+	}
+}
+
+@supports not (animation-timeline: scroll()) {
+	.shadcn-scroll-fade-b {
+		--scroll-fade-b: var(--_scroll-fade-size-b);
+	}
+}

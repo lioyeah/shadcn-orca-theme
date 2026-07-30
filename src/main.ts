@@ -1,16 +1,17 @@
 /**
- * Neubrutalism Theme for Orca Notes
+ * shadcn/ui Theme for Orca Notes
  *
- * Hard shadows, thick borders, zero border-radius.
- * Based on TUI-minimal architecture with shadcn/ui CSS variable standardization.
+ * Neutral palette and component patterns from https://ui.shadcn.com/
  */
 
 import { subscribe } from "valtio";
 
-const THEME_NAME = "Neubrutalism";
-const THEME_CLASS = "t-neubrutalism";
+const THEME_NAME = "shadcn";
+const THEME_CLASS = "t-shadcn";
+const LEGACY_THEME_NAME = "Neubrutalism";
+const LEGACY_THEME_CLASS = "t-neubrutalism";
 const LIGHT_CLASS = "t-light";
-const THEME_FILE = "neubrutalism.css";
+const THEME_FILE = "shadcn.css";
 let themeModeUnsub: (() => void) | null = null;
 
 function syncThemeMode() {
@@ -25,6 +26,11 @@ export async function load(name: string) {
 	const state = orca.state as {
 		themes?: Record<string, unknown>;
 	};
+	if (state.themes?.[LEGACY_THEME_NAME] != null) {
+		orca.themes.unregister(LEGACY_THEME_NAME);
+	}
+	document.documentElement.classList.remove(LEGACY_THEME_CLASS);
+
 	if (state.themes?.[THEME_NAME] == null) {
 		orca.themes.register(name, THEME_NAME, THEME_FILE);
 	}

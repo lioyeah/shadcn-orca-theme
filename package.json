@@ -1,13 +1,13 @@
 {
-  "name": "neubrutalism-orca-theme",
+  "name": "shadcn-orca-theme",
   "version": "1.0.0",
-  "description": "A Neubrutalism-style theme for Orca Notes — hard shadows, thick borders, zero border-radius.",
+  "description": "shadcn/ui neutral theme for Orca Notes — semantic tokens, 1px borders, accent hover states.",
   "type": "module",
   "scripts": {
     "build:css": "node scripts/build-theme-css.cjs",
     "build:deploy": "npm run deploy",
     "dev": "npm run build:css && vite",
-    "build": "npm run build:css && cross-env NODE_ENV=production tsc && vite build",
+    "build": "cross-env NODE_ENV=production tsc && vite build && npm run build:css",
     "deploy": "npm run build && node scripts/deploy.cjs",
     "lint:css": "stylelint \"src/theme-css/**/*.css\" \"src/flavors/**/*.css\"",
     "check": "npm run build && npm run lint:css",

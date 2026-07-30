@@ -1,168 +1,288 @@
 /**
- * Neubrutalism — Default Flavor: Orange
+ * Default Flavor — shadcn/ui neutral
  *
- * CSS variables follow ekmas/neobrutalism-components standard.
- * Orca convention: :root = dark (default), html.t-light = light.
- * Mapping: ekmas .dark → :root, ekmas :root → html.t-light
- * Reference: https://github.com/ekmas/neobrutalism-components
- *
- * Refactored: dark/light separated cleanly, ~66% size reduction.
- * Light mode only overrides variables that differ from dark.
+ * Tokens from https://ui.shadcn.com/docs/theming (neutral base)
+ * and apps/v4/registry/themes.ts (name: "neutral").
+ * Orca convention: :root = dark, html.t-light = light.
  */
 
-/* ===== Base Tokens — Dark (default) ===== */
+/* ===== Dark (Orca default) ===== */
 :root {
-	/* ekmas core: BLUE theme */
-	--main: oklch(67.47% 0.1726 259.49deg);
-	--background: oklch(29.12% 0.0633 270.86deg);
-	--secondary-background: oklch(23.93% 0 0deg);
-	--foreground: oklch(92.49% 0 0deg);
-	--main-foreground: oklch(0% 0 0deg);
-	--border: oklch(0% 0 0deg);
-	--ring: oklch(0% 0 0deg);
-	--overlay: oklch(0% 0 0deg / 80%);
+	--radius: 0.625rem;
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--border-radius: var(--radius);
+
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.205 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--popover: oklch(0.205 0 0);
+	--popover-foreground: oklch(0.985 0 0);
+	--primary: oklch(0.922 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+	--destructive: oklch(0.704 0.191 22.216);
+	--destructive-foreground: oklch(0.985 0 0);
+	--border: oklch(1 0 0 / 10%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: oklch(0.556 0 0);
+	--overlay: oklch(0 0 0 / 80%);
+
+	--chart-1: oklch(0.87 0 0);
+	--chart-2: oklch(0.556 0 0);
+	--chart-3: oklch(0.439 0 0);
+	--chart-4: oklch(0.371 0 0);
+	--chart-5: oklch(0.269 0 0);
+
+	--sidebar: oklch(0.205 0 0);
+	--sidebar-foreground: oklch(0.985 0 0);
+	--sidebar-primary: oklch(0.488 0.243 264.376);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.269 0 0);
+	--sidebar-accent-foreground: oklch(0.985 0 0);
+	--sidebar-border: oklch(1 0 0 / 10%);
+	--sidebar-ring: oklch(0.556 0 0);
+
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.25);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.35);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+
+	/* Orca backward-compat aliases (no blue chrome) */
+	--secondary-background: var(--card);
+	--main: var(--accent);
+	--main-foreground: var(--accent-foreground);
+	--main-muted: var(--muted-foreground);
+	--text-muted: var(--muted-foreground);
+	--surface-active: var(--accent);
+	--surface-active-fg: var(--accent-foreground);
+	--btn-primary-bg: var(--primary);
+	--btn-primary-fg: var(--primary-foreground);
+
+	--shadow: none;
+	--box-shadow-x: 0;
+	--box-shadow-y: 0;
+	--shadow-color: transparent;
+	--heading-font-weight: 600;
+	--base-font-weight: 400;
+
+	--nb-accent: var(--foreground);
+	--nb-info: var(--muted-foreground);
+	--nb-success: var(--muted-foreground);
+	--nb-warning: var(--foreground);
+	--nb-danger: var(--destructive);
 
 	/*
-	   Dual muted text:
-	   --text-muted  → hints on dark/neutral surfaces (echoes white, not confused with it)
-	   --main-muted  → hints on --main surfaces (weakened black, readable on blue)
+	   Typeset — editor body prose (shadcn/typeset)
+	   Rhythm: size / leading / flow. Colors: theme semantic tokens only.
 	*/
-	--text-muted: color-mix(in oklab, var(--foreground) 65%, var(--background));
-	--main-muted: color-mix(in oklab, var(--main-foreground) 58%, var(--main));
+	--typeset-size: 1em;
+	--typeset-leading: 1.9;
+	--typeset-flow: 1.25em;
+	--typeset-fg: var(--foreground);
+	--typeset-fg-muted: var(--muted-foreground);
+	--typeset-fg-subtle: var(--muted-foreground);
+	--typeset-bg: var(--background);
+	--typeset-bg-muted: var(--muted);
+	--typeset-border: var(--border);
+	--typeset-mark-bg: var(--muted);
+	--typeset-code-bg: var(--muted);
+	--typeset-link: var(--primary);
+	--typeset-link-hover: var(--primary);
+	--typeset-link-visited: var(--muted-foreground);
+	--typeset-placeholder: var(--muted-foreground);
+	--typeset-scope-line: var(--border);
+	--typeset-heading-weight: var(--heading-font-weight);
+	--typeset-h4-weight: 600;
+	--typeset-strong-weight: var(--heading-font-weight);
+	--typeset-handle-passive: var(--muted-foreground);
+	--typeset-handle-active: var(--foreground);
+	--typeset-breadcrumb: var(--muted-foreground);
+	--typeset-breadcrumb-hover: var(--foreground);
+	--typeset-tag-props: var(--muted-foreground);
+	--typeset-list-marker: var(--foreground);
+	--typeset-list-marker-nested: var(--muted-foreground);
 
-	/* Layout tokens (shared across modes) */
-	--border-radius: 5px;
-	--box-shadow-x: 4px;
-	--box-shadow-y: 4px;
-	--heading-font-weight: 700;
-	--base-font-weight: 500;
+	/* calendar.tsx — DayPicker cell + state tokens */
+	--calendar-cell-size: 2rem;
+	--calendar-bg: var(--background);
+	--calendar-fg: var(--foreground);
+	--calendar-fg-muted: var(--muted-foreground);
+	--calendar-today-bg: var(--accent);
+	--calendar-today-fg: var(--accent-foreground);
+	--calendar-selected-bg: var(--primary);
+	--calendar-selected-fg: var(--primary-foreground);
+	--calendar-hover-bg: var(--accent);
+	--calendar-hover-fg: var(--accent-foreground);
 
-	/* Extended semantic colors (shared across modes) */
-	--nb-accent: oklch(71.5% 0.197 354.23deg);
-	--nb-info: oklch(76.89% 0.1392 219.13deg);
-	--nb-success: oklch(79.76% 0.2044 153.08deg);
-	--nb-warning: oklch(72.27% 0.1894 50.19deg);
-	--nb-danger: oklch(67.28% 0.2147 24.22deg);
-
-	/* ===== Orca Semantic Mapping — Dark ===== */
 	color-scheme: dark;
-	--orca-color-bg-0: color-mix(in oklab, var(--background) 85%, var(--foreground));
-	--orca-color-bg-1: var(--background);
+	--orca-color-bg-0: color-mix(in oklab, var(--background) 88%, var(--foreground));
+	--orca-color-bg-1: var(--typeset-bg);
 	--orca-color-bg-2: var(--secondary-background);
-	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
-	--orca-color-text-1: var(--foreground);
-	--orca-color-text-2: var(--text-muted);
-	--orca-color-text-3: color-mix(in oklab, var(--foreground) 45%, var(--background));
-	--orca-color-border: var(--border);
-	--orca-color-border-2: var(--ring);
-	--orca-color-divider: var(--border);
-	--orca-color-link: var(--nb-info);
-	--orca-color-link-hover: color-mix(in oklab, var(--nb-info), var(--foreground) 20%);
-	--orca-color-link-visited: var(--nb-accent);
-	--orca-color-heading-1: var(--main);
-	--orca-color-heading-2: var(--foreground);
-	--orca-color-heading-3: color-mix(in oklab, var(--main) 60%, var(--foreground));
-	--orca-color-heading-4: color-mix(in oklab, var(--foreground) 65%, var(--background));
-	--orca-color-primary-1: color-mix(in oklab, var(--main) 10%, var(--background));
-	--orca-color-primary-2: color-mix(in oklab, var(--main) 20%, var(--background));
-	--orca-color-primary-3: color-mix(in oklab, var(--main) 35%, var(--background));
-	--orca-color-primary-4: color-mix(in oklab, var(--main) 50%, var(--background));
-	--orca-color-primary-5: var(--main);
-	--orca-color-primary-6: color-mix(in oklab, var(--main) 60%, var(--foreground));
-	--orca-color-primary-7: color-mix(in oklab, var(--main) 40%, var(--foreground));
-	--orca-color-primary-8: color-mix(in oklab, var(--main) 20%, var(--foreground));
-	--orca-color-primary-9: color-mix(in oklab, var(--main) 10%, var(--foreground));
-	--orca-color-gray-0: color-mix(in oklab, var(--background) 80%, var(--foreground));
+	--orca-color-bg-3: var(--typeset-bg-muted);
+	--orca-color-text-1: var(--typeset-fg);
+	--orca-color-text-2: var(--typeset-fg-muted);
+	--orca-color-text-3: var(--typeset-fg-subtle);
+	--orca-color-border: var(--typeset-border);
+	--orca-color-border-2: var(--input);
+	--orca-color-divider: var(--typeset-border);
+	--orca-color-link: var(--typeset-link);
+	--orca-color-link-hover: var(--typeset-link-hover);
+	--orca-color-link-visited: var(--typeset-link-visited);
+	--orca-color-heading-1: var(--typeset-fg);
+	--orca-color-heading-2: var(--typeset-fg);
+	--orca-color-heading-3: var(--typeset-fg);
+	--orca-color-heading-4: var(--typeset-fg-muted);
+	--orca-color-primary-1: color-mix(in oklab, var(--primary) 8%, var(--background));
+	--orca-color-primary-2: color-mix(in oklab, var(--primary) 15%, var(--background));
+	--orca-color-primary-3: color-mix(in oklab, var(--primary) 22%, var(--background));
+	--orca-color-primary-4: color-mix(in oklab, var(--primary) 30%, var(--background));
+	--orca-color-primary-5: var(--primary);
+	--orca-color-primary-6: color-mix(in oklab, var(--primary) 55%, var(--foreground));
+	--orca-color-primary-7: color-mix(in oklab, var(--primary) 40%, var(--foreground));
+	--orca-color-primary-8: color-mix(in oklab, var(--primary) 25%, var(--foreground));
+	--orca-color-primary-9: color-mix(in oklab, var(--primary) 12%, var(--foreground));
+	--orca-color-gray-0: color-mix(in oklab, var(--background) 82%, var(--foreground));
 	--orca-color-gray-1: var(--background);
 	--orca-color-gray-2: var(--secondary-background);
-	--orca-color-gray-3: color-mix(in oklab, var(--secondary-background) 70%, var(--background));
-	--orca-color-gray-4: color-mix(in oklab, var(--secondary-background) 50%, var(--border));
-	--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--background));
-	--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--background));
-	--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--background));
-	--orca-color-gray-8: color-mix(in oklab, var(--foreground) 80%, var(--background));
-	--orca-color-gray-9: var(--foreground);
-	--orca-color-success-1: color-mix(in oklab, var(--nb-success) 15%, var(--background));
-	--orca-color-success-5: var(--nb-success);
-	--orca-color-success-9: color-mix(in oklab, var(--nb-success) 15%, var(--foreground));
-	--orca-color-warning-1: color-mix(in oklab, var(--nb-warning) 15%, var(--background));
-	--orca-color-warning-5: var(--nb-warning);
-	--orca-color-warning-9: color-mix(in oklab, var(--nb-warning) 15%, var(--foreground));
-	--orca-color-dangerous-1: color-mix(in oklab, var(--nb-danger) 15%, var(--background));
-	--orca-color-dangerous-5: var(--nb-danger);
-	--orca-color-dangerous-9: color-mix(in oklab, var(--nb-danger) 15%, var(--foreground));
-	--orca-color-tag: var(--nb-accent);
+	--orca-color-gray-3: color-mix(in oklab, var(--secondary-background) 72%, var(--background));
+	--orca-color-gray-4: var(--muted-foreground);
+	--orca-color-gray-5: var(--typeset-handle-passive);
+	--orca-color-gray-6: var(--typeset-handle-passive);
+	--orca-color-gray-7: var(--typeset-handle-active);
+	--orca-color-gray-8: var(--typeset-fg);
+	--orca-color-gray-9: var(--typeset-fg);
+	--orca-block-handle-passive-color: var(--typeset-handle-passive);
+	--orca-color-success-1: color-mix(in oklab, var(--foreground) 8%, var(--background));
+	--orca-color-success-5: var(--text-muted);
+	--orca-color-success-9: color-mix(in oklab, var(--foreground) 12%, var(--background));
+	--orca-color-warning-1: color-mix(in oklab, var(--foreground) 8%, var(--background));
+	--orca-color-warning-5: var(--muted-foreground);
+	--orca-color-warning-9: color-mix(in oklab, var(--foreground) 12%, var(--background));
+	--orca-color-dangerous-1: color-mix(in oklab, var(--destructive) 15%, var(--background));
+	--orca-color-dangerous-5: var(--destructive);
+	--orca-color-dangerous-9: color-mix(in oklab, var(--destructive) 15%, var(--foreground));
+	--orca-color-tag: var(--foreground);
 	--orca-color-scrollbar: var(--border);
-	--orca-color-scrollbar-hover: color-mix(in oklab, var(--foreground) 45%, var(--background));
-	--orca-color-selection: var(--main);
-	--orca-color-scope-line: color-mix(in oklab, var(--foreground) 45%, transparent);
+	--orca-color-scrollbar-hover: color-mix(in oklab, var(--foreground) 35%, var(--background));
+	--orca-color-selection: color-mix(in oklab, var(--primary) 28%, var(--background));
+	--orca-color-scope-line: var(--typeset-scope-line);
 	--orca-color-separator: var(--border);
 	--orca-color-tab: var(--border);
 	--orca-color-mirror: var(--secondary-background);
-	--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
-	--orca-color-win-scrollbar: var(--border);
-	--orca-color-menu-highlight: var(--orca-color-bg-3);
-	--orca-color-result-highlight: var(--nb-danger);
-	--orca-color-heading-1-dim: color-mix(in oklab, var(--main) 50%, var(--background));
-	--orca-color-heading-2-dim: color-mix(in oklab, var(--foreground) 50%, var(--background));
-	--orca-color-heading-3-dim: color-mix(in oklab, var(--main) 30%, var(--background));
-	--orca-color-heading-4-dim: color-mix(in oklab, var(--foreground) 50%, var(--background));
-	--orca-color-code-fg: var(--foreground);
-	--orca-color-code-comment: var(--orca-color-text-3);
-	--orca-color-code-keyword: var(--nb-accent);
-	--orca-color-code-string: var(--nb-success);
-	--orca-color-code-number: var(--nb-warning);
-	--orca-color-code-function: var(--nb-info);
-	--orca-color-code-constant: var(--main);
-	--orca-color-code-type: var(--main);
-	--orca-color-code-operator: var(--orca-color-text-2);
-	--orca-color-code-punctuation: var(--orca-color-text-2);
-	--orca-color-code-builtin: color-mix(in oklab, var(--nb-info) 70%, var(--foreground));
-	--orca-color-code-variable: var(--foreground);
-	--orca-color-code-attribute: var(--nb-warning);
-	--orca-color-code-doc: color-mix(in oklab, var(--nb-success) 60%, var(--foreground));
-	--orca-color-code-diff-added: color-mix(in oklab, var(--nb-success) 30%, var(--background));
-	--orca-color-code-diff-removed: color-mix(in oklab, var(--nb-danger) 30%, var(--background));
+	--orca-color-placeholder: var(--typeset-placeholder);
+	--orca-color-win-scrollbar: var(--typeset-border);
+	--orca-color-menu-highlight: var(--accent);
+	--orca-color-result-highlight: color-mix(in oklab, var(--primary) 25%, var(--background));
+	--orca-color-heading-1-dim: var(--typeset-fg-muted);
+	--orca-color-heading-2-dim: var(--typeset-fg-muted);
+	--orca-color-heading-3-dim: var(--typeset-fg-muted);
+	--orca-color-heading-4-dim: var(--typeset-fg-muted);
+	--orca-color-code-fg: var(--typeset-fg);
+	--orca-color-code-comment: var(--typeset-fg-subtle);
+	--orca-color-code-keyword: var(--typeset-fg);
+	--orca-color-code-string: var(--typeset-fg-muted);
+	--orca-color-code-number: var(--typeset-fg);
+	--orca-color-code-function: var(--typeset-fg);
+	--orca-color-code-constant: var(--typeset-fg);
+	--orca-color-code-type: var(--typeset-fg-muted);
+	--orca-color-code-operator: var(--typeset-fg-muted);
+	--orca-color-code-punctuation: var(--typeset-fg-muted);
+	--orca-color-code-builtin: var(--typeset-fg-muted);
+	--orca-color-code-variable: var(--typeset-fg);
+	--orca-color-code-attribute: var(--typeset-fg);
+	--orca-color-code-doc: var(--typeset-fg-muted);
+	--orca-color-code-diff-added: color-mix(in oklab, var(--foreground) 10%, var(--background));
+	--orca-color-code-diff-removed: color-mix(in oklab, var(--destructive) 20%, var(--background));
 }
 
-/* ===== Light mode overrides: only variables that differ from dark ===== */
+/* ===== Light ===== */
 html.t-light {
 	color-scheme: light;
-	--main: oklch(67.47% 0.1726 259.49deg);
-	--background: oklch(93.46% 0.0305 255.11deg);
-	--secondary-background: oklch(100% 0 0deg);
-	--foreground: oklch(0% 0 0deg);
-	--border: oklch(0% 0 0deg);
-	--ring: oklch(0% 0 0deg);
-	--overlay: oklch(0% 0 0deg / 80%);
-	/* Light: muted still echoes black primary; on-main muted stays black-into-main */
-	--text-muted: color-mix(in oklab, var(--foreground) 55%, var(--background));
-	--main-muted: color-mix(in oklab, var(--main-foreground) 58%, var(--main));
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(0.985 0 0);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--overlay: oklch(0.145 0 0 / 45%);
+
+	--chart-1: oklch(0.87 0 0);
+	--chart-2: oklch(0.556 0 0);
+	--chart-3: oklch(0.439 0 0);
+	--chart-4: oklch(0.371 0 0);
+	--chart-5: oklch(0.269 0 0);
+
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: oklch(0.205 0 0);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+	--secondary-background: var(--card);
+	--main: var(--accent);
+	--main-foreground: var(--accent-foreground);
+	--main-muted: var(--muted-foreground);
+	--text-muted: var(--muted-foreground);
+	--surface-active: var(--accent);
+	--surface-active-fg: var(--accent-foreground);
+	--btn-primary-bg: var(--primary);
+	--btn-primary-fg: var(--primary-foreground);
+
+	--typeset-leading: 1.75;
+
 	--orca-color-bg-0: var(--secondary-background);
 	--orca-color-bg-1: var(--background);
 	--orca-color-bg-2: var(--secondary-background);
-	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
+	--orca-color-bg-3: var(--muted);
 	--orca-color-gray-0: var(--background);
 	--orca-color-gray-1: var(--secondary-background);
 	--orca-color-gray-2: var(--background);
 	--orca-color-gray-3: var(--secondary-background);
-	--orca-color-gray-4: color-mix(in oklab, var(--border) 10%, var(--background));
+	--orca-color-gray-4: var(--muted-foreground);
 }
 
-/* ===== Sidebar variable overrides (scoped) ===== */
 #sidebar {
-	--orca-color-bg-1: var(--background);
-	--orca-color-bg-2: var(--secondary-background);
-	--orca-color-bg-3: color-mix(in oklab, var(--main) 15%, var(--background));
-	--orca-color-text-1: var(--foreground);
-	--orca-color-text-2: var(--text-muted);
-	--orca-color-border: var(--border);
-	--orca-color-primary-5: var(--main);
-	--orca-color-menu-highlight: color-mix(in oklab, var(--main) 15%, var(--background));
-	--orca-color-selection: var(--main);
-	--orca-color-placeholder: color-mix(in oklab, var(--foreground) 50%, transparent);
-	--orca-color-dangerous-5: var(--nb-danger);
-	--orca-color-win-scrollbar: var(--border);
-
-	/* Sidebar light mode inherits same overrides via prop inheritance */
+	--orca-color-bg-1: var(--sidebar);
+	--orca-color-bg-2: var(--sidebar);
+	--orca-color-bg-3: var(--muted);
+	--orca-color-text-1: var(--sidebar-foreground);
+	--orca-color-text-2: var(--muted-foreground);
+	--orca-color-border: var(--sidebar-border);
+	--orca-color-primary-5: var(--sidebar-primary);
+	--orca-color-menu-highlight: var(--sidebar-accent);
+	--orca-color-selection: color-mix(in oklab, var(--sidebar-primary) 18%, var(--sidebar));
+	--orca-color-placeholder: color-mix(in oklab, var(--sidebar-foreground) 45%, transparent);
+	--orca-color-dangerous-5: var(--destructive);
+	--orca-color-win-scrollbar: var(--sidebar-border);
+	--calendar-bg: transparent;
 }

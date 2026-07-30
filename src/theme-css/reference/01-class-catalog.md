@@ -3,7 +3,7 @@
 > 总计 **1,091** 个 `.orca-*` 类名，按功能区域分类
 >
 > ⚠️ 核心 CSS 经过 minify，部分类名（如 `.orca-sidebar-item`、`.orca-tab-item`、`.orca-list-item`、
-> `.orca-pill`）**不在 minified 核心 CSS 中以独立选择器出现**，由组件 JS 注入或 Neubrutalism 主题 CSS 补充。
+> `.orca-pill`）**不在 minified 核心 CSS 中以独立选择器出现**，由组件 JS 注入或 shadcn 主题 CSS 补充。
 > 此处全量列出以保证覆盖全面。
 
 ---
