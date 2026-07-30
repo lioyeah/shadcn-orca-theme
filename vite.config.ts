@@ -1,3 +1,4 @@
+import externalGlobals from "rollup-plugin-external-globals";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -12,4 +13,5 @@ export default defineConfig({
       external: ["valtio"],
     },
   },
+  plugins: [externalGlobals({ valtio: "Valtio" })],
 });
