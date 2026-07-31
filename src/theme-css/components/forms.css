@@ -551,7 +551,6 @@
 		border-radius: calc(var(--radius) - 4px) !important;
 		background: var(--muted) !important;
 		color: var(--muted-foreground) !important;
-		font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif) !important;
 		font-size: 0.75rem !important;
 		font-weight: 500 !important;
 		line-height: 1 !important;

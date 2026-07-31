@@ -114,7 +114,19 @@
 	.orca-repo-switcher-modal .orca-repo-panel,
 	.orca-repo-switcher-modal.orca-menu {
 		padding: 0.25rem !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
 	}
+
+	.orca-repo-switcher-modal .orca-repo-panel > *,
+	.orca-repo-switcher-modal.orca-menu > * {
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+	}
+
 	.orca-repo-switcher-modal .orca-repo-item,
 	.orca-repo-switcher-modal .orca-menu-item,
 	.orca-repo-switcher-modal .orca-menu-text {

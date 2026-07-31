@@ -577,7 +577,6 @@ html.t-light {
 		border-radius: calc(var(--radius) - 4px);
 		background: var(--muted);
 		color: var(--muted-foreground);
-		font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
 		font-size: 0.75rem;
 		font-weight: 500;
 		line-height: 1;
@@ -1519,7 +1518,6 @@ html.t-light {
 		border-radius: calc(var(--radius) - 4px) !important;
 		background: var(--muted) !important;
 		color: var(--muted-foreground) !important;
-		font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif) !important;
 		font-size: 0.75rem !important;
 		font-weight: 500 !important;
 		line-height: 1 !important;
@@ -4864,7 +4862,7 @@ html.t-light {
 		letter-spacing: 0 !important;
 	}
 
-	/* Journal = horizontal bar chart */
+	/* Journal = shadcn Progress (track + indicator) */
 	.orca-stats-content .orca-stats-journal-chart {
 		display: grid !important;
 		grid-template-columns: auto 1fr auto !important;
@@ -4891,10 +4889,10 @@ html.t-light {
 	}
 	.orca-stats-content .orca-stats-journal-bar-track {
 		position: relative !important;
-		height: 18px !important;
-		background: color-mix(in oklab, var(--foreground) 10%, var(--secondary-background)) !important;
-		border: 1px solid var(--border) !important;
-		border-radius: var(--border-radius) !important;
+		height: 0.5rem !important;
+		background: var(--muted) !important;
+		border: none !important;
+		border-radius: 9999px !important;
 		overflow: hidden !important;
 		box-shadow: none !important;
 		padding: 0 !important;
@@ -4902,15 +4900,16 @@ html.t-light {
 	.orca-stats-content .orca-stats-journal-bar-fill {
 		position: absolute !important;
 		inset: 0 !important;
-		background: var(--main) !important;
+		background: var(--primary) !important;
 		opacity: 1 !important;
 		border: none !important;
 		box-shadow: none !important;
-		border-radius: 0 !important;
+		border-radius: 9999px !important;
 		padding: 0 !important;
+		transition: width 0.2s ease, background-color 0.15s ease !important;
 	}
 
-	/* Creative hours = vertical column chart (rounded rects, not capsules).
+	/* Creative hours = shadcn Bar Chart (rectangular bars, not capsules).
 	   .orca-popup * sets border-radius:5px which turns narrow bars into pills. */
 	.orca-stats-content .orca-stats-chart {
 		height: 160px !important;
@@ -4922,13 +4921,20 @@ html.t-light {
 		padding: 0 !important;
 		overflow: hidden !important;
 		min-height: 0 !important;
+		background-image: repeating-linear-gradient(
+			to top,
+			transparent 0,
+			transparent calc(25% - 1px),
+			color-mix(in oklab, var(--border) 65%, transparent) calc(25% - 1px),
+			color-mix(in oklab, var(--border) 65%, transparent) 25%
+		) !important;
 	}
 	.orca-stats-content .orca-stats-chart svg {
 		flex: 1 1 auto !important;
 		width: 100% !important;
 		min-height: 0 !important;
-		color: var(--main) !important;
-		fill: var(--main) !important;
+		color: var(--chart-1) !important;
+		fill: var(--chart-1) !important;
 		margin-bottom: 6px !important;
 		overflow: hidden !important;
 	}
@@ -4936,17 +4942,30 @@ html.t-light {
 	.orca-stats-content .orca-stats-chart rect.orca-stats-chart-bar,
 	.orca-popup .orca-stats-chart-bar,
 	.orca-popup .orca-stats-chart rect {
-		fill: var(--main) !important;
+		fill: var(--chart-1) !important;
 		stroke: var(--border) !important;
-		stroke-width: 2px !important;
+		stroke-width: 1px !important;
 		paint-order: stroke fill !important;
-		/* small corner radius only — keep rectangular body */
-		border-radius: 2px !important;
-		rx: 2 !important;
-		ry: 2 !important;
+		/* shadcn Bar uses rectangular indicators; avoid popup-wide rounding */
+		border-radius: 0 !important;
+		rx: 0 !important;
+		ry: 0 !important;
 		transition: opacity 0.15s ease !important;
 	}
 	.orca-stats-content .orca-stats-chart-bar:hover { opacity: 0.85 !important; }
+
+	html.t-light .orca-stats-content .orca-stats-chart svg {
+		color: var(--primary) !important;
+		fill: var(--primary) !important;
+	}
+
+	html.t-light .orca-stats-content .orca-stats-chart-bar,
+	html.t-light .orca-stats-content .orca-stats-chart rect.orca-stats-chart-bar,
+	html.t-light .orca-popup .orca-stats-chart-bar,
+	html.t-light .orca-popup .orca-stats-chart rect {
+		fill: var(--primary) !important;
+	}
+
 	.orca-stats-content .orca-stats-chart-labels {
 		display: flex !important;
 		justify-content: space-between !important;
@@ -5181,7 +5200,19 @@ html.t-light {
 	.orca-repo-switcher-modal .orca-repo-panel,
 	.orca-repo-switcher-modal.orca-menu {
 		padding: 0.25rem !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
 	}
+
+	.orca-repo-switcher-modal .orca-repo-panel > *,
+	.orca-repo-switcher-modal.orca-menu > * {
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+	}
+
 	.orca-repo-switcher-modal .orca-repo-item,
 	.orca-repo-switcher-modal .orca-menu-item,
 	.orca-repo-switcher-modal .orca-menu-text {
@@ -5914,6 +5945,19 @@ html .orca-search-modal-footer .orca-search-modal-footer-item {
 
 /* Search panel — the visible panel owns the single border; popup is positioning-only. */
 @layer base {
+	.orca-select-menu-options {
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
+	}
+
+	.orca-select-menu-options > * {
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+	}
+
 	html.t-shadcn .orca-modal-overlay > .orca-popup:has(.orca-search-modal),
 	html.t-shadcn .orca-modal-overlay > .orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal) {
 		border: none !important;

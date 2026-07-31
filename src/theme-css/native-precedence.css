@@ -5,6 +5,19 @@
 
 /* Search panel — the visible panel owns the single border; popup is positioning-only. */
 @layer base {
+	.orca-select-menu-options {
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
+	}
+
+	.orca-select-menu-options > * {
+		max-width: 100% !important;
+		min-width: 0 !important;
+		box-sizing: border-box !important;
+	}
+
 	html.t-shadcn .orca-modal-overlay > .orca-popup:has(.orca-search-modal),
 	html.t-shadcn .orca-modal-overlay > .orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal) {
 		border: none !important;
