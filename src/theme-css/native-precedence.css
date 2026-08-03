@@ -71,6 +71,96 @@ html .orca-block-preview .orca-block-editor {
 	--orca-repr-tag-props-color: var(--typeset-tag-props);
 }
 
+/* Typeset inline links + block refs — unlayered; host .orca-inline[data-type=l|r] resets background. */
+html .orca-panels-container #main .orca-inline[data-type="l"],
+html #main .orca-inline[data-type="l"],
+html .orca-search-modal-result-preview .orca-inline[data-type="l"],
+html .orca-block-popup-preview .orca-inline[data-type="l"],
+html .orca-inline-reference-preview .orca-inline[data-type="l"],
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="l"],
+html .orca-block-preview .orca-inline[data-type="l"] {
+	padding: 0 0.05em !important;
+	border-radius: var(--typeset-link-radius) !important;
+	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) right bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
+	transition: background-position var(--typeset-link-highlight-duration) ease !important;
+	box-decoration-break: clone !important;
+	-webkit-box-decoration-break: clone !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="r"] .orca-inline-r-content,
+html #main .orca-inline[data-type="r"] .orca-inline-r-content,
+html .orca-search-modal-result-preview .orca-inline[data-type="r"] .orca-inline-r-content,
+html .orca-block-popup-preview .orca-inline[data-type="r"] .orca-inline-r-content,
+html .orca-inline-reference-preview .orca-inline[data-type="r"] .orca-inline-r-content,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="r"] .orca-inline-r-content,
+html .orca-block-preview .orca-inline[data-type="r"] .orca-inline-r-content {
+	padding: 0 0.05em !important;
+	border-radius: var(--typeset-link-radius) !important;
+	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) right bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
+	transition: background-position var(--typeset-link-highlight-duration) ease !important;
+	box-decoration-break: clone !important;
+	-webkit-box-decoration-break: clone !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="r"],
+html #main .orca-inline[data-type="r"],
+html .orca-search-modal-result-preview .orca-inline[data-type="r"],
+html .orca-block-popup-preview .orca-inline[data-type="r"],
+html .orca-inline-reference-preview .orca-inline[data-type="r"],
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="r"],
+html .orca-block-preview .orca-inline[data-type="r"],
+html .orca-panels-container #main .orca-inline[data-type="r"]:hover,
+html #main .orca-inline[data-type="r"]:hover,
+html .orca-search-modal-result-preview .orca-inline[data-type="r"]:hover,
+html .orca-block-popup-preview .orca-inline[data-type="r"]:hover,
+html .orca-inline-reference-preview .orca-inline[data-type="r"]:hover,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="r"]:hover,
+html .orca-block-preview .orca-inline[data-type="r"]:hover {
+	background: none !important;
+	background-color: transparent !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="l"],
+html #main .orca-inline[data-type="l"],
+html .orca-search-modal-result-preview .orca-inline[data-type="l"],
+html .orca-block-popup-preview .orca-inline[data-type="l"],
+html .orca-inline-reference-preview .orca-inline[data-type="l"],
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="l"],
+html .orca-block-preview .orca-inline[data-type="l"] {
+	text-decoration: underline !important;
+	text-underline-offset: 0.15em !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="l"] .orca-inline-l-text,
+html #main .orca-inline[data-type="l"] .orca-inline-l-text,
+html .orca-search-modal-result-preview .orca-inline[data-type="l"] .orca-inline-l-text,
+html .orca-block-popup-preview .orca-inline[data-type="l"] .orca-inline-l-text,
+html .orca-inline-reference-preview .orca-inline[data-type="l"] .orca-inline-l-text,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="l"] .orca-inline-l-text,
+html .orca-block-preview .orca-inline[data-type="l"] .orca-inline-l-text {
+	border-bottom: none !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="l"]:hover,
+html #main .orca-inline[data-type="l"]:hover,
+html .orca-search-modal-result-preview .orca-inline[data-type="l"]:hover,
+html .orca-block-popup-preview .orca-inline[data-type="l"]:hover,
+html .orca-inline-reference-preview .orca-inline[data-type="l"]:hover,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="l"]:hover,
+html .orca-block-preview .orca-inline[data-type="l"]:hover {
+	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) left bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
+}
+
+html .orca-panels-container #main .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html #main .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html .orca-search-modal-result-preview .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html .orca-block-popup-preview .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html .orca-inline-reference-preview .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="r"]:hover .orca-inline-r-content,
+html .orca-block-preview .orca-inline[data-type="r"]:hover .orca-inline-r-content {
+	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) left bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
+}
+
 /* Journal/reference arrow — use the theme palette, not host accent. */
 html .orca-repr-journal-right,
 html .orca-repr-journal-right::before {
@@ -322,6 +412,89 @@ html .orca-block-preview .orca-block-editor .orca-repr-scope-line::before {
 	border-left: var(--orca-border-scope) !important;
 	border-color: var(--orca-color-scope-line) !important;
 	opacity: 1 !important;
+}
+
+/* Main editor + preview — scope line: slow light-up on hover or active caret */
+html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line,
+html #main .orca-block-editor .orca-repr-scope-line,
+html .orca-panels-container #main .orca-repr-scope-line,
+html #main .orca-repr-scope-line,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line {
+	transition: opacity var(--typeset-scope-line-duration) ease !important;
+}
+
+html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line::before,
+html #main .orca-block-editor .orca-repr-scope-line::before,
+html .orca-panels-container #main .orca-repr-scope-line::before,
+html #main .orca-repr-scope-line::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line::before,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line::before {
+	width: 1px !important;
+	left: 2px !important;
+	border-left: none !important;
+	background-color: var(--typeset-scope-line) !important;
+	background-image: none !important;
+	transition: background-color var(--typeset-scope-line-duration) ease !important;
+}
+
+html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line::after,
+html #main .orca-block-editor .orca-repr-scope-line::after,
+html .orca-panels-container #main .orca-repr-scope-line::after,
+html #main .orca-repr-scope-line::after,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line::after,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line::after,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line::after,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line::after,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line::after {
+	display: none !important;
+	content: none !important;
+}
+
+html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover,
+html #main .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-panels-container #main .orca-repr-scope-line:hover,
+html #main .orca-repr-scope-line:hover,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line:hover,
+html .orca-panels-container #main .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html #main .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html .orca-block-popup-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html .orca-inline-reference-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line,
+html .orca-block-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line {
+	background: none !important;
+	background-color: transparent !important;
+	opacity: 1 !important;
+}
+
+html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover::before,
+html #main .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-panels-container #main .orca-repr-scope-line:hover::before,
+html #main .orca-repr-scope-line:hover::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-block-popup-preview .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-block-preview .orca-block-editor .orca-repr-scope-line:hover::before,
+html .orca-panels-container #main .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html #main .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html .orca-popup .orca-search-modal-result-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html .orca-block-popup-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html .orca-inline-reference-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before,
+html .orca-block-preview .orca-block-editor .orca-block.orca-active-parent:not(:has(.orca-block.orca-active-parent)) > .orca-repr > .orca-repr-main > .orca-repr-main-none-editable > .orca-repr-scope-line::before {
+	background-color: var(--typeset-scope-line-hover) !important;
 }
 
 /* Lock / chrome buttons in preview body — match #main plain buttons */

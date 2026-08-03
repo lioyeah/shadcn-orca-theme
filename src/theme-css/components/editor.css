@@ -11,9 +11,11 @@
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.c {
 		color: var(--typeset-fg) !important;
-		border: 1px solid var(--typeset-border) !important;
-		border-radius: var(--border-radius) !important;
-		background: var(--typeset-code-bg) !important;
+		font-size: var(--typeset-code-size) !important;
+		padding: 0.15em 0.35em !important;
+		border: 1px solid color-mix(in oklab, var(--typeset-border) 80%, transparent) !important;
+		border-radius: calc(var(--border-radius) * 0.75) !important;
+		background: color-mix(in oklab, var(--typeset-code-bg) 55%, transparent) !important;
 	}
 
 	/* ----------------------------------------------------------
@@ -76,6 +78,49 @@
 		font-weight: var(--typeset-h4-weight) !important;
 	}
 
+	/* Heading scale — Orca data-level + semantic h1–h4 in previews */
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-heading-content[data-level="1"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h1 {
+		font-size: var(--typeset-h1-size) !important;
+		margin-top: var(--typeset-heading-flow) !important;
+		letter-spacing: var(--typeset-h1-tracking) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-heading-content[data-level="2"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h2 {
+		font-size: var(--typeset-h2-size) !important;
+		margin-top: var(--typeset-heading-flow) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-heading-content[data-level="3"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h3 {
+		font-size: var(--typeset-h3-size) !important;
+		margin-top: calc(var(--typeset-heading-flow) * 0.85) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-heading-content[data-level="4"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h4 {
+		font-size: var(--typeset-h4-size) !important;
+		margin-top: calc(var(--typeset-heading-flow) * 0.75) !important;
+	}
+
+	:is(.orca-panels-container, #main) .orca-repr-main-content > .orca-repr-children > .orca-block:first-child .orca-repr-heading-content {
+		margin-top: 0 !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-block-editor-placeholder-text {
+		font-size: var(--typeset-placeholder-size) !important;
+		color: var(--typeset-placeholder) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline[data-type="l"] {
+		color: var(--typeset-link) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline[data-type="l"]:hover {
+		color: var(--typeset-link-hover) !important;
+	}
+
 	.orca-block-preview h4 {
 		color: var(--typeset-fg-muted) !important;
 		font-weight: var(--typeset-h4-weight) !important;
@@ -103,7 +148,12 @@
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ul .orca-block-handle::before { color: var(--typeset-list-marker) !important; }
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ul .orca-repr-ul .orca-block-handle::before { color: var(--typeset-list-marker-nested) !important; }
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ol-content::before { color: var(--typeset-list-marker) !important; }
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ul .orca-repr-ul .orca-repr-main,
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ol .orca-repr-ol .orca-repr-main {
+		line-height: var(--typeset-leading-nested) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-ol-content::before { color: var(--typeset-list-marker-ordered) !important; }
 
 	/* ----------------------------------------------------------
 	   4.11b Editor canvas chrome — breadcrumbs, handles, guides
@@ -232,12 +282,12 @@
 
 	/* ----------------------------------------------------------
 	   4.11c Editor tags — slow light-up with host _color on hover
-	   Orca inline color/background/border on .orca-tag when tag has _color.
+	   Orca inline color/background/border when tag has _color.
 	   navigation.css neutralizes via :not(:hover); hover releases to inline.
 	   ---------------------------------------------------------- */
 
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-tag[style*="background-color"],
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-pill[style*="background-color"] {
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-tag[style*="background"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-pill[style*="background"] {
 		transition:
 			background-color 0.4s ease,
 			background 0.4s ease,
@@ -250,8 +300,20 @@
 	   ---------------------------------------------------------- */
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline[data-type="r"] {
-		border-radius: var(--border-radius) !important;
-		&:hover { background: var(--accent) !important; color: var(--accent-foreground) !important; border-radius: var(--border-radius) !important; }
+		color: var(--typeset-link) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline[data-type="r"]:hover {
+		color: var(--typeset-link-hover) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-inline-r-content {
+		color: inherit !important;
+		font-weight: inherit !important;
+		text-decoration: underline !important;
+		text-underline-offset: 0.15em !important;
+		text-decoration-color: currentColor !important;
+		border-bottom: none !important;
 	}
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-scope-line {
 		opacity: 0.55 !important;
@@ -261,11 +323,40 @@
 
 	/* ----------------------------------------------------------
 	   4.13 Blockquote / Callout
+	   Quote: neutral prose. Typed callouts: host left-bar + semantic body color.
 	   ---------------------------------------------------------- */
 
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2 .orca-block,
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2 .orca-inline:not(.c) {
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-quote::before {
+		border-left-color: color-mix(in oklab, var(--foreground) 22%, var(--border)) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-quote :is(.orca-block, .orca-inline:not(.c)) {
 		font-family: inherit !important;
+		color: var(--typeset-fg-muted) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-info :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--orca-color-text-blue) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-warning :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--orca-color-text-yellow) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-error :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--orca-color-text-red) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-tip :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--orca-color-text-green) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-important :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--typeset-callout-important) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-note :is(.orca-block, .orca-inline:not(.c)) {
+		color: var(--typeset-callout-note) !important;
 	}
 
 }

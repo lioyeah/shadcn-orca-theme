@@ -85,8 +85,17 @@
 	   Rhythm: size / leading / flow. Colors: theme semantic tokens only.
 	*/
 	--typeset-size: 1em;
-	--typeset-leading: 1.9;
-	--typeset-flow: 1.25em;
+	--typeset-leading: 1.68;
+	--typeset-leading-nested: 1.6;
+	--typeset-flow: 0.875em;
+	--typeset-heading-flow: 1.5em;
+	--typeset-h1-size: 1.875em;
+	--typeset-h2-size: 1.5em;
+	--typeset-h3-size: 1.25em;
+	--typeset-h4-size: 1.0625em;
+	--typeset-h1-tracking: -0.02em;
+	--typeset-code-size: 0.925em;
+	--typeset-placeholder-size: 0.95em;
 	--typeset-fg: var(--foreground);
 	--typeset-fg-muted: var(--muted-foreground);
 	--typeset-fg-subtle: var(--muted-foreground);
@@ -95,11 +104,17 @@
 	--typeset-border: var(--border);
 	--typeset-mark-bg: var(--muted);
 	--typeset-code-bg: var(--muted);
-	--typeset-link: var(--primary);
-	--typeset-link-hover: var(--primary);
-	--typeset-link-visited: var(--muted-foreground);
-	--typeset-placeholder: var(--muted-foreground);
+	--typeset-link: color-mix(in oklab, var(--foreground) 78%, var(--muted-foreground));
+	--typeset-link-hover: var(--foreground);
+	--typeset-link-visited: color-mix(in oklab, var(--foreground) 62%, var(--muted-foreground));
+	--typeset-link-highlight: color-mix(in oklab, var(--foreground) 28%, var(--muted));
+	--typeset-link-highlight-size: 205%;
+	--typeset-link-highlight-duration: 0.25s;
+	--typeset-link-radius: var(--radius-sm);
+	--typeset-placeholder: color-mix(in oklab, var(--muted-foreground) 65%, transparent);
 	--typeset-scope-line: var(--border);
+	--typeset-scope-line-hover: color-mix(in oklab, var(--foreground) 92%, var(--background));
+	--typeset-scope-line-duration: 0.45s;
 	--typeset-heading-weight: var(--heading-font-weight);
 	--typeset-h4-weight: 600;
 	--typeset-strong-weight: var(--heading-font-weight);
@@ -111,6 +126,15 @@
 	--typeset-tag-props: var(--muted-foreground);
 	--typeset-list-marker: var(--foreground);
 	--typeset-list-marker-nested: var(--muted-foreground);
+	--typeset-list-marker-ordered: var(--muted-foreground);
+
+	/* Callout (quote2) — host semantic colors; quote type stays neutral in editor.css */
+	--orca-color-text-blue: rgb(7 113 173);
+	--orca-color-text-yellow: rgb(203 145 47);
+	--orca-color-text-red: rgb(212 76 71);
+	--orca-color-text-green: rgb(70 140 102);
+	--typeset-callout-important: #6b46c1;
+	--typeset-callout-note: #0ea7c5;
 
 	/* calendar.tsx — DayPicker cell + state tokens */
 	--calendar-cell-size: 2rem;
@@ -260,7 +284,8 @@ html.t-light {
 	--btn-primary-bg: var(--primary);
 	--btn-primary-fg: var(--primary-foreground);
 
-	--typeset-leading: 1.75;
+	--typeset-leading: 1.65;
+	--typeset-link-highlight: color-mix(in oklab, var(--foreground) 10%, var(--muted));
 
 	--orca-color-bg-0: var(--secondary-background);
 	--orca-color-bg-1: var(--background);

@@ -65,20 +65,20 @@
 	   ---------------------------------------------------------- */
 
 	.orca-query-editor .orca-select-button-text,
-	.orca-query-editor .orca-tag:not([style*="background-color"]),
-	.orca-query-editor .orca-tag[style*="background-color"]:not(:hover),
+	.orca-query-editor .orca-tag:not([style*="background"]),
+	.orca-query-editor .orca-tag[style*="background"]:not(:hover),
 	.orca-query-editor .orca-tags-tag-item,
 	.orca-block-graph-header .orca-select-button-text,
-	.orca-block-graph-header .orca-tag:not([style*="background-color"]),
-	.orca-block-graph-header .orca-tag[style*="background-color"]:not(:hover),
+	.orca-block-graph-header .orca-tag:not([style*="background"]),
+	.orca-block-graph-header .orca-tag[style*="background"]:not(:hover),
 	.orca-block-graph-header .orca-tags-tag-item { color: var(--foreground) !important; }
 
 	.orca-query-editor .orca-select-button:hover,
 	.orca-block-graph-header .orca-select-button:hover,
 	.orca-query-editor .orca-select-button:hover .orca-select-button-text,
 	.orca-block-graph-header .orca-select-button:hover .orca-select-button-text,
-	.orca-query-editor .orca-select-button:hover .orca-tag:not([style*="background-color"]),
-	.orca-block-graph-header .orca-select-button:hover .orca-tag:not([style*="background-color"]),
+	.orca-query-editor .orca-select-button:hover .orca-tag:not([style*="background"]),
+	.orca-block-graph-header .orca-select-button:hover .orca-tag:not([style*="background"]),
 	.orca-query-editor .orca-select-button:hover .orca-tags-tag-item,
 	.orca-block-graph-header .orca-select-button:hover .orca-tags-tag-item,
 	.orca-query-editor .orca-select-button:hover .orca-select-button-selector,
@@ -100,8 +100,8 @@
 	}
 
 	.orca-query-conditions-header .orca-select-button-text,
-	.orca-query-conditions-header .orca-tag:not([style*="background-color"]),
-	.orca-query-conditions-header .orca-tag[style*="background-color"]:not(:hover),
+	.orca-query-conditions-header .orca-tag:not([style*="background"]),
+	.orca-query-conditions-header .orca-tag[style*="background"]:not(:hover),
 	.orca-query-conditions-header .orca-select-button-selector,
 	.orca-query-conditions-header .orca-select-button-selector::before,
 	.orca-query-conditions-header-non-editable .orca-select-button-selector,

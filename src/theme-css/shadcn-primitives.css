@@ -98,12 +98,26 @@
 		color: var(--typeset-fg);
 		font-weight: var(--typeset-heading-weight);
 		line-height: 1.25;
-		margin-block-start: var(--typeset-flow);
+		margin-block-start: var(--typeset-heading-flow);
+	}
+
+	.shadcn-typeset :where(h1) {
+		font-size: var(--typeset-h1-size);
+		letter-spacing: var(--typeset-h1-tracking);
+	}
+
+	.shadcn-typeset :where(h2) {
+		font-size: var(--typeset-h2-size);
+	}
+
+	.shadcn-typeset :where(h3) {
+		font-size: var(--typeset-h3-size);
 	}
 
 	.shadcn-typeset :where(h4) {
 		color: var(--typeset-fg-muted);
 		font-weight: var(--typeset-h4-weight);
+		font-size: var(--typeset-h4-size);
 	}
 
 	.shadcn-typeset :where(p, li, blockquote) {

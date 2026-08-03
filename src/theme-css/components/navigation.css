@@ -9,10 +9,10 @@
 	}
 
 	/* Neutral badge — default tags, and host-colored tags while not hovered */
-	.orca-tag:not([style*="background-color"]),
-	.orca-pill:not([style*="background-color"]),
-	.orca-tag[style*="background-color"]:not(:hover),
-	.orca-pill[style*="background-color"]:not(:hover) {
+	.orca-tag:not([style*="background"]),
+	.orca-pill:not([style*="background"]),
+	.orca-tag[style*="background"]:not(:hover),
+	.orca-pill[style*="background"]:not(:hover) {
 		border: 1px solid var(--border) !important;
 		background: var(--secondary-background) !important;
 		color: var(--foreground) !important;
