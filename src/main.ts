@@ -13,87 +13,13 @@ const LEGACY_THEME_NAME = "Neubrutalism";
 const LEGACY_THEME_CLASS = "t-neubrutalism";
 const LIGHT_CLASS = "t-light";
 const THEME_FILE = "shadcn.css";
-const BLOCK_GRAPH_SLIDER_STYLE_ID = "shadcn-block-graph-slider";
+const BLOCK_GRAPH_SLIDER_SELECTOR = ".orca-block-graph-depth-control input[type=\"range\"]";
+const BLOCK_GRAPH_DETENT_CLASS = "shadcn-slider-detents";
+const BLOCK_GRAPH_VALUE_CLASS = "shadcn-slider-value";
 /** Tabler laser icon tip on Excalidraw's 28×28 cursor (viewBox 0 0 24 24). */
 const EXCALIDRAW_LASER_CURSOR_HOTSPOT = "4 4";
 let themeModeUnsub: (() => void) | null = null;
 let whiteboardExcalidrawFixUnsub: (() => void) | null = null;
-
-const BLOCK_GRAPH_SLIDER_CSS = `
-html:root:root .orca-block-graph-depth-control input[type="range"] {
-	accent-color: var(--primary) !important;
-	background: transparent !important;
-	flex: 1 1 7rem !important;
-	min-inline-size: 6rem !important;
-	max-inline-size: 10rem !important;
-	block-size: 1rem !important;
-	cursor: pointer !important;
-	align-self: center !important;
-	margin-block: 0 !important;
-}
-html:root:root .orca-block-graph-depth-control input[type="range"]::-webkit-slider-runnable-track {
-	block-size: 0.375rem !important;
-	border-radius: 9999px !important;
-}
-html:root:root .orca-block-graph-depth-control input[type="range"]::-webkit-slider-thumb {
-	-webkit-appearance: none !important;
-	appearance: none !important;
-	box-sizing: border-box !important;
-	inline-size: 1rem !important;
-	block-size: 1rem !important;
-	margin-top: calc(0.375rem / 2 - 1rem / 2 - 1px) !important;
-	margin-block-start: calc(0.375rem / 2 - 1rem / 2 - 1px) !important;
-	border-radius: 9999px !important;
-	border: 1px solid var(--primary) !important;
-	background: #fff !important;
-	box-shadow: var(--shadow-sm) !important;
-}
-html:root:root .orca-block-graph-depth-control input[type="range"]::-moz-range-track {
-	block-size: 0.375rem !important;
-	border-radius: 9999px !important;
-	background: var(--muted) !important;
-	border: none !important;
-}
-html:root:root .orca-block-graph-depth-control input[type="range"]::-moz-range-progress {
-	block-size: 0.375rem !important;
-	border-radius: 9999px !important;
-	background: var(--primary) !important;
-}
-html:root:root .orca-block-graph-depth-control input[type="range"]::-moz-range-thumb {
-	inline-size: 1rem !important;
-	block-size: 1rem !important;
-	border-radius: 9999px !important;
-	border: 1px solid var(--primary) !important;
-	background: #fff !important;
-	box-shadow: var(--shadow-sm) !important;
-}
-`.trim();
-
-function injectBlockGraphSliderStyles() {
-	let style = document.getElementById(BLOCK_GRAPH_SLIDER_STYLE_ID) as HTMLStyleElement | null;
-	if (!style) {
-		style = document.createElement("style");
-		style.id = BLOCK_GRAPH_SLIDER_STYLE_ID;
-		document.head.appendChild(style);
-	}
-	style.textContent = BLOCK_GRAPH_SLIDER_CSS;
-}
-
-function tagBlockGraphSliders() {
-	document
-		.querySelectorAll<HTMLInputElement>('.orca-block-graph-depth-control input[type="range"]')
-		.forEach((input) => {
-			input.classList.add("shadcn-slider-input");
-		});
-}
-
-function setupBlockGraphSliderObserver() {
-	tagBlockGraphSliders();
-	const observer = new MutationObserver(tagBlockGraphSliders);
-	observer.observe(document.body, { childList: true, subtree: true });
-	return () => observer.disconnect();
-}
-
 let blockGraphSliderUnsub: (() => void) | null = null;
 
 function fixExcalidrawLaserCursor(cursor: string): string | null {
@@ -137,20 +63,33 @@ function patchWhiteboardExcalidraw(root: ParentNode = document) {
 }
 
 function setupWhiteboardExcalidrawFix() {
-	const syncAll = () => patchWhiteboardExcalidraw();
+	let syncFrame: number | null = null;
+	const syncAll = () => {
+		syncFrame = null;
+		patchWhiteboardExcalidraw();
+	};
+	const scheduleSync = () => {
+		if (syncFrame == null) {
+			syncFrame = requestAnimationFrame(syncAll);
+		}
+	};
 
 	syncAll();
 
-	const resizeObserver = new ResizeObserver(syncAll);
-	const observeExcalidrawRoots = () => {
-		document.querySelectorAll<HTMLElement>(".orca-whiteboard .excalidraw").forEach((root) => {
-			resizeObserver.observe(root);
+	const resizeObserver = new ResizeObserver(scheduleSync);
+	const observedRoots = new WeakSet<HTMLElement>();
+	const observeExcalidrawRoots = (root: ParentNode = document) => {
+		root.querySelectorAll<HTMLElement>(".orca-whiteboard .excalidraw").forEach((excalidraw) => {
+			if (!observedRoots.has(excalidraw)) {
+				observedRoots.add(excalidraw);
+				resizeObserver.observe(excalidraw);
+			}
 		});
 	};
 
 	observeExcalidrawRoots();
 
-	const onWindowChange = () => syncAll();
+	const onWindowChange = scheduleSync;
 	window.addEventListener("scroll", onWindowChange, true);
 	window.addEventListener("resize", onWindowChange);
 
@@ -166,9 +105,7 @@ function setupWhiteboardExcalidrawFix() {
 				mutation.addedNodes.forEach((node) => {
 					if (node instanceof HTMLElement) {
 						patchWhiteboardExcalidraw(node);
-						node.querySelectorAll<HTMLElement>(".orca-whiteboard .excalidraw").forEach((root) => {
-							resizeObserver.observe(root);
-						});
+						observeExcalidrawRoots(node);
 					}
 				});
 			}
@@ -185,6 +122,9 @@ function setupWhiteboardExcalidrawFix() {
 	return () => {
 		observer.disconnect();
 		resizeObserver.disconnect();
+		if (syncFrame != null) {
+			cancelAnimationFrame(syncFrame);
+		}
 		window.removeEventListener("scroll", onWindowChange, true);
 		window.removeEventListener("resize", onWindowChange);
 	};
@@ -196,8 +136,95 @@ function syncThemeMode() {
 	document.documentElement.classList.toggle(LIGHT_CLASS, isLight);
 }
 
+function setupBlockGraphSliderDetents() {
+	const cleanups: Array<() => void> = [];
+	const initialized = new WeakSet<HTMLInputElement>();
+
+	const setupSlider = (input: HTMLInputElement) => {
+		if (initialized.has(input) || !input.parentElement) return;
+		const control = input.closest<HTMLElement>(".orca-block-graph-depth-control");
+		if (!control) return;
+
+		const min = Number(input.min);
+		const max = Number(input.max);
+		const step = Number(input.step) || 1;
+		if (!Number.isFinite(min) || !Number.isFinite(max) || max <= min) return;
+		const detentCount = Math.floor((max - min) / step) + 1;
+		if (detentCount > 16) return;
+
+		initialized.add(input);
+		control.classList.add("shadcn-slider-detent-control");
+		const marks = document.createElement("span");
+		marks.className = BLOCK_GRAPH_DETENT_CLASS;
+		marks.setAttribute("aria-hidden", "true");
+		for (let index = 0; index < detentCount; index += 1) {
+			const mark = document.createElement("span");
+			mark.style.left = `${(index / (detentCount - 1)) * 100}%`;
+			marks.appendChild(mark);
+		}
+		control.appendChild(marks);
+
+		const value = document.createElement("output");
+		value.className = BLOCK_GRAPH_VALUE_CLASS;
+		value.setAttribute("aria-hidden", "true");
+		control.appendChild(value);
+
+		const sync = () => {
+			const ratio = (Number(input.value) - min) / (max - min);
+			const percent = Math.min(100, Math.max(0, ratio * 100));
+			input.style.setProperty("--shadcn-slider-value", `${percent}%`);
+			value.textContent = input.value;
+			const inputRect = input.getBoundingClientRect();
+			const controlRect = control.getBoundingClientRect();
+			value.style.left = `${inputRect.left - controlRect.left + inputRect.width * (percent / 100)}px`;
+			marks.style.left = `${inputRect.left - controlRect.left}px`;
+			marks.style.top = `${inputRect.bottom - controlRect.top + 1}px`;
+			marks.style.width = `${inputRect.width}px`;
+		};
+		const showValue = () => value.classList.add("is-visible");
+		const hideValue = () => value.classList.remove("is-visible");
+		const resizeObserver = new ResizeObserver(sync);
+		input.addEventListener("input", sync);
+		input.addEventListener("focus", showValue);
+		input.addEventListener("blur", hideValue);
+		resizeObserver.observe(control);
+		sync();
+
+		cleanups.push(() => {
+			input.removeEventListener("input", sync);
+			input.removeEventListener("focus", showValue);
+			input.removeEventListener("blur", hideValue);
+			resizeObserver.disconnect();
+			marks.remove();
+			value.remove();
+			control.classList.remove("shadcn-slider-detent-control");
+		});
+	};
+
+	const scan = (root: ParentNode) => {
+		if (root instanceof HTMLInputElement) {
+			setupSlider(root);
+		}
+		root.querySelectorAll<HTMLInputElement>(BLOCK_GRAPH_SLIDER_SELECTOR).forEach(setupSlider);
+	};
+	scan(document);
+	const observer = new MutationObserver((mutations) => {
+		for (const mutation of mutations) {
+			mutation.addedNodes.forEach((node) => {
+				if (node instanceof HTMLElement) {
+					scan(node);
+				}
+			});
+		}
+	});
+	observer.observe(document.body, { childList: true, subtree: true });
+	cleanups.push(() => observer.disconnect());
+	return () => cleanups.splice(0).forEach((cleanup) => cleanup());
+}
+
 export async function load(name: string) {
 	themeModeUnsub?.();
+	blockGraphSliderUnsub?.();
 
 	const state = orca.state as {
 		themes?: Record<string, unknown>;
@@ -212,8 +239,7 @@ export async function load(name: string) {
 	}
 
 	document.documentElement.classList.add(THEME_CLASS);
-	injectBlockGraphSliderStyles();
-	blockGraphSliderUnsub = setupBlockGraphSliderObserver();
+	blockGraphSliderUnsub = setupBlockGraphSliderDetents();
 	whiteboardExcalidrawFixUnsub = setupWhiteboardExcalidrawFix();
 
 	// Sync with Orca's built-in light/dark toggle
@@ -226,7 +252,6 @@ export async function unload() {
 		themeModeUnsub();
 		themeModeUnsub = null;
 	}
-	document.getElementById(BLOCK_GRAPH_SLIDER_STYLE_ID)?.remove();
 	if (blockGraphSliderUnsub) {
 		blockGraphSliderUnsub();
 		blockGraphSliderUnsub = null;

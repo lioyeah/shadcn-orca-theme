@@ -12,7 +12,10 @@ const fs = require("fs");
 const path = require("path");
 
 const rootDir = path.join(__dirname, "..");
-const outputPath = path.join(rootDir, "public", "shadcn.css");
+const outputPaths = {
+	public: path.join(rootDir, "public", "shadcn.css"),
+	dist: path.join(rootDir, "dist", "shadcn.css"),
+};
 const [, , action, requestedPath] = process.argv;
 
 function resolvePath(filePath) {
@@ -39,7 +42,15 @@ function extractSelectors(css) {
 	while ((match = declarationBlockPattern.exec(stripComments(css))) !== null) {
 		for (const selector of match[2].split(",")) {
 			const normalized = selector.replace(/\s+/g, " ").trim();
-			if (normalized) selectors.add(normalized);
+			if (
+				normalized &&
+				!normalized.includes("&") &&
+				!normalized.includes("{") &&
+				!normalized.includes("}") &&
+				(normalized.match(/\(/g) || []).length === (normalized.match(/\)/g) || []).length
+			) {
+				selectors.add(normalized);
+			}
 		}
 	}
 
@@ -73,6 +84,18 @@ function audit(filePath) {
 	};
 }
 
+function auditArtifacts() {
+	const publicContent = read(outputPaths.public);
+	const distContent = read(outputPaths.dist);
+	if (publicContent !== distContent) {
+		throw new Error("Generated CSS artifacts differ between public/ and dist/");
+	}
+	return {
+		public: { file: path.relative(rootDir, outputPaths.public), sha256: sha256(publicContent) },
+		dist: { file: path.relative(rootDir, outputPaths.dist), sha256: sha256(distContent) },
+	};
+}
+
 function createReport() {
 	const manifest = require(path.join(rootDir, "src", "theme-css", "manifest.cjs"));
 	const sourceFiles = [
@@ -83,7 +106,8 @@ function createReport() {
 	].map((filePath) => path.join(rootDir, "src", filePath));
 
 	return {
-		generated: audit(outputPath),
+		generated: audit(outputPaths.dist),
+		artifacts: auditArtifacts(),
 		sources: sourceFiles.map(audit),
 	};
 }

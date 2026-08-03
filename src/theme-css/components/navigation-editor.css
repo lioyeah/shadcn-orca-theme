@@ -171,6 +171,22 @@
 		}
 	}
 
+	.orca-sidebar-item:focus-visible,
+	.orca-list-item:focus-visible,
+	.orca-fav-item-item:focus-visible,
+	.orca-search-result-item:focus-visible,
+	.orca-aliased-block-item:focus-visible,
+	.orca-page-item:focus-visible,
+	.orca-tags-tag-item:focus-visible,
+	.orca-tab-item:focus-visible,
+	.orca-segmented-item:focus-visible,
+	.orca-tab:focus-visible,
+	.orca-query-tab:focus-visible,
+	.orca-sidebar-tab:focus-visible {
+		outline: none !important;
+		box-shadow: var(--shadcn-ring) !important;
+	}
+
 	.orca-tags-tag-item {
 		border: 1px solid transparent !important;
 		border-radius: calc(var(--radius) - 4px) !important;
@@ -200,7 +216,8 @@
 			width: 100% !important; padding: 3px 12px !important;
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
-			cursor: pointer !important; transition: all 0.15s ease !important;
+			cursor: pointer !important;
+			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				color: var(--sidebar-accent-foreground) !important;
@@ -243,7 +260,8 @@
 			width: 100% !important; padding: 3px 12px !important;
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
-			cursor: pointer !important; transition: all 0.15s ease !important;
+			cursor: pointer !important;
+			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				border-color: transparent !important;
@@ -306,7 +324,7 @@
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
 		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -319,7 +337,7 @@
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; }
 		& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -334,7 +352,7 @@
 		border: 1px solid var(--border) !important;
 		border-radius: 50% !important;
 		box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		padding: 0 !important; width: 18px !important; height: 18px !important;
 		display: inline-flex !important; align-items: center !important; justify-content: center !important;
 		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;

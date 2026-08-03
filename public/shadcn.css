@@ -362,7 +362,7 @@ html.t-light {
  * Source: apps/v4/registry/new-york-v4/ui/*.tsx
  * Docs: https://ui.shadcn.com/docs/theming
  *
- * These are semantic defaults Orca selectors inherit via _shared.css.
+ * These are semantic defaults Orca selectors inherit from the generated theme.
  * Do not add Orca-specific class names here.
  */
 
@@ -707,8 +707,7 @@ html.t-light {
 
 	/* slider.tsx — native input[type=range] (Track + Range + Thumb)
 	   Chromium/Electron: accent-color for fill; custom ::-webkit-slider-thumb only. */
-	.shadcn-slider-input,
-	.orca-block-graph-depth-control input[type="range"] {
+	.shadcn-slider-input {
 		accent-color: var(--primary);
 		inline-size: 100%;
 		block-size: 1rem;
@@ -722,19 +721,16 @@ html.t-light {
 		align-self: center;
 	}
 
-	.shadcn-slider-input:focus-visible,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible {
+	.shadcn-slider-input:focus-visible {
 		outline: none;
 	}
 
-	.shadcn-slider-input::-webkit-slider-runnable-track,
-	.orca-block-graph-depth-control input[type="range"]::-webkit-slider-runnable-track {
+	.shadcn-slider-input::-webkit-slider-runnable-track {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 	}
 
-	.shadcn-slider-input::-webkit-slider-thumb,
-	.orca-block-graph-depth-control input[type="range"]::-webkit-slider-thumb {
+	.shadcn-slider-input::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
 		box-sizing: border-box;
@@ -749,28 +745,24 @@ html.t-light {
 		transition: box-shadow 0.15s ease;
 	}
 
-	.shadcn-slider-input:focus-visible::-webkit-slider-thumb,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible::-webkit-slider-thumb {
+	.shadcn-slider-input:focus-visible::-webkit-slider-thumb {
 		box-shadow: var(--shadow-sm), 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
 	}
 
-	.shadcn-slider-input::-moz-range-track,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-track {
+	.shadcn-slider-input::-moz-range-track {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 		background: var(--muted);
 		border: none;
 	}
 
-	.shadcn-slider-input::-moz-range-progress,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-progress {
+	.shadcn-slider-input::-moz-range-progress {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 		background: var(--primary);
 	}
 
-	.shadcn-slider-input::-moz-range-thumb,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-thumb {
+	.shadcn-slider-input::-moz-range-thumb {
 		inline-size: 1rem;
 		block-size: 1rem;
 		border-radius: 9999px;
@@ -779,13 +771,11 @@ html.t-light {
 		box-shadow: var(--shadow-sm);
 	}
 
-	.shadcn-slider-input:focus-visible::-moz-range-thumb,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible::-moz-range-thumb {
+	.shadcn-slider-input:focus-visible::-moz-range-thumb {
 		box-shadow: var(--shadow-sm), 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
 	}
 
-	.shadcn-slider-input:disabled,
-	.orca-block-graph-depth-control input[type="range"]:disabled {
+	.shadcn-slider-input:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
@@ -1841,8 +1831,15 @@ html.t-light {
 		background: var(--input) !important;
 		background-color: var(--input) !important;
 		box-shadow: var(--shadow-xs) !important;
+		position: relative !important;
 		vertical-align: middle !important;
 		align-self: center !important;
+		justify-content: flex-start !important;
+		gap: 0 !important;
+		margin: 0 !important;
+		line-height: 0 !important;
+		text-align: start !important;
+		overflow: hidden !important;
 		cursor: pointer !important;
 		transition: background-color 0.15s ease, border-color 0.15s ease !important;
 	}
@@ -1873,8 +1870,12 @@ html.t-light {
 		background-color: var(--background) !important;
 		box-shadow: none !important;
 		flex-shrink: 0 !important;
-		transition: translate 0.15s ease-in-out !important;
-		translate: 0 !important;
+		position: static !important;
+		inset: auto !important;
+		margin: 0 !important;
+		transform: none !important;
+		translate: none !important;
+		transition: margin-inline-start 0.15s ease-in-out !important;
 	}
 
 	html:not(.t-light) .orca-switch-on .orca-switch-toggle,
@@ -1890,7 +1891,7 @@ html.t-light {
 
 	.orca-switch-on .orca-switch-toggle,
 	.orca-switch.orca-switch-on .orca-switch-toggle {
-		translate: calc(2rem - 1rem - 2px) !important;
+		margin-inline-start: auto !important;
 	}
 
 	.orca-switch-readonly,
@@ -1934,7 +1935,7 @@ html.t-light {
 	.orca-block-editor .orca-switch-on .orca-switch-toggle,
 	.orca-repr-tag-props .orca-switch-on .orca-switch-toggle,
 	.orca-tag-value-switch.orca-switch-on .orca-switch-toggle {
-		translate: calc(1.5rem - 0.75rem - 2px) !important;
+		margin-inline-start: auto !important;
 	}
 
 	/* Tag props layout — see §4.22b accordion card */
@@ -2157,6 +2158,17 @@ html.t-light {
 		margin-block-start: 0 !important;
 	}
 
+	@keyframes shadcn-popover-in {
+		from {
+			opacity: 0;
+			transform: scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -2290,6 +2302,12 @@ html.t-light {
 		box-shadow: none !important;
 	}
 
+	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
+	.orca-select-menu {
+		animation: shadcn-popover-in 0.14s ease-out both;
+		transform-origin: top center;
+	}
+
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
 	.orca-search-modal,
 	.orca-search-modal.orca-menu {
@@ -2314,6 +2332,18 @@ html.t-light {
 		--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--background));
 		--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--background));
 		--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	}
+
+	.orca-search-modal-no-result {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		min-block-size: 6rem !important;
+		padding: 1.5rem !important;
+		text-align: center !important;
+		color: var(--muted-foreground) !important;
+		font-size: 0.875rem !important;
+		line-height: 1.5 !important;
 	}
 
 	/* Right preview = editor island (canvas grid from §3; typography from :is(..., preview)).
@@ -4214,6 +4244,22 @@ html.t-light {
 		}
 	}
 
+	.orca-sidebar-item:focus-visible,
+	.orca-list-item:focus-visible,
+	.orca-fav-item-item:focus-visible,
+	.orca-search-result-item:focus-visible,
+	.orca-aliased-block-item:focus-visible,
+	.orca-page-item:focus-visible,
+	.orca-tags-tag-item:focus-visible,
+	.orca-tab-item:focus-visible,
+	.orca-segmented-item:focus-visible,
+	.orca-tab:focus-visible,
+	.orca-query-tab:focus-visible,
+	.orca-sidebar-tab:focus-visible {
+		outline: none !important;
+		box-shadow: var(--shadcn-ring) !important;
+	}
+
 	.orca-tags-tag-item {
 		border: 1px solid transparent !important;
 		border-radius: calc(var(--radius) - 4px) !important;
@@ -4243,7 +4289,8 @@ html.t-light {
 			width: 100% !important; padding: 3px 12px !important;
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
-			cursor: pointer !important; transition: all 0.15s ease !important;
+			cursor: pointer !important;
+			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				color: var(--sidebar-accent-foreground) !important;
@@ -4286,7 +4333,8 @@ html.t-light {
 			width: 100% !important; padding: 3px 12px !important;
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
-			cursor: pointer !important; transition: all 0.15s ease !important;
+			cursor: pointer !important;
+			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				border-color: transparent !important;
@@ -4349,7 +4397,7 @@ html.t-light {
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
 		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -4362,7 +4410,7 @@ html.t-light {
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; }
 		& svg, & i, & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -4377,7 +4425,7 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: 50% !important;
 		box-shadow: none !important; outline: none !important;
-		transition: all 0.15s ease !important;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		padding: 0 !important; width: 18px !important; height: 18px !important;
 		display: inline-flex !important; align-items: center !important; justify-content: center !important;
 		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;
@@ -4591,7 +4639,14 @@ html.t-light {
 		font-size: 1rem !important;
 		line-height: 1 !important;
 		flex-shrink: 0 !important;
+		transform: rotate(0deg) !important;
 		transition: transform 0.2s ease !important;
+	}
+	.orca-query-conditions-header[aria-expanded="true"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header[data-state="open"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header-non-editable[aria-expanded="true"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header-non-editable[data-state="open"] .orca-query-conditions-header-arrow {
+		transform: rotate(90deg) !important;
 	}
 	.orca-query-conditions-header .orca-select-button-selector,
 	.orca-query-conditions-header .orca-select-button-selector::before,
@@ -4668,6 +4723,64 @@ html.t-light {
 			fill: currentColor !important;
 			stroke: currentColor !important;
 		}
+	}
+
+	/* Slider detents — native input stays authoritative; marks/value are visual only */
+	.orca-block-graph-depth-control.shadcn-slider-detent-control {
+		position: relative !important;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"] {
+		--shadcn-slider-value: 0%;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]::-webkit-slider-thumb {
+		transition: transform 0.16s ease !important;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]:active::-webkit-slider-thumb,
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]:focus-visible::-webkit-slider-thumb {
+		transform: scale(1.08) !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-detents {
+		position: absolute !important;
+		display: block !important;
+		block-size: 0.3rem !important;
+		pointer-events: none !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-detents > span {
+		position: absolute !important;
+		display: block !important;
+		inline-size: 2px !important;
+		block-size: 0.3rem !important;
+		padding: 0 !important;
+		border-radius: 9999px !important;
+		background: color-mix(in oklab, var(--foreground) 35%, transparent) !important;
+		transform: translateX(-50%) !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-value {
+		position: absolute !important;
+		top: -1.15rem !important;
+		display: block !important;
+		min-inline-size: 1.25rem !important;
+		padding-inline: 0.25rem !important;
+		border-radius: var(--radius-sm) !important;
+		background: var(--popover) !important;
+		color: var(--popover-foreground) !important;
+		font-size: 0.7rem !important;
+		line-height: 1.1rem !important;
+		text-align: center !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+		transform: translateX(-50%) !important;
+		transition: opacity 0.14s ease !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-value.is-visible {
+		opacity: 1 !important;
 	}
 	/* ----------------------------------------------------------
 	   4.22b Tag properties — accordion.tsx (Card + Borders)
@@ -4803,6 +4916,15 @@ html.t-light {
 		overflow: visible !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important;
 	}
 	.orca-query-results { background: transparent !important; color: var(--foreground) !important; border: none !important; padding: 8px 12px !important; }
+
+	.orca-query-card {
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+	}
 
 	/* Self-fold blocks (query list AI chat rows, foldable embeds) — card.tsx */
 	.orca-repr-self-fold-container {
@@ -4969,14 +5091,20 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
-		transition: all 0.15s ease !important;
+		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		padding: 0.25rem 0.625rem !important;
 		min-block-size: 1.75rem !important;
 		align-self: center !important;
 		&:hover {
-			background: var(--accent) !important;
-			color: var(--accent-foreground) !important;
+			background: color-mix(in oklab, var(--destructive) 12%, var(--card)) !important;
+			color: var(--destructive) !important;
+			border-color: color-mix(in oklab, var(--destructive) 45%, var(--border)) !important;
 			opacity: 1 !important;
+			& * {
+				color: var(--destructive) !important;
+				fill: currentColor !important;
+				stroke: currentColor !important;
+			}
 		}
 	}
 	.orca-query-conditions .orca-checkbox-box { outline: 1px solid var(--border) !important; outline-offset: 0 !important; border: none !important; }
@@ -6787,12 +6915,8 @@ html .orca-datepicker-menu .orca-date-picker .day {
 }
 
 /* AI chat — beat native message card + composer gradient + scroller chrome */
-.orca-aichat-container,
-.orca-aichat-container.orca-maximized {
-	background-image: none !important;
-}
-
 .orca-aichat-container {
+	background-image: none !important;
 	height: 85cqh !important;
 	min-height: 0 !important;
 	display: flex !important;
@@ -6802,6 +6926,7 @@ html .orca-datepicker-menu .orca-date-picker .day {
 
 .orca-aichat-container.orca-maximized {
 	height: 100% !important;
+	background-image: none !important;
 	background: var(--background) !important;
 	background-color: var(--background) !important;
 }
@@ -7793,6 +7918,73 @@ html .orca-settings > .sections .item > i.ti::before {
 	line-height: 1 !important;
 }
 
+/* Switch geometry — beat native padding/gap/translate in late-loaded Orca CSS */
+html:root:root .orca-switch {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: flex-start !important;
+	box-sizing: border-box !important;
+	min-inline-size: 2rem !important;
+	inline-size: 2rem !important;
+	block-size: 1.15rem !important;
+	position: relative !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	gap: 0 !important;
+	line-height: 0 !important;
+	text-align: start !important;
+	overflow: hidden !important;
+	border-radius: 9999px !important;
+	vertical-align: middle !important;
+}
+
+html:root:root .orca-switch-toggle {
+	display: block !important;
+	box-sizing: border-box !important;
+	inline-size: 1rem !important;
+	block-size: 1rem !important;
+	min-inline-size: 1rem !important;
+	min-block-size: 1rem !important;
+	aspect-ratio: 1 !important;
+	border-radius: 9999px !important;
+	position: static !important;
+	inset: auto !important;
+	margin: 0 !important;
+	transform: none !important;
+	translate: none !important;
+}
+
+html:root:root .orca-switch-on .orca-switch-toggle {
+	margin-inline-start: auto !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch-on .orca-switch-toggle {
+	margin-inline-start: auto !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch {
+	min-inline-size: 1.5rem !important;
+	inline-size: 1.5rem !important;
+	block-size: 0.875rem !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch) .orca-switch-toggle {
+	inline-size: 0.75rem !important;
+	block-size: 0.75rem !important;
+	min-inline-size: 0.75rem !important;
+	min-block-size: 0.75rem !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch) .orca-switch {
+	vertical-align: -0.1em !important;
+}
+
+html:root:root .orca-settings .orca-switch {
+	align-self: center !important;
+	margin-block: 0 !important;
+	vertical-align: middle !important;
+}
+
 @layer base {
 	/* Menu category headers — flat full-bleed divider (counter .orca-menu padding) */
 	html .orca-menu:not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-block-preview):not(.orca-block-preview-popup) .orca-menu-title {
@@ -8111,6 +8303,15 @@ html:root:root :is(
 html:root:root .orca-query-list-block::before {
 	background-color: var(--card) !important;
 	border-radius: var(--radius-lg) !important;
+}
+
+html:root:root .orca-query-card {
+	background: var(--card) !important;
+	color: var(--card-foreground) !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	overflow: hidden !important;
 }
 
 /* Self-fold header expands to wrap embedded AI chat */

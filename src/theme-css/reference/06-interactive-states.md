@@ -64,7 +64,7 @@
 | `.orca-search-result-item.selected` | 选中 | ✅ 核心 CSS 确认 |
 
 > `.orca-sidebar-item` 和 `.orca-list-item` 不在 minified 核心 CSS 中，
-> 但 shadcn 主题 CSS 定义了它们（见 `_shared.css`）。
+> 但 shadcn 主题 CSS 定义了它们（见 `components/navigation.css`）。
 
 ## 5. 开关 (Switch) 状态
 

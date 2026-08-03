@@ -19,6 +19,18 @@ function ensureDir(dir) {
 }
 
 const sources = require(manifestPath);
+const groups = ["prelude", "base", "components", "overrides"];
+const manifestPaths = groups.flatMap((group) => {
+	if (!Array.isArray(sources[group])) {
+		throw new Error(`Theme manifest group must be an array: ${group}`);
+	}
+	return sources[group];
+});
+const duplicatePaths = manifestPaths.filter((filePath, index) => manifestPaths.indexOf(filePath) !== index);
+if (duplicatePaths.length > 0) {
+	throw new Error(`Duplicate theme manifest entries: ${[...new Set(duplicatePaths)].join(", ")}`);
+}
+
 const readSources = (relativePaths) => relativePaths.map((relativePath) => {
 	const sourcePath = path.join(sourceDir, relativePath);
 	if (!fs.existsSync(sourcePath)) {
@@ -26,10 +38,24 @@ const readSources = (relativePaths) => relativePaths.map((relativePath) => {
 	}
 	return fs.readFileSync(sourcePath, "utf8");
 });
+const flattenComponent = (content, relativePath) => {
+	const prefix = "@layer components {\n";
+	const suffix = "\n}\n";
+	if (content.startsWith(prefix)) {
+		if (!content.endsWith(suffix)) {
+			throw new Error(`Unclosed @layer components wrapper: ${relativePath}`);
+		}
+		return content.slice(prefix.length, -suffix.length);
+	}
+	if (content.includes("@layer components")) {
+		throw new Error(`Unexpected @layer components wrapper: ${relativePath}`);
+	}
+	return content;
+};
 const prelude = readSources(sources.prelude);
 const base = readSources(sources.base);
-const components = readSources(sources.components).map((content) =>
-	content.replace(/^@layer components \{\n/, "").replace(/\n\}\n$/, ""),
+const components = readSources(sources.components).map((content, index) =>
+	flattenComponent(content, sources.components[index]),
 );
 const overrides = readSources(sources.overrides);
 
@@ -58,3 +84,9 @@ console.log(`Built ${path.join(publicDir, outputName)}`);
 ensureDir(distDir);
 fs.writeFileSync(path.join(distDir, outputName), combined, "utf8");
 console.log(`Copied ${outputName} → dist/`);
+
+const publicOutput = fs.readFileSync(path.join(publicDir, outputName));
+const distOutput = fs.readFileSync(path.join(distDir, outputName));
+if (!publicOutput.equals(distOutput)) {
+	throw new Error(`${outputName} artifacts differ between public/ and dist/`);
+}

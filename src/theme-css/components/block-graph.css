@@ -53,4 +53,62 @@
 			stroke: currentColor !important;
 		}
 	}
+
+	/* Slider detents — native input stays authoritative; marks/value are visual only */
+	.orca-block-graph-depth-control.shadcn-slider-detent-control {
+		position: relative !important;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"] {
+		--shadcn-slider-value: 0%;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]::-webkit-slider-thumb {
+		transition: transform 0.16s ease !important;
+	}
+
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]:active::-webkit-slider-thumb,
+	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]:focus-visible::-webkit-slider-thumb {
+		transform: scale(1.08) !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-detents {
+		position: absolute !important;
+		display: block !important;
+		block-size: 0.3rem !important;
+		pointer-events: none !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-detents > span {
+		position: absolute !important;
+		display: block !important;
+		inline-size: 2px !important;
+		block-size: 0.3rem !important;
+		padding: 0 !important;
+		border-radius: 9999px !important;
+		background: color-mix(in oklab, var(--foreground) 35%, transparent) !important;
+		transform: translateX(-50%) !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-value {
+		position: absolute !important;
+		top: -1.15rem !important;
+		display: block !important;
+		min-inline-size: 1.25rem !important;
+		padding-inline: 0.25rem !important;
+		border-radius: var(--radius-sm) !important;
+		background: var(--popover) !important;
+		color: var(--popover-foreground) !important;
+		font-size: 0.7rem !important;
+		line-height: 1.1rem !important;
+		text-align: center !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+		transform: translateX(-50%) !important;
+		transition: opacity 0.14s ease !important;
+	}
+
+	.orca-block-graph-depth-control .shadcn-slider-value.is-visible {
+		opacity: 1 !important;
+	}
 }

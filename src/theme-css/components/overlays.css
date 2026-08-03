@@ -1,4 +1,15 @@
 @layer components {
+	@keyframes shadcn-popover-in {
+		from {
+			opacity: 0;
+			transform: scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -132,6 +143,12 @@
 		box-shadow: none !important;
 	}
 
+	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
+	.orca-select-menu {
+		animation: shadcn-popover-in 0.14s ease-out both;
+		transform-origin: top center;
+	}
+
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
 	.orca-search-modal,
 	.orca-search-modal.orca-menu {
@@ -156,6 +173,18 @@
 		--orca-color-gray-5: color-mix(in oklab, var(--foreground) 45%, var(--background));
 		--orca-color-gray-6: color-mix(in oklab, var(--foreground) 55%, var(--background));
 		--orca-color-gray-7: color-mix(in oklab, var(--foreground) 65%, var(--background));
+	}
+
+	.orca-search-modal-no-result {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		min-block-size: 6rem !important;
+		padding: 1.5rem !important;
+		text-align: center !important;
+		color: var(--muted-foreground) !important;
+		font-size: 0.875rem !important;
+		line-height: 1.5 !important;
 	}
 
 	/* Right preview = editor island (canvas grid from §3; typography from :is(..., preview)).

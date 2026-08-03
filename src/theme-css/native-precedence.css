@@ -702,6 +702,73 @@ html .orca-settings > .sections .item > i.ti::before {
 	line-height: 1 !important;
 }
 
+/* Switch geometry — beat native padding/gap/translate in late-loaded Orca CSS */
+html:root:root .orca-switch {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: flex-start !important;
+	box-sizing: border-box !important;
+	min-inline-size: 2rem !important;
+	inline-size: 2rem !important;
+	block-size: 1.15rem !important;
+	position: relative !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	gap: 0 !important;
+	line-height: 0 !important;
+	text-align: start !important;
+	overflow: hidden !important;
+	border-radius: 9999px !important;
+	vertical-align: middle !important;
+}
+
+html:root:root .orca-switch-toggle {
+	display: block !important;
+	box-sizing: border-box !important;
+	inline-size: 1rem !important;
+	block-size: 1rem !important;
+	min-inline-size: 1rem !important;
+	min-block-size: 1rem !important;
+	aspect-ratio: 1 !important;
+	border-radius: 9999px !important;
+	position: static !important;
+	inset: auto !important;
+	margin: 0 !important;
+	transform: none !important;
+	translate: none !important;
+}
+
+html:root:root .orca-switch-on .orca-switch-toggle {
+	margin-inline-start: auto !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch-on .orca-switch-toggle {
+	margin-inline-start: auto !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch {
+	min-inline-size: 1.5rem !important;
+	inline-size: 1.5rem !important;
+	block-size: 0.875rem !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch) .orca-switch-toggle {
+	inline-size: 0.75rem !important;
+	block-size: 0.75rem !important;
+	min-inline-size: 0.75rem !important;
+	min-block-size: 0.75rem !important;
+}
+
+html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch) .orca-switch {
+	vertical-align: -0.1em !important;
+}
+
+html:root:root .orca-settings .orca-switch {
+	align-self: center !important;
+	margin-block: 0 !important;
+	vertical-align: middle !important;
+}
+
 @layer base {
 	/* Menu category headers — flat full-bleed divider (counter .orca-menu padding) */
 	html .orca-menu:not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-block-preview):not(.orca-block-preview-popup) .orca-menu-title {
@@ -1020,6 +1087,15 @@ html:root:root :is(
 html:root:root .orca-query-list-block::before {
 	background-color: var(--card) !important;
 	border-radius: var(--radius-lg) !important;
+}
+
+html:root:root .orca-query-card {
+	background: var(--card) !important;
+	color: var(--card-foreground) !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-sm) !important;
+	overflow: hidden !important;
 }
 
 /* Self-fold header expands to wrap embedded AI chat */

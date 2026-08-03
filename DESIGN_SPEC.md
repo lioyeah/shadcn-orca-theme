@@ -98,9 +98,8 @@ const THEME_FILE = "shadcn.css";
 
 部署默认路径：`/home/ilio/Documents/orca/plugins/shadcn`（`ORCA_PLUGINS_DIR` 可覆盖）。
 
-## 8. 遗留文件
+## 8. 参考文件
 
-- `src/flavors/{pink,cyan,green,violet,red}.css` — 旧 palette 源，**未**接入运行时切换；仅作参考。
 - `src/theme-css/reference/` — Orca 原生 CSS 逆向参考，与主题品牌无关。
 - `public/icons/` — 可选 SVG 图标包（MIT），与 shadcn 皮肤无硬依赖。
 

@@ -191,7 +191,14 @@
 		font-size: 1rem !important;
 		line-height: 1 !important;
 		flex-shrink: 0 !important;
+		transform: rotate(0deg) !important;
 		transition: transform 0.2s ease !important;
+	}
+	.orca-query-conditions-header[aria-expanded="true"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header[data-state="open"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header-non-editable[aria-expanded="true"] .orca-query-conditions-header-arrow,
+	.orca-query-conditions-header-non-editable[data-state="open"] .orca-query-conditions-header-arrow {
+		transform: rotate(90deg) !important;
 	}
 	.orca-query-conditions-header .orca-select-button-selector,
 	.orca-query-conditions-header .orca-select-button-selector::before,

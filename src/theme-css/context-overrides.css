@@ -126,12 +126,8 @@ html .orca-datepicker-menu .orca-date-picker .day {
 }
 
 /* AI chat — beat native message card + composer gradient + scroller chrome */
-.orca-aichat-container,
-.orca-aichat-container.orca-maximized {
-	background-image: none !important;
-}
-
 .orca-aichat-container {
+	background-image: none !important;
 	height: 85cqh !important;
 	min-height: 0 !important;
 	display: flex !important;
@@ -141,6 +137,7 @@ html .orca-datepicker-menu .orca-date-picker .day {
 
 .orca-aichat-container.orca-maximized {
 	height: 100% !important;
+	background-image: none !important;
 	background: var(--background) !important;
 	background-color: var(--background) !important;
 }

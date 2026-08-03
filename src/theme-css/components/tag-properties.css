@@ -134,6 +134,15 @@
 	}
 	.orca-query-results { background: transparent !important; color: var(--foreground) !important; border: none !important; padding: 8px 12px !important; }
 
+	.orca-query-card {
+		background: var(--card) !important;
+		color: var(--card-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-sm) !important;
+		overflow: hidden !important;
+	}
+
 	/* Self-fold blocks (query list AI chat rows, foldable embeds) — card.tsx */
 	.orca-repr-self-fold-container {
 		background: var(--card) !important;
@@ -299,14 +308,20 @@
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
-		transition: all 0.15s ease !important;
+		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
 		padding: 0.25rem 0.625rem !important;
 		min-block-size: 1.75rem !important;
 		align-self: center !important;
 		&:hover {
-			background: var(--accent) !important;
-			color: var(--accent-foreground) !important;
+			background: color-mix(in oklab, var(--destructive) 12%, var(--card)) !important;
+			color: var(--destructive) !important;
+			border-color: color-mix(in oklab, var(--destructive) 45%, var(--border)) !important;
 			opacity: 1 !important;
+			& * {
+				color: var(--destructive) !important;
+				fill: currentColor !important;
+				stroke: currentColor !important;
+			}
 		}
 	}
 	.orca-query-conditions .orca-checkbox-box { outline: 1px solid var(--border) !important; outline-offset: 0 !important; border: none !important; }

@@ -4,7 +4,7 @@
  * Source: apps/v4/registry/new-york-v4/ui/*.tsx
  * Docs: https://ui.shadcn.com/docs/theming
  *
- * These are semantic defaults Orca selectors inherit via _shared.css.
+ * These are semantic defaults Orca selectors inherit from the generated theme.
  * Do not add Orca-specific class names here.
  */
 
@@ -349,8 +349,7 @@
 
 	/* slider.tsx — native input[type=range] (Track + Range + Thumb)
 	   Chromium/Electron: accent-color for fill; custom ::-webkit-slider-thumb only. */
-	.shadcn-slider-input,
-	.orca-block-graph-depth-control input[type="range"] {
+	.shadcn-slider-input {
 		accent-color: var(--primary);
 		inline-size: 100%;
 		block-size: 1rem;
@@ -364,19 +363,16 @@
 		align-self: center;
 	}
 
-	.shadcn-slider-input:focus-visible,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible {
+	.shadcn-slider-input:focus-visible {
 		outline: none;
 	}
 
-	.shadcn-slider-input::-webkit-slider-runnable-track,
-	.orca-block-graph-depth-control input[type="range"]::-webkit-slider-runnable-track {
+	.shadcn-slider-input::-webkit-slider-runnable-track {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 	}
 
-	.shadcn-slider-input::-webkit-slider-thumb,
-	.orca-block-graph-depth-control input[type="range"]::-webkit-slider-thumb {
+	.shadcn-slider-input::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
 		box-sizing: border-box;
@@ -391,28 +387,24 @@
 		transition: box-shadow 0.15s ease;
 	}
 
-	.shadcn-slider-input:focus-visible::-webkit-slider-thumb,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible::-webkit-slider-thumb {
+	.shadcn-slider-input:focus-visible::-webkit-slider-thumb {
 		box-shadow: var(--shadow-sm), 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
 	}
 
-	.shadcn-slider-input::-moz-range-track,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-track {
+	.shadcn-slider-input::-moz-range-track {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 		background: var(--muted);
 		border: none;
 	}
 
-	.shadcn-slider-input::-moz-range-progress,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-progress {
+	.shadcn-slider-input::-moz-range-progress {
 		block-size: 0.375rem;
 		border-radius: 9999px;
 		background: var(--primary);
 	}
 
-	.shadcn-slider-input::-moz-range-thumb,
-	.orca-block-graph-depth-control input[type="range"]::-moz-range-thumb {
+	.shadcn-slider-input::-moz-range-thumb {
 		inline-size: 1rem;
 		block-size: 1rem;
 		border-radius: 9999px;
@@ -421,13 +413,11 @@
 		box-shadow: var(--shadow-sm);
 	}
 
-	.shadcn-slider-input:focus-visible::-moz-range-thumb,
-	.orca-block-graph-depth-control input[type="range"]:focus-visible::-moz-range-thumb {
+	.shadcn-slider-input:focus-visible::-moz-range-thumb {
 		box-shadow: var(--shadow-sm), 0 0 0 4px color-mix(in oklab, var(--ring) 50%, transparent);
 	}
 
-	.shadcn-slider-input:disabled,
-	.orca-block-graph-depth-control input[type="range"]:disabled {
+	.shadcn-slider-input:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}

@@ -12,7 +12,8 @@
     "audit:css": "node scripts/audit-theme-css.cjs",
     "audit:css:write": "node scripts/audit-theme-css.cjs --write docs/superpowers/baselines/2026-07-30-css-baseline.json",
     "lint:css": "stylelint \"src/theme-css/**/*.css\" \"src/flavors/**/*.css\"",
-    "check": "npm run build && npm run lint:css",
+    "audit:css:compare": "node scripts/audit-theme-css.cjs --compare docs/superpowers/baselines/2026-07-30-css-baseline.json",
+    "check": "npm run build && npm run lint:css && npm run audit:css:compare",
     "preview": "vite preview"
   },
   "peerDependencies": {
