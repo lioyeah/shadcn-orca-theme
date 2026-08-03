@@ -29,6 +29,7 @@
 | `.orca-command-modal` | `dialog.tsx` + `command.tsx` | shell=`secondary-background`, list=`background`, footer muted |
 | `.orca-search-modal` | `dialog` + 自定义分栏 | 左列表 sidebar 色，右 preview = editor |
 | `.orca-find-replace` | `popover` 式浮层 | `card`/`secondary` 壳，无双边框 |
+| `.orca-editor-toolbar`, `.orca-editor-toolbar-bar`, `.orca-editor-toolbar-list` | `context-menu.tsx` | popover 壳 + `shadow-md`；按钮项 hover=`accent`；下拉列表=SubContent |
 | `nav#sidebar`, `.orca-aliased-block-item` | `sidebar.tsx` | `--sidebar`, hover `--sidebar-accent` |
 | `.orca-switch` | `switch.tsx` | off=`input` track, on=`primary`, thumb=`background` |
 | `.orca-tooltip` | `tooltip.tsx` | `bg-foreground text-background` |
@@ -37,11 +38,13 @@
 | `.orca-tag`, `.orca-pill` | `badge.tsx` | outline + muted fill |
 | `input[type="checkbox"]`, `.orca-checkbox-box` | `checkbox.tsx` | checked=`primary` |
 | `.orca-query-conditions` | `accordion.tsx` (Card + Borders) | shell=`card`+`shadow-sm`; header=AccordionTrigger (`py-4`, `font-medium`); body=AccordionContent (`pb-4`) |
+| `.orca-block-graph-header`, `.orca-block-graph-depth-control` | `accordion.tsx` + `slider.tsx` | 查询栏与 query editor 同 card 壳；Depth/Size 滑块 = muted track + primary fill + ring thumb |
 | `.orca-repr-tag-props` | `accordion.tsx` (Card + Borders) | 正文标签属性：`card` 壳；分组/属性行边框与图标用 `--orca-repr-tag-props-color`（用户 tag 色） |
 | `.orca-query-tabs`, `.orca-tab-item.orca-selected` | `tabs.tsx` | active=`background` + `shadow-sm` |
 | `.orca-stats-*` cards | `card.tsx` | `--card`, `shadow-sm` |
 | `html body #main`, `#main.orca-panels-container` | `sidebar.tsx` `SidebarInset` | `border` + `rounded-xl` + `shadow-sm`；右侧/底边 `0.5rem` inset；`#app.sidebar-closed` 时左侧同样 `0.5rem` |
 | `#main`, `.orca-block-editor` (preview) | `typeset` / Typography | `--typeset-*` 节奏 + `foreground`/`muted-foreground` 灰阶正文 |
+| `.orca-breadcrumb`, `.orca-scrolling-breadcrumb` | `breadcrumb.tsx` | list=`text-muted-foreground`; ancestor segments=`BreadcrumbLink` hover→foreground; current segment=`BreadcrumbPage` — scrolling trail uses flat `.orca-scrolling-breadcrumb-segment:last-of-type`; block trail uses last `.orca-breadcrumb-item` |
 | `.orca-repr-self-fold-container`, `.orca-aichat-collapsible` | `card.tsx` | 查询列表 AI 对话等 self-fold 容器：`rounded-md` + `border` + `shadow-sm` |
 | `.orca-query-list-block-block .orca-aichat-container` (expanded) | `card.tsx` | 展开后的 messages 面板：外层 card 圆角；messages 区 `--background`，composer 底栏无二次边框 |
 | `.orca-calendar`, `.orca-date-picker` | `calendar.tsx` | today=`accent`；selected=`primary`；weekday=`muted-foreground`；nav=ghost |

@@ -408,10 +408,14 @@
 		}
 		& .orca-search-modal-result-label .highlight,
 		& .highlight {
-			background: var(--surface-active) !important;
-			background-color: var(--surface-active) !important;
-			color: var(--surface-active-fg) !important;
-			border-radius: 2px !important;
+			background: var(--orca-color-result-highlight) !important;
+			background-color: var(--orca-color-result-highlight) !important;
+			color: var(--orca-color-result-highlight-fg) !important;
+			border-radius: calc(var(--radius) - 4px) !important;
+			padding-inline: 0.125rem !important;
+			font-weight: 600 !important;
+			box-decoration-break: clone !important;
+			-webkit-box-decoration-break: clone !important;
 		}
 		& .orca-search-modal-result-breadcrumb,
 		& .orca-search-modal-result-breadcrumb-segment,
@@ -459,6 +463,12 @@
 				fill: currentColor !important;
 				stroke: currentColor !important;
 			}
+
+			& .highlight {
+				background: color-mix(in oklab, var(--orca-color-result-highlight) 82%, var(--accent)) !important;
+				background-color: color-mix(in oklab, var(--orca-color-result-highlight) 82%, var(--accent)) !important;
+				color: var(--accent-foreground) !important;
+			}
 		}
 	}
 
@@ -468,8 +478,12 @@
 	.orca-block-preview .highlight {
 		background: var(--orca-color-result-highlight) !important;
 		background-color: var(--orca-color-result-highlight) !important;
-		color: var(--foreground) !important;
-		border-radius: 2px !important;
+		color: var(--orca-color-result-highlight-fg) !important;
+		border-radius: calc(var(--radius) - 4px) !important;
+		padding-inline: 0.125rem !important;
+		font-weight: 600 !important;
+		box-decoration-break: clone !important;
+		-webkit-box-decoration-break: clone !important;
 	}
 
 	/* Single border — shadcn tooltip.tsx (inverted) */

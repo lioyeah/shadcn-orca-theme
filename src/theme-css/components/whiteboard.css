@@ -1,0 +1,533 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   Whiteboard (Excalidraw) — shadcn token bridge
+	   Scope: embedded + maximized .orca-whiteboard only.
+	   Excalidraw reads --island-bg-color, --color-primary, etc.
+	   ---------------------------------------------------------- */
+
+	.orca-whiteboard .excalidraw,
+	.orca-whiteboard .excalidraw.theme--dark {
+		--default-bg-color: var(--background);
+		--island-bg-color: var(--popover);
+		--popup-bg-color: var(--popover);
+		--popup-secondary-bg-color: var(--muted);
+		--popup-text-color: var(--popover-foreground);
+		--popup-text-inverted-color: var(--primary-foreground);
+		--overlay-bg-color: var(--overlay);
+		--sidebar-bg-color: var(--popover);
+
+		--text-primary-color: var(--foreground);
+		--color-on-surface: var(--foreground);
+		--icon-fill-color: var(--foreground);
+		--input-label-color: var(--muted-foreground);
+		--keybinding-color: var(--muted-foreground);
+
+		--input-bg-color: color-mix(in oklab, var(--input) 30%, transparent);
+		--input-border-color: var(--input);
+		--input-hover-bg-color: var(--accent);
+
+		--color-primary: var(--primary);
+		--color-primary-darker: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+		--color-primary-darkest: color-mix(in oklab, var(--primary) 72%, var(--foreground));
+		--color-primary-light: color-mix(in oklab, var(--primary) 14%, var(--background));
+		--color-primary-light-darker: color-mix(in oklab, var(--primary) 20%, var(--background));
+		--color-primary-hover: color-mix(in oklab, var(--primary) 92%, var(--foreground));
+		--color-selection: var(--primary);
+		--select-highlight-color: var(--accent);
+		--focus-highlight-color: var(--ring);
+		--link-color: var(--primary);
+
+		--button-gray-1: var(--accent);
+		--button-gray-2: color-mix(in oklab, var(--accent) 80%, var(--border));
+		--button-gray-3: var(--border);
+		--button-hover-bg: color-mix(in oklab, var(--foreground) 11%, var(--popover));
+		--button-hover-color: var(--foreground);
+		--button-active-bg: color-mix(in oklab, var(--foreground) 14%, var(--popover));
+		--button-active-border: var(--border);
+		--button-selected-bg: var(--button-hover-bg);
+		--button-selected-border: transparent;
+
+		--default-border-color: var(--border);
+		--dialog-border-color: var(--border);
+		--sidebar-border-color: var(--border);
+		--avatar-border-color: var(--border);
+
+		--shadow-island: var(--shadow-md);
+		--modal-shadow: var(--shadow-lg);
+		--library-dropdown-shadow: var(--shadow-md);
+		--sidebar-shadow: var(--shadow-lg);
+
+		--color-surface-high: var(--accent);
+		--color-surface-low: var(--background);
+		--color-surface-mid: var(--card);
+		--color-surface-lowest: var(--background);
+		--color-surface-primary-container: var(--button-hover-bg);
+		--color-on-primary-container: var(--foreground);
+		--color-brand-hover: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+		--color-brand-active: color-mix(in oklab, var(--primary) 76%, var(--foreground));
+		--color-border-outline: var(--border);
+		--color-border-outline-variant: var(--border);
+
+		--color-gray-10: color-mix(in oklab, var(--foreground) 5%, var(--background));
+		--color-gray-20: var(--border);
+		--color-gray-30: var(--border);
+		--color-gray-40: var(--muted-foreground);
+		--color-gray-50: var(--muted-foreground);
+		--color-gray-60: var(--muted-foreground);
+		--color-gray-70: color-mix(in oklab, var(--foreground) 65%, var(--background));
+		--color-gray-80: color-mix(in oklab, var(--foreground) 82%, var(--background));
+		--color-gray-85: color-mix(in oklab, var(--foreground) 88%, var(--background));
+		--color-gray-90: var(--foreground);
+		--color-gray-100: var(--foreground);
+
+		--color-muted: var(--border);
+		--color-muted-darker: var(--muted-foreground);
+		--color-muted-darkest: var(--foreground);
+		--color-muted-background: var(--muted);
+		--color-muted-background-darker: var(--accent);
+
+		--scrollbar-thumb: var(--border);
+		--scrollbar-thumb-hover: color-mix(in oklab, var(--foreground) 35%, var(--background));
+
+		--button-destructive-bg-color: color-mix(in oklab, var(--destructive) 14%, var(--background));
+		--button-destructive-color: var(--destructive);
+		--color-danger: var(--destructive);
+		--color-danger-dark: var(--destructive);
+		--color-danger-darker: color-mix(in oklab, var(--destructive) 85%, var(--foreground));
+		--color-danger-darkest: color-mix(in oklab, var(--destructive) 70%, var(--foreground));
+		--color-danger-text: var(--destructive-foreground);
+		--color-danger-background: color-mix(in oklab, var(--destructive) 12%, var(--background));
+		--color-danger-icon-background: color-mix(in oklab, var(--destructive) 18%, var(--background));
+		--color-danger-color: var(--destructive);
+		--color-danger-icon-color: var(--destructive);
+
+		--border-radius-lg: var(--radius-md);
+
+		--ExcTextField--color: var(--foreground);
+		--ExcTextField--label-color: var(--muted-foreground);
+		--ExcTextField--background: color-mix(in oklab, var(--input) 30%, transparent);
+		--ExcTextField--readonly--background: var(--muted);
+		--ExcTextField--readonly--color: var(--foreground);
+		--ExcTextField--border: var(--input);
+		--ExcTextField--readonly--border: var(--border);
+		--ExcTextField--border-hover: var(--border);
+		--ExcTextField--border-active: var(--border);
+		--ExcTextField--placeholder: var(--muted-foreground);
+	}
+
+	/* Island panels — single popover border (no double chrome) */
+	.orca-whiteboard .excalidraw .Island {
+		border: 1px solid var(--border);
+	}
+
+	/* Orca shell around the canvas */
+	.orca-whiteboard {
+		background: var(--background);
+		color: var(--foreground);
+	}
+
+	.orca-whiteboard-placeholder {
+		color: var(--muted-foreground);
+	}
+
+	.orca-whiteboard-placeholder .ti {
+		color: var(--muted-foreground);
+	}
+
+	.orca-whiteboard-collapsible-header {
+		color: var(--foreground);
+		font-weight: 600;
+	}
+
+	.orca-whiteboard-caption-input {
+		border: 1px solid var(--input) !important;
+		border-radius: var(--border-radius) !important;
+		background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+		color: var(--foreground) !important;
+		box-shadow: var(--shadow-xs) !important;
+	}
+
+	.orca-whiteboard-caption-input:focus,
+	.orca-whiteboard-caption-input:focus-visible,
+	.orca-whiteboard-caption-input:focus-within {
+		border-color: var(--input) !important;
+		box-shadow: var(--shadow-xs) !important;
+		outline: none !important;
+	}
+
+	/*
+	   Add / insert block — renderTopRightUI (.orca-whiteboard-insert-btn)
+	   Host uses variant="solid"; theme maps to shadcn button outline.
+	*/
+	.orca-whiteboard .orca-whiteboard-insert-btn.orca-button {
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		min-inline-size: 2.25rem !important;
+		min-block-size: 2.25rem !important;
+		padding: 0 !important;
+		background: transparent !important;
+		background-color: transparent !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-whiteboard .orca-whiteboard-insert-btn.orca-button:hover {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border-color: transparent !important;
+		opacity: 1 !important;
+	}
+
+	.orca-whiteboard .orca-whiteboard-insert-btn.orca-button :is(.ti, i) {
+		color: currentColor !important;
+	}
+
+	/* ----------------------------------------------------------
+	   Toolbar actions — shadcn button outline
+	   https://ui.shadcn.com/docs/components/base/button
+	   Left menu (.main-menu-trigger), add/insert (.ExcButton),
+	   library (.sidebar-trigger), help (.help-icon)
+	   ---------------------------------------------------------- */
+
+	.orca-whiteboard .excalidraw :is(
+		.main-menu-trigger,
+		.sidebar-trigger,
+		.help-icon,
+		button.standalone,
+		.dropdown-menu-button
+	) {
+		background: transparent !important;
+		background-color: transparent !important;
+		color: var(--foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+		font-weight: var(--base-font-weight) !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(
+		.main-menu-trigger,
+		.sidebar-trigger,
+		.help-icon,
+		button.standalone,
+		.dropdown-menu-button
+	):hover {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border-color: transparent !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(
+		.main-menu-trigger,
+		.sidebar-trigger,
+		.help-icon,
+		button.standalone,
+		.dropdown-menu-button
+	):active {
+		background: var(--accent) !important;
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(
+		.main-menu-trigger,
+		.sidebar-trigger,
+		button.standalone,
+		.dropdown-menu-button
+	) svg {
+		color: currentColor !important;
+		fill: currentColor !important;
+	}
+
+	/* Tabler help — stroke circle/? only; bbox path must stay stroke:none */
+	.orca-whiteboard .excalidraw .help-icon svg {
+		color: currentColor !important;
+		overflow: visible !important;
+	}
+
+	.orca-whiteboard .excalidraw .help-icon svg :is(circle, line),
+	.orca-whiteboard .excalidraw .help-icon svg path:not(:first-of-type) {
+		fill: none !important;
+		stroke: currentColor !important;
+	}
+
+	.orca-whiteboard .excalidraw .help-icon svg path:first-of-type {
+		fill: none !important;
+		stroke: none !important;
+	}
+
+	/* Orca ExcButton — add block / insert block (outline default) */
+	.orca-whiteboard .excalidraw .ExcButton {
+		--text-color: var(--foreground);
+		--border-color: var(--border);
+		--back-color: transparent;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--border-radius) !important;
+		background-color: transparent !important;
+		color: var(--foreground) !important;
+		box-shadow: none !important;
+		font-weight: var(--base-font-weight) !important;
+	}
+
+	.orca-whiteboard .excalidraw .ExcButton:hover {
+		--text-color: var(--accent-foreground);
+		--border-color: transparent;
+		--back-color: var(--accent);
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border-color: transparent !important;
+	}
+
+	.orca-whiteboard .excalidraw .ExcButton:active {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .ExcButton.ExcButton--variant-filled {
+		--text-color: var(--primary-foreground);
+		--border-color: transparent;
+		--back-color: var(--primary);
+		background-color: var(--primary) !important;
+		color: var(--primary-foreground) !important;
+		border-color: transparent !important;
+	}
+
+	.orca-whiteboard .excalidraw .ExcButton.ExcButton--variant-filled:hover {
+		opacity: 0.9;
+	}
+
+	.orca-whiteboard .excalidraw .ExcButton.ExcButton--variant-icon {
+		min-inline-size: var(--lg-button-size);
+		min-block-size: var(--lg-button-size);
+		padding: 0 !important;
+	}
+
+	/* Left hamburger panel — popover menu shell */
+	.orca-whiteboard .excalidraw .App-menu__left {
+		background: var(--popover) !important;
+		color: var(--popover-foreground) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-md) !important;
+	}
+
+	.orca-whiteboard .excalidraw .App-menu__left .dropdown-select {
+		background-color: color-mix(in oklab, var(--input) 30%, transparent) !important;
+		border: 1px solid var(--input) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .App-menu__left .dropdown-select:hover {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	/* Bottom-left zoom + undo/redo — grouped popover toolbar */
+	.orca-whiteboard .excalidraw :is(.zoom-actions, .undo-redo-buttons) {
+		background-color: var(--popover) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-md) !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(.zoom-actions, .undo-redo-buttons) :is(.zoom-button, button) {
+		background-color: transparent !important;
+		color: var(--popover-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(.zoom-actions, .undo-redo-buttons) :is(.zoom-button, button):hover,
+	.orca-whiteboard .excalidraw :is(.zoom-actions, .undo-redo-buttons) :is(.zoom-button, button):hover .ToolIcon__icon {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .reset-zoom-button {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .HintViewer {
+		color: var(--muted-foreground) !important;
+	}
+
+	/* Tool icons inside islands + floating embed controls */
+	.orca-whiteboard .excalidraw .ToolIcon_type_floating .ToolIcon__icon {
+		background-color: var(--popover) !important;
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: var(--shadow-md) !important;
+		color: var(--popover-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .ToolIcon_type_floating .ToolIcon__icon:hover {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+		border-color: transparent !important;
+	}
+
+	.orca-whiteboard .excalidraw .ToolIcon_type_button.ToolIcon--selected .ToolIcon__icon,
+	.orca-whiteboard .excalidraw .ToolIcon_type_button.ToolIcon--selected {
+		background-color: var(--button-hover-bg) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .ToolIcon .ToolIcon__icon:hover {
+		background-color: var(--button-hover-bg) !important;
+		color: var(--foreground) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   Library panel — shadcn Drawer (right, border-l, bg-background)
+	   https://ui.shadcn.com/docs/components/aria/drawer
+	   ---------------------------------------------------------- */
+
+	.orca-whiteboard .excalidraw:has(.sidebar)::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 4;
+		background: var(--overlay);
+		pointer-events: none;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar {
+		background-color: var(--background) !important;
+		border-left: 1px solid var(--border) !important;
+		box-shadow: var(--shadow-lg) !important;
+		border-radius: 0 !important;
+		width: min(24rem, calc(var(--right-sidebar-width) - var(--space-factor) * 2)) !important;
+		z-index: 5;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar--docked {
+		box-shadow: none !important;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar__header {
+		color: var(--foreground);
+	}
+
+	.orca-whiteboard .excalidraw .sidebar__header::after {
+		background: var(--border) !important;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar__header__buttons button {
+		background-color: transparent !important;
+		border: 1px solid transparent !important;
+		box-shadow: none !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar__header__buttons button:hover {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .default-sidebar .sidebar-triggers {
+		background: var(--muted) !important;
+		border: none !important;
+		border-radius: var(--radius-lg) !important;
+		padding: 3px !important;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar-tab-trigger {
+		--button-bg: transparent;
+		--button-hover-bg: transparent;
+		--button-active-bg: var(--background);
+		--button-hover-color: var(--foreground);
+		--button-hover-border: transparent;
+		--button-border: transparent;
+		background-color: transparent !important;
+		color: color-mix(in oklab, var(--foreground) 60%, transparent) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--radius-md) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-whiteboard .excalidraw .sidebar-tab-trigger[data-state="active"] {
+		--button-bg: var(--background);
+		--button-hover-bg: var(--background);
+		--button-active-bg: var(--background);
+		--button-border: transparent;
+		--button-hover-color: var(--foreground);
+		background-color: var(--background) !important;
+		color: var(--foreground) !important;
+		box-shadow: var(--shadow-sm) !important;
+	}
+
+	html:not(.t-light) .orca-whiteboard .excalidraw .sidebar-tab-trigger[data-state="active"] {
+		border: 1px solid var(--input) !important;
+		background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+	}
+
+	.orca-whiteboard .excalidraw .library-menu-items-container__header,
+	.orca-whiteboard .excalidraw .library-menu-items__no-items__label {
+		color: var(--foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .library-menu-items__no-items {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .library-menu-control-buttons--at-bottom::before {
+		background: var(--border) !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(a.library-menu-browse-button, .library-menu-browse-button) {
+		background-color: var(--primary) !important;
+		color: var(--primary-foreground) !important;
+		border: 1px solid transparent !important;
+		border-radius: var(--border-radius) !important;
+		box-shadow: none !important;
+	}
+
+	.orca-whiteboard .excalidraw :is(a.library-menu-browse-button, .library-menu-browse-button):hover {
+		background-color: color-mix(in oklab, var(--primary) 88%, var(--foreground)) !important;
+		color: var(--primary-foreground) !important;
+		opacity: 0.95;
+	}
+
+	.orca-whiteboard .excalidraw .library-unit {
+		border-radius: var(--radius-md) !important;
+	}
+
+	.orca-whiteboard .excalidraw .library-unit--hover,
+	.orca-whiteboard .excalidraw .library-unit--selected {
+		border-color: var(--primary) !important;
+	}
+
+	/* Help dialog — card + muted shortcut keys */
+	.orca-whiteboard .excalidraw .HelpDialog__btn {
+		background-color: var(--secondary) !important;
+		border: 1px solid var(--border) !important;
+		color: var(--foreground) !important;
+		border-radius: var(--radius-md) !important;
+	}
+
+	.orca-whiteboard .excalidraw .HelpDialog__btn:hover {
+		background-color: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .HelpDialog__island-content {
+		border: 1px solid var(--border) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--card) !important;
+	}
+
+	.orca-whiteboard .excalidraw .HelpDialog__shortcut {
+		border-bottom-color: var(--border) !important;
+		color: var(--foreground) !important;
+	}
+
+	.orca-whiteboard .excalidraw .HelpDialog__key {
+		background-color: var(--muted) !important;
+		color: var(--foreground) !important;
+		border-radius: var(--radius-sm) !important;
+	}
+}

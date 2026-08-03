@@ -111,31 +111,82 @@
 	   ---------------------------------------------------------- */
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview .orca-block-editor, .orca-block-popup-preview .orca-block-editor, .orca-inline-reference-preview .orca-block-editor, .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor, .orca-block-preview .orca-block-editor) {
+		/* shadcn breadcrumb.tsx — list + links muted; BreadcrumbPage = last item foreground */
+		& .orca-scrolling-breadcrumb {
+			background-color: color-mix(in oklab, var(--background) 85%, transparent) !important;
+			border-bottom: 1px solid var(--border) !important;
+			box-shadow: none !important;
+			backdrop-filter: blur(8px);
+		}
+
 		& .orca-block-breadcrumb,
 		& .orca-breadcrumb,
+		& .orca-scrolling-breadcrumb,
 		& .orca-block-breadcrumb-segment,
+		& .orca-scrolling-breadcrumb-segment,
 		& .orca-breadcrumb-item,
 		& .orca-breadcrumb-dots,
 		& .orca-breadcrumb-sep {
 			color: var(--typeset-breadcrumb) !important;
 		}
-		& .orca-block-breadcrumb-segment:hover,
-		& .orca-breadcrumb-item:hover,
+
+		& .orca-breadcrumb:not(:has(> .orca-breadcrumb-sep)) > .orca-breadcrumb-item:last-of-type,
+		& .orca-breadcrumb:not(:has(> .orca-breadcrumb-sep)) > .orca-breadcrumb-item:last-of-type .orca-block-breadcrumb-segment,
+		& .orca-breadcrumb:not(:has(> .orca-breadcrumb-sep)) > .orca-breadcrumb-item:last-of-type .orca-scrolling-breadcrumb-segment,
+		& .orca-breadcrumb > .orca-breadcrumb-sep:last-of-type + .orca-breadcrumb-item,
+		& .orca-breadcrumb > .orca-breadcrumb-sep:last-of-type + .orca-breadcrumb-item .orca-block-breadcrumb-segment,
+		& .orca-breadcrumb > .orca-breadcrumb-sep:last-of-type + .orca-breadcrumb-item .orca-scrolling-breadcrumb-segment,
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:last-child,
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:last-of-type,
+		& .orca-breadcrumb .orca-scrolling-breadcrumb-segment:last-child,
+		& .orca-breadcrumb .orca-scrolling-breadcrumb-segment:last-of-type {
+			color: var(--typeset-breadcrumb-current) !important;
+			font-weight: var(--base-font-weight) !important;
+		}
+
+		& .orca-breadcrumb-item:not(:last-child):hover,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-block-breadcrumb-segment,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-scrolling-breadcrumb-segment,
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-child):hover,
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-of-type):hover,
+		& .orca-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-child):hover,
 		& .orca-breadcrumb-dots:hover {
 			color: var(--typeset-breadcrumb-hover) !important;
 		}
+
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:last-child:hover,
+		& .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:last-of-type:hover,
+		& .orca-breadcrumb .orca-scrolling-breadcrumb-segment:last-child:hover,
+		& .orca-breadcrumb .orca-scrolling-breadcrumb-segment:last-of-type:hover {
+			color: var(--typeset-breadcrumb-current) !important;
+		}
+
 		& .orca-breadcrumb .ti,
 		& .orca-breadcrumb .ti::before,
 		& .orca-block-breadcrumb .ti,
-		& .orca-block-breadcrumb .ti::before {
+		& .orca-block-breadcrumb .ti::before,
+		& .orca-scrolling-breadcrumb .ti,
+		& .orca-scrolling-breadcrumb .ti::before {
 			color: var(--typeset-breadcrumb) !important;
 			fill: currentColor !important;
 			stroke: currentColor !important;
 		}
-		& .orca-breadcrumb-item:hover .ti,
-		& .orca-breadcrumb-item:hover .ti::before,
-		& .orca-block-breadcrumb-segment:hover .ti,
-		& .orca-block-breadcrumb-segment:hover .ti::before {
+
+		& .orca-breadcrumb:not(:has(> .orca-breadcrumb-sep)) > .orca-breadcrumb-item:last-of-type .ti,
+		& .orca-breadcrumb:not(:has(> .orca-breadcrumb-sep)) > .orca-breadcrumb-item:last-of-type .ti::before,
+		& .orca-breadcrumb > .orca-breadcrumb-sep:last-of-type + .orca-breadcrumb-item .ti,
+		& .orca-breadcrumb > .orca-breadcrumb-sep:last-of-type + .orca-breadcrumb-item .ti::before {
+			color: var(--typeset-breadcrumb-current) !important;
+		}
+
+		& .orca-breadcrumb-item:not(:last-child):hover .ti,
+		& .orca-breadcrumb-item:not(:last-child):hover .ti::before,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-block-breadcrumb-segment .ti,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-block-breadcrumb-segment .ti::before,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-scrolling-breadcrumb-segment .ti,
+		& .orca-breadcrumb-item:not(:last-child):hover .orca-scrolling-breadcrumb-segment .ti::before,
+		& .orca-breadcrumb-dots:hover .ti,
+		& .orca-breadcrumb-dots:hover .ti::before {
 			color: var(--typeset-breadcrumb-hover) !important;
 			fill: currentColor !important;
 			stroke: currentColor !important;
@@ -177,6 +228,21 @@
 		& .orca-repr-scope-line::before {
 			border-color: var(--typeset-scope-line) !important;
 		}
+	}
+
+	/* ----------------------------------------------------------
+	   4.11c Editor tags — slow light-up with host _color on hover
+	   Orca inline color/background/border on .orca-tag when tag has _color.
+	   navigation.css neutralizes via :not(:hover); hover releases to inline.
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-tag[style*="background-color"],
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview, .orca-query-results, .orca-query-result-list, .orca-query-list-block, .orca-query-list-block-block) .orca-pill[style*="background-color"] {
+		transition:
+			background-color 0.4s ease,
+			background 0.4s ease,
+			border-color 0.4s ease,
+			color 0.4s ease;
 	}
 
 	/* ----------------------------------------------------------

@@ -107,6 +107,7 @@
 	--typeset-handle-active: var(--foreground);
 	--typeset-breadcrumb: var(--muted-foreground);
 	--typeset-breadcrumb-hover: var(--foreground);
+	--typeset-breadcrumb-current: var(--foreground);
 	--typeset-tag-props: var(--muted-foreground);
 	--typeset-list-marker: var(--foreground);
 	--typeset-list-marker-nested: var(--muted-foreground);
@@ -181,7 +182,8 @@
 	--orca-color-placeholder: var(--typeset-placeholder);
 	--orca-color-win-scrollbar: var(--typeset-border);
 	--orca-color-menu-highlight: var(--accent);
-	--orca-color-result-highlight: color-mix(in oklab, var(--primary) 25%, var(--background));
+	--orca-color-result-highlight: color-mix(in oklab, oklch(0.84 0.14 92) 52%, var(--background));
+	--orca-color-result-highlight-fg: var(--foreground);
 	--orca-color-heading-1-dim: var(--typeset-fg-muted);
 	--orca-color-heading-2-dim: var(--typeset-fg-muted);
 	--orca-color-heading-3-dim: var(--typeset-fg-muted);
@@ -269,6 +271,8 @@ html.t-light {
 	--orca-color-gray-2: var(--background);
 	--orca-color-gray-3: var(--secondary-background);
 	--orca-color-gray-4: var(--muted-foreground);
+	--orca-color-result-highlight: color-mix(in oklab, oklch(0.91 0.16 95) 58%, var(--background));
+	--orca-color-result-highlight-fg: var(--foreground);
 }
 
 #sidebar {

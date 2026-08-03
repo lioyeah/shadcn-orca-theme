@@ -9,8 +9,9 @@
 
 	.orca-query-editor { box-sizing: border-box !important; margin-block-start: 0 !important; }
 
-	/* Card shell */
+	/* Card shell — query editor + block graph header */
 	.orca-query-editor .orca-query-conditions,
+	.orca-block-graph-header .orca-query-conditions,
 	.orca-query-editor > .orca-query-conditions-header-non-editable {
 		background: var(--card) !important;
 		color: var(--card-foreground) !important;
@@ -26,7 +27,8 @@
 		font-size: 0.875rem !important;
 	}
 
-	.orca-query-editor .orca-query-conditions {
+	.orca-query-editor .orca-query-conditions,
+	.orca-block-graph-header .orca-query-conditions {
 		margin-block-start: 0 !important;
 	}
 
@@ -199,7 +201,9 @@
 		fill: var(--foreground) !important;
 	}
 	.orca-query-editor .orca-select-button-selector,
-	.orca-query-editor .orca-select-button-selector::before {
+	.orca-query-editor .orca-select-button-selector::before,
+	.orca-block-graph-header .orca-select-button-selector,
+	.orca-block-graph-header .orca-select-button-selector::before {
 		color: var(--foreground) !important; fill: var(--foreground) !important;
 	}
 

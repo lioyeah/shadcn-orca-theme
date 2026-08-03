@@ -1,0 +1,56 @@
+@layer components {
+	/* ----------------------------------------------------------
+	   4.32 Block graph panel — query bar parity + depth/size sliders
+	   Ref: query.css (accordion conditions), slider.tsx
+	   ---------------------------------------------------------- */
+
+	.orca-block-graph-header {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: stretch !important;
+		gap: 0.5rem !important;
+		padding: 0.5rem 0.75rem !important;
+		z-index: 10 !important;
+	}
+
+	.orca-block-graph-header .orca-query-conditions {
+		inline-size: 100% !important;
+		max-inline-size: 100% !important;
+	}
+
+	.orca-block-graph-depth-control {
+		display: flex !important;
+		align-items: center !important;
+		flex-wrap: wrap !important;
+		gap: 0.75rem !important;
+		padding: 0 0 0.25rem !important;
+		font-size: 0.875rem !important;
+		line-height: 1.25rem !important;
+		color: var(--muted-foreground) !important;
+		white-space: nowrap !important;
+
+		& > span {
+			flex: 0 0 auto !important;
+			color: var(--foreground) !important;
+			font-size: 0.875rem !important;
+			line-height: 1.25rem !important;
+		}
+
+		& input[type="range"] {
+			align-self: center !important;
+			margin-block: 0 !important;
+		}
+
+		& .orca-button.outline {
+			margin-inline-start: 0 !important;
+			flex: 0 0 auto !important;
+		}
+
+		& .ti,
+		& .ti::before {
+			color: var(--foreground) !important;
+			fill: currentColor !important;
+			stroke: currentColor !important;
+		}
+	}
+}

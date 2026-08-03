@@ -65,26 +65,43 @@
 	   ---------------------------------------------------------- */
 
 	.orca-query-editor .orca-select-button-text,
-	.orca-query-editor .orca-tag,
-	.orca-query-editor .orca-tags-tag-item { color: var(--foreground) !important; }
+	.orca-query-editor .orca-tag:not([style*="background-color"]),
+	.orca-query-editor .orca-tag[style*="background-color"]:not(:hover),
+	.orca-query-editor .orca-tags-tag-item,
+	.orca-block-graph-header .orca-select-button-text,
+	.orca-block-graph-header .orca-tag:not([style*="background-color"]),
+	.orca-block-graph-header .orca-tag[style*="background-color"]:not(:hover),
+	.orca-block-graph-header .orca-tags-tag-item { color: var(--foreground) !important; }
 
 	.orca-query-editor .orca-select-button:hover,
+	.orca-block-graph-header .orca-select-button:hover,
 	.orca-query-editor .orca-select-button:hover .orca-select-button-text,
-	.orca-query-editor .orca-select-button:hover .orca-tag,
+	.orca-block-graph-header .orca-select-button:hover .orca-select-button-text,
+	.orca-query-editor .orca-select-button:hover .orca-tag:not([style*="background-color"]),
+	.orca-block-graph-header .orca-select-button:hover .orca-tag:not([style*="background-color"]),
 	.orca-query-editor .orca-select-button:hover .orca-tags-tag-item,
+	.orca-block-graph-header .orca-select-button:hover .orca-tags-tag-item,
 	.orca-query-editor .orca-select-button:hover .orca-select-button-selector,
+	.orca-block-graph-header .orca-select-button:hover .orca-select-button-selector,
 	.orca-query-editor .orca-select-button:hover .orca-select-button-selector::before,
+	.orca-block-graph-header .orca-select-button:hover .orca-select-button-selector::before,
 	.orca-query-editor .orca-select-button:hover .ti,
+	.orca-block-graph-header .orca-select-button:hover .ti,
 	.orca-query-editor .orca-select-button:hover .ti::before,
+	.orca-block-graph-header .orca-select-button:hover .ti::before,
 	.orca-query-editor .orca-select-button:hover i,
+	.orca-block-graph-header .orca-select-button:hover i,
 	.orca-query-editor .orca-select-button:hover i::before,
-	.orca-query-editor .orca-select-button:hover svg {
+	.orca-block-graph-header .orca-select-button:hover i::before,
+	.orca-query-editor .orca-select-button:hover svg,
+	.orca-block-graph-header .orca-select-button:hover svg {
 		color: var(--accent-foreground) !important;
 		fill: var(--accent-foreground) !important;
 	}
 
 	.orca-query-conditions-header .orca-select-button-text,
-	.orca-query-conditions-header .orca-tag,
+	.orca-query-conditions-header .orca-tag:not([style*="background-color"]),
+	.orca-query-conditions-header .orca-tag[style*="background-color"]:not(:hover),
 	.orca-query-conditions-header .orca-select-button-selector,
 	.orca-query-conditions-header .orca-select-button-selector::before,
 	.orca-query-conditions-header-non-editable .orca-select-button-selector,
