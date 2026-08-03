@@ -41,7 +41,7 @@ src/theme-css/native-precedence.css ← 击败 Orca late-loaded CSS 的补丁
         ↓ build-theme-css.cjs
 public/shadcn.css / dist/shadcn.css
         ↓ main.ts
-orca.themes.register(plugin, "shadcn", "shadcn.css")
+orca.themes.register(plugin, "shadcn/ui Neutral", "shadcn.css")
 document.documentElement.classList.add("t-shadcn")
 ```
 
@@ -91,7 +91,7 @@ Orca 兼容别名（历史命名，语义已 neutral 化）：
 ## 7. 插件入口
 
 ```typescript
-const THEME_NAME = "shadcn";
+const THEME_NAME = "shadcn/ui Neutral";
 const THEME_CLASS = "t-shadcn";
 const THEME_FILE = "shadcn.css";
 ```

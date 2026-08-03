@@ -11,7 +11,7 @@ const DEPLOY_DIR = process.env.ORCA_PLUGINS_DIR
 	? path.join(process.env.ORCA_PLUGINS_DIR, "shadcn")
 	: DEFAULT_DEPLOY_DIR;
 
-const ROOT_FILES = ["package.json", "icon.png", "LICENSE", "README.md"];
+const ROOT_FILES = ["package.json", "icon.png", "LICENSE", "NOTICE", "README.md"];
 
 const DIST_FILES = [
 	"index.js",

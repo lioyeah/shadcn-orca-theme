@@ -21,7 +21,7 @@
 - Vite uses `publicDir: false`; production `build` runs `tsc → vite build → build:css` so stale `public/shadcn.css` is never copied over fresh `dist/shadcn.css`.
 - `npm run build:deploy` and `npm run deploy` both run full TS/CSS build then deploy to `/home/ilio/Documents/orca/plugins/shadcn` (override base path with `ORCA_PLUGINS_DIR`); `npm run build:css` rebuilds theme CSS only.
 - Plugin unregisters legacy Neubrutalism theme on load; deploy removes stale `dist/neubrutalism.css`.
-- Plugin registers theme name **shadcn** (`t-shadcn` class, `shadcn.css` file) in `src/main.ts`.
+- Plugin registers theme name **shadcn/ui Neutral** (`t-shadcn` class, `shadcn.css` file) in `src/main.ts`.
 - Orca may cache theme CSS via a `?_t=` query; after deploy, toggling the theme or reloading the plugin is sometimes needed to see updates.
 - Global `.orca-menu` rules must exclude modals/special shells (`.orca-search-modal`, `.orca-block-popup`, `.orca-inline-reference-with-preview`, `.orca-command-modal`) or preview panes inherit popover chrome incorrectly.
 - Settings shortcuts table uses Orca `Table`: column labels = `.orca-table-header-cell`, category rows = `.orca-settings-shortcuts-header`.

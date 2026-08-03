@@ -1,0 +1,22 @@
+Third-Party Notices
+===================
+
+This Orca Note theme is an independent community project. It is not
+affiliated with, endorsed by, or maintained by shadcn/ui or Orca Notes.
+
+shadcn/ui
+---------
+Styling patterns and component conventions in this theme are inspired by
+shadcn/ui.
+
+Copyright (c) 2023 shadcn
+Licensed under the MIT License.
+https://github.com/shadcn-ui/ui
+
+Lucide Icons
+------------
+The plugin icon is based on the Lucide "square-stroke-rounded" icon.
+
+Copyright (c) Lucide Icons and Contributors
+Licensed under the ISC License.
+https://lucide.dev/license

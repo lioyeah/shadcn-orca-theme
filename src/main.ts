@@ -1,12 +1,13 @@
 /**
- * shadcn/ui Theme for Orca Notes
+ * shadcn/ui Neutral — community theme for Orca Notes
  *
- * Neutral palette and component patterns from https://ui.shadcn.com/
+ * Inspired by the neutral palette and component patterns from https://ui.shadcn.com/
+ * Not affiliated with or endorsed by shadcn/ui.
  */
 
 import { subscribe } from "valtio";
 
-const THEME_NAME = "shadcn";
+const THEME_NAME = "shadcn/ui Neutral";
 const THEME_CLASS = "t-shadcn";
 const LEGACY_THEME_NAME = "Neubrutalism";
 const LEGACY_THEME_CLASS = "t-neubrutalism";

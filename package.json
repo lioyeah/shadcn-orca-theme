@@ -1,7 +1,7 @@
 {
   "name": "shadcn-orca-theme",
   "version": "1.0.0",
-  "description": "shadcn/ui neutral theme for Orca Notes — semantic tokens, 1px borders, accent hover states.",
+  "description": "Unofficial shadcn/ui-inspired neutral theme for Orca Notes — semantic tokens, 1px borders, accent hover states.",
   "type": "module",
   "scripts": {
     "build:css": "node scripts/build-theme-css.cjs",

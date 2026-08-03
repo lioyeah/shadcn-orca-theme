@@ -1,20 +1,22 @@
-# shadcn — Orca Note Theme
+# shadcn/ui Neutral — Orca Note Theme
 
-[shadcn/ui](https://ui.shadcn.com/) neutral theme for [Orca Notes](https://orca-notes.app).
+A community theme for [Orca Notes](https://orca-notes.app) inspired by the neutral palette and component patterns of [shadcn/ui](https://ui.shadcn.com/).
+
+**Disclaimer:** This is an unofficial third-party theme. It is not the official shadcn/ui theme, not affiliated with shadcn, and not affiliated with Orca Notes.
 
 ## Features
 
 - Semantic OKLCH tokens (`background`, `foreground`, `primary`, `accent`, `popover`, `sidebar-*`, …)
 - 1px borders, soft shadows on popovers/dialogs, `0.625rem` radius
-- Orca controls mapped to official shadcn component patterns
+- Orca controls mapped to shadcn/ui component patterns (New York style)
 - Light/dark via Orca theme toggle (`html.t-light`)
 
 ## Project layout
 
 ```
 src/
-  main.ts                 # registers theme "shadcn" → shadcn.css
-  flavors/default.css     # shadcn neutral tokens
+  main.ts                 # registers theme "shadcn/ui Neutral" → shadcn.css
+  flavors/default.css     # neutral tokens
   theme-css/
     shadcn-primitives.css   # translated shadcn patterns
     manifest.cjs             # ordered CSS source groups
@@ -47,9 +49,12 @@ Default deploy path: `/home/ilio/Documents/orca/plugins/shadcn`. Override with `
 
 ## Using in Orca
 
-1. Enable the **shadcn** plugin from the plugins directory above.
-2. Select theme **shadcn** in appearance settings.
-3. Reload the plugin or toggle theme if CSS looks cached.
+1. Install or symlink this plugin into your Orca plugins directory.
+2. Enable the plugin in Orca settings.
+3. Select appearance theme **shadcn/ui Neutral**.
+4. Reload the plugin or toggle theme if CSS looks cached.
+
+If you previously used the theme named **shadcn**, re-select **shadcn/ui Neutral** after updating.
 
 ## Docs
 
@@ -58,4 +63,6 @@ Default deploy path: `/home/ilio/Documents/orca/plugins/shadcn`. Override with `
 
 ## License
 
-MIT
+MIT — see [LICENSE](./LICENSE) (Copyright (c) 2025 Lioyeah).
+
+Third-party attributions (shadcn/ui, Lucide Icons) are in [NOTICE](./NOTICE).
