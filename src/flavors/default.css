@@ -85,15 +85,17 @@
 	   Rhythm: size / leading / flow. Colors: theme semantic tokens only.
 	*/
 	--typeset-size: 1em;
-	--typeset-leading: 1.68;
-	--typeset-leading-nested: 1.6;
+	--typeset-leading: 1.72;
+	--typeset-leading-nested: 1.68;
+	--typeset-quote-leading: 1.72;
+	--typeset-code-leading: 1.62;
 	--typeset-flow: 0.875em;
 	--typeset-heading-flow: 1.5em;
 	--typeset-h1-size: 1.875em;
 	--typeset-h2-size: 1.5em;
 	--typeset-h3-size: 1.25em;
 	--typeset-h4-size: 1.0625em;
-	--typeset-h1-tracking: -0.02em;
+	--typeset-h1-tracking: 0;
 	--typeset-code-size: 0.925em;
 	--typeset-placeholder-size: 0.95em;
 	--typeset-fg: var(--foreground);
@@ -115,9 +117,11 @@
 	--typeset-scope-line: var(--border);
 	--typeset-scope-line-hover: color-mix(in oklab, var(--foreground) 92%, var(--background));
 	--typeset-scope-line-duration: 0.45s;
-	--typeset-heading-weight: var(--heading-font-weight);
-	--typeset-h4-weight: 600;
-	--typeset-strong-weight: var(--heading-font-weight);
+	/* Typeset weights — lighter than UI chrome; 600 on CJK often reads too heavy */
+	--typeset-h1-weight: 600;
+	--typeset-heading-weight: 500;
+	--typeset-h4-weight: 500;
+	--typeset-strong-weight: 500;
 	--typeset-handle-passive: var(--muted-foreground);
 	--typeset-handle-active: var(--foreground);
 	--typeset-breadcrumb: var(--muted-foreground);
@@ -212,20 +216,21 @@
 	--orca-color-heading-2-dim: var(--typeset-fg-muted);
 	--orca-color-heading-3-dim: var(--typeset-fg-muted);
 	--orca-color-heading-4-dim: var(--typeset-fg-muted);
-	--orca-color-code-fg: var(--typeset-fg);
-	--orca-color-code-comment: var(--typeset-fg-subtle);
-	--orca-color-code-keyword: var(--typeset-fg);
-	--orca-color-code-string: var(--typeset-fg-muted);
-	--orca-color-code-number: var(--typeset-fg);
-	--orca-color-code-function: var(--typeset-fg);
-	--orca-color-code-constant: var(--typeset-fg);
-	--orca-color-code-type: var(--typeset-fg-muted);
-	--orca-color-code-operator: var(--typeset-fg-muted);
-	--orca-color-code-punctuation: var(--typeset-fg-muted);
-	--orca-color-code-builtin: var(--typeset-fg-muted);
-	--orca-color-code-variable: var(--typeset-fg);
-	--orca-color-code-attribute: var(--typeset-fg);
-	--orca-color-code-doc: var(--typeset-fg-muted);
+	--orca-color-code-fg: oklch(0.9 0 0);
+	--orca-color-code-comment: oklch(0.58 0 0);
+	--orca-color-code-punctuation: oklch(0.68 0 0);
+	--orca-color-code-keyword: oklch(0.78 0.12 300);
+	--orca-color-code-string: oklch(0.78 0.1 155);
+	--orca-color-code-number: oklch(0.75 0.12 55);
+	--orca-color-code-function: oklch(0.72 0.1 250);
+	--orca-color-code-constant: oklch(0.82 0.11 85);
+	--orca-color-code-type: oklch(0.82 0.11 85);
+	--orca-color-code-operator: oklch(0.72 0.08 185);
+	--orca-color-code-builtin: oklch(0.78 0.12 300);
+	--orca-color-code-variable: oklch(0.78 0.1 155);
+	--orca-color-code-attribute: oklch(0.72 0.14 25);
+	--orca-color-code-tag: oklch(0.72 0.14 25);
+	--orca-color-code-doc: oklch(0.58 0 0);
 	--orca-color-code-diff-added: color-mix(in oklab, var(--foreground) 10%, var(--background));
 	--orca-color-code-diff-removed: color-mix(in oklab, var(--destructive) 20%, var(--background));
 }
@@ -284,7 +289,9 @@ html.t-light {
 	--btn-primary-bg: var(--primary);
 	--btn-primary-fg: var(--primary-foreground);
 
-	--typeset-leading: 1.65;
+	--typeset-leading: 1.7;
+	--typeset-leading-nested: 1.66;
+	--typeset-quote-leading: 1.7;
 	--typeset-link-highlight: color-mix(in oklab, var(--foreground) 10%, var(--muted));
 
 	--orca-color-bg-0: var(--secondary-background);
@@ -296,8 +303,37 @@ html.t-light {
 	--orca-color-gray-2: var(--background);
 	--orca-color-gray-3: var(--secondary-background);
 	--orca-color-gray-4: var(--muted-foreground);
-	--orca-color-result-highlight: color-mix(in oklab, oklch(0.91 0.16 95) 58%, var(--background));
+	--orca-color-result-highlight: color-mix(in oklab, oklch(0.88 0.19 95) 64%, var(--background));
 	--orca-color-result-highlight-fg: var(--foreground);
+
+	--orca-color-code-fg: oklch(0.2 0 0);
+	--orca-color-code-comment: oklch(0.52 0.02 250);
+	--orca-color-code-punctuation: oklch(0.55 0 0);
+	--orca-color-code-keyword: oklch(0.48 0.14 250);
+	--orca-color-code-string: oklch(0.45 0.14 145);
+	--orca-color-code-number: oklch(0.42 0.12 25);
+	--orca-color-code-function: oklch(0.55 0.18 15);
+	--orca-color-code-constant: oklch(0.42 0.12 25);
+	--orca-color-code-type: oklch(0.55 0.18 15);
+	--orca-color-code-operator: oklch(0.52 0.08 75);
+	--orca-color-code-builtin: oklch(0.45 0.14 145);
+	--orca-color-code-variable: oklch(0.62 0.15 85);
+	--orca-color-code-attribute: oklch(0.45 0.14 145);
+	--orca-color-code-tag: oklch(0.42 0.12 25);
+	--orca-color-code-doc: oklch(0.52 0.02 250);
+}
+
+/* CJK longform — extra leading; H1 drops to 500 when lang is set on an ancestor */
+:lang(zh),
+:lang(zh-CN),
+:lang(zh-TW),
+:lang(ja),
+:lang(ko) {
+	--typeset-h1-weight: 500;
+	--typeset-leading: 1.78;
+	--typeset-leading-nested: 1.72;
+	--typeset-quote-leading: 1.78;
+	--typeset-h1-tracking: 0.01em;
 }
 
 #sidebar {

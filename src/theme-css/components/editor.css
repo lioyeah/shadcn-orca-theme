@@ -7,6 +7,7 @@
 		border: 1px solid var(--border) !important;
 		background: var(--secondary-background) !important;
 		border-radius: var(--border-radius) !important;
+		line-height: var(--typeset-code-leading) !important;
 	}
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.c {
@@ -26,7 +27,7 @@
 	th, td, .orca-table th, .orca-table td {
 		border: 1px solid var(--border) !important; padding: 0.5em 0.75em !important;
 	}
-	th, .orca-table th { border-bottom: 1px solid var(--border) !important; font-weight: var(--heading-font-weight) !important; }
+	th, .orca-table th { border-bottom: 1px solid var(--border) !important; font-weight: var(--typeset-heading-weight) !important; }
 
 	/* ----------------------------------------------------------
 	   4.10 Typeset — editor body prose (shadcn/typeset)
@@ -82,6 +83,7 @@
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-heading-content[data-level="1"],
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) h1 {
 		font-size: var(--typeset-h1-size) !important;
+		font-weight: var(--typeset-h1-weight) !important;
 		margin-top: var(--typeset-heading-flow) !important;
 		letter-spacing: var(--typeset-h1-tracking) !important;
 	}
@@ -131,9 +133,21 @@
 		color: var(--typeset-fg) !important;
 	}
 
-	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.i:not(.b) {
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.i {
 		color: var(--typeset-fg) !important;
 		font-style: italic !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.sup {
+		vertical-align: super !important;
+		font-size: 0.75em !important;
+		line-height: 0 !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.sub {
+		vertical-align: sub !important;
+		font-size: 0.75em !important;
+		line-height: 0 !important;
 	}
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.bc {
@@ -333,6 +347,18 @@
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-quote :is(.orca-block, .orca-inline:not(.c)) {
 		font-family: inherit !important;
 		color: var(--typeset-fg-muted) !important;
+		line-height: var(--typeset-quote-leading) !important;
+	}
+
+	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) :is(
+		.orca-repr-quote2-info,
+		.orca-repr-quote2-warning,
+		.orca-repr-quote2-error,
+		.orca-repr-quote2-tip,
+		.orca-repr-quote2-important,
+		.orca-repr-quote2-note
+	) :is(.orca-block, .orca-inline:not(.c)) {
+		line-height: var(--typeset-quote-leading) !important;
 	}
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-info :is(.orca-block, .orca-inline:not(.c)) {
@@ -357,6 +383,21 @@
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) .orca-repr-quote2-note :is(.orca-block, .orca-inline:not(.c)) {
 		color: var(--typeset-callout-note) !important;
+	}
+
+	/* ----------------------------------------------------------
+	   4.14 Query embed results — match editor prose rhythm
+	   ---------------------------------------------------------- */
+
+	:is(.orca-panels-container, #main) :is(
+		.orca-query-results,
+		.orca-query-result-list,
+		.orca-query-list-block,
+		.orca-query-list-block-block
+	) {
+		color: var(--typeset-fg) !important;
+		font-size: var(--typeset-size) !important;
+		line-height: var(--typeset-leading) !important;
 	}
 
 }

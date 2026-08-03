@@ -216,21 +216,107 @@
    ============================================================ */
 
 @layer components {
-	pre, .orca-code-block, .orca-code-wrapper,
-	.orca-repr-code, .orca-code-editor, .cm-editor { color: var(--orca-color-code-fg) !important; }
-
-	pre .token, .orca-code-block .token, .orca-code-wrapper .token, .orca-repr-code .token {
-		color: var(--orca-color-code-fg) !important; background: transparent !important;
+	:is(
+		pre,
+		.orca-code-block,
+		.orca-code-wrapper,
+		.orca-repr-code,
+		.orca-code-preview,
+		.orca-code-editor,
+		.cm-editor
+	) {
+		color: var(--orca-color-code-fg) !important;
 	}
-	pre .token.comment     { color: var(--orca-color-code-comment) !important; }
-	pre .token.keyword     { color: var(--orca-color-code-keyword) !important; }
-	pre .token.string      { color: var(--orca-color-code-string) !important; }
-	pre .token.number      { color: var(--orca-color-code-number) !important; }
-	pre .token.function    { color: var(--orca-color-code-function) !important; }
-	pre .token.constant    { color: var(--orca-color-code-constant) !important; }
-	pre .token.type        { color: var(--orca-color-code-type) !important; }
-	pre .token.operator    { color: var(--orca-color-code-operator) !important; }
-	pre .token.punctuation { color: var(--orca-color-code-punctuation) !important; }
+
+	:is(
+		pre,
+		.orca-code-block,
+		.orca-code-wrapper,
+		.orca-repr-code,
+		.orca-code-preview
+	) .token {
+		color: var(--orca-color-code-fg) !important;
+		background: transparent !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.comment,
+		.token.prolog,
+		.token.doctype,
+		.token.cdata,
+		.token.block-comment
+	) {
+		color: var(--orca-color-code-comment) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) .token.punctuation {
+		color: var(--orca-color-code-punctuation) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.tag,
+		.token.deleted,
+		.token.attr-name,
+		.token.namespace
+	) {
+		color: var(--orca-color-code-tag) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.keyword,
+		.token.selector,
+		.token.important,
+		.token.atrule,
+		.token.builtin
+	) {
+		color: var(--orca-color-code-keyword) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.string,
+		.token.char,
+		.token.attr-value,
+		.token.regex,
+		.token.inserted
+	) {
+		color: var(--orca-color-code-string) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.boolean,
+		.token.number,
+		.token.constant,
+		.token.symbol,
+		.token.property
+	) {
+		color: var(--orca-color-code-number) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.function,
+		.token.function-name,
+		.token.class-name
+	) {
+		color: var(--orca-color-code-function) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.variable,
+		.token.entity
+	) {
+		color: var(--orca-color-code-variable) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) :is(
+		.token.operator,
+		.token.url
+	) {
+		color: var(--orca-color-code-operator) !important;
+	}
+
+	:is(pre, .orca-code-block, .orca-code-wrapper, .orca-repr-code, .orca-code-preview) .token.type {
+		color: var(--orca-color-code-type) !important;
+	}
 
 	.cm-editor {
 		& .cm-content { color: var(--orca-color-code-fg) !important; }

@@ -103,6 +103,7 @@
 
 	.shadcn-typeset :where(h1) {
 		font-size: var(--typeset-h1-size);
+		font-weight: var(--typeset-h1-weight);
 		letter-spacing: var(--typeset-h1-tracking);
 	}
 
