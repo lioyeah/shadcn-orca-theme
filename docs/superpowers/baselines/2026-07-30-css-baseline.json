@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b",
-    "bytes": 374495,
-    "lines": 9776,
-    "selectorCount": 1565,
+    "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc",
+    "bytes": 375362,
+    "lines": 9804,
+    "selectorCount": 1570,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
       "#app.sidebar-closed > #main.orca-panels-container",
@@ -1320,6 +1320,11 @@
       "html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-child):hover",
       "html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-of-type):hover",
       "html .orca-search-modal",
+      "html .orca-search-modal .orca-search-modal-block-item",
+      "html .orca-search-modal .orca-search-modal-no-result",
+      "html .orca-search-modal .orca-search-modal-result-list",
+      "html .orca-search-modal .orca-search-modal-result-preview",
+      "html .orca-search-modal .orca-search-modal-syntax-tips",
       "html .orca-search-modal-footer",
       "html .orca-search-modal-footer .orca-search-modal-footer-item",
       "html .orca-search-modal-result-preview #main",
@@ -1899,16 +1904,16 @@
       "--typeset-tag-props",
       "--variant-filled"
     ],
-    "declarationBlockCount": 1096
+    "declarationBlockCount": 1100
   },
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b"
+      "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b"
+      "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc"
     }
   },
   "sources": [
@@ -2577,9 +2582,9 @@
     },
     {
       "file": "src/theme-css/components/overlays.css",
-      "sha256": "dce104efa2ec5e7b927cb917ce764a2f5c167a10f9b99e29bdc65a5d3f2c1e07",
-      "bytes": 21430,
-      "lines": 579,
+      "sha256": "7de4caf1aed76d5fb265cdd4da919362fb718dab96afa3cad5a9f8f7b93b1a59",
+      "bytes": 21644,
+      "lines": 588,
       "selectorCount": 110,
       "selectors": [
         ".orca-block-popup",
@@ -2710,7 +2715,7 @@
         "--orca-shadow-menu",
         "--orca-shadow-popup"
       ],
-      "declarationBlockCount": 59
+      "declarationBlockCount": 60
     },
     {
       "file": "src/theme-css/components/editor.css",
@@ -3636,10 +3641,10 @@
     },
     {
       "file": "src/theme-css/context-overrides.css",
-      "sha256": "8b121a71a0e789a35654a7ac7afb129afa364c8641e75c7c27e5d1989105b6e1",
-      "bytes": 14457,
-      "lines": 428,
-      "selectorCount": 86,
+      "sha256": "e765e1cc28e77a920217d3ce96bf4d1e1618e25a2b9e7088ab5dff42bfd0703f",
+      "bytes": 15110,
+      "lines": 447,
+      "selectorCount": 91,
       "selectors": [
         "#app.sidebar-closed #main.orca-panels-container",
         "#app.sidebar-closed > #main.orca-panels-container",
@@ -3716,6 +3721,11 @@
         "html .orca-popup .orca-command-modal.orca-menu",
         "html .orca-popup.orca-command-modal.orca-menu",
         "html .orca-search-modal",
+        "html .orca-search-modal .orca-search-modal-block-item",
+        "html .orca-search-modal .orca-search-modal-no-result",
+        "html .orca-search-modal .orca-search-modal-result-list",
+        "html .orca-search-modal .orca-search-modal-result-preview",
+        "html .orca-search-modal .orca-search-modal-syntax-tips",
         "html .orca-search-modal-footer",
         "html .orca-search-modal-footer .orca-search-modal-footer-item",
         "html .orca-search-modal-result-preview #main",
@@ -3735,7 +3745,7 @@
         "--scroll-fade-b",
         "--scroll-fade-mask"
       ],
-      "declarationBlockCount": 46
+      "declarationBlockCount": 49
     },
     {
       "file": "src/theme-css/native-precedence.css",
