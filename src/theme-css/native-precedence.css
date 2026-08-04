@@ -161,6 +161,21 @@ html .orca-block-preview .orca-inline[data-type="r"]:hover .orca-inline-r-conten
 	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) left bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
 }
 
+/* Inline underline marks — keep Orca's preset/custom color and style. */
+html .orca-panels-container #main .orca-inline.u,
+html #main .orca-inline.u,
+html .orca-search-modal-result-preview .orca-inline.u,
+html .orca-block-popup-preview .orca-inline.u,
+html .orca-inline-reference-preview .orca-inline.u,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline.u,
+html .orca-block-preview .orca-inline.u {
+	-webkit-text-decoration-line: underline !important;
+	text-decoration-line: underline !important;
+	text-decoration-style: solid;
+	text-decoration-color: currentColor;
+	text-underline-offset: 0.15em;
+}
+
 /* Journal/reference arrow — use the theme palette, not host accent. */
 html .orca-repr-journal-right,
 html .orca-repr-journal-right::before {

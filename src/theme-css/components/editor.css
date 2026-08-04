@@ -151,7 +151,8 @@
 	}
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.bc {
-		background: var(--typeset-mark-bg) !important;
+		/* Fallback only: preserve Orca's inline preset/custom mark color. */
+		background-color: var(--typeset-mark-bg);
 		color: var(--typeset-fg) !important;
 		border-radius: var(--border-radius) !important;
 	}

@@ -2911,7 +2911,8 @@ html.t-light {
 	}
 
 	:is(.orca-panels-container, #main, .orca-search-modal-result-preview, .orca-block-popup-preview, .orca-inline-reference-preview, .orca-inline-reference:not(.orca-inline-reference-with-preview), .orca-block-preview) span.orca-inline.bc {
-		background: var(--typeset-mark-bg) !important;
+		/* Fallback only: preserve Orca's inline preset/custom mark color. */
+		background-color: var(--typeset-mark-bg);
 		color: var(--typeset-fg) !important;
 		border-radius: var(--border-radius) !important;
 	}
@@ -7891,6 +7892,21 @@ html .orca-inline-reference-preview .orca-inline[data-type="r"]:hover .orca-inli
 html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type="r"]:hover .orca-inline-r-content,
 html .orca-block-preview .orca-inline[data-type="r"]:hover .orca-inline-r-content {
 	background: linear-gradient(to right, var(--typeset-link-highlight) 50%, transparent 50%) left bottom / var(--typeset-link-highlight-size) 100% no-repeat !important;
+}
+
+/* Inline underline marks — keep Orca's preset/custom color and style. */
+html .orca-panels-container #main .orca-inline.u,
+html #main .orca-inline.u,
+html .orca-search-modal-result-preview .orca-inline.u,
+html .orca-block-popup-preview .orca-inline.u,
+html .orca-inline-reference-preview .orca-inline.u,
+html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline.u,
+html .orca-block-preview .orca-inline.u {
+	-webkit-text-decoration-line: underline !important;
+	text-decoration-line: underline !important;
+	text-decoration-style: solid;
+	text-decoration-color: currentColor;
+	text-underline-offset: 0.15em;
 }
 
 /* Journal/reference arrow — use the theme palette, not host accent. */
