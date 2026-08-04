@@ -2310,12 +2310,12 @@ html.t-light {
 	.orca-popup:has(.orca-inline-reference-with-preview),
 	.orca-popup.orca-block-popup,
 	.orca-popup.orca-inline-reference-with-preview {
-		background: var(--secondary-background) !important;
-		background-color: var(--secondary-background) !important;
-		color: var(--foreground) !important;
-		border: 1px solid var(--border) !important;
-		border-radius: var(--border-radius) !important;
+		background: transparent !important;
+		background-color: transparent !important;
+		border: none !important;
+		border-radius: 0 !important;
 		box-shadow: none !important;
+		padding: 0 !important;
 	}
 
 	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
@@ -2332,14 +2332,16 @@ html.t-light {
 		background: var(--secondary-background) !important;
 		background-color: var(--secondary-background) !important;
 		border-radius: var(--border-radius) !important;
-		box-shadow: none !important;
+		border: 1px solid var(--border) !important;
+		box-shadow: var(--shadow-lg) !important;
+		overflow: hidden !important;
 	}
 
-	/* Left: blue shell like menus / toolbars */
+	/* Left: sidebar surface like shadcn Sidebar */
 	.orca-search-modal-result-list,
 	.orca-search-modal-no-result,
 	.orca-search-modal-syntax-tips {
-		background: var(--background) !important;
+		background: var(--sidebar) !important;
 		color: var(--foreground) !important;
 		--orca-color-text-1: var(--foreground);
 		--orca-color-text-2: var(--text-muted);
@@ -2390,6 +2392,11 @@ html.t-light {
 	.orca-block-popup-preview,
 	.orca-inline-reference-preview {
 		border-left: 1px solid var(--border) !important;
+	}
+
+	.orca-search-modal-result-preview {
+		background: var(--background) !important;
+		background-color: var(--background) !important;
 	}
 
 	.orca-block-popup-preview,
@@ -2604,6 +2611,8 @@ html.t-light {
 		border: 1px solid transparent !important;
 		border-radius: var(--border-radius) !important;
 		color: var(--foreground) !important;
+		margin-inline: 0.375rem !important;
+		padding-block: 0.5rem !important;
 		cursor: pointer !important;
 		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 
@@ -7584,8 +7593,27 @@ html .orca-search-modal {
 	color: var(--foreground) !important;
 	border: 1px solid var(--border) !important;
 	border-radius: var(--border-radius) !important;
-	box-shadow: none !important;
+	box-shadow: var(--shadow-lg) !important;
 	overflow: hidden !important;
+}
+
+html .orca-search-modal .orca-search-modal-result-list,
+html .orca-search-modal .orca-search-modal-no-result,
+html .orca-search-modal .orca-search-modal-syntax-tips {
+	background: var(--sidebar) !important;
+	background-color: var(--sidebar) !important;
+}
+
+html .orca-search-modal .orca-search-modal-result-preview {
+	background: var(--background) !important;
+	background-color: var(--background) !important;
+	border-left: 1px solid var(--border) !important;
+}
+
+html .orca-search-modal .orca-search-modal-block-item {
+	border-color: transparent !important;
+	border-radius: var(--radius-md) !important;
+	margin-inline: 0.375rem !important;
 }
 
 /* Main editor — SidebarInset card (beat native #main flat chrome) */
