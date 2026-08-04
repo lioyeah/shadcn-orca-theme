@@ -1089,6 +1089,49 @@ html:root:root .orca-query-list-block::before {
 	border-radius: var(--radius-lg) !important;
 }
 
+html:root:root .orca-repr-tag-props .orca-tag-data-propicon {
+	display: inline-flex !important;
+	align-items: center !important;
+	align-self: center !important;
+	line-height: 1 !important;
+	vertical-align: middle !important;
+}
+
+html:root:root .orca-repr-tag-props .orca-tag-data-name {
+	align-self: center !important;
+	margin-inline-end: 0 !important;
+	line-height: 1.25rem !important;
+}
+
+html:root:root .orca-repr-tag-props .orca-tag-data-text:not(.orca-tag-data-text-link) {
+	display: inline-flex !important;
+	align-items: center !important;
+	min-block-size: 1.75rem !important;
+	border: 1px solid var(--input) !important;
+	border-radius: var(--radius-sm) !important;
+	background: color-mix(in oklab, var(--input) 30%, transparent) !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+	line-height: 1.25rem !important;
+}
+
+html:root:root .orca-repr-tag-props .orca-tag-data-text-link {
+	color: var(--foreground) !important;
+	text-decoration: underline !important;
+	text-decoration-color: var(--muted-foreground) !important;
+	text-underline-offset: 0.15em !important;
+}
+
+html:root:root .orca-repr-tag-props :is(.orca-textarea-input, .orca-input-input) {
+	min-inline-size: 0 !important;
+	border: 0 !important;
+	border-bottom: 1px solid var(--input) !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	align-self: center !important;
+}
+
 html:root:root .orca-query-card {
 	background: var(--card) !important;
 	color: var(--card-foreground) !important;
@@ -1147,18 +1190,28 @@ html:root:root body #app.sidebar-closed > #main,
 	margin-inline-start: 0.5rem !important;
 }
 
-/* Tag properties accordion — per-tag accent via --orca-repr-tag-props-color */
+/* Tag properties collapsible — borderless shell with a flat title separator */
 html:root:root .orca-repr-tag-props {
 	margin-block-start: 1rem !important;
-	border-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 45%, var(--border)) !important;
+	background: transparent !important;
+	background-color: transparent !important;
+	color: var(--foreground) !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: visible !important;
 }
 
 html:root:root .orca-repr-tag-props-group {
-	border-bottom-color: color-mix(in oklab, var(--orca-repr-tag-props-color, var(--border)) 55%, var(--border)) !important;
+	border-bottom: 0 !important;
+	border-block-end: 0 !important;
 }
 
 html:root:root .orca-repr-tag-props-title {
 	border-top: none !important;
+	border-bottom: 1px solid var(--border) !important;
+	border-block-end: 1px solid var(--border) !important;
+	border-radius: 0 !important;
 	margin-top: 0 !important;
 	padding-top: 1rem !important;
 	color: var(--orca-repr-tag-props-color, var(--foreground)) !important;
@@ -1172,7 +1225,64 @@ html:root:root .orca-repr-tag-props .orca-tag-data-name {
 }
 
 html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
-	border-bottom-color: var(--orca-repr-tag-props-color, var(--border)) !important;
+	border-bottom-color: var(--input) !important;
+}
+
+html:root:root .orca-repr-tag-props .orca-block-select-button {
+	border: 0 !important;
+	border-bottom: 0 !important;
+	border-bottom-color: transparent !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	color: var(--muted-foreground) !important;
+	padding: 0.5rem !important;
+	box-shadow: none !important;
+}
+
+html:root:root .orca-repr-tag-props .orca-block-select-button :is(
+	.orca-select-button-text,
+	.orca-select-button-placeholder,
+	.orca-select-button-selector
+) {
+	background: transparent !important;
+	color: inherit !important;
+}
+
+html:root:root .orca-repr-tag-props button.orca-block-select-button :is(
+	.orca-tag,
+	.orca-select-button-selection
+) {
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 0.25rem !important;
+	min-block-size: 1.5rem !important;
+	max-inline-size: 100% !important;
+	padding: 0.125rem 0.5rem !important;
+	border: 1px solid color-mix(in oklab, var(--foreground) 16%, transparent) !important;
+	border-radius: 6px !important;
+	background: var(--secondary) !important;
+	background-color: var(--secondary) !important;
+	color: var(--secondary-foreground) !important;
+	box-shadow: var(--shadow-xs) !important;
+	font-size: 0.8125rem !important;
+	font-weight: 400 !important;
+	line-height: 1.25rem !important;
+	white-space: nowrap !important;
+}
+
+html:root:root .orca-repr-tag-props :is(.orca-tag-data-text:not(.orca-tag-data-text-link), .orca-tag) {
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 0.25rem !important;
+	min-block-size: 1.5rem !important;
+	max-inline-size: 100% !important;
+	padding: 0.125rem 0.5rem !important;
+	border: 1px solid var(--border) !important;
+	border-radius: var(--radius-sm) !important;
+	background: var(--secondary) !important;
+	color: var(--secondary-foreground) !important;
+	box-shadow: var(--shadow-xs) !important;
+	line-height: 1.25rem !important;
 }
 
 html:root:root .orca-repr-tag-props .orca-select-button:has(.orca-select-button-text:not(:empty)):hover,
@@ -1472,4 +1582,490 @@ html.t-shadcn .orca-whiteboard .excalidraw .layer-ui__library .dropdown-menu .dr
 	border: 1px solid var(--border) !important;
 	box-shadow: var(--shadow-md) !important;
 	border-radius: var(--radius-md) !important;
+}
+
+/* Tag property value controls — final host-cascade normalization */
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-input.orca-tag-data-text,
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text-link {
+	display: inline-flex !important;
+	align-items: center !important;
+	box-sizing: border-box !important;
+	gap: 0 !important;
+	min-block-size: 2rem !important;
+	min-inline-size: 0 !important;
+	padding: 0 !important;
+	border: 1px solid var(--input) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	box-shadow: var(--shadow-xs) !important;
+	line-height: 1.25rem !important;
+	text-decoration: none !important;
+	overflow: hidden !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+):focus-within {
+	border-color: var(--ring) !important;
+	box-shadow: var(--shadcn-input-focus-shadow) !important;
+	outline: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-input.orca-tag-data-text > :is(.orca-button, .orca-input-post, .orca-textarea-post),
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text-link > :is(.orca-button, .orca-input-post, .orca-textarea-post) {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex: 0 0 auto !important;
+	align-self: stretch !important;
+	min-block-size: 1.5rem !important;
+	padding: 0.375rem 0.75rem !important;
+	margin: 0 !important;
+	border: 0 !important;
+	border-inline-start: 1px solid var(--border) !important;
+	border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+	text-decoration: none !important;
+	white-space: nowrap !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) > :is(.orca-input-input, .orca-textarea-input) {
+	display: flex !important;
+	align-items: center !important;
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	inline-size: 100% !important;
+	padding: 0 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-textarea, textarea) {
+	min-inline-size: 0 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-input, .orca-textarea-input) > :is(
+	.orca-input-post,
+	.orca-textarea-post,
+	.orca-button
+) {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex: 0 0 auto !important;
+	align-self: stretch !important;
+	min-block-size: 1.5rem !important;
+	padding: 0.375rem 0.75rem !important;
+	margin: 0 !important;
+	border: 0 !important;
+	border-inline-start: 1px solid var(--border) !important;
+	border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+	text-decoration: none !important;
+	white-space: nowrap !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-input, .orca-textarea-input) > :is(
+	.orca-input-post,
+	.orca-textarea-post,
+	.orca-button
+):hover {
+	background: var(--accent) !important;
+	background-color: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-input, .orca-textarea-input, .orca-textarea) > :is(input, textarea),
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) > :is(input, textarea) {
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	padding: 0.375rem 0.75rem !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: none !important;
+	text-decoration: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-input.orca-tag-data-text > :is(.orca-button, .orca-input-post, .orca-textarea-post):hover,
+html:root:root.t-shadcn .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text-link > :is(.orca-button, .orca-input-post, .orca-textarea-post):hover {
+	background: var(--accent) !important;
+	background-color: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+	text-decoration: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-post, .orca-textarea-post, .orca-button) * {
+	text-decoration: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props textarea.orca-tag-data-textarea {
+	box-sizing: border-box !important;
+	display: block !important;
+	min-block-size: 2rem !important;
+	padding: 0.375rem 0.5rem !important;
+	border: 1px solid var(--input) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	box-shadow: none !important;
+	resize: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	.orca-textarea,
+	.orca-textarea-input,
+	.orca-input-input
+):not(:has(.orca-button, .orca-input-post, .orca-textarea-post)) {
+	display: flex !important;
+	align-items: center !important;
+	min-block-size: 2rem !important;
+	min-inline-size: 0 !important;
+	padding: 0 !important;
+	border: 1px solid var(--input) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: var(--shadow-xs) !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	.orca-textarea,
+	.orca-textarea-input,
+	.orca-input-input
+):not(:has(.orca-button, .orca-input-post, .orca-textarea-post)) :is(
+	textarea,
+	input
+) {
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	inline-size: 100% !important;
+	min-block-size: 2rem !important;
+	padding: 0.375rem 0.75rem !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button,
+html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button > .orca-select-button-text,
+html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button > .orca-select-button-placeholder {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: 0 !important;
+	border-bottom: 0 !important;
+	border-bottom-color: transparent !important;
+	border-radius: 0 !important;
+	color: var(--muted-foreground) !important;
+	box-shadow: none !important;
+}
+
+/* ButtonGroup fallback — normalize an unknown trailing action node */
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) > :not(.orca-input-input, .orca-textarea-input, .orca-textarea):last-child,
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-input, .orca-textarea-input, .orca-textarea) > :not(
+	input,
+	textarea,
+	.orca-input-actualinput
+):last-child {
+	align-self: stretch !important;
+	min-block-size: 100% !important;
+	margin: 0 !important;
+	border-inline-start: 1px solid var(--border) !important;
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-top-right-radius: var(--radius-md) !important;
+	border-bottom-right-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	text-decoration: none !important;
+}
+
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) > :not(.orca-input-input, .orca-textarea-input, .orca-textarea):last-child *,
+html:root:root.t-shadcn .orca-repr-tag-props :is(
+	span.orca-input.orca-tag-data-text,
+	span.orca-textarea2.orca-tag-data-text-link
+) :is(.orca-input-input, .orca-textarea-input, .orca-textarea) > :not(
+	input,
+	textarea,
+	.orca-input-actualinput
+):last-child * {
+	text-decoration: none !important;
+}
+
+/* Tag property ButtonGroup — direct fallback independent of theme root class */
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post) {
+	align-self: stretch !important;
+	min-block-size: 100% !important;
+	margin: 0 !important;
+	border-inline-start: 1px solid var(--border) !important;
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-top-right-radius: var(--radius-md) !important;
+	border-bottom-right-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	text-decoration: none !important;
+}
+
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post *,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post) * {
+	text-decoration: none !important;
+}
+
+/* InputGroupButton mode — addon button is a small secondary control */
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input {
+	display: flex !important;
+	align-items: center !important;
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	inline-size: 100% !important;
+	padding: 0 !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	background: var(--secondary-background) !important;
+	background-color: var(--secondary-background) !important;
+	box-shadow: none !important;
+}
+
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post) {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	align-self: center !important;
+	flex: 0 0 auto !important;
+	min-block-size: 1.5rem !important;
+	padding: 0.125rem 0.5rem !important;
+	margin: 0.125rem 0.25rem 0.125rem 0.375rem !important;
+	border: 0 !important;
+	border-radius: var(--radius-sm) !important;
+	background: var(--secondary) !important;
+	background-color: var(--secondary) !important;
+	color: var(--secondary-foreground) !important;
+	box-shadow: none !important;
+	text-decoration: none !important;
+	text-decoration-line: none !important;
+	border-bottom: 0 !important;
+	white-space: nowrap !important;
+}
+
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post:hover,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post):hover {
+	background: color-mix(in oklab, var(--secondary) 84%, var(--foreground) 16%) !important;
+	background-color: color-mix(in oklab, var(--secondary) 84%, var(--foreground) 16%) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post *,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post) * {
+	text-decoration: none !important;
+	text-decoration-line: none !important;
+	border-bottom: 0 !important;
+}
+
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post::before,
+html:root:root .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text.orca-tag-data-text-link
+	> span.orca-textarea-input > button.orca-button.orca-textarea-post::after,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post)::before,
+html:root:root .orca-repr-tag-props span.orca-input.orca-tag-data-text
+	> span.orca-input-input > :is(a.orca-input-post, button.orca-input-post)::after {
+	text-decoration: none !important;
+	border-bottom: 0 !important;
+}
+
+/* Text action anchors — remove Orca link decoration explicitly */
+html:root:root .orca-repr-tag-props a.orca-input-post,
+html:root:root .orca-repr-tag-props a.orca-input-post:hover,
+html:root:root .orca-repr-tag-props a.orca-input-post:visited {
+	text-decoration: none !important;
+	text-decoration-line: none !important;
+	text-decoration-style: none !important;
+	border: 0 !important;
+	border-bottom: 0 !important;
+	border-block-end: 0 !important;
+	background-image: none !important;
+}
+
+html:root:root .orca-repr-tag-props a.orca-input-post::before,
+html:root:root .orca-repr-tag-props a.orca-input-post::after,
+html:root:root .orca-repr-tag-props a.orca-input-post * {
+	text-decoration: none !important;
+	text-decoration-line: none !important;
+	border-bottom: 0 !important;
+	border-block-end: 0 !important;
+}
+
+/* Block-reference selector — fill the value column like other fields */
+html:root:root .orca-repr-tag-props-group > button.orca-block-select-button {
+	display: flex !important;
+	align-items: center !important;
+	grid-column: 3 / 4 !important;
+	justify-self: stretch !important;
+	inline-size: 100% !important;
+	min-inline-size: 0 !important;
+	max-inline-size: 100% !important;
+	box-sizing: border-box !important;
+	padding: 0.375rem 0.5rem !important;
+}
+
+html:root:root .orca-repr-tag-props-group > button.orca-block-select-button > :is(
+	.orca-select-button-text,
+	.orca-select-button-placeholder,
+	.orca-select-button-selector
+) {
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	white-space: nowrap !important;
+	text-align: start !important;
+}
+
+html:root:root .orca-repr-tag-props-group > button.orca-tag-data-reset {
+	grid-column: 4 / 5 !important;
+	justify-self: end !important;
+	padding-inline: 0 !important;
+}
+
+/* Final tag-property cleanup — block ref is borderless; text actions are not links */
+html:root:root .orca-repr-tag-props-group
+	> button.orca-button.outline.orca-select-button.orca-block-select-button {
+	border: 0 !important;
+	border-bottom: 0 !important;
+	border-block-end: 0 !important;
+	border-radius: 0 !important;
+	background: transparent !important;
+	background-color: transparent !important;
+	box-shadow: none !important;
+}
+
+html:root:root .orca-repr-tag-props-group
+	> span.orca-input.orca-tag-data-text
+	> span.orca-input-input
+	> a.orca-input-post.orca-input-post,
+html:root:root .orca-repr-tag-props-group
+	> span.orca-input.orca-tag-data-text
+	> span.orca-input-input
+	> a.orca-input-post.orca-input-post:hover,
+html:root:root .orca-repr-tag-props-group
+	> span.orca-input.orca-tag-data-text
+	> span.orca-input-input
+	> a.orca-input-post.orca-input-post:visited {
+	text-decoration: none !important;
+	text-decoration-line: none !important;
+	text-decoration-style: none !important;
+	-webkit-text-decoration-line: none !important;
+	border: 0 !important;
+	border-bottom: 0 !important;
+	border-block-end: 0 !important;
+	background-image: none !important;
+}
+
+/* Sidebar calendar density — keep popover date pickers unchanged */
+html:root:root #sidebar .orca-sidebar-header {
+	padding-block-end: 0 !important;
+}
+
+html:root:root #sidebar .orca-calendar {
+	--calendar-cell-size: 1.5rem !important;
+	padding: 0.5rem !important;
+	padding-block-start: 0 !important;
+	margin-block-start: -0.5rem !important;
+}
+
+html:root:root #sidebar .orca-calendar header {
+	min-block-size: var(--calendar-cell-size) !important;
+	padding-block-end: 0.125rem !important;
+	margin-block-end: 0.125rem !important;
+}
+
+html:root:root #sidebar .orca-calendar .weekday {
+	padding-block: 0 !important;
+	min-block-size: 1rem !important;
+}
+
+html:root:root #sidebar .orca-calendar :is(.choosen-year, .choosen-month, .go-now) {
+	font-size: 0.8125rem !important;
+	line-height: 1.125rem !important;
+}
+
+html:root:root #sidebar .orca-calendar .weekday::before,
+html:root:root #sidebar .orca-calendar .week {
+	font-size: 0.6875rem !important;
+	line-height: 1rem !important;
+}
+
+html:root:root #sidebar .orca-calendar .day {
+	font-size: 0.8125rem !important;
+}
+
+html:root:root #sidebar .orca-calendar .day .journal-dot {
+	inset-block-end: 1px !important;
 }

@@ -35,6 +35,11 @@
 		border-radius: var(--border-radius) !important;
 	}
 
+	/* Tag-property block references are borderless value controls, not buttons. */
+	.orca-repr-tag-props .orca-block-select-button {
+		border-radius: 0 !important;
+	}
+
 	/* Switch track: always fully rounded */
 	.orca-switch,
 	.orca-switch-toggle,

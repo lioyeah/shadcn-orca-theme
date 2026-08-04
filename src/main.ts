@@ -234,9 +234,12 @@ export async function load(name: string) {
 	}
 	document.documentElement.classList.remove(LEGACY_THEME_CLASS);
 
-	if (state.themes?.[THEME_NAME] == null) {
-		orca.themes.register(name, THEME_NAME, THEME_FILE);
+	// Refresh the registration on every plugin load so Orca does not reuse
+	// a stale CSS URL/cache entry after the theme file has been rebuilt.
+	if (state.themes?.[THEME_NAME] != null) {
+		orca.themes.unregister(THEME_NAME);
 	}
+	orca.themes.register(name, THEME_NAME, THEME_FILE);
 
 	document.documentElement.classList.add(THEME_CLASS);
 	blockGraphSliderUnsub = setupBlockGraphSliderDetents();

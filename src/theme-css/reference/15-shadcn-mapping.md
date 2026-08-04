@@ -39,7 +39,7 @@
 | `input[type="checkbox"]`, `.orca-checkbox-box` | `checkbox.tsx` | checked=`primary` |
 | `.orca-query-conditions` | `accordion.tsx` (Card + Borders) | shell=`card`+`shadow-sm`; header=AccordionTrigger (`py-4`, `font-medium`); body=AccordionContent (`pb-4`) |
 | `.orca-block-graph-header`, `.orca-block-graph-depth-control` | `accordion.tsx` + `slider.tsx` | 查询栏与 query editor 同 card 壳；Depth/Size 滑块 = muted track + primary fill + ring thumb |
-| `.orca-repr-tag-props` | `accordion.tsx` (Card + Borders) | 正文标签属性：`card` 壳；分组/属性行边框与图标用 `--orca-repr-tag-props-color`（用户 tag 色） |
+| `.orca-repr-tag-props` | `collapsible.tsx` + `separator.tsx` | 正文标签属性：无背景/边框的 `Collapsible`；标题下方使用平直 `Separator`，属性行是 content |
 | `.orca-query-tabs`, `.orca-tab-item.orca-selected` | `tabs.tsx` | active=`background` + `shadow-sm` |
 | `.orca-stats-*` cards | `card.tsx` | `--card`, `shadow-sm` |
 | `html body #main`, `#main.orca-panels-container` | `sidebar.tsx` `SidebarInset` | `border` + `rounded-xl` + `shadow-sm`；右侧/底边 `0.5rem` inset；`#app.sidebar-closed` 时左侧同样 `0.5rem` |

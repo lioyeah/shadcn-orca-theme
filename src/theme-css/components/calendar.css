@@ -6,14 +6,14 @@
 
 	@scope (.orca-calendar) {
 		:scope {
-			--calendar-cell-size: 2rem;
+			--calendar-cell-size: 1.5rem;
 			background: var(--calendar-bg) !important;
 			color: var(--calendar-fg) !important;
 			border: none !important;
 			border-radius: var(--border-radius) !important;
 			box-shadow: none !important;
 			display: block;
-			padding: 0.75rem !important;
+			padding: 0.5rem !important;
 		}
 		header {
 			background: transparent !important;
@@ -21,15 +21,15 @@
 			border: none !important;
 			display: flex;
 			align-items: center;
-			padding: 0 0 0.25rem !important;
-			margin-block-end: 0.25rem !important;
+			padding: 0 0 0.125rem !important;
+			margin-block-end: 0.125rem !important;
 			min-block-size: var(--calendar-cell-size);
 		}
 		.choosen-year, .choosen-month {
 			color: var(--calendar-fg) !important;
 			font-weight: 500 !important;
-			font-size: 0.875rem !important;
-			line-height: 1.25rem !important;
+			font-size: 0.8125rem !important;
+			line-height: 1.125rem !important;
 			padding: 0.25rem 0.5rem !important;
 			background: transparent !important;
 			border: 1px solid transparent !important;
@@ -50,7 +50,7 @@
 		.go-now {
 			color: var(--calendar-fg-muted) !important;
 			font-weight: 500 !important;
-			font-size: 0.875rem !important;
+			font-size: 0.8125rem !important;
 			cursor: pointer;
 			padding: 0.25rem 0.5rem !important;
 			background: transparent !important;
@@ -107,11 +107,11 @@
 			justify-content: center;
 			background: transparent !important;
 			border: none !important;
-			padding: 0.25rem 0 !important;
-			min-block-size: calc(var(--calendar-cell-size) * 0.75) !important;
+			padding: 0 !important;
+			min-block-size: 1rem !important;
 			line-height: 0 !important;
 			&.weekend { opacity: 1 !important; color: var(--calendar-fg-muted) !important; }
-			&::before { font-size: 0.8rem !important; line-height: 1.25rem !important; display: block; }
+			&::before { font-size: 0.6875rem !important; line-height: 1rem !important; display: block; }
 			&:nth-child(2) { grid-column: 2; &::before { content: "Mo"; } }
 			&:nth-child(3) { grid-column: 3; &::before { content: "Tu"; } }
 			&:nth-child(4) { grid-column: 4; &::before { content: "We"; } }
@@ -123,7 +123,7 @@
 		.week {
 			color: var(--calendar-fg-muted) !important;
 			opacity: 1 !important;
-			font-size: 0.8rem !important;
+			font-size: 0.75rem !important;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -140,7 +140,7 @@
 			align-items: center;
 			justify-content: center;
 			cursor: pointer;
-			font-size: 0.875rem !important;
+			font-size: 0.8125rem !important;
 			font-weight: 400 !important;
 			aspect-ratio: 1;
 			min-inline-size: 0 !important;
@@ -212,7 +212,7 @@
 			background: var(--calendar-fg-muted) !important;
 			opacity: 1 !important;
 			position: absolute;
-			inset-block-end: 2px;
+			inset-block-end: 1px !important;
 			inset-inline-start: 50%;
 			transform: translateX(-50%);
 			border: none !important;

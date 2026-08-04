@@ -53,6 +53,17 @@
 		&:hover { color: var(--orca-color-link-hover) !important; }
 	}
 
+	/* Tag-property action anchors are InputGroupButton addons, not prose links. */
+	.orca-repr-tag-props a.orca-input-post,
+	.orca-repr-tag-props a.orca-input-post:hover,
+	.orca-repr-tag-props a.orca-input-post:visited {
+		color: var(--secondary-foreground) !important;
+		text-decoration: none !important;
+		text-decoration-line: none !important;
+		border-bottom: 0 !important;
+		border-block-end: 0 !important;
+	}
+
 		img, video, iframe, embed, object, .orca-image, .orca-media {
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
