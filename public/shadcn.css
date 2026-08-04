@@ -120,11 +120,11 @@
 	--typeset-scope-line: var(--border);
 	--typeset-scope-line-hover: color-mix(in oklab, var(--foreground) 92%, var(--background));
 	--typeset-scope-line-duration: 0.45s;
-	/* Typeset weights — lighter than UI chrome; 600 on CJK often reads too heavy */
+	/* Typeset weights — 600 keeps strong text distinct from regular CJK text. */
 	--typeset-h1-weight: 600;
 	--typeset-heading-weight: 500;
 	--typeset-h4-weight: 500;
-	--typeset-strong-weight: 500;
+	--typeset-strong-weight: 600;
 	--typeset-handle-passive: var(--muted-foreground);
 	--typeset-handle-active: var(--foreground);
 	--typeset-breadcrumb: var(--muted-foreground);

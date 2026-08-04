@@ -1,8 +1,8 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "33982b63f9c380346c3886d32fa2252ee8bb0e200341459006c72a09e61186fe",
-    "bytes": 374498,
+    "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b",
+    "bytes": 374495,
     "lines": 9776,
     "selectorCount": 1565,
     "selectors": [
@@ -1904,18 +1904,18 @@
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "33982b63f9c380346c3886d32fa2252ee8bb0e200341459006c72a09e61186fe"
+      "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "33982b63f9c380346c3886d32fa2252ee8bb0e200341459006c72a09e61186fe"
+      "sha256": "a92bb6c6fdb0d04aeba7bde7827e29bb45603fa0118cc0651dc2cd5ae9b3397b"
     }
   },
   "sources": [
     {
       "file": "src/flavors/default.css",
-      "sha256": "6a71c5e95b91fd323d07f296390095fc0f55e77b9f5c4db547743dbccd1df347",
-      "bytes": 14617,
+      "sha256": "8cfa5691bded86c083c9e79716040be3054b8207738894348b4ef23dd8c74626",
+      "bytes": 14614,
       "lines": 354,
       "selectorCount": 8,
       "selectors": [
