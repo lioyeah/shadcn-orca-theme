@@ -184,6 +184,122 @@ html .orca-repr-journal-right::before {
 	stroke: currentColor !important;
 }
 
+@layer base {
+/* Journal date navigation — important declarations in the early base layer
+   beat Orca's late unlayered important chrome. */
+html.t-shadcn #main .orca-repr-journal {
+	display: inline-flex !important;
+	align-items: center !important;
+	vertical-align: middle !important;
+	line-height: 1 !important;
+}
+
+html.t-shadcn #main .orca-repr-journal .orca-repr-main-content {
+	display: flex !important;
+	align-items: center !important;
+	line-height: 1 !important;
+}
+
+html.t-shadcn #main .orca-repr-journal-date {
+	display: inline-flex !important;
+	align-items: center !important;
+	align-self: center !important;
+	line-height: 1.2 !important;
+	vertical-align: middle !important;
+}
+
+html:root:root #main .orca-repr-journal-btn.orca-button.plain,
+html.t-shadcn button.orca-button.plain.orca-repr-journal-btn {
+	inline-size: 1.25rem !important;
+	block-size: 1.25rem !important;
+	min-inline-size: 1.25rem !important;
+	min-block-size: 1.25rem !important;
+	width: 1.25rem !important;
+	height: 1.25rem !important;
+	padding: 0 !important;
+	margin-inline: 0.1rem !important;
+	border-radius: 50% !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+	line-height: 1 !important;
+	position: relative !important;
+	inset-block-start: 2px !important;
+}
+
+html.t-shadcn button.orca-button.plain.orca-repr-journal-btn > :is(i, svg),
+html.t-shadcn .orca-block-editor-go-btn.orca-button.plain > :is(i, svg) {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	inline-size: 1em !important;
+	block-size: 1em !important;
+	margin: 0 !important;
+	line-height: 1 !important;
+	vertical-align: middle !important;
+}
+
+html.t-shadcn button.orca-button.plain.orca-repr-journal-btn > :is(i, svg) {
+	font-size: 0.8em !important;
+}
+
+html:root:root .orca-block-editor-go-btn.orca-button.plain {
+	inline-size: 1.5rem !important;
+	block-size: 1.5rem !important;
+	min-inline-size: 1.5rem !important;
+	min-block-size: 1.5rem !important;
+	aspect-ratio: 1 !important;
+	padding: 0 !important;
+	border-radius: 50% !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+}
+
+/* Search input-group suffix/filter controls — keep them inside the shell. */
+html:root:root .orca-input:has(.orca-input-post) .orca-input-post,
+html:root:root .orca-input:has(.orca-input-input > .orca-button) .orca-input-input > .orca-button,
+html:root:root .orca-input > .orca-input-post,
+html:root:root .orca-input-input > :is(.orca-button, .orca-input-post),
+html.t-shadcn .orca-input > .orca-button {
+	box-sizing: border-box !important;
+	align-self: center !important;
+	flex: 0 0 auto !important;
+	max-block-size: calc(100% - 0.25rem) !important;
+	margin-block: 0 !important;
+	overflow: hidden !important;
+}
+
+html.t-shadcn .orca-input-input > :is(.orca-button, .orca-input-post) {
+	inline-size: 1.5rem !important;
+	block-size: 1.5rem !important;
+	min-inline-size: 1.5rem !important;
+	min-block-size: 1.5rem !important;
+	padding: 0 !important;
+}
+
+/* Select-menu filter toggle is a checkbox span, not a button. */
+html.t-shadcn .orca-select-menu-filter .orca-checkbox-box,
+html.t-shadcn .orca-input-input > .orca-checkbox-box {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex: 0 0 auto !important;
+	align-self: center !important;
+	inline-size: 1.25rem !important;
+	block-size: 1.25rem !important;
+	min-inline-size: 1.25rem !important;
+	min-block-size: 1.25rem !important;
+	max-block-size: calc(100% - 0.25rem) !important;
+	box-sizing: border-box !important;
+	margin-block: 0 !important;
+	margin-inline-end: 0.25rem !important;
+	overflow: hidden !important;
+}
+}
+
 /* Breadcrumb — beat native primary hover; last item = BreadcrumbPage */
 html .orca-block-breadcrumb-segment:hover,
 html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-child):hover,
