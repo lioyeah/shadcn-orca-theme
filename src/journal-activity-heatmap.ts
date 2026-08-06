@@ -497,6 +497,7 @@ export function setupJournalActivityHeatmap(): () => void {
 	let mountedRoot: HTMLElement | null = null;
 	let heatmapElement: HTMLElement | null = null;
 	let scanFrame: number | null = null;
+	let blocksChangeFrame: number | null = null;
 	let loadGeneration = 0;
 	let blocksFingerprint = computeBlocksFingerprint(orca.state.blocks);
 
@@ -504,6 +505,13 @@ export function setupJournalActivityHeatmap(): () => void {
 		if (scanFrame != null) {
 			cancelAnimationFrame(scanFrame);
 			scanFrame = null;
+		}
+	};
+
+	const clearBlocksChangeFrame = () => {
+		if (blocksChangeFrame != null) {
+			cancelAnimationFrame(blocksChangeFrame);
+			blocksChangeFrame = null;
 		}
 	};
 
@@ -556,7 +564,9 @@ export function setupJournalActivityHeatmap(): () => void {
 	};
 
 	const scheduleScan = () => {
-		clearScanFrame();
+		if (scanFrame != null) {
+			return;
+		}
 		scanFrame = requestAnimationFrame(() => {
 			scanFrame = null;
 			scan();
@@ -571,15 +581,27 @@ export function setupJournalActivityHeatmap(): () => void {
 		}
 	};
 
-	const stateUnsub = subscribe(orca.state, () => {
+	const applyBlocksChange = () => {
+		blocksChangeFrame = null;
 		const nextFingerprint = computeBlocksFingerprint(orca.state.blocks);
-		const blocksChanged = nextFingerprint !== blocksFingerprint;
-		if (blocksChanged) {
-			blocksFingerprint = nextFingerprint;
-			refreshData();
+		if (nextFingerprint === blocksFingerprint) {
+			return;
 		}
-		scheduleScan();
-	});
+		blocksFingerprint = nextFingerprint;
+		refreshData();
+	};
+
+	const scheduleBlocksChange = () => {
+		if (blocksChangeFrame != null) {
+			return;
+		}
+		blocksChangeFrame = requestAnimationFrame(applyBlocksChange);
+	};
+
+	// Block-scoped subscription: only activity-relevant edits schedule a merged refresh.
+	const blocksUnsub = subscribe(orca.state.blocks, scheduleBlocksChange);
+	// Mount/unmount when active panel or host DOM changes — no block fingerprint work here.
+	const stateUnsub = subscribe(orca.state, scheduleScan);
 
 	const domObserver = new MutationObserver(() => {
 		scheduleScan();
@@ -589,9 +611,11 @@ export function setupJournalActivityHeatmap(): () => void {
 	scan();
 
 	return () => {
+		blocksUnsub();
 		stateUnsub();
 		domObserver.disconnect();
 		clearScanFrame();
+		clearBlocksChangeFrame();
 		unmountHeatmap();
 		collector.cancel();
 	};
