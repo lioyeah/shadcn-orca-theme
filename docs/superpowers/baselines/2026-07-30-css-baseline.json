@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc",
-    "bytes": 375362,
-    "lines": 9804,
-    "selectorCount": 1570,
+    "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e",
+    "bytes": 379085,
+    "lines": 9917,
+    "selectorCount": 1584,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
       "#app.sidebar-closed > #main.orca-panels-container",
@@ -16,7 +16,6 @@
       "#main",
       "#main .orca-no-editable-btn.orca-button.plain",
       "#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover",
-      "#main .orca-repr-journal-btn.orca-button.plain",
       "#main .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain",
       "#main .orca-switch",
       "#main .orca-switch-on .orca-switch-toggle",
@@ -336,6 +335,7 @@
       ".orca-input:focus-within .orca-input-input",
       ".orca-input:has(.orca-input-input .orca-button) .orca-input-actualinput",
       ".orca-input:has(.orca-input-input .orca-button) .orca-input-input > .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker)",
+      ".orca-input:has(.orca-input-input > .orca-button) .orca-input-input > .orca-button",
       ".orca-input:has(.orca-input-post) .orca-input-post",
       ".orca-key-selected",
       ".orca-key-selected .orca-menu-text-kbd",
@@ -970,6 +970,7 @@
       "html #main .orca-block-editor .orca-repr-scope-line:hover::before",
       "html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)",
       "html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before",
+      "html #main .orca-inline.u",
       "html #main .orca-inline[data-type=\"l\"]",
       "html #main .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html #main .orca-inline[data-type=\"l\"]:hover",
@@ -1031,6 +1032,7 @@
       "html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props-title::before",
       "html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
       "html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+      "html .orca-block-popup-preview .orca-inline.u",
       "html .orca-block-popup-preview .orca-inline[data-type=\"l\"]",
       "html .orca-block-popup-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-block-popup-preview .orca-inline[data-type=\"l\"]:hover",
@@ -1074,6 +1076,7 @@
       "html .orca-block-preview .orca-block-editor .orca-repr-tag-props-title::before",
       "html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
       "html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+      "html .orca-block-preview .orca-inline.u",
       "html .orca-block-preview .orca-inline[data-type=\"l\"]",
       "html .orca-block-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-block-preview .orca-inline[data-type=\"l\"]:hover",
@@ -1147,6 +1150,7 @@
       "html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props-title::before",
       "html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
       "html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+      "html .orca-inline-reference-preview .orca-inline.u",
       "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"]",
       "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"]:hover",
@@ -1191,6 +1195,7 @@
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props-title::before",
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-block-handle::before",
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+      "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline.u",
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"]",
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"]:hover",
@@ -1220,6 +1225,7 @@
       "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line::before",
       "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover",
       "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover::before",
+      "html .orca-panels-container #main .orca-inline.u",
       "html .orca-panels-container #main .orca-inline[data-type=\"l\"]",
       "html .orca-panels-container #main .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-panels-container #main .orca-inline[data-type=\"l\"]:hover",
@@ -1328,6 +1334,7 @@
       "html .orca-search-modal-footer",
       "html .orca-search-modal-footer .orca-search-modal-footer-item",
       "html .orca-search-modal-result-preview #main",
+      "html .orca-search-modal-result-preview .orca-inline.u",
       "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"]",
       "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
       "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"]:hover",
@@ -1392,6 +1399,8 @@
       "html.t-shadcn .orca-editor-toolbar .orca-editor-toolbar-button-item.orca-button:hover",
       "html.t-shadcn .orca-editor-toolbar .orca-editor-toolbar-list",
       "html.t-shadcn .orca-inline-reference-preview .highlight",
+      "html.t-shadcn .orca-input > .orca-button",
+      "html.t-shadcn .orca-input-input > .orca-checkbox-box",
       "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal",
       "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal > .orca-command-modal-footer",
       "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-search-modal",
@@ -1401,6 +1410,7 @@
       "html.t-shadcn .orca-modal-overlay > .orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal)",
       "html.t-shadcn .orca-search-modal-block-item .highlight",
       "html.t-shadcn .orca-search-modal-result-preview .highlight",
+      "html.t-shadcn .orca-select-menu-filter .orca-checkbox-box",
       "html.t-shadcn .orca-whiteboard .excalidraw",
       "html.t-shadcn .orca-whiteboard .excalidraw .App-toolbar__extra-tools-trigger--selected",
       "html.t-shadcn .orca-whiteboard .excalidraw .App-toolbar__extra-tools-trigger--selected:hover",
@@ -1464,6 +1474,7 @@
       "html:root:root #sidebar .orca-calendar header",
       "html:root:root #sidebar .orca-sidebar-header",
       "html:root:root .orca-aichat-collapsible",
+      "html:root:root .orca-block-editor-go-btn.orca-button.plain",
       "html:root:root .orca-block-graph-depth-control input[type=\"range\"]",
       "html:root:root .orca-block-graph-depth-control input[type=\"range\"]::-moz-range-progress",
       "html:root:root .orca-block-graph-depth-control input[type=\"range\"]::-moz-range-thumb",
@@ -1478,6 +1489,9 @@
       "html:root:root .orca-command-modal .orca-menu-title.orca-command-modal-command-header",
       "html:root:root .orca-command-modal.orca-menu",
       "html:root:root .orca-command-modal.orca-popup.orca-menu",
+      "html:root:root .orca-input > .orca-input-post",
+      "html:root:root .orca-input:has(.orca-input-input > .orca-button) .orca-input-input > .orca-button",
+      "html:root:root .orca-input:has(.orca-input-post) .orca-input-post",
       "html:root:root .orca-menu:not(.orca-command-modal):not(.orca-search-modal) .orca-menu-title",
       "html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover",
       "html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *",
@@ -1904,16 +1918,16 @@
       "--typeset-tag-props",
       "--variant-filled"
     ],
-    "declarationBlockCount": 1100
+    "declarationBlockCount": 1107
   },
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc"
+      "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "bafa8ba4db591fe167797d5cffdf467f47824930f36bff14458b91b82e5247cc"
+      "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e"
     }
   },
   "sources": [
@@ -2332,10 +2346,10 @@
     },
     {
       "file": "src/theme-css/components/forms.css",
-      "sha256": "eeca5e0014d0f60796ab83a76c070662f516fadea9fee0c954c4189834aececf",
-      "bytes": 22381,
-      "lines": 617,
-      "selectorCount": 134,
+      "sha256": "7c2b444b8fbc3beab5fd4a4145f67e6855060c235ccf89dc5e6bbe09a5524abd",
+      "bytes": 22903,
+      "lines": 631,
+      "selectorCount": 135,
       "selectors": [
         "#headbar .orca-popup .orca-input .orca-input-pre",
         "#headbar .orca-popup .orca-input .orca-input-pre::before",
@@ -2384,6 +2398,7 @@
         ".orca-input:focus-within .orca-input-input",
         ".orca-input:has(.orca-input-input .orca-button) .orca-input-actualinput",
         ".orca-input:has(.orca-input-input .orca-button) .orca-input-input > .orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker)",
+        ".orca-input:has(.orca-input-input > .orca-button) .orca-input-input > .orca-button",
         ".orca-input:has(.orca-input-post) .orca-input-post",
         ".orca-key-selected .orca-menu-text-kbd",
         ".orca-menu-item:hover .orca-menu-text-kbd",
@@ -2474,7 +2489,7 @@
       ],
       "customPropertyCount": 0,
       "customProperties": [],
-      "declarationBlockCount": 68
+      "declarationBlockCount": 69
     },
     {
       "file": "src/theme-css/components/navigation.css",
@@ -2719,9 +2734,9 @@
     },
     {
       "file": "src/theme-css/components/editor.css",
-      "sha256": "53033fc44d88291a3b513718009cd715026e76f1eedb885942f1af4ac4653116",
-      "bytes": 24029,
-      "lines": 404,
+      "sha256": "225f455c5056c73eafdb88f8a46a13090994de2b89f8757ba823ac4e4d5056ac",
+      "bytes": 24096,
+      "lines": 405,
       "selectorCount": 40,
       "selectors": [
         "#main",
@@ -2994,14 +3009,13 @@
     },
     {
       "file": "src/theme-css/components/navigation-editor.css",
-      "sha256": "9fc2bf96f1e79895d10d3725919ac8ac99f6d4199e72d0b153a90b63a42c2b13",
-      "bytes": 15582,
-      "lines": 378,
-      "selectorCount": 72,
+      "sha256": "86f3205a5b47c708a1548aa5ec822422faa8bc176f3070e175fbccbe8b7ff4b5",
+      "bytes": 14779,
+      "lines": 365,
+      "selectorCount": 71,
       "selectors": [
         "#main .orca-no-editable-btn.orca-button.plain",
         "#main .orca-no-editable-btn.orca-button.plain:not(.orca-select-button):not(.orca-block-ref-count-marker):hover",
-        "#main .orca-repr-journal-btn.orca-button.plain",
         "#main .orca-repr-main-content:hover > .orca-no-editable-container > .orca-no-editable-btn.orca-button.plain",
         "#sidebar",
         "#sidebar .orca-button[aria-label=\"新页面\"]",
@@ -3078,7 +3092,7 @@
         "--orca-color-text-2",
         "--orca-color-text-3"
       ],
-      "declarationBlockCount": 50
+      "declarationBlockCount": 47
     },
     {
       "file": "src/theme-css/components/query.css",
@@ -3749,10 +3763,10 @@
     },
     {
       "file": "src/theme-css/native-precedence.css",
-      "sha256": "6fe78658f64b0777fa3a56b9d3f7ac0351cc4541c7e294bceea25735b5aeb326",
-      "bytes": 94078,
-      "lines": 2072,
-      "selectorCount": 522,
+      "sha256": "e3da5402c1e152bf5fd463ee7d0e1724bbb7b6a703ef3e26586928fdb4e24632",
+      "bytes": 98015,
+      "lines": 2183,
+      "selectorCount": 536,
       "selectors": [
         ".choosen-month",
         ".help-icon",
@@ -3789,6 +3803,7 @@
         "html #main .orca-block-editor .orca-repr-scope-line:hover::before",
         "html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)",
         "html #main .orca-block-handle-collapsed:not(:hover):not(.orca-block-handle-colored)::before",
+        "html #main .orca-inline.u",
         "html #main .orca-inline[data-type=\"l\"]",
         "html #main .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html #main .orca-inline[data-type=\"l\"]:hover",
@@ -3844,6 +3859,7 @@
         "html .orca-block-popup-preview .orca-block-editor .orca-repr-tag-props-title::before",
         "html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
         "html .orca-block-popup-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+        "html .orca-block-popup-preview .orca-inline.u",
         "html .orca-block-popup-preview .orca-inline[data-type=\"l\"]",
         "html .orca-block-popup-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-block-popup-preview .orca-inline[data-type=\"l\"]:hover",
@@ -3886,6 +3902,7 @@
         "html .orca-block-preview .orca-block-editor .orca-repr-tag-props-title::before",
         "html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
         "html .orca-block-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+        "html .orca-block-preview .orca-inline.u",
         "html .orca-block-preview .orca-inline[data-type=\"l\"]",
         "html .orca-block-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-block-preview .orca-inline[data-type=\"l\"]:hover",
@@ -3946,6 +3963,7 @@
         "html .orca-inline-reference-preview .orca-block-editor .orca-repr-tag-props-title::before",
         "html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-block-handle::before",
         "html .orca-inline-reference-preview .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+        "html .orca-inline-reference-preview .orca-inline.u",
         "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"]",
         "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-inline-reference-preview .orca-inline[data-type=\"l\"]:hover",
@@ -3989,6 +4007,7 @@
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-tag-props-title::before",
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-block-handle::before",
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-block-editor .orca-repr-ul .orca-repr-ul .orca-block-handle::before",
+        "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline.u",
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"]",
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-inline-reference:not(.orca-inline-reference-with-preview) .orca-inline[data-type=\"l\"]:hover",
@@ -4016,6 +4035,7 @@
         "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line::before",
         "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover",
         "html .orca-panels-container #main .orca-block-editor .orca-repr-scope-line:hover::before",
+        "html .orca-panels-container #main .orca-inline.u",
         "html .orca-panels-container #main .orca-inline[data-type=\"l\"]",
         "html .orca-panels-container #main .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-panels-container #main .orca-inline[data-type=\"l\"]:hover",
@@ -4113,6 +4133,7 @@
         "html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:last-of-type:hover",
         "html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-child):hover",
         "html .orca-scrolling-breadcrumb .orca-scrolling-breadcrumb-segment:not(:last-of-type):hover",
+        "html .orca-search-modal-result-preview .orca-inline.u",
         "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"]",
         "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"] .orca-inline-l-text",
         "html .orca-search-modal-result-preview .orca-inline[data-type=\"l\"]:hover",
@@ -4143,6 +4164,8 @@
         "html.t-shadcn .orca-editor-toolbar .orca-editor-toolbar-button-item.orca-button:hover",
         "html.t-shadcn .orca-editor-toolbar .orca-editor-toolbar-list",
         "html.t-shadcn .orca-inline-reference-preview .highlight",
+        "html.t-shadcn .orca-input > .orca-button",
+        "html.t-shadcn .orca-input-input > .orca-checkbox-box",
         "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal",
         "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-command-modal > .orca-command-modal-footer",
         "html.t-shadcn .orca-modal-overlay > .orca-menu.orca-search-modal",
@@ -4152,6 +4175,7 @@
         "html.t-shadcn .orca-modal-overlay > .orca-popup:not(.orca-stats-modal):not(.orca-about-modal):has(.orca-search-modal)",
         "html.t-shadcn .orca-search-modal-block-item .highlight",
         "html.t-shadcn .orca-search-modal-result-preview .highlight",
+        "html.t-shadcn .orca-select-menu-filter .orca-checkbox-box",
         "html.t-shadcn .orca-whiteboard .excalidraw",
         "html.t-shadcn .orca-whiteboard .excalidraw .App-toolbar__extra-tools-trigger--selected",
         "html.t-shadcn .orca-whiteboard .excalidraw .App-toolbar__extra-tools-trigger--selected:hover",
@@ -4192,6 +4216,7 @@
         "html:root:root #sidebar .orca-calendar header",
         "html:root:root #sidebar .orca-sidebar-header",
         "html:root:root .orca-aichat-collapsible",
+        "html:root:root .orca-block-editor-go-btn.orca-button.plain",
         "html:root:root .orca-block-graph-depth-control input[type=\"range\"]",
         "html:root:root .orca-block-graph-depth-control input[type=\"range\"]::-moz-range-progress",
         "html:root:root .orca-block-graph-depth-control input[type=\"range\"]::-moz-range-thumb",
@@ -4206,6 +4231,9 @@
         "html:root:root .orca-command-modal .orca-menu-title.orca-command-modal-command-header",
         "html:root:root .orca-command-modal.orca-menu",
         "html:root:root .orca-command-modal.orca-popup.orca-menu",
+        "html:root:root .orca-input > .orca-input-post",
+        "html:root:root .orca-input:has(.orca-input-input > .orca-button) .orca-input-input > .orca-button",
+        "html:root:root .orca-input:has(.orca-input-post) .orca-input-post",
         "html:root:root .orca-menu:not(.orca-command-modal):not(.orca-search-modal) .orca-menu-title",
         "html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover",
         "html:root:root .orca-plugin-marketplace-controls .orca-button.plain:not(.orca-select-button):hover *",
@@ -4315,7 +4343,7 @@
         "--selected",
         "--text-color"
       ],
-      "declarationBlockCount": 201
+      "declarationBlockCount": 210
     }
   ]
 }
