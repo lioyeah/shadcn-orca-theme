@@ -119,6 +119,176 @@ export function aggregateActivity(
 	return { startDate, endDate, days };
 }
 
+export function createEmptySnapshot(today: Date): ActivitySnapshot {
+	return aggregateActivity([], today);
+}
+
+const QUERY_KIND_SELF_AND = 100;
+const QUERY_KIND_BLOCK = 9;
+const QUERY_OP_GE = 9;
+const QUERY_OP_LE = 10;
+const QUERY_DATE_ABSOLUTE = 2;
+const QUERY_PAGE_SIZE = 500;
+const GET_BLOCKS_BATCH_SIZE = 200;
+
+type QueryDateValue = { t: number; v: number };
+type QueryBlockCondition = {
+	kind: typeof QUERY_KIND_BLOCK;
+	created?: { op: number; value: QueryDateValue };
+	modified?: { op: number; value: QueryDateValue };
+};
+type QueryDescriptionPayload = {
+	q: {
+		kind: typeof QUERY_KIND_SELF_AND;
+		conditions: QueryBlockCondition[];
+	};
+	page?: number;
+	pageSize?: number;
+};
+type QueryBackendResult = {
+	totalCount?: number;
+	page?: number;
+	pageSize?: number;
+	resultIds?: number[];
+};
+
+function dateKeyToStartMs(dateKey: string): number {
+	const [year, month, day] = dateKey.split("-").map(Number);
+	return new Date(year, month - 1, day, 0, 0, 0, 0).getTime();
+}
+
+function dateKeyToEndMs(dateKey: string): number {
+	const [year, month, day] = dateKey.split("-").map(Number);
+	return new Date(year, month - 1, day, 23, 59, 59, 999).getTime();
+}
+
+function buildBlockDateRangeQuery(
+	field: "created" | "modified",
+	startDate: string,
+	endDate: string,
+): QueryDescriptionPayload {
+	const startMs = dateKeyToStartMs(startDate);
+	const endMs = dateKeyToEndMs(endDate);
+	const dateCondition = (op: number, valueMs: number): QueryBlockCondition => ({
+		kind: QUERY_KIND_BLOCK,
+		[field]: { op, value: { t: QUERY_DATE_ABSOLUTE, v: valueMs } },
+	});
+
+	return {
+		q: {
+			kind: QUERY_KIND_SELF_AND,
+			conditions: [
+				dateCondition(QUERY_OP_GE, startMs),
+				dateCondition(QUERY_OP_LE, endMs),
+			],
+		},
+	};
+}
+
+async function queryAllBlockIds(
+	description: QueryDescriptionPayload,
+): Promise<number[]> {
+	const ids: number[] = [];
+	let page = 1;
+	let totalCount = Number.POSITIVE_INFINITY;
+
+	while ((page - 1) * QUERY_PAGE_SIZE < totalCount) {
+		const result = (await orca.invokeBackend("query", {
+			...description,
+			page,
+			pageSize: QUERY_PAGE_SIZE,
+		})) as QueryBackendResult;
+		const pageIds = result?.resultIds ?? [];
+		totalCount = result?.totalCount ?? pageIds.length;
+		ids.push(...pageIds);
+		if (pageIds.length === 0) {
+			break;
+		}
+		page += 1;
+	}
+
+	return ids;
+}
+
+async function fetchActivityBlocksByIds(ids: number[]): Promise<ActivityBlock[]> {
+	if (ids.length === 0) {
+		return [];
+	}
+
+	const blocks: ActivityBlock[] = [];
+	for (let index = 0; index < ids.length; index += GET_BLOCKS_BATCH_SIZE) {
+		const batch = ids.slice(index, index + GET_BLOCKS_BATCH_SIZE);
+		const fetched = (await orca.invokeBackend("get-blocks", batch)) as Block[];
+		for (const block of fetched ?? []) {
+			blocks.push({
+				id: block.id,
+				created: block.created,
+				modified: block.modified,
+			});
+		}
+	}
+	return blocks;
+}
+
+async function collectActivityBlocks(
+	startDate: string,
+	endDate: string,
+): Promise<ActivityBlock[]> {
+	const createdIds = await queryAllBlockIds(
+		buildBlockDateRangeQuery("created", startDate, endDate),
+	);
+	const modifiedIds = await queryAllBlockIds(
+		buildBlockDateRangeQuery("modified", startDate, endDate),
+	);
+	const uniqueIds = [...new Set([...createdIds, ...modifiedIds])];
+	return fetchActivityBlocksByIds(uniqueIds);
+}
+
+export type ActivityCollector = {
+	load(today: Date): Promise<ActivitySnapshot>;
+	cancel(): void;
+};
+
+export function createActivityCollector(): ActivityCollector {
+	let requestToken = 0;
+	const snapshotCache = new Map<string, ActivitySnapshot>();
+	let lastSuccessfulSnapshot: ActivitySnapshot | null = null;
+
+	return {
+		cancel() {
+			requestToken += 1;
+		},
+		async load(today: Date): Promise<ActivitySnapshot> {
+			const requestId = ++requestToken;
+			const { startDate, endDate } = buildDateRange(today);
+			const cacheKey = `${startDate}:${endDate}`;
+			const cachedSnapshot = snapshotCache.get(cacheKey);
+			if (cachedSnapshot) {
+				return cachedSnapshot;
+			}
+
+			const fallback = (): ActivitySnapshot =>
+				lastSuccessfulSnapshot ?? createEmptySnapshot(today);
+
+			try {
+				const blocks = await collectActivityBlocks(startDate, endDate);
+				if (requestId !== requestToken) {
+					return fallback();
+				}
+				const snapshot = aggregateActivity(blocks, today);
+				snapshotCache.set(cacheKey, snapshot);
+				lastSuccessfulSnapshot = snapshot;
+				return snapshot;
+			} catch {
+				if (requestId !== requestToken) {
+					return fallback();
+				}
+				return fallback();
+			}
+		},
+	};
+}
+
 function assertFixture(condition: boolean, message: string): void {
 	if (!condition) {
 		throw new Error(`journal-activity-heatmap fixture: ${message}`);
