@@ -4475,6 +4475,204 @@ html.t-light {
 	}
 
 	/* ----------------------------------------------------------
+	   4.33 Journal activity heatmap — full-width editor footer
+	   Ref: GitHub-style 53-week grid, primary/background level mix
+	   ---------------------------------------------------------- */
+
+	.shadcn-journal-activity-heatmap {
+		--heatmap-gap: 3px;
+		--heatmap-label-size: 0.625rem;
+		--heatmap-level-0: color-mix(in oklab, var(--primary) 8%, var(--background));
+		--heatmap-level-1: color-mix(in oklab, var(--primary) 28%, var(--background));
+		--heatmap-level-2: color-mix(in oklab, var(--primary) 48%, var(--background));
+		--heatmap-level-3: color-mix(in oklab, var(--primary) 68%, var(--background));
+		--heatmap-level-4: color-mix(in oklab, var(--primary) 88%, var(--background));
+
+		box-sizing: border-box;
+		inline-size: 100%;
+		max-inline-size: 100%;
+		min-inline-size: 0;
+		margin-block-start: 0.5rem;
+		background: var(--background);
+		border-block-start: 1px solid var(--border);
+		color: var(--muted-foreground);
+		padding-block: 0.75rem;
+	}
+
+	.shadcn-journal-activity-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding-inline: 1rem;
+		margin-block-end: 0.5rem;
+		font-size: 0.75rem;
+		line-height: 1.25rem;
+	}
+
+	.shadcn-journal-activity-title {
+		color: var(--foreground);
+		font-weight: 500;
+	}
+
+	.shadcn-journal-activity-range {
+		color: var(--muted-foreground);
+		font-size: 0.6875rem;
+		white-space: nowrap;
+	}
+
+	.shadcn-journal-activity-grid {
+		min-inline-size: 0;
+		padding-inline: 1rem;
+	}
+
+	.shadcn-journal-activity-months {
+		display: grid;
+		grid-template-columns: repeat(53, minmax(0, 1fr));
+		column-gap: var(--heatmap-gap);
+		margin-block-end: 0.25rem;
+		min-inline-size: 0;
+	}
+
+	.shadcn-journal-activity-month-label {
+		color: var(--muted-foreground);
+		font-size: var(--heatmap-label-size);
+		line-height: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.shadcn-journal-activity-month-label[data-column="0"] { grid-column: 1; }
+	.shadcn-journal-activity-month-label[data-column="1"] { grid-column: 2; }
+	.shadcn-journal-activity-month-label[data-column="2"] { grid-column: 3; }
+	.shadcn-journal-activity-month-label[data-column="3"] { grid-column: 4; }
+	.shadcn-journal-activity-month-label[data-column="4"] { grid-column: 5; }
+	.shadcn-journal-activity-month-label[data-column="5"] { grid-column: 6; }
+	.shadcn-journal-activity-month-label[data-column="6"] { grid-column: 7; }
+	.shadcn-journal-activity-month-label[data-column="7"] { grid-column: 8; }
+	.shadcn-journal-activity-month-label[data-column="8"] { grid-column: 9; }
+	.shadcn-journal-activity-month-label[data-column="9"] { grid-column: 10; }
+	.shadcn-journal-activity-month-label[data-column="10"] { grid-column: 11; }
+	.shadcn-journal-activity-month-label[data-column="11"] { grid-column: 12; }
+	.shadcn-journal-activity-month-label[data-column="12"] { grid-column: 13; }
+	.shadcn-journal-activity-month-label[data-column="13"] { grid-column: 14; }
+	.shadcn-journal-activity-month-label[data-column="14"] { grid-column: 15; }
+	.shadcn-journal-activity-month-label[data-column="15"] { grid-column: 16; }
+	.shadcn-journal-activity-month-label[data-column="16"] { grid-column: 17; }
+	.shadcn-journal-activity-month-label[data-column="17"] { grid-column: 18; }
+	.shadcn-journal-activity-month-label[data-column="18"] { grid-column: 19; }
+	.shadcn-journal-activity-month-label[data-column="19"] { grid-column: 20; }
+	.shadcn-journal-activity-month-label[data-column="20"] { grid-column: 21; }
+	.shadcn-journal-activity-month-label[data-column="21"] { grid-column: 22; }
+	.shadcn-journal-activity-month-label[data-column="22"] { grid-column: 23; }
+	.shadcn-journal-activity-month-label[data-column="23"] { grid-column: 24; }
+	.shadcn-journal-activity-month-label[data-column="24"] { grid-column: 25; }
+	.shadcn-journal-activity-month-label[data-column="25"] { grid-column: 26; }
+	.shadcn-journal-activity-month-label[data-column="26"] { grid-column: 27; }
+	.shadcn-journal-activity-month-label[data-column="27"] { grid-column: 28; }
+	.shadcn-journal-activity-month-label[data-column="28"] { grid-column: 29; }
+	.shadcn-journal-activity-month-label[data-column="29"] { grid-column: 30; }
+	.shadcn-journal-activity-month-label[data-column="30"] { grid-column: 31; }
+	.shadcn-journal-activity-month-label[data-column="31"] { grid-column: 32; }
+	.shadcn-journal-activity-month-label[data-column="32"] { grid-column: 33; }
+	.shadcn-journal-activity-month-label[data-column="33"] { grid-column: 34; }
+	.shadcn-journal-activity-month-label[data-column="34"] { grid-column: 35; }
+	.shadcn-journal-activity-month-label[data-column="35"] { grid-column: 36; }
+	.shadcn-journal-activity-month-label[data-column="36"] { grid-column: 37; }
+	.shadcn-journal-activity-month-label[data-column="37"] { grid-column: 38; }
+	.shadcn-journal-activity-month-label[data-column="38"] { grid-column: 39; }
+	.shadcn-journal-activity-month-label[data-column="39"] { grid-column: 40; }
+	.shadcn-journal-activity-month-label[data-column="40"] { grid-column: 41; }
+	.shadcn-journal-activity-month-label[data-column="41"] { grid-column: 42; }
+	.shadcn-journal-activity-month-label[data-column="42"] { grid-column: 43; }
+	.shadcn-journal-activity-month-label[data-column="43"] { grid-column: 44; }
+	.shadcn-journal-activity-month-label[data-column="44"] { grid-column: 45; }
+	.shadcn-journal-activity-month-label[data-column="45"] { grid-column: 46; }
+	.shadcn-journal-activity-month-label[data-column="46"] { grid-column: 47; }
+	.shadcn-journal-activity-month-label[data-column="47"] { grid-column: 48; }
+	.shadcn-journal-activity-month-label[data-column="48"] { grid-column: 49; }
+	.shadcn-journal-activity-month-label[data-column="49"] { grid-column: 50; }
+	.shadcn-journal-activity-month-label[data-column="50"] { grid-column: 51; }
+	.shadcn-journal-activity-month-label[data-column="51"] { grid-column: 52; }
+	.shadcn-journal-activity-month-label[data-column="52"] { grid-column: 53; }
+
+	.shadcn-journal-activity-weeks {
+		display: grid;
+		grid-template-columns: repeat(53, minmax(0, 1fr));
+		gap: var(--heatmap-gap);
+		min-inline-size: 0;
+	}
+
+	.shadcn-journal-activity-week-column {
+		display: grid;
+		grid-template-rows: repeat(7, minmax(0, 1fr));
+		gap: var(--heatmap-gap);
+		min-inline-size: 0;
+	}
+
+	.shadcn-journal-activity-cell {
+		display: block;
+		inline-size: 100%;
+		aspect-ratio: 1;
+		border-radius: 2px;
+		min-inline-size: 0;
+	}
+
+	.shadcn-journal-activity-cell.is-placeholder {
+		background: transparent;
+		visibility: hidden;
+	}
+
+	.shadcn-journal-activity-cell.is-level-0 { background: var(--heatmap-level-0); }
+	.shadcn-journal-activity-cell.is-level-1 { background: var(--heatmap-level-1); }
+	.shadcn-journal-activity-cell.is-level-2 { background: var(--heatmap-level-2); }
+	.shadcn-journal-activity-cell.is-level-3 { background: var(--heatmap-level-3); }
+	.shadcn-journal-activity-cell.is-level-4 { background: var(--heatmap-level-4); }
+
+	.shadcn-journal-activity-legend {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding-inline: 1rem;
+		margin-block-start: 0.5rem;
+		font-size: 0.625rem;
+		line-height: 1;
+		color: var(--muted-foreground);
+	}
+
+	.shadcn-journal-activity-legend .shadcn-journal-activity-cell {
+		flex: 0 0 auto;
+		inline-size: 0.625rem;
+		block-size: 0.625rem;
+	}
+
+	@media (width <= 640px) {
+		.shadcn-journal-activity-heatmap {
+			--heatmap-gap: 2px;
+			--heatmap-label-size: 0.5625rem;
+		}
+
+		.shadcn-journal-activity-header,
+		.shadcn-journal-activity-grid,
+		.shadcn-journal-activity-legend {
+			padding-inline: 0.75rem;
+		}
+	}
+
+	@media (width <= 400px) {
+		.shadcn-journal-activity-heatmap {
+			--heatmap-gap: 1px;
+			--heatmap-label-size: 0.5rem;
+		}
+
+		.shadcn-journal-activity-header,
+		.shadcn-journal-activity-grid,
+		.shadcn-journal-activity-legend {
+			padding-inline: 0.5rem;
+		}
+	}
+	/* ----------------------------------------------------------
 	   4.22 Query Editor — accordion.tsx (Card + Borders variant)
 	   .orca-query-conditions = AccordionItem in card shell
 	   .orca-query-conditions-header = AccordionTrigger
