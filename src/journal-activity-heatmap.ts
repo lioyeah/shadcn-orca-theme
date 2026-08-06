@@ -297,8 +297,90 @@ export function createActivityCollector(): ActivityCollector {
 }
 
 const HEATMAP_ROOT_CLASS = "shadcn-journal-activity-heatmap";
+const JOURNAL_MOUNT_MARKER_CLASS = "shadcn-journal-activity-mount";
 const MAX_WEEK_COLUMNS = 53;
 const WEEKDAY_COUNT = 7;
+
+function isElementVisible(element: HTMLElement): boolean {
+	if (!element.isConnected) {
+		return false;
+	}
+	const style = window.getComputedStyle(element);
+	if (style.display === "none" || style.visibility === "hidden") {
+		return false;
+	}
+	const rect = element.getBoundingClientRect();
+	return rect.width > 0 && rect.height > 0;
+}
+
+function findJournalEditorInContainer(
+	container: ParentNode,
+): HTMLElement | null {
+	const selectors = [
+		":scope > .orca-hideable:not(.orca-hideable-hidden) > .orca-block-editor",
+		".orca-hideable:not(.orca-hideable-hidden) > .orca-block-editor",
+		".orca-block-editor",
+	];
+	for (const selector of selectors) {
+		const editor = container.querySelector(selector);
+		if (editor instanceof HTMLElement && isElementVisible(editor)) {
+			return editor;
+		}
+	}
+	return null;
+}
+
+function findPanelContainerById(panelId: string): HTMLElement | null {
+	const selectors = [
+		`#${CSS.escape(panelId)}`,
+		`.orca-panel[data-panel-id="${panelId}"]`,
+		`.orca-view-panel[data-panel-id="${panelId}"]`,
+		`[data-panel-id="${panelId}"]`,
+		`.orca-view-panel[id="${panelId}"]`,
+		`.orca-panel[id="${panelId}"]`,
+		`[data-id="${panelId}"]`,
+		`[data-rid="${panelId}"]`,
+	];
+	for (const selector of selectors) {
+		const container = document.querySelector(selector);
+		if (container instanceof HTMLElement) {
+			return container;
+		}
+	}
+	return null;
+}
+
+function isJournalEditorRoot(editor: HTMLElement): boolean {
+	return editor.querySelector(".orca-repr.orca-repr-journal, .orca-repr-journal") != null;
+}
+
+function collectVisibleJournalEditors(): HTMLElement[] {
+	const editors: HTMLElement[] = [];
+	const seen = new Set<HTMLElement>();
+	const candidates = document.querySelectorAll(
+		".orca-panel > .orca-hideable:not(.orca-hideable-hidden) > .orca-block-editor, .orca-view-panel .orca-block-editor, .orca-block-editor",
+	);
+	for (const candidate of candidates) {
+		if (!(candidate instanceof HTMLElement) || seen.has(candidate)) {
+			continue;
+		}
+		if (!isElementVisible(candidate) || !isJournalEditorRoot(candidate)) {
+			continue;
+		}
+		seen.add(candidate);
+		editors.push(candidate);
+	}
+	return editors;
+}
+
+function markJournalMountRoot(editor: HTMLElement): HTMLElement {
+	editor.classList.add(JOURNAL_MOUNT_MARKER_CLASS);
+	return editor;
+}
+
+function clearJournalMountMarker(editor: HTMLElement | null): void {
+	editor?.classList.remove(JOURNAL_MOUNT_MARKER_CLASS);
+}
 
 type GridCell =
 	| { kind: "placeholder" }
@@ -319,9 +401,37 @@ function findActiveJournalMountRoot(): HTMLElement | null {
 		return null;
 	}
 
-	const panelElement = document.getElementById(activePanel.id);
-	const editor = panelElement?.querySelector(".orca-block-editor");
-	return editor instanceof HTMLElement ? editor : null;
+	const panelId = activePanel.id;
+
+	const panelByDomId = document.getElementById(panelId);
+	const editorFromDomId = panelByDomId
+		? findJournalEditorInContainer(panelByDomId)
+		: null;
+	if (editorFromDomId) {
+		return markJournalMountRoot(editorFromDomId);
+	}
+
+	const panelContainer = findPanelContainerById(panelId);
+	const editorFromPanelContainer = panelContainer
+		? findJournalEditorInContainer(panelContainer)
+		: null;
+	if (editorFromPanelContainer) {
+		return markJournalMountRoot(editorFromPanelContainer);
+	}
+
+	const directEditor = document.querySelector(
+		`.orca-panel[data-panel-id="${panelId}"] > .orca-hideable:not(.orca-hideable-hidden) > .orca-block-editor`,
+	);
+	if (directEditor instanceof HTMLElement && isElementVisible(directEditor)) {
+		return markJournalMountRoot(directEditor);
+	}
+
+	const visibleJournalEditors = collectVisibleJournalEditors();
+	if (visibleJournalEditors.length === 1) {
+		return markJournalMountRoot(visibleJournalEditors[0]);
+	}
+
+	return null;
 }
 
 function mondayFirstWeekdayIndex(date: Date): number {
@@ -520,6 +630,7 @@ export function setupJournalActivityHeatmap(): () => void {
 		loadGeneration += 1;
 		heatmapElement?.remove();
 		heatmapElement = null;
+		clearJournalMountMarker(mountedRoot);
 		mountedRoot = null;
 	};
 
