@@ -125,44 +125,105 @@ function assertFixture(condition: boolean, message: string): void {
 	}
 }
 
+function localDateTime(
+	year: number,
+	month: number,
+	day: number,
+	hour: number,
+	minute = 0,
+	second = 0,
+): Date {
+	return new Date(year, month - 1, day, hour, minute, second);
+}
+
+function localTimeOn(date: Date, hour: number, minute = 0, second = 0): Date {
+	return new Date(
+		date.getFullYear(),
+		date.getMonth(),
+		date.getDate(),
+		hour,
+		minute,
+		second,
+	);
+}
+
+function countFor(snapshot: ActivitySnapshot, dateKey: string): number {
+	return snapshot.days.find((day) => day.date === dateKey)?.count ?? 0;
+}
+
 function runDevFixture(): void {
-	const blocks: ActivityBlock[] = [
-		{
-			id: 1,
-			created: new Date("2026-08-06T00:30:00+08:00"),
-			modified: new Date("2026-08-06T08:00:00+08:00"),
-		},
-		{
-			id: 2,
-			created: new Date("2026-08-05T23:30:00+08:00"),
-			modified: new Date("2026-08-06T00:10:00+08:00"),
-		},
-	];
-	const today = new Date("2026-08-06T12:00:00+08:00");
-	const snapshot = aggregateActivity(blocks, today);
+	// Fixed local calendar anchor — all keys derived from these Date instances.
+	const today = localDateTime(2020, 6, 15, 12, 0, 0);
+	const yesterday = addLocalDays(today, -1);
+	const todayKey = localDateKey(today);
+	const yesterdayKey = localDateKey(yesterday);
 
-	const dayCount = (date: string) =>
-		snapshot.days.find((day) => day.date === date)?.count;
+	const blockSameDay: ActivityBlock = {
+		id: 1,
+		created: localTimeOn(today, 0, 30),
+		modified: localTimeOn(today, 8, 0),
+	};
+	const blockCrossDay: ActivityBlock = {
+		id: 2,
+		created: localTimeOn(yesterday, 23, 30),
+		modified: localTimeOn(today, 0, 10),
+	};
 
-	assertFixture(snapshot.endDate === localDateKey(today), "endDate uses local today");
-	assertFixture(snapshot.days.length === 365, "snapshot covers 365 days");
-	assertFixture(dayCount("2026-08-05") === 1, "block 2 counts on creation day");
-	assertFixture(dayCount("2026-08-06") === 2, "blocks aggregate on modification day");
 	assertFixture(
-		dayCount("2026-08-06") === 2,
+		localDateKey(blockSameDay.created) === todayKey,
+		"same-day block creation maps to today",
+	);
+	assertFixture(
+		localDateKey(blockSameDay.modified) === todayKey,
+		"same-day block modification maps to today",
+	);
+	assertFixture(
+		localDateKey(blockCrossDay.created) === yesterdayKey,
+		"cross-day block creation maps to yesterday",
+	);
+	assertFixture(
+		localDateKey(blockCrossDay.modified) === todayKey,
+		"cross-day block modification maps to today",
+	);
+
+	const sameDayOnly = aggregateActivity([blockSameDay], today);
+	assertFixture(
+		countFor(sameDayOnly, todayKey) === 1,
 		"same block create+modify same day counts once",
 	);
 
-	const block2Modified = blocks[1].modified;
-	const utcModifiedKey = block2Modified.toISOString().slice(0, 10);
+	const crossDayOnly = aggregateActivity([blockCrossDay], today);
 	assertFixture(
-		utcModifiedKey !== localDateKey(block2Modified),
-		"localDateKey differs from UTC ISO date for cross-midnight timestamps",
+		countFor(crossDayOnly, yesterdayKey) === 1,
+		"cross-day block counts on creation day",
 	);
 	assertFixture(
-		localDateKey(block2Modified) === "2026-08-06",
-		"modification day uses local calendar date",
+		countFor(crossDayOnly, todayKey) === 1,
+		"cross-day block counts on modification day",
 	);
+
+	const snapshot = aggregateActivity([blockSameDay, blockCrossDay], today);
+	assertFixture(snapshot.endDate === todayKey, "endDate uses local today");
+	assertFixture(snapshot.days.length === 365, "snapshot covers 365 days");
+	assertFixture(
+		countFor(snapshot, yesterdayKey) === 1,
+		"combined snapshot: cross-day block on creation day",
+	);
+	assertFixture(
+		countFor(snapshot, todayKey) === 2,
+		"combined snapshot: same-day block once plus cross-day block on modification day",
+	);
+
+	const earlyToday = localTimeOn(today, 0, 10);
+	const localKey = localDateKey(earlyToday);
+	const utcKey = earlyToday.toISOString().slice(0, 10);
+	assertFixture(localKey === todayKey, "early-morning timestamp buckets to local today");
+	if (localKey !== utcKey) {
+		assertFixture(
+			countFor(crossDayOnly, todayKey) === 1,
+			"aggregation follows localDateKey, not UTC ISO date",
+		);
+	}
 
 	assertFixture(
 		snapshot.days.every((day) => day.level >= 0 && day.level <= 4),
