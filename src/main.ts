@@ -7,6 +7,8 @@
 
 import { subscribe } from "valtio";
 
+import { setupJournalActivityHeatmap } from "./journal-activity-heatmap";
+
 const THEME_NAME = "shadcn/ui Neutral";
 const THEME_CLASS = "t-shadcn";
 const LEGACY_THEME_NAME = "Neubrutalism";
@@ -21,6 +23,7 @@ const EXCALIDRAW_LASER_CURSOR_HOTSPOT = "4 4";
 let themeModeUnsub: (() => void) | null = null;
 let whiteboardExcalidrawFixUnsub: (() => void) | null = null;
 let blockGraphSliderUnsub: (() => void) | null = null;
+let journalActivityHeatmapUnsub: (() => void) | null = null;
 
 function fixExcalidrawLaserCursor(cursor: string): string | null {
 	if (!cursor.includes("data:image/svg+xml")) {
@@ -225,6 +228,7 @@ function setupBlockGraphSliderDetents() {
 export async function load(name: string) {
 	themeModeUnsub?.();
 	blockGraphSliderUnsub?.();
+	journalActivityHeatmapUnsub?.();
 
 	const state = orca.state as {
 		themes?: Record<string, unknown>;
@@ -242,6 +246,7 @@ export async function load(name: string) {
 	orca.themes.register(name, THEME_NAME, THEME_FILE);
 
 	document.documentElement.classList.add(THEME_CLASS);
+	journalActivityHeatmapUnsub = setupJournalActivityHeatmap();
 	blockGraphSliderUnsub = setupBlockGraphSliderDetents();
 	whiteboardExcalidrawFixUnsub = setupWhiteboardExcalidrawFix();
 
@@ -262,6 +267,10 @@ export async function unload() {
 	if (whiteboardExcalidrawFixUnsub) {
 		whiteboardExcalidrawFixUnsub();
 		whiteboardExcalidrawFixUnsub = null;
+	}
+	if (journalActivityHeatmapUnsub) {
+		journalActivityHeatmapUnsub();
+		journalActivityHeatmapUnsub = null;
 	}
 	orca.themes.unregister(THEME_NAME);
 	document.documentElement.classList.remove(THEME_CLASS, LIGHT_CLASS);

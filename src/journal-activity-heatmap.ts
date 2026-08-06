@@ -1,4 +1,6 @@
-import type { Block } from "./orca.d.ts";
+import { subscribe } from "valtio";
+
+import type { Block, RowPanel, ViewPanel } from "./orca.d.ts";
 
 export type ActivityBlock = Pick<Block, "id" | "created" | "modified">;
 
@@ -286,6 +288,335 @@ export function createActivityCollector(): ActivityCollector {
 				return fallback();
 			}
 		},
+	};
+}
+
+const HEATMAP_ROOT_CLASS = "shadcn-journal-activity-heatmap";
+const MAX_WEEK_COLUMNS = 53;
+const WEEKDAY_COUNT = 7;
+
+type PanelNode = RowPanel | ViewPanel;
+
+type GridCell =
+	| { kind: "placeholder" }
+	| { kind: "day"; date: string; count: number; level: ActivityDay["level"] };
+
+type WeekGridLayout = {
+	columns: GridCell[][];
+	monthLabels: Array<{ column: number; label: string }>;
+};
+
+function isViewPanel(panel: PanelNode): panel is ViewPanel {
+	return "view" in panel;
+}
+
+function walkViewPanels(
+	root: PanelNode,
+	visit: (panel: ViewPanel) => void,
+): void {
+	if (isViewPanel(root)) {
+		visit(root);
+		return;
+	}
+	for (const child of root.children) {
+		walkViewPanels(child as PanelNode, visit);
+	}
+}
+
+function findActiveJournalMountRoot(): HTMLElement | null {
+	const state = orca.state as { panels: RowPanel; activePanel: string };
+	const activePanel = orca.nav.findViewPanel(
+		state.activePanel,
+		state.panels,
+	);
+	if (activePanel?.view === "journal") {
+		const panelElement = document.getElementById(activePanel.id);
+		const editor = panelElement?.querySelector(".orca-block-editor");
+		if (editor instanceof HTMLElement) {
+			return editor;
+		}
+	}
+
+	let fallback: HTMLElement | null = null;
+	walkViewPanels(state.panels, (panel) => {
+		if (fallback || panel.view !== "journal") {
+			return;
+		}
+		const panelElement = document.getElementById(panel.id);
+		const editor = panelElement?.querySelector(".orca-block-editor");
+		if (editor instanceof HTMLElement) {
+			fallback = editor;
+		}
+	});
+	return fallback;
+}
+
+function mondayFirstWeekdayIndex(date: Date): number {
+	const day = date.getDay();
+	return day === 0 ? 6 : day - 1;
+}
+
+function formatActivityRange(snapshot: ActivitySnapshot): string {
+	return `${snapshot.startDate} – ${snapshot.endDate}`;
+}
+
+function buildWeekGrid(days: ActivityDay[]): WeekGridLayout {
+	const cells: GridCell[] = [];
+	const startPad = mondayFirstWeekdayIndex(parseLocalDateKey(days[0]?.date ?? localDateKey(new Date())));
+
+	for (let index = 0; index < startPad; index += 1) {
+		cells.push({ kind: "placeholder" });
+	}
+
+	for (const day of days) {
+		cells.push({
+			kind: "day",
+			date: day.date,
+			count: day.count,
+			level: day.level,
+		});
+	}
+
+	const endPad = (WEEKDAY_COUNT - (cells.length % WEEKDAY_COUNT)) % WEEKDAY_COUNT;
+	for (let index = 0; index < endPad; index += 1) {
+		cells.push({ kind: "placeholder" });
+	}
+
+	const columns: GridCell[][] = [];
+	for (let index = 0; index < cells.length; index += WEEKDAY_COUNT) {
+		columns.push(cells.slice(index, index + WEEKDAY_COUNT));
+	}
+	if (columns.length > MAX_WEEK_COLUMNS) {
+		columns.length = MAX_WEEK_COLUMNS;
+	}
+
+	const monthLabels: WeekGridLayout["monthLabels"] = [];
+	const seenMonths = new Set<string>();
+	for (const [columnIndex, column] of columns.entries()) {
+		for (const cell of column) {
+			if (cell.kind !== "day") {
+				continue;
+			}
+			const date = parseLocalDateKey(cell.date);
+			if (date.getDate() !== 1) {
+				continue;
+			}
+			const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+			if (seenMonths.has(monthKey)) {
+				continue;
+			}
+			seenMonths.add(monthKey);
+			monthLabels.push({
+				column: columnIndex,
+				label: new Intl.DateTimeFormat("zh-CN", { month: "short" }).format(date),
+			});
+			break;
+		}
+	}
+
+	return { columns, monthLabels };
+}
+
+function createHeatmapShell(): HTMLElement {
+	const section = document.createElement("section");
+	section.className = HEATMAP_ROOT_CLASS;
+	section.setAttribute("aria-label", "最近一年的块活动");
+	section.innerHTML = `
+<div class="shadcn-journal-activity-header">
+  <span class="shadcn-journal-activity-title">活动</span>
+  <span class="shadcn-journal-activity-range"></span>
+</div>
+<div class="shadcn-journal-activity-grid" role="presentation"></div>
+<div class="shadcn-journal-activity-legend" aria-hidden="true">
+  <span class="shadcn-journal-activity-legend-less">少</span>
+  <span class="shadcn-journal-activity-cell is-level-0"></span>
+  <span class="shadcn-journal-activity-cell is-level-1"></span>
+  <span class="shadcn-journal-activity-cell is-level-2"></span>
+  <span class="shadcn-journal-activity-cell is-level-3"></span>
+  <span class="shadcn-journal-activity-cell is-level-4"></span>
+  <span class="shadcn-journal-activity-legend-more">多</span>
+</div>`;
+	return section;
+}
+
+function renderActivityCell(cell: GridCell): HTMLSpanElement {
+	const element = document.createElement("span");
+	element.className = "shadcn-journal-activity-cell";
+	if (cell.kind === "placeholder") {
+		element.classList.add("is-placeholder");
+		element.setAttribute("aria-hidden", "true");
+		return element;
+	}
+	element.classList.add(`is-level-${cell.level}`);
+	element.dataset.date = cell.date;
+	element.dataset.count = String(cell.count);
+	return element;
+}
+
+function renderHeatmapSnapshot(
+	root: HTMLElement,
+	snapshot: ActivitySnapshot,
+): void {
+	const rangeElement = root.querySelector<HTMLElement>(
+		".shadcn-journal-activity-range",
+	);
+	if (rangeElement) {
+		rangeElement.textContent = formatActivityRange(snapshot);
+	}
+
+	const gridElement = root.querySelector<HTMLElement>(
+		".shadcn-journal-activity-grid",
+	);
+	if (!gridElement) {
+		return;
+	}
+
+	const { columns, monthLabels } = buildWeekGrid(snapshot.days);
+	gridElement.replaceChildren();
+
+	const monthsElement = document.createElement("div");
+	monthsElement.className = "shadcn-journal-activity-months";
+	monthsElement.setAttribute("aria-hidden", "true");
+	for (const label of monthLabels) {
+		const monthElement = document.createElement("span");
+		monthElement.className = "shadcn-journal-activity-month-label";
+		monthElement.dataset.column = String(label.column);
+		monthElement.textContent = label.label;
+		monthsElement.appendChild(monthElement);
+	}
+	gridElement.appendChild(monthsElement);
+
+	const weeksElement = document.createElement("div");
+	weeksElement.className = "shadcn-journal-activity-weeks";
+	for (const column of columns) {
+		const columnElement = document.createElement("div");
+		columnElement.className = "shadcn-journal-activity-week-column";
+		for (const cell of column) {
+			columnElement.appendChild(renderActivityCell(cell));
+		}
+		weeksElement.appendChild(columnElement);
+	}
+	gridElement.appendChild(weeksElement);
+}
+
+function computeBlocksFingerprint(
+	blocks: Record<string | number, Block | undefined>,
+): string {
+	let count = 0;
+	let checksum = 0;
+	for (const block of Object.values(blocks)) {
+		if (!block) {
+			continue;
+		}
+		count += 1;
+		checksum ^= Number(block.id) ^ block.modified.getTime();
+	}
+	return `${count}:${checksum}`;
+}
+
+export function setupJournalActivityHeatmap(): () => void {
+	let collector = createActivityCollector();
+	let mountedRoot: HTMLElement | null = null;
+	let heatmapElement: HTMLElement | null = null;
+	let scanFrame: number | null = null;
+	let loadGeneration = 0;
+	let blocksFingerprint = computeBlocksFingerprint(orca.state.blocks);
+
+	const clearScanFrame = () => {
+		if (scanFrame != null) {
+			cancelAnimationFrame(scanFrame);
+			scanFrame = null;
+		}
+	};
+
+	const unmountHeatmap = () => {
+		collector.cancel();
+		loadGeneration += 1;
+		heatmapElement?.remove();
+		heatmapElement = null;
+		mountedRoot = null;
+	};
+
+	const loadAndRender = async () => {
+		const element = heatmapElement;
+		if (!element) {
+			return;
+		}
+		const requestGeneration = ++loadGeneration;
+		const snapshot = await collector.load(new Date());
+		if (requestGeneration !== loadGeneration || heatmapElement !== element) {
+			return;
+		}
+		renderHeatmapSnapshot(element, snapshot);
+	};
+
+	const mountHeatmap = (mountRoot: HTMLElement) => {
+		unmountHeatmap();
+		mountedRoot = mountRoot;
+		heatmapElement = createHeatmapShell();
+		mountRoot.appendChild(heatmapElement);
+		void loadAndRender();
+	};
+
+	const scan = () => {
+		const mountRoot = findActiveJournalMountRoot();
+		if (!mountRoot) {
+			unmountHeatmap();
+			return;
+		}
+
+		if (
+			heatmapElement &&
+			(!heatmapElement.isConnected || mountedRoot !== mountRoot)
+		) {
+			unmountHeatmap();
+		}
+
+		if (!heatmapElement) {
+			mountHeatmap(mountRoot);
+		}
+	};
+
+	const scheduleScan = () => {
+		clearScanFrame();
+		scanFrame = requestAnimationFrame(() => {
+			scanFrame = null;
+			scan();
+		});
+	};
+
+	const refreshData = () => {
+		collector.cancel();
+		collector = createActivityCollector();
+		if (heatmapElement) {
+			void loadAndRender();
+		}
+	};
+
+	const stateUnsub = subscribe(orca.state, () => {
+		const nextFingerprint = computeBlocksFingerprint(orca.state.blocks);
+		const blocksChanged = nextFingerprint !== blocksFingerprint;
+		if (blocksChanged) {
+			blocksFingerprint = nextFingerprint;
+			refreshData();
+		}
+		scheduleScan();
+	});
+
+	const mountTarget = document.querySelector("#main") ?? document.body;
+	const domObserver = new MutationObserver(() => {
+		scheduleScan();
+	});
+	domObserver.observe(mountTarget, { childList: true, subtree: true });
+
+	scan();
+
+	return () => {
+		stateUnsub();
+		domObserver.disconnect();
+		clearScanFrame();
+		unmountHeatmap();
+		collector.cancel();
 	};
 }
 
