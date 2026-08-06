@@ -1,9 +1,9 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "3e9bea8602827b8dfdebb60fea0785da13ae5c7da2b9a31214ea6b99ffafa5da",
-    "bytes": 386946,
-    "lines": 10115,
+    "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8",
+    "bytes": 387288,
+    "lines": 10133,
     "selectorCount": 1657,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
@@ -1998,16 +1998,16 @@
       "--typeset-tag-props",
       "--variant-filled"
     ],
-    "declarationBlockCount": 1184
+    "declarationBlockCount": 1186
   },
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "3e9bea8602827b8dfdebb60fea0785da13ae5c7da2b9a31214ea6b99ffafa5da"
+      "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "3e9bea8602827b8dfdebb60fea0785da13ae5c7da2b9a31214ea6b99ffafa5da"
+      "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8"
     }
   },
   "sources": [
@@ -3176,9 +3176,9 @@
     },
     {
       "file": "src/theme-css/components/journal-activity-heatmap.css",
-      "sha256": "d7e0094867ec124acce5ab9f0a89313a0b055d4b056e2cd5ec5c57019e33b96e",
-      "bytes": 7883,
-      "lines": 201,
+      "sha256": "c2134b8b723e458187ae1911b6d2a48f46f913148e6bb560abb1560f56c7e5f3",
+      "bytes": 8225,
+      "lines": 219,
       "selectorCount": 72,
       "selectors": [
         ".shadcn-journal-activity-cell",
@@ -3264,7 +3264,7 @@
         "--heatmap-level-3",
         "--heatmap-level-4"
       ],
-      "declarationBlockCount": 78
+      "declarationBlockCount": 80
     },
     {
       "file": "src/theme-css/components/query.css",
