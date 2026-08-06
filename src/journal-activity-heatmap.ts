@@ -1,6 +1,6 @@
 import { subscribe } from "valtio";
 
-import type { Block, RowPanel, ViewPanel } from "./orca.d.ts";
+import type { Block, RowPanel } from "./orca.d.ts";
 
 export type ActivityBlock = Pick<Block, "id" | "created" | "modified">;
 
@@ -249,6 +249,8 @@ async function collectActivityBlocks(
 export type ActivityCollector = {
 	load(today: Date): Promise<ActivitySnapshot>;
 	cancel(): void;
+	/** Drop cached query results but keep the last successful snapshot for failure fallback. */
+	invalidateCache(): void;
 };
 
 export function createActivityCollector(): ActivityCollector {
@@ -259,6 +261,9 @@ export function createActivityCollector(): ActivityCollector {
 	return {
 		cancel() {
 			requestToken += 1;
+		},
+		invalidateCache() {
+			snapshotCache.clear();
 		},
 		async load(today: Date): Promise<ActivitySnapshot> {
 			const requestId = ++requestToken;
@@ -295,8 +300,6 @@ const HEATMAP_ROOT_CLASS = "shadcn-journal-activity-heatmap";
 const MAX_WEEK_COLUMNS = 53;
 const WEEKDAY_COUNT = 7;
 
-type PanelNode = RowPanel | ViewPanel;
-
 type GridCell =
 	| { kind: "placeholder" }
 	| { kind: "day"; date: string; count: number; level: ActivityDay["level"] };
@@ -306,49 +309,19 @@ type WeekGridLayout = {
 	monthLabels: Array<{ column: number; label: string }>;
 };
 
-function isViewPanel(panel: PanelNode): panel is ViewPanel {
-	return "view" in panel;
-}
-
-function walkViewPanels(
-	root: PanelNode,
-	visit: (panel: ViewPanel) => void,
-): void {
-	if (isViewPanel(root)) {
-		visit(root);
-		return;
-	}
-	for (const child of root.children) {
-		walkViewPanels(child as PanelNode, visit);
-	}
-}
-
 function findActiveJournalMountRoot(): HTMLElement | null {
 	const state = orca.state as { panels: RowPanel; activePanel: string };
 	const activePanel = orca.nav.findViewPanel(
 		state.activePanel,
 		state.panels,
 	);
-	if (activePanel?.view === "journal") {
-		const panelElement = document.getElementById(activePanel.id);
-		const editor = panelElement?.querySelector(".orca-block-editor");
-		if (editor instanceof HTMLElement) {
-			return editor;
-		}
+	if (activePanel?.view !== "journal") {
+		return null;
 	}
 
-	let fallback: HTMLElement | null = null;
-	walkViewPanels(state.panels, (panel) => {
-		if (fallback || panel.view !== "journal") {
-			return;
-		}
-		const panelElement = document.getElementById(panel.id);
-		const editor = panelElement?.querySelector(".orca-block-editor");
-		if (editor instanceof HTMLElement) {
-			fallback = editor;
-		}
-	});
-	return fallback;
+	const panelElement = document.getElementById(activePanel.id);
+	const editor = panelElement?.querySelector(".orca-block-editor");
+	return editor instanceof HTMLElement ? editor : null;
 }
 
 function mondayFirstWeekdayIndex(date: Date): number {
@@ -502,16 +475,21 @@ function renderHeatmapSnapshot(
 function computeBlocksFingerprint(
 	blocks: Record<string | number, Block | undefined>,
 ): string {
-	let count = 0;
-	let checksum = 0;
+	const entries: string[] = [];
 	for (const block of Object.values(blocks)) {
 		if (!block) {
 			continue;
 		}
-		count += 1;
-		checksum ^= Number(block.id) ^ block.modified.getTime();
+		entries.push(
+			`${block.id},${block.created.getTime()},${block.modified.getTime()}`,
+		);
 	}
-	return `${count}:${checksum}`;
+	entries.sort((left, right) => {
+		const leftId = Number(left.split(",", 1)[0]);
+		const rightId = Number(right.split(",", 1)[0]);
+		return leftId - rightId;
+	});
+	return `${entries.length}:${entries.join(";")}`;
 }
 
 export function setupJournalActivityHeatmap(): () => void {
@@ -587,7 +565,7 @@ export function setupJournalActivityHeatmap(): () => void {
 
 	const refreshData = () => {
 		collector.cancel();
-		collector = createActivityCollector();
+		collector.invalidateCache();
 		if (heatmapElement) {
 			void loadAndRender();
 		}
@@ -603,11 +581,10 @@ export function setupJournalActivityHeatmap(): () => void {
 		scheduleScan();
 	});
 
-	const mountTarget = document.querySelector("#main") ?? document.body;
 	const domObserver = new MutationObserver(() => {
 		scheduleScan();
 	});
-	domObserver.observe(mountTarget, { childList: true, subtree: true });
+	domObserver.observe(document.body, { childList: true, subtree: true });
 
 	scan();
 

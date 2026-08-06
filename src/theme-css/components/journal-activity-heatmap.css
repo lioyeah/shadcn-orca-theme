@@ -33,16 +33,23 @@
 		margin-block-end: 0.5rem;
 		font-size: 0.75rem;
 		line-height: 1.25rem;
+		min-inline-size: 0;
 	}
 
 	.shadcn-journal-activity-title {
 		color: var(--foreground);
 		font-weight: 500;
+		flex: 0 0 auto;
 	}
 
 	.shadcn-journal-activity-range {
 		color: var(--muted-foreground);
 		font-size: 0.6875rem;
+		flex: 1 1 auto;
+		min-inline-size: 0;
+		text-align: end;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
@@ -195,6 +202,17 @@
 		.shadcn-journal-activity-grid,
 		.shadcn-journal-activity-legend {
 			padding-inline: 0.5rem;
+		}
+
+		.shadcn-journal-activity-header {
+			flex-wrap: wrap;
+		}
+
+		.shadcn-journal-activity-range {
+			flex-basis: 100%;
+			text-align: start;
+			white-space: normal;
+			overflow-wrap: anywhere;
 		}
 	}
 }
