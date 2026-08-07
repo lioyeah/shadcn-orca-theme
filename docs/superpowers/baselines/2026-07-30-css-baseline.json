@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53",
-    "bytes": 388021,
-    "lines": 10165,
-    "selectorCount": 1661,
+    "sha256": "605662fdc2f7fc6bccfaa89f075b89210451df91ef2ed519a10eede401e8f303",
+    "bytes": 388827,
+    "lines": 10191,
+    "selectorCount": 1662,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
       "#app.sidebar-closed > #main.orca-panels-container",
@@ -1631,6 +1631,7 @@
       "html:root:root.t-shadcn .orca-repr-tag-props textarea.orca-tag-data-textarea",
       "html:root:root.t-shadcn .shadcn-journal-activity-layout",
       "html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor",
+      "html:root:root.t-shadcn .shadcn-journal-activity-layout > .shadcn-journal-activity-heatmap",
       "iframe",
       "img",
       "input",
@@ -1668,7 +1669,7 @@
       "to",
       "video"
     ],
-    "customPropertyCount": 331,
+    "customPropertyCount": 332,
     "customProperties": [
       "--ExcTextField--background",
       "--ExcTextField--border",
@@ -1781,6 +1782,7 @@
       "--focus-highlight-color",
       "--foreground",
       "--heading-font-weight",
+      "--heatmap-cell-min",
       "--heatmap-gap",
       "--heatmap-label-size",
       "--heatmap-level-0",
@@ -2007,11 +2009,11 @@
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53"
+      "sha256": "605662fdc2f7fc6bccfaa89f075b89210451df91ef2ed519a10eede401e8f303"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53"
+      "sha256": "605662fdc2f7fc6bccfaa89f075b89210451df91ef2ed519a10eede401e8f303"
     }
   },
   "sources": [
@@ -3180,9 +3182,9 @@
     },
     {
       "file": "src/theme-css/components/journal-activity-heatmap.css",
-      "sha256": "9029fb49252118a966e408d0107905efa02ff450f7817b05074c142cd6352460",
-      "bytes": 8515,
-      "lines": 235,
+      "sha256": "378fa2e86b12b4fd8d82387b5cc5685a84ec7d7465b9b958233c20a7810678d0",
+      "bytes": 8869,
+      "lines": 246,
       "selectorCount": 74,
       "selectors": [
         ".shadcn-journal-activity-cell",
@@ -3260,8 +3262,9 @@
         "@media (width <= 400px)",
         "@media (width <= 640px)"
       ],
-      "customPropertyCount": 7,
+      "customPropertyCount": 8,
       "customProperties": [
+        "--heatmap-cell-min",
         "--heatmap-gap",
         "--heatmap-label-size",
         "--heatmap-level-0",
@@ -3270,7 +3273,7 @@
         "--heatmap-level-3",
         "--heatmap-level-4"
       ],
-      "declarationBlockCount": 82
+      "declarationBlockCount": 81
     },
     {
       "file": "src/theme-css/components/query.css",
@@ -3941,10 +3944,10 @@
     },
     {
       "file": "src/theme-css/native-precedence.css",
-      "sha256": "11c3eec3b553c031a7bbbe7dfc4a2f3f6b83b53d1e982b2cf2f40e52ce1e8582",
-      "bytes": 98458,
-      "lines": 2199,
-      "selectorCount": 538,
+      "sha256": "e7a4d7e51c2aa2cce8aa6d10bc7fb473075f92ded42657eae1db4902a722832b",
+      "bytes": 98910,
+      "lines": 2214,
+      "selectorCount": 539,
       "selectors": [
         ".choosen-month",
         ".help-icon",
@@ -4476,6 +4479,7 @@
         "html:root:root.t-shadcn .orca-repr-tag-props textarea.orca-tag-data-textarea",
         "html:root:root.t-shadcn .shadcn-journal-activity-layout",
         "html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor",
+        "html:root:root.t-shadcn .shadcn-journal-activity-layout > .shadcn-journal-activity-heatmap",
         "input",
         "span.orca-textarea2.orca-tag-data-text-link ) :is(.orca-input-input",
         "span.orca-textarea2.orca-tag-data-text-link ) :is(.orca-input-post",
@@ -4523,7 +4527,7 @@
         "--selected",
         "--text-color"
       ],
-      "declarationBlockCount": 212
+      "declarationBlockCount": 213
     }
   ]
 }

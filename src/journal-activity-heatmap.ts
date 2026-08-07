@@ -16,6 +16,33 @@ export type ActivitySnapshot = {
 	days: ActivityDay[];
 };
 
+/** Normalize Orca IPC date fields (Date, ISO string, or Unix ms/s) to a real Date. */
+export function normalizeActivityDate(value: unknown): Date | null {
+	if (value instanceof Date) {
+		return Number.isNaN(value.getTime()) ? null : value;
+	}
+
+	if (typeof value === "number" && Number.isFinite(value)) {
+		const milliseconds = Math.abs(value) < 1e12 ? value * 1000 : value;
+		const date = new Date(milliseconds);
+		return Number.isNaN(date.getTime()) ? null : date;
+	}
+
+	if (typeof value === "string" && value.trim().length > 0) {
+		const date = new Date(value);
+		return Number.isNaN(date.getTime()) ? null : date;
+	}
+
+	return null;
+}
+
+function activityDateKey(value: Date): string | null {
+	if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
+		return null;
+	}
+	return localDateKey(value);
+}
+
 /** Local calendar date as `YYYY-MM-DD` (not UTC). */
 export function localDateKey(value: Date): string {
 	const year = value.getFullYear();
@@ -95,13 +122,13 @@ export function aggregateActivity(
 	}
 
 	for (const block of blocks) {
-		const createdKey = localDateKey(block.created);
-		if (isDateKeyInRange(createdKey, startDate, endDate)) {
+		const createdKey = activityDateKey(block.created);
+		if (createdKey && isDateKeyInRange(createdKey, startDate, endDate)) {
 			blockIdsByDate.get(createdKey)?.add(block.id);
 		}
 
-		const modifiedKey = localDateKey(block.modified);
-		if (isDateKeyInRange(modifiedKey, startDate, endDate)) {
+		const modifiedKey = activityDateKey(block.modified);
+		if (modifiedKey && isDateKeyInRange(modifiedKey, startDate, endDate)) {
 			blockIdsByDate.get(modifiedKey)?.add(block.id);
 		}
 	}
@@ -222,10 +249,15 @@ async function fetchActivityBlocksByIds(ids: number[]): Promise<ActivityBlock[]>
 		const batch = ids.slice(index, index + GET_BLOCKS_BATCH_SIZE);
 		const fetched = (await orca.invokeBackend("get-blocks", batch)) as Block[];
 		for (const block of fetched ?? []) {
+			const created = normalizeActivityDate(block.created);
+			const modified = normalizeActivityDate(block.modified);
+			if (!created && !modified) {
+				continue;
+			}
 			blocks.push({
 				id: block.id,
-				created: block.created,
-				modified: block.modified,
+				created: created ?? modified!,
+				modified: modified ?? created!,
 			});
 		}
 	}
@@ -911,6 +943,35 @@ function runDevFixture(): void {
 		snapshot.days.every((day) => day.level >= 0 && day.level <= 4),
 		"activity levels stay within 0-4",
 	);
+
+	const isoCreated = normalizeActivityDate(blockSameDay.created.toISOString());
+	const unixModified = normalizeActivityDate(blockSameDay.modified.getTime());
+	assertFixture(
+		isoCreated != null && localDateKey(isoCreated) === todayKey,
+		"ISO string dates normalize for aggregation",
+	);
+	assertFixture(
+		unixModified != null && localDateKey(unixModified) === todayKey,
+		"Unix millisecond timestamps normalize for aggregation",
+	);
+
+	const ipcStyleBlock: ActivityBlock = {
+		id: 3,
+		created: normalizeActivityDate(blockCrossDay.created.toISOString())!,
+		modified: normalizeActivityDate(blockCrossDay.modified.getTime())!,
+	};
+	const ipcSnapshot = aggregateActivity([ipcStyleBlock], today);
+	assertFixture(
+		countFor(ipcSnapshot, yesterdayKey) === 1,
+		"IPC-normalized block counts on creation day",
+	);
+	assertFixture(
+		countFor(ipcSnapshot, todayKey) === 1,
+		"IPC-normalized block counts on modification day",
+	);
+
+	assertFixture(normalizeActivityDate("not-a-date") === null, "invalid date strings are rejected");
+	assertFixture(normalizeActivityDate(Number.NaN) === null, "invalid numbers are rejected");
 }
 
 if (import.meta.env?.DEV) {
