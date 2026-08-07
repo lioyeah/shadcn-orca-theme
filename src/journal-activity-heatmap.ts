@@ -16,6 +16,58 @@ export type ActivitySnapshot = {
 	days: ActivityDay[];
 };
 
+const DATE_ONLY_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
+const ISO_DATETIME_RE =
+	/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})?$/;
+
+function isRealCalendarDate(year: number, month: number, day: number): boolean {
+	const date = new Date(year, month - 1, day);
+	return (
+		date.getFullYear() === year &&
+		date.getMonth() === month - 1 &&
+		date.getDate() === day
+	);
+}
+
+function parseDateOnlyString(value: string): Date | null {
+	const match = DATE_ONLY_RE.exec(value);
+	if (!match) {
+		return null;
+	}
+	const year = Number(match[1]);
+	const month = Number(match[2]);
+	const day = Number(match[3]);
+	if (!isRealCalendarDate(year, month, day)) {
+		return null;
+	}
+	return new Date(year, month - 1, day);
+}
+
+function parseIsoDateTimeString(value: string): Date | null {
+	const match = ISO_DATETIME_RE.exec(value);
+	if (!match) {
+		return null;
+	}
+	const year = Number(match[1]);
+	const month = Number(match[2]);
+	const day = Number(match[3]);
+	if (!isRealCalendarDate(year, month, day)) {
+		return null;
+	}
+	const date = new Date(value);
+	return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function hasPresentActivityDateValue(value: unknown): boolean {
+	if (value == null) {
+		return false;
+	}
+	if (typeof value === "string") {
+		return value.trim().length > 0;
+	}
+	return true;
+}
+
 /** Normalize Orca IPC date fields (Date, ISO string, or Unix ms/s) to a real Date. */
 export function normalizeActivityDate(value: unknown): Date | null {
 	if (value instanceof Date) {
@@ -28,12 +80,42 @@ export function normalizeActivityDate(value: unknown): Date | null {
 		return Number.isNaN(date.getTime()) ? null : date;
 	}
 
-	if (typeof value === "string" && value.trim().length > 0) {
-		const date = new Date(value);
-		return Number.isNaN(date.getTime()) ? null : date;
+	if (typeof value === "string") {
+		const trimmed = value.trim();
+		if (trimmed.length === 0) {
+			return null;
+		}
+		if (DATE_ONLY_RE.test(trimmed)) {
+			return parseDateOnlyString(trimmed);
+		}
+		if (ISO_DATETIME_RE.test(trimmed)) {
+			return parseIsoDateTimeString(trimmed);
+		}
+		return null;
 	}
 
 	return null;
+}
+
+function toActivityBlock(block: Block): ActivityBlock {
+	const created = normalizeActivityDate(block.created);
+	const modified = normalizeActivityDate(block.modified);
+
+	if (hasPresentActivityDateValue(block.created) && !created) {
+		throw new Error(`Invalid block created date for block ${block.id}`);
+	}
+	if (hasPresentActivityDateValue(block.modified) && !modified) {
+		throw new Error(`Invalid block modified date for block ${block.id}`);
+	}
+	if (!created && !modified) {
+		throw new Error(`Missing block dates for block ${block.id}`);
+	}
+
+	return {
+		id: block.id,
+		created: created ?? modified!,
+		modified: modified ?? created!,
+	};
 }
 
 function activityDateKey(value: Date): string | null {
@@ -249,16 +331,7 @@ async function fetchActivityBlocksByIds(ids: number[]): Promise<ActivityBlock[]>
 		const batch = ids.slice(index, index + GET_BLOCKS_BATCH_SIZE);
 		const fetched = (await orca.invokeBackend("get-blocks", batch)) as Block[];
 		for (const block of fetched ?? []) {
-			const created = normalizeActivityDate(block.created);
-			const modified = normalizeActivityDate(block.modified);
-			if (!created && !modified) {
-				continue;
-			}
-			blocks.push({
-				id: block.id,
-				created: created ?? modified!,
-				modified: modified ?? created!,
-			});
+			blocks.push(toActivityBlock(block));
 		}
 	}
 	return blocks;
@@ -955,6 +1028,18 @@ function runDevFixture(): void {
 		"Unix millisecond timestamps normalize for aggregation",
 	);
 
+	const unixSeconds = normalizeActivityDate(Math.floor(blockSameDay.modified.getTime() / 1000));
+	assertFixture(
+		unixSeconds != null && localDateKey(unixSeconds) === todayKey,
+		"Unix second timestamps normalize for aggregation",
+	);
+
+	const dateOnlyCreated = normalizeActivityDate(todayKey);
+	assertFixture(
+		dateOnlyCreated != null && localDateKey(dateOnlyCreated) === todayKey,
+		"date-only strings parse as local calendar dates",
+	);
+
 	const ipcStyleBlock: ActivityBlock = {
 		id: 3,
 		created: normalizeActivityDate(blockCrossDay.created.toISOString())!,
@@ -971,7 +1056,44 @@ function runDevFixture(): void {
 	);
 
 	assertFixture(normalizeActivityDate("not-a-date") === null, "invalid date strings are rejected");
+	assertFixture(normalizeActivityDate("2020-06-15 12:00:00") === null, "ambiguous date strings are rejected");
+	assertFixture(normalizeActivityDate("2020/06/15") === null, "slash-separated date strings are rejected");
+	assertFixture(normalizeActivityDate("2020-02-30") === null, "rollover date-only strings are rejected");
+	assertFixture(
+		normalizeActivityDate("2020-02-30T00:00:00Z") === null,
+		"rollover ISO datetime strings are rejected",
+	);
 	assertFixture(normalizeActivityDate(Number.NaN) === null, "invalid numbers are rejected");
+
+	let invalidBlockThrew = false;
+	try {
+		toActivityBlock({
+			id: 99,
+			created: "2020-02-30",
+			modified: blockSameDay.modified,
+		} as unknown as Block);
+	} catch {
+		invalidBlockThrew = true;
+	}
+	assertFixture(invalidBlockThrew, "invalid fetched block dates fail the collector path");
+
+	const goodSnapshot = aggregateActivity([blockSameDay], today);
+	let lastSuccessfulSnapshot: ActivitySnapshot | null = goodSnapshot;
+	const refreshFailureFallback =
+		lastSuccessfulSnapshot ?? createEmptySnapshot(today);
+	assertFixture(
+		refreshFailureFallback === goodSnapshot,
+		"refresh failure preserves lastSuccessfulSnapshot",
+	);
+
+	lastSuccessfulSnapshot = null;
+	const firstLoadFailureFallback =
+		lastSuccessfulSnapshot ?? createEmptySnapshot(today);
+	assertFixture(
+		firstLoadFailureFallback.days.length === 365 &&
+			firstLoadFailureFallback.days.every((day) => day.count === 0),
+		"first load failure shows empty grid",
+	);
 }
 
 if (import.meta.env?.DEV) {
