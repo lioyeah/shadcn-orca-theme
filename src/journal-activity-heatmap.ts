@@ -297,7 +297,7 @@ export function createActivityCollector(): ActivityCollector {
 }
 
 const HEATMAP_ROOT_CLASS = "shadcn-journal-activity-heatmap";
-const JOURNAL_MOUNT_MARKER_CLASS = "shadcn-journal-activity-mount";
+const JOURNAL_LAYOUT_MARKER_CLASS = "shadcn-journal-activity-layout";
 const MAX_WEEK_COLUMNS = 53;
 const WEEKDAY_COUNT = 7;
 
@@ -313,6 +313,11 @@ function isElementVisible(element: HTMLElement): boolean {
 	return rect.width > 0 && rect.height > 0;
 }
 
+type JournalMountTarget = {
+	layoutHost: HTMLElement;
+	editor: HTMLElement;
+};
+
 function findJournalEditorInContainer(
 	container: ParentNode,
 ): HTMLElement | null {
@@ -327,6 +332,46 @@ function findJournalEditorInContainer(
 			return editor;
 		}
 	}
+	return null;
+}
+
+function findJournalMountTargetInContainer(
+	container: ParentNode,
+): JournalMountTarget | null {
+	const hideableSelectors = [
+		":scope > .orca-hideable:not(.orca-hideable-hidden)",
+		".orca-hideable:not(.orca-hideable-hidden)",
+	];
+	for (const selector of hideableSelectors) {
+		const hideable = container.querySelector(selector);
+		if (!(hideable instanceof HTMLElement) || !isElementVisible(hideable)) {
+			continue;
+		}
+		const editorSelectors = [
+			":scope > .orca-block-editor",
+			"> .orca-block-editor",
+			".orca-block-editor",
+		];
+		for (const editorSelector of editorSelectors) {
+			const editor = hideable.querySelector(editorSelector);
+			if (!(editor instanceof HTMLElement) || !isElementVisible(editor)) {
+				continue;
+			}
+			if (!isJournalEditorRoot(editor)) {
+				continue;
+			}
+			return { layoutHost: hideable, editor };
+		}
+	}
+
+	const editor = findJournalEditorInContainer(container);
+	if (editor && isJournalEditorRoot(editor)) {
+		const parent = editor.parentElement;
+		if (parent instanceof HTMLElement && isElementVisible(parent)) {
+			return { layoutHost: parent, editor };
+		}
+	}
+
 	return null;
 }
 
@@ -373,13 +418,13 @@ function collectVisibleJournalEditors(): HTMLElement[] {
 	return editors;
 }
 
-function markJournalMountRoot(editor: HTMLElement): HTMLElement {
-	editor.classList.add(JOURNAL_MOUNT_MARKER_CLASS);
-	return editor;
+function markJournalLayoutHost(host: HTMLElement): HTMLElement {
+	host.classList.add(JOURNAL_LAYOUT_MARKER_CLASS);
+	return host;
 }
 
-function clearJournalMountMarker(editor: HTMLElement | null): void {
-	editor?.classList.remove(JOURNAL_MOUNT_MARKER_CLASS);
+function clearJournalLayoutMarker(host: HTMLElement | null): void {
+	host?.classList.remove(JOURNAL_LAYOUT_MARKER_CLASS);
 }
 
 type GridCell =
@@ -391,7 +436,7 @@ type WeekGridLayout = {
 	monthLabels: Array<{ column: number; label: string }>;
 };
 
-function findActiveJournalMountRoot(): HTMLElement | null {
+function findActiveJournalMountTarget(): JournalMountTarget | null {
 	const state = orca.state as { panels: RowPanel; activePanel: string };
 	const activePanel = orca.nav.findViewPanel(
 		state.activePanel,
@@ -404,31 +449,54 @@ function findActiveJournalMountRoot(): HTMLElement | null {
 	const panelId = activePanel.id;
 
 	const panelByDomId = document.getElementById(panelId);
-	const editorFromDomId = panelByDomId
-		? findJournalEditorInContainer(panelByDomId)
+	const targetFromDomId = panelByDomId
+		? findJournalMountTargetInContainer(panelByDomId)
 		: null;
-	if (editorFromDomId) {
-		return markJournalMountRoot(editorFromDomId);
+	if (targetFromDomId) {
+		return {
+			layoutHost: markJournalLayoutHost(targetFromDomId.layoutHost),
+			editor: targetFromDomId.editor,
+		};
 	}
 
 	const panelContainer = findPanelContainerById(panelId);
-	const editorFromPanelContainer = panelContainer
-		? findJournalEditorInContainer(panelContainer)
+	const targetFromPanelContainer = panelContainer
+		? findJournalMountTargetInContainer(panelContainer)
 		: null;
-	if (editorFromPanelContainer) {
-		return markJournalMountRoot(editorFromPanelContainer);
+	if (targetFromPanelContainer) {
+		return {
+			layoutHost: markJournalLayoutHost(targetFromPanelContainer.layoutHost),
+			editor: targetFromPanelContainer.editor,
+		};
 	}
 
-	const directEditor = document.querySelector(
-		`.orca-panel[data-panel-id="${panelId}"] > .orca-hideable:not(.orca-hideable-hidden) > .orca-block-editor`,
+	const directHideable = document.querySelector(
+		`.orca-panel[data-panel-id="${panelId}"] > .orca-hideable:not(.orca-hideable-hidden)`,
 	);
-	if (directEditor instanceof HTMLElement && isElementVisible(directEditor)) {
-		return markJournalMountRoot(directEditor);
+	if (directHideable instanceof HTMLElement && isElementVisible(directHideable)) {
+		const editor = directHideable.querySelector(":scope > .orca-block-editor");
+		if (
+			editor instanceof HTMLElement &&
+			isElementVisible(editor) &&
+			isJournalEditorRoot(editor)
+		) {
+			return {
+				layoutHost: markJournalLayoutHost(directHideable),
+				editor,
+			};
+		}
 	}
 
 	const visibleJournalEditors = collectVisibleJournalEditors();
 	if (visibleJournalEditors.length === 1) {
-		return markJournalMountRoot(visibleJournalEditors[0]);
+		const editor = visibleJournalEditors[0];
+		const parent = editor.parentElement;
+		if (parent instanceof HTMLElement && isElementVisible(parent)) {
+			return {
+				layoutHost: markJournalLayoutHost(parent),
+				editor,
+			};
+		}
 	}
 
 	return null;
@@ -604,7 +672,7 @@ function computeBlocksFingerprint(
 
 export function setupJournalActivityHeatmap(): () => void {
 	let collector = createActivityCollector();
-	let mountedRoot: HTMLElement | null = null;
+	let mountedLayoutHost: HTMLElement | null = null;
 	let heatmapElement: HTMLElement | null = null;
 	let scanFrame: number | null = null;
 	let blocksChangeFrame: number | null = null;
@@ -630,8 +698,8 @@ export function setupJournalActivityHeatmap(): () => void {
 		loadGeneration += 1;
 		heatmapElement?.remove();
 		heatmapElement = null;
-		clearJournalMountMarker(mountedRoot);
-		mountedRoot = null;
+		clearJournalLayoutMarker(mountedLayoutHost);
+		mountedLayoutHost = null;
 	};
 
 	const loadAndRender = async () => {
@@ -647,30 +715,31 @@ export function setupJournalActivityHeatmap(): () => void {
 		renderHeatmapSnapshot(element, snapshot);
 	};
 
-	const mountHeatmap = (mountRoot: HTMLElement) => {
+	const mountHeatmap = (mountTarget: JournalMountTarget) => {
 		unmountHeatmap();
-		mountedRoot = mountRoot;
+		mountedLayoutHost = mountTarget.layoutHost;
 		heatmapElement = createHeatmapShell();
-		mountRoot.appendChild(heatmapElement);
+		mountTarget.layoutHost.appendChild(heatmapElement);
 		void loadAndRender();
 	};
 
 	const scan = () => {
-		const mountRoot = findActiveJournalMountRoot();
-		if (!mountRoot) {
+		const mountTarget = findActiveJournalMountTarget();
+		if (!mountTarget) {
 			unmountHeatmap();
 			return;
 		}
 
 		if (
 			heatmapElement &&
-			(!heatmapElement.isConnected || mountedRoot !== mountRoot)
+			(!heatmapElement.isConnected ||
+				mountedLayoutHost !== mountTarget.layoutHost)
 		) {
 			unmountHeatmap();
 		}
 
 		if (!heatmapElement) {
-			mountHeatmap(mountRoot);
+			mountHeatmap(mountTarget);
 		}
 	};
 

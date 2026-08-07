@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8",
-    "bytes": 387288,
-    "lines": 10133,
-    "selectorCount": 1657,
+    "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53",
+    "bytes": 388021,
+    "lines": 10165,
+    "selectorCount": 1661,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
       "#app.sidebar-closed > #main.orca-panels-container",
@@ -862,6 +862,8 @@
       ".shadcn-journal-activity-grid",
       ".shadcn-journal-activity-header",
       ".shadcn-journal-activity-heatmap",
+      ".shadcn-journal-activity-layout",
+      ".shadcn-journal-activity-layout > .orca-block-editor",
       ".shadcn-journal-activity-legend",
       ".shadcn-journal-activity-legend .shadcn-journal-activity-cell",
       ".shadcn-journal-activity-month-label",
@@ -1627,6 +1629,8 @@
       "html:root:root.t-shadcn .orca-repr-tag-props span.orca-input.orca-tag-data-text",
       "html:root:root.t-shadcn .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text-link",
       "html:root:root.t-shadcn .orca-repr-tag-props textarea.orca-tag-data-textarea",
+      "html:root:root.t-shadcn .shadcn-journal-activity-layout",
+      "html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor",
       "iframe",
       "img",
       "input",
@@ -1998,16 +2002,16 @@
       "--typeset-tag-props",
       "--variant-filled"
     ],
-    "declarationBlockCount": 1186
+    "declarationBlockCount": 1190
   },
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8"
+      "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "715a6b321f56f29c630b94e7e800e3ff4db93438418dc126d7cfc98de0f317f8"
+      "sha256": "4b638d466e33cdb8809469d7a30a07b0d059129604f88b41b6eb6cab598d8a53"
     }
   },
   "sources": [
@@ -3176,10 +3180,10 @@
     },
     {
       "file": "src/theme-css/components/journal-activity-heatmap.css",
-      "sha256": "c2134b8b723e458187ae1911b6d2a48f46f913148e6bb560abb1560f56c7e5f3",
-      "bytes": 8225,
-      "lines": 219,
-      "selectorCount": 72,
+      "sha256": "9029fb49252118a966e408d0107905efa02ff450f7817b05074c142cd6352460",
+      "bytes": 8515,
+      "lines": 235,
+      "selectorCount": 74,
       "selectors": [
         ".shadcn-journal-activity-cell",
         ".shadcn-journal-activity-cell.is-level-0",
@@ -3190,6 +3194,8 @@
         ".shadcn-journal-activity-cell.is-placeholder",
         ".shadcn-journal-activity-grid",
         ".shadcn-journal-activity-header",
+        ".shadcn-journal-activity-heatmap",
+        ".shadcn-journal-activity-layout > .orca-block-editor",
         ".shadcn-journal-activity-legend",
         ".shadcn-journal-activity-legend .shadcn-journal-activity-cell",
         ".shadcn-journal-activity-month-label",
@@ -3264,7 +3270,7 @@
         "--heatmap-level-3",
         "--heatmap-level-4"
       ],
-      "declarationBlockCount": 80
+      "declarationBlockCount": 82
     },
     {
       "file": "src/theme-css/components/query.css",
@@ -3935,10 +3941,10 @@
     },
     {
       "file": "src/theme-css/native-precedence.css",
-      "sha256": "e3da5402c1e152bf5fd463ee7d0e1724bbb7b6a703ef3e26586928fdb4e24632",
-      "bytes": 98015,
-      "lines": 2183,
-      "selectorCount": 536,
+      "sha256": "11c3eec3b553c031a7bbbe7dfc4a2f3f6b83b53d1e982b2cf2f40e52ce1e8582",
+      "bytes": 98458,
+      "lines": 2199,
+      "selectorCount": 538,
       "selectors": [
         ".choosen-month",
         ".help-icon",
@@ -4468,6 +4474,8 @@
         "html:root:root.t-shadcn .orca-repr-tag-props span.orca-input.orca-tag-data-text",
         "html:root:root.t-shadcn .orca-repr-tag-props span.orca-textarea2.orca-tag-data-text-link",
         "html:root:root.t-shadcn .orca-repr-tag-props textarea.orca-tag-data-textarea",
+        "html:root:root.t-shadcn .shadcn-journal-activity-layout",
+        "html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor",
         "input",
         "span.orca-textarea2.orca-tag-data-text-link ) :is(.orca-input-input",
         "span.orca-textarea2.orca-tag-data-text-link ) :is(.orca-input-post",
@@ -4515,7 +4523,7 @@
         "--selected",
         "--text-color"
       ],
-      "declarationBlockCount": 210
+      "declarationBlockCount": 212
     }
   ]
 }

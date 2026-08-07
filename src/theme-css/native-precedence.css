@@ -184,6 +184,22 @@ html .orca-repr-journal-right::before {
 	stroke: currentColor !important;
 }
 
+html:root:root.t-shadcn .shadcn-journal-activity-layout {
+	display: flex !important;
+	flex-direction: column !important;
+	min-block-size: 0 !important;
+	block-size: 100% !important;
+	inline-size: 100% !important;
+}
+
+html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor {
+	flex: 1 1 auto !important;
+	min-block-size: 0 !important;
+	block-size: auto !important;
+	height: auto !important;
+	overflow-y: auto !important;
+}
+
 @layer base {
 /* Journal date navigation — important declarations in the early base layer
    beat Orca's late unlayered important chrome. */

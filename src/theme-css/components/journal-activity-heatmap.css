@@ -1,8 +1,23 @@
 @layer components {
 	/* ----------------------------------------------------------
-	   4.33 Journal activity heatmap — full-width editor footer
+	   4.33 Journal activity heatmap — fixed panel footer
 	   Ref: GitHub-style 53-week grid, primary/background level mix
 	   ---------------------------------------------------------- */
+
+	.shadcn-journal-activity-layout {
+		display: flex;
+		flex-direction: column;
+		min-block-size: 0;
+		block-size: 100%;
+		inline-size: 100%;
+	}
+
+	.shadcn-journal-activity-layout > .orca-block-editor {
+		flex: 1 1 auto;
+		min-block-size: 0;
+		block-size: auto;
+		overflow-y: auto;
+	}
 
 	.shadcn-journal-activity-heatmap {
 		--heatmap-gap: 3px;
@@ -14,10 +29,11 @@
 		--heatmap-level-4: color-mix(in oklab, var(--primary) 88%, var(--background));
 
 		box-sizing: border-box;
+		flex: 0 0 auto;
 		inline-size: 100%;
 		max-inline-size: 100%;
 		min-inline-size: 0;
-		margin-block-start: 0.5rem;
+		margin-block-start: 0;
 		background: var(--background);
 		border-block-start: 1px solid var(--border);
 		color: var(--muted-foreground);

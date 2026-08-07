@@ -4475,9 +4475,24 @@ html.t-light {
 	}
 
 	/* ----------------------------------------------------------
-	   4.33 Journal activity heatmap — full-width editor footer
+	   4.33 Journal activity heatmap — fixed panel footer
 	   Ref: GitHub-style 53-week grid, primary/background level mix
 	   ---------------------------------------------------------- */
+
+	.shadcn-journal-activity-layout {
+		display: flex;
+		flex-direction: column;
+		min-block-size: 0;
+		block-size: 100%;
+		inline-size: 100%;
+	}
+
+	.shadcn-journal-activity-layout > .orca-block-editor {
+		flex: 1 1 auto;
+		min-block-size: 0;
+		block-size: auto;
+		overflow-y: auto;
+	}
 
 	.shadcn-journal-activity-heatmap {
 		--heatmap-gap: 3px;
@@ -4489,10 +4504,11 @@ html.t-light {
 		--heatmap-level-4: color-mix(in oklab, var(--primary) 88%, var(--background));
 
 		box-sizing: border-box;
+		flex: 0 0 auto;
 		inline-size: 100%;
 		max-inline-size: 100%;
 		min-inline-size: 0;
-		margin-block-start: 0.5rem;
+		margin-block-start: 0;
 		background: var(--background);
 		border-block-start: 1px solid var(--border);
 		color: var(--muted-foreground);
@@ -8132,6 +8148,22 @@ html .orca-repr-journal-right::before {
 	color: var(--muted-foreground) !important;
 	fill: currentColor !important;
 	stroke: currentColor !important;
+}
+
+html:root:root.t-shadcn .shadcn-journal-activity-layout {
+	display: flex !important;
+	flex-direction: column !important;
+	min-block-size: 0 !important;
+	block-size: 100% !important;
+	inline-size: 100% !important;
+}
+
+html:root:root.t-shadcn .shadcn-journal-activity-layout > .orca-block-editor {
+	flex: 1 1 auto !important;
+	min-block-size: 0 !important;
+	block-size: auto !important;
+	height: auto !important;
+	overflow-y: auto !important;
 }
 
 @layer base {
