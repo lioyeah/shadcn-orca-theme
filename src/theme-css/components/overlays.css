@@ -43,6 +43,21 @@
 		}
 	}
 
+	@keyframes shadcn-tooltip-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(1px) scale(0.98); }
+	}
+
+	@keyframes shadcn-toast-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(4px) scale(0.98); }
+	}
+
+	@keyframes shadcn-panel-out {
+		from { opacity: 1; transform: translateX(0) scale(1); }
+		to { opacity: 0; transform: translateX(8px) scale(0.99); }
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -197,6 +212,12 @@
 
 	.orca-repo-switcher-modal {
 		transform-origin: top right;
+	}
+
+	.orca-toc[data-state="closed"],
+	.orca-repo-switcher-modal[data-state="closed"] {
+		animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease, ease-in) both;
+		pointer-events: none !important;
 	}
 
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
@@ -591,6 +612,12 @@
 		--orca-color-gray-4: color-mix(in oklab, var(--background) 75%, var(--foreground));
 		--orca-color-gray-5: color-mix(in oklab, var(--background) 75%, var(--foreground));
 	}
+
+	.orca-tooltip[data-state="closed"],
+	.orca-tooltip[aria-hidden="true"] {
+		animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease, ease-in) both;
+		pointer-events: none !important;
+	}
 	.orca-tooltip .orca-tooltip-shortcut {
 		display: inline-flex !important;
 		align-items: center !important;
@@ -628,6 +655,12 @@
 		box-shadow: none !important;
 		animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both;
 		transform-origin: bottom right;
+	}
+
+	.orca-notification[data-state="closed"],
+	.orca-notification[aria-hidden="true"] {
+		animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease, ease-in) both;
+		pointer-events: none !important;
 	}
 
 	.orca-progress, progress {

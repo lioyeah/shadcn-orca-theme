@@ -706,14 +706,32 @@ html.t-shadcn .orca-tooltip {
 	transform-origin: bottom center !important;
 }
 
+html.t-shadcn .orca-tooltip[data-state="closed"],
+html.t-shadcn .orca-tooltip[aria-hidden="true"] {
+	animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease, ease-in) both !important;
+	pointer-events: none !important;
+}
+
 html.t-shadcn .orca-notification {
 	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
 	transform-origin: bottom right !important;
 }
 
+html.t-shadcn .orca-notification[data-state="closed"],
+html.t-shadcn .orca-notification[aria-hidden="true"] {
+	animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease, ease-in) both !important;
+	pointer-events: none !important;
+}
+
 html.t-shadcn .orca-repo-switcher-modal {
 	animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
 	transform-origin: top right !important;
+}
+
+html.t-shadcn .orca-toc[data-state="closed"],
+html.t-shadcn .orca-repo-switcher-modal[data-state="closed"] {
+	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease, ease-in) both !important;
+	pointer-events: none !important;
 }
 
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */

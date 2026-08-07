@@ -303,6 +303,7 @@
 		line-height: 1.25rem !important;
 		font-weight: var(--base-font-weight) !important;
 		display: inline-flex !important;
+		position: relative !important;
 		align-items: center !important;
 		justify-content: center !important;
 		gap: 0.375rem !important;
@@ -326,6 +327,19 @@
 		}
 	}
 
+	:is(.orca-tab-item, .orca-segmented-item, .orca-tab, .orca-query-tab, .orca-sidebar-tab)::after {
+		position: absolute !important;
+		inset-inline: 0.5rem !important;
+		inset-block-end: 0.125rem !important;
+		block-size: 2px !important;
+		border-radius: 9999px !important;
+		background: var(--primary) !important;
+		content: "" !important;
+		opacity: 0 !important;
+		transform: scaleX(0.35) !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease), transform var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
 	.orca-tab-item.orca-selected,
 	.orca-segmented-item.orca-selected,
 	.orca-tab.orca-selected,
@@ -337,6 +351,11 @@
 		border-radius: var(--radius-md) !important;
 		box-shadow: var(--shadow-sm) !important;
 		font-weight: 500 !important;
+	}
+
+	:is(.orca-tab-item.orca-selected, .orca-segmented-item.orca-selected, .orca-tab.orca-selected, .orca-query-tab.orca-selected, .orca-sidebar-tab.orca-selected)::after {
+		opacity: 1 !important;
+		transform: scaleX(1) !important;
 	}
 
 	html:not(.t-light) .orca-tab-item.orca-selected,

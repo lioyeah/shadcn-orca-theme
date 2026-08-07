@@ -1,3 +1,9 @@
+@keyframes shadcn-form-error-shake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-3px); }
+	75% { transform: translateX(3px); }
+}
+
 	/* ----------------------------------------------------------
 	   4.0 Separators — separator.tsx + dropdown-menu DropdownMenuSeparator
 	   Horizontal: shrink-0 bg-border h-px w-full
@@ -147,6 +153,11 @@
 		font-weight: var(--base-font-weight) !important; color: var(--foreground) !important;
 		border: none !important;
 		box-shadow: none !important;
+	}
+
+	:is(input, textarea, [role="textbox"])[aria-invalid="true"] {
+		animation: shadcn-form-error-shake var(--motion-duration-fast) var(--motion-ease) both;
+		border-color: var(--destructive) !important;
 	}
 
 	/* shadcn input.tsx — plain shell (no adornments) */
