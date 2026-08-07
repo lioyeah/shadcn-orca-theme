@@ -60,6 +60,7 @@
 	--motion-duration-fast: 0.15s;
 	--motion-duration-normal: 0.2s;
 	--motion-ease: ease;
+	--motion-ease-in: ease-in;
 	--motion-ease-out: ease-out;
 	--motion-ease-linear: linear;
 

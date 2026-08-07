@@ -78,7 +78,7 @@
 		border-radius: 0 !important;
 		box-sizing: border-box !important;
 		cursor: pointer !important;
-		transition: color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease) !important;
 		flex-shrink: 0 !important;
 		--orca-color-text-1: var(--foreground);
 		--orca-color-text-2: var(--muted-foreground);

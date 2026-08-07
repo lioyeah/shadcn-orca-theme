@@ -708,7 +708,7 @@ html.t-shadcn .orca-tooltip {
 
 html.t-shadcn .orca-tooltip[data-state="closed"],
 html.t-shadcn .orca-tooltip[aria-hidden="true"] {
-	animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease, ease-in) both !important;
+	animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
 	pointer-events: none !important;
 }
 
@@ -719,7 +719,7 @@ html.t-shadcn .orca-notification {
 
 html.t-shadcn .orca-notification[data-state="closed"],
 html.t-shadcn .orca-notification[aria-hidden="true"] {
-	animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease, ease-in) both !important;
+	animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease-in) both !important;
 	pointer-events: none !important;
 }
 
@@ -730,7 +730,7 @@ html.t-shadcn .orca-repo-switcher-modal {
 
 html.t-shadcn .orca-toc[data-state="closed"],
 html.t-shadcn .orca-repo-switcher-modal[data-state="closed"] {
-	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease, ease-in) both !important;
+	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
 	pointer-events: none !important;
 }
 
