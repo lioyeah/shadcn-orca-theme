@@ -59,6 +59,12 @@
 	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.35);
 	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 
+	/* Motion — theme-wide transition/animation timing */
+	--motion-duration-fast: 0.15s;
+	--motion-duration-normal: 0.2s;
+	--motion-ease: ease;
+	--motion-ease-out: ease-out;
+
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);
 	--main: var(--accent);
@@ -2334,7 +2340,7 @@ html.t-light {
 
 	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
 	.orca-select-menu {
-		animation: shadcn-popover-in 0.14s ease-out both;
+		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
 	}
 
@@ -2628,7 +2634,7 @@ html.t-light {
 		margin-inline: 0.375rem !important;
 		padding-block: 0.5rem !important;
 		cursor: pointer !important;
-		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+		transition: background var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		& .orca-search-modal-result-label {
 			color: var(--foreground) !important;

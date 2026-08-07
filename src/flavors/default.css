@@ -56,6 +56,12 @@
 	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.35);
 	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 
+	/* Motion — theme-wide transition/animation timing */
+	--motion-duration-fast: 0.15s;
+	--motion-duration-normal: 0.2s;
+	--motion-ease: ease;
+	--motion-ease-out: ease-out;
+
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);
 	--main: var(--accent);
