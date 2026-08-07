@@ -145,7 +145,7 @@
 			aspect-ratio: 1;
 			min-inline-size: 0 !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			position: relative;
 			&.weekend { border-color: transparent !important; color: var(--calendar-fg) !important; }
 			&.outside {
@@ -192,7 +192,7 @@
 			font-size: 0.875rem !important;
 			padding: 0.25rem !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;
@@ -372,7 +372,7 @@
 			display: flex; align-items: center; justify-content: center;
 			cursor: pointer; font-size: 0.875rem !important; padding: 0.25rem;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease);
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;

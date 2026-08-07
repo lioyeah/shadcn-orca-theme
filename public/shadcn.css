@@ -64,6 +64,7 @@
 	--motion-duration-normal: 0.2s;
 	--motion-ease: ease;
 	--motion-ease-out: ease-out;
+	--motion-ease-linear: linear;
 
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);
@@ -826,7 +827,7 @@ html.t-light {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+	animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite;
 }
 
 .dark .shadcn-shimmer {
@@ -1264,7 +1265,7 @@ html.t-light {
 
 	.orca-button {
 		font-weight: var(--base-font-weight) !important;
-		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), opacity var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&.solid.primary {
 			background: var(--btn-primary-bg) !important;
@@ -1359,7 +1360,7 @@ html.t-light {
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
 		overflow: hidden !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button) {
@@ -1646,7 +1647,7 @@ html.t-light {
 		font-size: 0.875rem !important;
 		font-weight: var(--base-font-weight) !important;
 		text-align: start !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&:hover {
 			background: color-mix(in oklab, var(--input) 30%, transparent) !important;
@@ -1918,7 +1919,7 @@ html.t-light {
 		text-align: start !important;
 		overflow: hidden !important;
 		cursor: pointer !important;
-		transition: background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch:not(.orca-switch-on):not(.orca-switch.orca-switch-on) {
@@ -1952,7 +1953,7 @@ html.t-light {
 		margin: 0 !important;
 		transform: none !important;
 		translate: none !important;
-		transition: margin-inline-start 0.15s ease-in-out !important;
+		transition: margin-inline-start var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch-on .orca-switch-toggle,
@@ -3996,7 +3997,7 @@ html.t-light {
 			aspect-ratio: 1;
 			min-inline-size: 0 !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			position: relative;
 			&.weekend { border-color: transparent !important; color: var(--calendar-fg) !important; }
 			&.outside {
@@ -4043,7 +4044,7 @@ html.t-light {
 			font-size: 0.875rem !important;
 			padding: 0.25rem !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;
@@ -4223,7 +4224,7 @@ html.t-light {
 			display: flex; align-items: center; justify-content: center;
 			cursor: pointer; font-size: 0.875rem !important; padding: 0.25rem;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease);
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;
@@ -6170,7 +6171,7 @@ html.t-light {
 		background-clip: text !important;
 		-webkit-background-clip: text !important;
 		-webkit-text-fill-color: transparent !important;
-		animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite !important;
+		animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite !important;
 	}
 
 	.dark .orca-aichat-message-reasoning-streaming .orca-aichat-reasoning-toggle.orca-button,

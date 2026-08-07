@@ -104,7 +104,7 @@
 		text-align: start !important;
 		overflow: hidden !important;
 		cursor: pointer !important;
-		transition: background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch:not(.orca-switch-on):not(.orca-switch.orca-switch-on) {
@@ -138,7 +138,7 @@
 		margin: 0 !important;
 		transform: none !important;
 		translate: none !important;
-		transition: margin-inline-start 0.15s ease-in-out !important;
+		transition: margin-inline-start var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch-on .orca-switch-toggle,

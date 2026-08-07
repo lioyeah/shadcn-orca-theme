@@ -252,7 +252,7 @@
 		background-clip: text !important;
 		-webkit-background-clip: text !important;
 		-webkit-text-fill-color: transparent !important;
-		animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite !important;
+		animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite !important;
 	}
 
 	.dark .orca-aichat-message-reasoning-streaming .orca-aichat-reasoning-toggle.orca-button,

@@ -91,7 +91,7 @@
 
 	.orca-button {
 		font-weight: var(--base-font-weight) !important;
-		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), opacity var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&.solid.primary {
 			background: var(--btn-primary-bg) !important;
@@ -186,7 +186,7 @@
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
 		overflow: hidden !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button) {
@@ -473,7 +473,7 @@
 		font-size: 0.875rem !important;
 		font-weight: var(--base-font-weight) !important;
 		text-align: start !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&:hover {
 			background: color-mix(in oklab, var(--input) 30%, transparent) !important;

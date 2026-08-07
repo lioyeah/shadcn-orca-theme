@@ -462,7 +462,7 @@
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+	animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite;
 }
 
 .dark .shadcn-shimmer {

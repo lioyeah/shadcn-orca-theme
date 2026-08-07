@@ -61,6 +61,7 @@
 	--motion-duration-normal: 0.2s;
 	--motion-ease: ease;
 	--motion-ease-out: ease-out;
+	--motion-ease-linear: linear;
 
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);
