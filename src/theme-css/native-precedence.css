@@ -1380,6 +1380,22 @@ html:root:root .orca-repr-tag-props .orca-tag-data-name {
 	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
 }
 
+html:root:root .orca-repr-tag-props-title::before {
+	content: "" !important;
+	display: block !important;
+	inline-size: 0.45rem !important;
+	block-size: 0.45rem !important;
+	border-inline-end: 1.5px solid currentColor !important;
+	border-block-end: 1.5px solid currentColor !important;
+	transform: rotate(-45deg) !important;
+	transform-origin: center !important;
+	transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
+}
+
+html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
+	transform: rotate(45deg) !important;
+}
+
 html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
 	border-bottom-color: var(--input) !important;
 }

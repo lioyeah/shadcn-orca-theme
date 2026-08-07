@@ -4940,18 +4940,24 @@ html.t-light {
 	}
 
 	.orca-repr-tag-props-title::before {
+		content: "" !important;
 		order: 2 !important;
+		display: block !important;
 		flex-shrink: 0 !important;
 		margin: 0 !important;
 		margin-inline-start: auto !important;
+		inline-size: 0.45rem !important;
+		block-size: 0.45rem !important;
 		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
-		font-size: 1rem !important;
-		line-height: 1 !important;
-		transition: transform 0.2s ease !important;
+		border-inline-end: 1.5px solid currentColor !important;
+		border-block-end: 1.5px solid currentColor !important;
+		transform: rotate(-45deg) !important;
+		transform-origin: center !important;
+		transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
 	}
 
 	.orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
-		transform: rotate(180deg) !important;
+		transform: rotate(45deg) !important;
 	}
 
 	.orca-repr-tag-props-group:has(> .orca-repr-tag-props-title.orca-repr-tag-props-collapsed) > :not(.orca-repr-tag-props-title) {
@@ -9213,6 +9219,22 @@ html:root:root .orca-repr-tag-props-title::before,
 html:root:root .orca-repr-tag-props .orca-tag-data-propicon,
 html:root:root .orca-repr-tag-props .orca-tag-data-name {
 	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+}
+
+html:root:root .orca-repr-tag-props-title::before {
+	content: "" !important;
+	display: block !important;
+	inline-size: 0.45rem !important;
+	block-size: 0.45rem !important;
+	border-inline-end: 1.5px solid currentColor !important;
+	border-block-end: 1.5px solid currentColor !important;
+	transform: rotate(-45deg) !important;
+	transform-origin: center !important;
+	transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
+}
+
+html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
+	transform: rotate(45deg) !important;
 }
 
 html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
