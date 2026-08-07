@@ -16,7 +16,6 @@ module.exports = {
 		"theme-css/components/whiteboard.css",
 		"theme-css/components/calendar.css",
 		"theme-css/components/navigation-editor.css",
-		"theme-css/components/journal-activity-heatmap.css",
 		"theme-css/components/query.css",
 		"theme-css/components/block-graph.css",
 		"theme-css/components/tag-properties.css",
