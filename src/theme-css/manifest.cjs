@@ -12,6 +12,7 @@ module.exports = {
 		"theme-css/components/forms.css",
 		"theme-css/components/navigation.css",
 		"theme-css/components/overlays.css",
+		"theme-css/components/click-spark.css",
 		"theme-css/components/editor.css",
 		"theme-css/components/whiteboard.css",
 		"theme-css/components/calendar.css",

@@ -29,6 +29,16 @@
 		background-image: none !important;
 		border: 1px solid transparent !important;
 		align-items: center !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	/* Low-risk press feedback for ordinary UI actions only. */
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn) {
+		transition: transform var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn):active {
+		transform: scale(0.98) !important;
 	}
 
 	/* Menu leading icons — dropdown-menu.tsx: items-center, icon size-4 (1rem) */
@@ -217,7 +227,7 @@
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
 			cursor: pointer !important;
-			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				color: var(--sidebar-accent-foreground) !important;
@@ -261,7 +271,7 @@
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
 			cursor: pointer !important;
-			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				border-color: transparent !important;
@@ -324,7 +334,7 @@
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
 		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -339,7 +349,7 @@
 		border: 1px solid var(--border) !important;
 		border-radius: 50% !important;
 		box-shadow: none !important; outline: none !important;
-		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		padding: 0 !important; width: 18px !important; height: 18px !important;
 		display: inline-flex !important; align-items: center !important; justify-content: center !important;
 		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;

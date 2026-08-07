@@ -59,6 +59,14 @@
 	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35), 0 2px 4px -2px rgb(0 0 0 / 0.35);
 	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 
+	/* Motion — theme-wide transition/animation timing */
+	--motion-duration-fast: 0.15s;
+	--motion-duration-normal: 0.2s;
+	--motion-ease: ease;
+	--motion-ease-in: ease-in;
+	--motion-ease-out: ease-out;
+	--motion-ease-linear: linear;
+
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);
 	--main: var(--accent);
@@ -505,7 +513,7 @@ html.t-light {
 		border-radius: var(--radius-md);
 		background: transparent;
 		box-shadow: var(--shadow-xs);
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
 	}
 
 	.shadcn-input-group:focus-within {
@@ -592,7 +600,7 @@ html.t-light {
 		white-space: nowrap;
 		color: color-mix(in oklab, var(--foreground) 60%, transparent);
 		background: transparent;
-		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
 	}
 
 	.shadcn-tabs-trigger:hover {
@@ -742,7 +750,7 @@ html.t-light {
 		border: 1px solid var(--primary);
 		background: #fff;
 		box-shadow: var(--shadow-sm);
-		transition: box-shadow 0.15s ease;
+		transition: box-shadow var(--motion-duration-fast) var(--motion-ease);
 	}
 
 	.shadcn-slider-input:focus-visible::-webkit-slider-thumb {
@@ -820,7 +828,7 @@ html.t-light {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+	animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite;
 }
 
 .dark .shadcn-shimmer {
@@ -962,6 +970,36 @@ html.t-light {
 	.orca-settings > .sections .plugin-item img {
 		border: revert !important;
 		border-radius: revert !important;
+	}
+}
+
+/* ============================================================
+   2. REDUCED MOTION — global fallback
+   Instant completion preserves animation-fill-mode end states
+   without resetting static transform used for layout.
+   ============================================================ */
+
+@layer base {
+	@media (prefers-reduced-motion: reduce) {
+		:root,
+		html.t-light {
+			--motion-duration-fast: 0ms;
+			--motion-duration-normal: 0ms;
+			--typeset-link-highlight-duration: 0ms;
+			--typeset-scope-line-duration: 0ms;
+			--shimmer-duration: 0ms;
+		}
+
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			animation-delay: -1ms !important;
+			transition-duration: 0.01ms !important;
+			transition-delay: 0s !important;
+			scroll-behavior: auto !important;
+		}
 	}
 }
 
@@ -1136,6 +1174,12 @@ html.t-light {
    ============================================================ */
 
 @layer components {
+@keyframes shadcn-form-error-shake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-3px); }
+	75% { transform: translateX(3px); }
+}
+
 	/* ----------------------------------------------------------
 	   4.0 Separators — separator.tsx + dropdown-menu DropdownMenuSeparator
 	   Horizontal: shrink-0 bg-border h-px w-full
@@ -1223,7 +1267,7 @@ html.t-light {
 
 	.orca-button {
 		font-weight: var(--base-font-weight) !important;
-		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), opacity var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&.solid.primary {
 			background: var(--btn-primary-bg) !important;
@@ -1287,6 +1331,10 @@ html.t-light {
 		box-shadow: none !important;
 	}
 
+	:is(input, textarea, [role="textbox"])[aria-invalid="true"] {
+		animation: shadcn-form-error-shake var(--motion-duration-fast) var(--motion-ease) both;
+	}
+
 	/* shadcn input.tsx — plain shell (no adornments) */
 	.orca-input:not(:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button)),
 	.orca-textarea-input, .orca-textarea {
@@ -1295,6 +1343,13 @@ html.t-light {
 		background: var(--secondary-background) !important;
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
+	}
+
+	/* Persistent invalid state indicator on container */
+	.orca-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]) {
+		border-color: var(--destructive) !important;
 	}
 
 	/*
@@ -1313,7 +1368,7 @@ html.t-light {
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
 		overflow: hidden !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-input:has(.orca-input-pre, .orca-input-post, .ti-search, .orca-input-input .orca-button) {
@@ -1600,7 +1655,7 @@ html.t-light {
 		font-size: 0.875rem !important;
 		font-weight: var(--base-font-weight) !important;
 		text-align: start !important;
-		transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		&:hover {
 			background: color-mix(in oklab, var(--input) 30%, transparent) !important;
@@ -1817,6 +1872,7 @@ html.t-light {
 		border: 1px solid transparent !important;
 		background: transparent !important;
 		border-radius: calc(var(--radius) - 4px) !important;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	.orca-select-menu .orca-select-item:not(.disabled):hover,
@@ -1871,7 +1927,7 @@ html.t-light {
 		text-align: start !important;
 		overflow: hidden !important;
 		cursor: pointer !important;
-		transition: background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch:not(.orca-switch-on):not(.orca-switch.orca-switch-on) {
@@ -1905,7 +1961,7 @@ html.t-light {
 		margin: 0 !important;
 		transform: none !important;
 		translate: none !important;
-		transition: margin-inline-start 0.15s ease-in-out !important;
+		transition: margin-inline-start var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	html:not(.t-light) .orca-switch-on .orca-switch-toggle,
@@ -2077,7 +2133,7 @@ html.t-light {
 		margin: 0 !important;
 		min-block-size: calc(100% - 1px) !important;
 		white-space: nowrap !important;
-		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		&:hover { color: var(--foreground) !important; }
 		&:focus-visible {
 			border-color: var(--ring) !important;
@@ -2191,12 +2247,60 @@ html.t-light {
 	@keyframes shadcn-popover-in {
 		from {
 			opacity: 0;
-			transform: scale(0.98);
+			transform: scale(0.98) translateY(-4px);
 		}
 		to {
 			opacity: 1;
-			transform: scale(1);
+			transform: scale(1) translateY(0);
 		}
+	}
+
+	@keyframes shadcn-toc-in {
+		from {
+			opacity: 0;
+			transform: translateX(10px) scale(0.99);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-tooltip-in {
+		from {
+			opacity: 0;
+			transform: translateY(2px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-toast-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-tooltip-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(1px) scale(0.98); }
+	}
+
+	@keyframes shadcn-toast-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(4px) scale(0.98); }
+	}
+
+	@keyframes shadcn-panel-out {
+		from { opacity: 1; transform: translateX(0) scale(1); }
+		to { opacity: 0; transform: translateX(8px) scale(0.99); }
 	}
 
 	/* ----------------------------------------------------------
@@ -2332,10 +2436,33 @@ html.t-light {
 		padding: 0 !important;
 	}
 
-	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
-	.orca-select-menu {
-		animation: shadcn-popover-in 0.14s ease-out both;
+	/* TOC is a right-side sheet, not a centered editor popover. */
+	.orca-toc {
+		animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: right center;
+	}
+
+	/* Popover enter — opacity + slight scale/slide; excludes search/command/preview shells */
+	.orca-dropdown,
+	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-inline-reference-with-preview):not(.orca-command-modal):not(.orca-block-preview):not(.orca-block-preview-popup),
+	.orca-select-menu,
+	.orca-select-popup,
+	.orca-slash-commands,
+	.orca-datepicker-menu,
+	.orca-block-select-popup,
+	.orca-repo-switcher-modal {
+		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
+	}
+
+	.orca-repo-switcher-modal {
+		transform-origin: top right;
+	}
+
+	.orca-toc[data-state="closed"],
+	.orca-repo-switcher-modal[data-state="closed"] {
+		animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
@@ -2628,7 +2755,7 @@ html.t-light {
 		margin-inline: 0.375rem !important;
 		padding-block: 0.5rem !important;
 		cursor: pointer !important;
-		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+		transition: background var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		& .orca-search-modal-result-label {
 			color: var(--foreground) !important;
@@ -2720,6 +2847,8 @@ html.t-light {
 		border: none !important;
 		border-radius: var(--radius-md) !important;
 		box-shadow: none !important;
+		animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: bottom center;
 		--orca-shadow-md: none;
 		--orca-shadow-menu: none;
 		--orca-shadow-popup: none;
@@ -2727,6 +2856,12 @@ html.t-light {
 		--orca-color-text-2: color-mix(in oklab, var(--background) 75%, var(--foreground));
 		--orca-color-gray-4: color-mix(in oklab, var(--background) 75%, var(--foreground));
 		--orca-color-gray-5: color-mix(in oklab, var(--background) 75%, var(--foreground));
+	}
+
+	.orca-tooltip[data-state="closed"],
+	.orca-tooltip[aria-hidden="true"] {
+		animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 	.orca-tooltip .orca-tooltip-shortcut {
 		display: inline-flex !important;
@@ -2763,6 +2898,14 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
+		animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both;
+		transform-origin: bottom right;
+	}
+
+	.orca-notification[data-state="closed"],
+	.orca-notification[aria-hidden="true"] {
+		animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 
 	.orca-progress, progress {
@@ -2773,6 +2916,22 @@ html.t-light {
 	progress::-webkit-progress-bar { background: var(--secondary-background) !important; border-radius: var(--border-radius) !important; }
 	progress::-webkit-progress-value { background: var(--primary) !important; border-radius: var(--border-radius) !important; }
 
+	.shadcn-click-spark-canvas {
+		position: fixed !important;
+		inset: 0 !important;
+		z-index: 1000 !important;
+		display: block !important;
+		inline-size: 100vw !important;
+		block-size: 100vh !important;
+		pointer-events: none !important;
+		background: transparent !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shadcn-click-spark-canvas {
+			display: none !important;
+		}
+	}
 	/* ----------------------------------------------------------
 	   4.8 Code Block
 	   ---------------------------------------------------------- */
@@ -3852,7 +4011,7 @@ html.t-light {
 			aspect-ratio: 1;
 			min-inline-size: 0 !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			position: relative;
 			&.weekend { border-color: transparent !important; color: var(--calendar-fg) !important; }
 			&.outside {
@@ -3899,7 +4058,7 @@ html.t-light {
 			font-size: 0.875rem !important;
 			padding: 0.25rem !important;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease !important;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;
@@ -4079,7 +4238,7 @@ html.t-light {
 			display: flex; align-items: center; justify-content: center;
 			cursor: pointer; font-size: 0.875rem !important; padding: 0.25rem;
 			min-block-size: var(--calendar-cell-size) !important;
-			transition: background-color 0.15s ease, color 0.15s ease;
+			transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease);
 			&:hover {
 				background: var(--calendar-hover-bg) !important;
 				color: var(--calendar-hover-fg) !important;
@@ -4142,6 +4301,16 @@ html.t-light {
 		background-image: none !important;
 		border: 1px solid transparent !important;
 		align-items: center !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	/* Low-risk press feedback for ordinary UI actions only. */
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn) {
+		transition: transform var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn):active {
+		transform: scale(0.98) !important;
 	}
 
 	/* Menu leading icons — dropdown-menu.tsx: items-center, icon size-4 (1rem) */
@@ -4330,7 +4499,7 @@ html.t-light {
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
 			cursor: pointer !important;
-			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				color: var(--sidebar-accent-foreground) !important;
@@ -4374,7 +4543,7 @@ html.t-light {
 			border: 1px solid transparent !important;
 			border-radius: calc(var(--radius) - 4px) !important;
 			cursor: pointer !important;
-			transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 			&:hover, &.selected, &[aria-selected="true"] {
 				background: var(--sidebar-accent) !important;
 				border-color: transparent !important;
@@ -4437,7 +4606,7 @@ html.t-light {
 		background: var(--secondary) !important; color: var(--secondary-foreground) !important;
 		border: 1px solid var(--border) !important; border-radius: var(--radius-md) !important;
 		opacity: 0.7 !important; box-shadow: none !important; outline: none !important;
-		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		&:hover { opacity: 1 !important; background: var(--accent) !important; color: var(--accent-foreground) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
 		& svg:not(.orca-select-button), & i:not(.orca-select-button), & i::before { color: inherit !important; fill: currentColor !important; }
 	}
@@ -4452,7 +4621,7 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: 50% !important;
 		box-shadow: none !important; outline: none !important;
-		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		padding: 0 !important; width: 18px !important; height: 18px !important;
 		display: inline-flex !important; align-items: center !important; justify-content: center !important;
 		flex-shrink: 0 !important; min-width: 18px !important; min-height: 18px !important;
@@ -4553,7 +4722,7 @@ html.t-light {
 		border-radius: 0 !important;
 		box-sizing: border-box !important;
 		cursor: pointer !important;
-		transition: color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease) !important;
 		flex-shrink: 0 !important;
 		--orca-color-text-1: var(--foreground);
 		--orca-color-text-2: var(--muted-foreground);
@@ -4661,13 +4830,16 @@ html.t-light {
 		min-inline-size: 0 !important;
 	}
 
+	/* Arrow — Orca toggles caret icon classes; keep aria-expanded/data-state for
+	   shadcn parity. Body is conditionally mounted (not display-toggled) and the
+	   card root already uses host auto-animate, so skip CSS body transitions here. */
 	.orca-query-conditions-header-arrow {
 		color: var(--muted-foreground) !important;
 		font-size: 1rem !important;
 		line-height: 1 !important;
 		flex-shrink: 0 !important;
 		transform: rotate(0deg) !important;
-		transition: transform 0.2s ease !important;
+		transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
 	}
 	.orca-query-conditions-header[aria-expanded="true"] .orca-query-conditions-header-arrow,
 	.orca-query-conditions-header[data-state="open"] .orca-query-conditions-header-arrow,
@@ -4762,7 +4934,7 @@ html.t-light {
 	}
 
 	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]::-webkit-slider-thumb {
-		transition: transform 0.16s ease !important;
+		transition: transform var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	.orca-block-graph-depth-control.shadcn-slider-detent-control input[type="range"]:active::-webkit-slider-thumb,
@@ -4803,7 +4975,7 @@ html.t-light {
 		opacity: 0 !important;
 		pointer-events: none !important;
 		transform: translateX(-50%) !important;
-		transition: opacity 0.14s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	.orca-block-graph-depth-control .shadcn-slider-value.is-visible {
@@ -4874,23 +5046,29 @@ html.t-light {
 		font-weight: 500 !important;
 		line-height: 1.25rem !important;
 		cursor: pointer !important;
-		transition: color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease) !important;
 		-webkit-font-smoothing: antialiased !important;
 	}
 
 	.orca-repr-tag-props-title::before {
+		content: "" !important;
 		order: 2 !important;
+		display: block !important;
 		flex-shrink: 0 !important;
 		margin: 0 !important;
 		margin-inline-start: auto !important;
+		inline-size: 0.45rem !important;
+		block-size: 0.45rem !important;
 		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
-		font-size: 1rem !important;
-		line-height: 1 !important;
-		transition: transform 0.2s ease !important;
+		border-inline-end: 1.5px solid currentColor !important;
+		border-block-end: 1.5px solid currentColor !important;
+		transform: rotate(-45deg) !important;
+		transform-origin: center !important;
+		transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
 	}
 
 	.orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
-		transform: rotate(180deg) !important;
+		transform: rotate(45deg) !important;
 	}
 
 	.orca-repr-tag-props-group:has(> .orca-repr-tag-props-title.orca-repr-tag-props-collapsed) > :not(.orca-repr-tag-props-title) {
@@ -5590,7 +5768,7 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
-		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		padding: 0.25rem 0.625rem !important;
 		min-block-size: 1.75rem !important;
 		align-self: center !important;
@@ -5607,6 +5785,15 @@ html.t-light {
 		}
 	}
 	.orca-query-conditions .orca-checkbox-box { outline: 1px solid var(--border) !important; outline-offset: 0 !important; border: none !important; }
+
+	@keyframes shadcn-settings-content-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 
 	/* ----------------------------------------------------------
 	   4.23 Settings Page
@@ -5630,6 +5817,7 @@ html.t-light {
 			border-radius: var(--border-radius);
 			background: transparent !important;
 			color: var(--foreground) !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		}
 		html .orca-settings > .sections .item.selected,
 		html .orca-settings > .sections .item:hover,
@@ -5657,6 +5845,7 @@ html.t-light {
 	.orca-settings section.views,
 	html .orca-settings > section.views,
 	html .orca-settings > .views {
+		animation: shadcn-settings-content-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		background: var(--card) !important;
 		color: var(--card-foreground) !important;
 		--orca-color-gray-4: var(--muted-foreground);
@@ -5996,7 +6185,7 @@ html.t-light {
 		background-clip: text !important;
 		-webkit-background-clip: text !important;
 		-webkit-text-fill-color: transparent !important;
-		animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite !important;
+		animation: tw-shimmer var(--shimmer-duration, 2s) var(--motion-ease-linear) infinite !important;
 	}
 
 	.dark .orca-aichat-message-reasoning-streaming .orca-aichat-reasoning-toggle.orca-button,
@@ -6416,6 +6605,46 @@ html.t-light {
 		:scope { border: 1px solid var(--border); border-radius: var(--border-radius); box-shadow: none; }
 	}
 
+	/* TOC behaves like a right-side sheet, not a card floating above the editor. */
+	.orca-toc {
+		background: var(--background) !important;
+		color: var(--foreground) !important;
+		border: 0 !important;
+		border-left: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		overflow: hidden !important;
+	}
+
+	.orca-toc-items {
+		background: transparent !important;
+		color: inherit !important;
+	}
+
+	.orca-toc-item {
+		color: var(--foreground) !important;
+		border-radius: var(--radius-sm) !important;
+	}
+
+	.orca-toc-item:hover,
+	.orca-toc-item[aria-selected="true"],
+	.orca-toc-item.selected {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-toc-item-label {
+		color: inherit !important;
+	}
+
+	.orca-toc-item-fold-arrow {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-toc-resizer {
+		background: transparent !important;
+	}
+
 	/*
 	   Stats / About shells: ONLY strip blue popup chrome.
 	   Do NOT touch .orca-modal-overlay or position/display.
@@ -6581,7 +6810,7 @@ html.t-light {
 		box-shadow: none !important;
 		border-radius: 9999px !important;
 		padding: 0 !important;
-		transition: width 0.2s ease, background-color 0.15s ease !important;
+		transition: width var(--motion-duration-normal) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	/* Creative hours = shadcn Bar Chart (rectangular bars, not capsules).
@@ -6625,7 +6854,7 @@ html.t-light {
 		border-radius: 0 !important;
 		rx: 0 !important;
 		ry: 0 !important;
-		transition: opacity 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 	.orca-stats-content .orca-stats-chart-bar:hover { opacity: 0.85 !important; }
 
@@ -6798,7 +7027,7 @@ html.t-light {
 		line-height: 1.25rem !important;
 		font-weight: var(--base-font-weight) !important;
 		min-width: 0 !important;
-		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 		transform: none !important;
 		&:hover,
 		&:active,
@@ -8390,6 +8619,84 @@ html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
 	padding: 0 !important;
 }
 
+/* TOC popup — the panel is the right-side sheet; its popup wrapper is only a shell. */
+html.t-shadcn .orca-popup:has(> .orca-toc) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+html.t-shadcn .orca-toc {
+	animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: right center !important;
+	background: var(--background) !important;
+	color: var(--foreground) !important;
+	border: 0 !important;
+	border-left: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: hidden !important;
+}
+
+html.t-shadcn .orca-toc-items {
+	background: transparent !important;
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item:hover,
+html.t-shadcn .orca-toc-item[aria-selected="true"],
+html.t-shadcn .orca-toc-item.selected {
+	background: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-item-label {
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item-fold-arrow {
+	color: var(--muted-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-resizer {
+	background: transparent !important;
+}
+
+html.t-shadcn .orca-tooltip {
+	animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: bottom center !important;
+}
+
+html.t-shadcn .orca-tooltip[data-state="closed"],
+html.t-shadcn .orca-tooltip[aria-hidden="true"] {
+	animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
+html.t-shadcn .orca-notification {
+	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
+	transform-origin: bottom right !important;
+}
+
+html.t-shadcn .orca-notification[data-state="closed"],
+html.t-shadcn .orca-notification[aria-hidden="true"] {
+	animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
+html.t-shadcn .orca-repo-switcher-modal {
+	animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: top right !important;
+}
+
+html.t-shadcn .orca-toc[data-state="closed"],
+html.t-shadcn .orca-repo-switcher-modal[data-state="closed"] {
+	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
 html .orca-popup:has(.orca-block-popup),
 html .orca-popup:has(.orca-inline-reference-with-preview),
@@ -9067,6 +9374,22 @@ html:root:root .orca-repr-tag-props-title::before,
 html:root:root .orca-repr-tag-props .orca-tag-data-propicon,
 html:root:root .orca-repr-tag-props .orca-tag-data-name {
 	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+}
+
+html:root:root .orca-repr-tag-props-title::before {
+	content: "" !important;
+	display: block !important;
+	inline-size: 0.45rem !important;
+	block-size: 0.45rem !important;
+	border-inline-end: 1.5px solid currentColor !important;
+	border-block-end: 1.5px solid currentColor !important;
+	transform: rotate(-45deg) !important;
+	transform-origin: center !important;
+	transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
+}
+
+html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
+	transform: rotate(45deg) !important;
 }
 
 html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {

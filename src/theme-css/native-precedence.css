@@ -656,6 +656,84 @@ html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
 	padding: 0 !important;
 }
 
+/* TOC popup — the panel is the right-side sheet; its popup wrapper is only a shell. */
+html.t-shadcn .orca-popup:has(> .orca-toc) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+html.t-shadcn .orca-toc {
+	animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: right center !important;
+	background: var(--background) !important;
+	color: var(--foreground) !important;
+	border: 0 !important;
+	border-left: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: hidden !important;
+}
+
+html.t-shadcn .orca-toc-items {
+	background: transparent !important;
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item:hover,
+html.t-shadcn .orca-toc-item[aria-selected="true"],
+html.t-shadcn .orca-toc-item.selected {
+	background: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-item-label {
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item-fold-arrow {
+	color: var(--muted-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-resizer {
+	background: transparent !important;
+}
+
+html.t-shadcn .orca-tooltip {
+	animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: bottom center !important;
+}
+
+html.t-shadcn .orca-tooltip[data-state="closed"],
+html.t-shadcn .orca-tooltip[aria-hidden="true"] {
+	animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
+html.t-shadcn .orca-notification {
+	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
+	transform-origin: bottom right !important;
+}
+
+html.t-shadcn .orca-notification[data-state="closed"],
+html.t-shadcn .orca-notification[aria-hidden="true"] {
+	animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
+html.t-shadcn .orca-repo-switcher-modal {
+	animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: top right !important;
+}
+
+html.t-shadcn .orca-toc[data-state="closed"],
+html.t-shadcn .orca-repo-switcher-modal[data-state="closed"] {
+	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
+	pointer-events: none !important;
+}
+
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
 html .orca-popup:has(.orca-block-popup),
 html .orca-popup:has(.orca-inline-reference-with-preview),
@@ -1333,6 +1411,22 @@ html:root:root .orca-repr-tag-props-title::before,
 html:root:root .orca-repr-tag-props .orca-tag-data-propicon,
 html:root:root .orca-repr-tag-props .orca-tag-data-name {
 	color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
+}
+
+html:root:root .orca-repr-tag-props-title::before {
+	content: "" !important;
+	display: block !important;
+	inline-size: 0.45rem !important;
+	block-size: 0.45rem !important;
+	border-inline-end: 1.5px solid currentColor !important;
+	border-block-end: 1.5px solid currentColor !important;
+	transform: rotate(-45deg) !important;
+	transform-origin: center !important;
+	transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
+}
+
+html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
+	transform: rotate(45deg) !important;
 }
 
 html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {

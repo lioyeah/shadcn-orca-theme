@@ -6,6 +6,7 @@
  */
 
 import { subscribe } from "valtio";
+import { setupClickSpark } from "./click-spark";
 
 const THEME_NAME = "shadcn/ui Neutral";
 const THEME_CLASS = "t-shadcn";
@@ -21,6 +22,7 @@ const EXCALIDRAW_LASER_CURSOR_HOTSPOT = "4 4";
 let themeModeUnsub: (() => void) | null = null;
 let whiteboardExcalidrawFixUnsub: (() => void) | null = null;
 let blockGraphSliderUnsub: (() => void) | null = null;
+let clickSparkUnsub: (() => void) | null = null;
 
 function fixExcalidrawLaserCursor(cursor: string): string | null {
 	if (!cursor.includes("data:image/svg+xml")) {
@@ -225,6 +227,7 @@ function setupBlockGraphSliderDetents() {
 export async function load(name: string) {
 	themeModeUnsub?.();
 	blockGraphSliderUnsub?.();
+	clickSparkUnsub?.();
 
 	const state = orca.state as {
 		themes?: Record<string, unknown>;
@@ -244,6 +247,7 @@ export async function load(name: string) {
 	document.documentElement.classList.add(THEME_CLASS);
 	blockGraphSliderUnsub = setupBlockGraphSliderDetents();
 	whiteboardExcalidrawFixUnsub = setupWhiteboardExcalidrawFix();
+	clickSparkUnsub = setupClickSpark();
 
 	// Sync with Orca's built-in light/dark toggle
 	syncThemeMode();
@@ -258,6 +262,10 @@ export async function unload() {
 	if (blockGraphSliderUnsub) {
 		blockGraphSliderUnsub();
 		blockGraphSliderUnsub = null;
+	}
+	if (clickSparkUnsub) {
+		clickSparkUnsub();
+		clickSparkUnsub = null;
 	}
 	if (whiteboardExcalidrawFixUnsub) {
 		whiteboardExcalidrawFixUnsub();

@@ -1,0 +1,18 @@
+@layer components {
+	.shadcn-click-spark-canvas {
+		position: fixed !important;
+		inset: 0 !important;
+		z-index: 1000 !important;
+		display: block !important;
+		inline-size: 100vw !important;
+		block-size: 100vh !important;
+		pointer-events: none !important;
+		background: transparent !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shadcn-click-spark-canvas {
+			display: none !important;
+		}
+	}
+}

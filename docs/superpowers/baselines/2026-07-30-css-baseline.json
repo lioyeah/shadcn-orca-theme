@@ -1,9 +1,9 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e",
-    "bytes": 379085,
-    "lines": 9917,
+    "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94",
+    "bytes": 391490,
+    "lines": 10226,
     "selectorCount": 1584,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
@@ -401,7 +401,7 @@
       ".orca-menu:has(.orca-key-selected) .orca-menu-text:not(.orca-menu-text-disabled):hover",
       ".orca-menu:has(.orca-key-selected) .orca-select-item:not(.disabled):hover",
       ".orca-menu:not(.orca-block-popup):not(.orca-inline-reference):not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-preview):not(.orca-block-preview-popup)",
-      ".orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal)",
+      ".orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-inline-reference-with-preview):not(.orca-command-modal):not(.orca-block-preview):not(.orca-block-preview-popup)",
       ".orca-mermaid-toolbar",
       ".orca-modal",
       ".orca-no-editable-btn",
@@ -1591,7 +1591,7 @@
       "to",
       "video"
     ],
-    "customPropertyCount": 324,
+    "customPropertyCount": 330,
     "customProperties": [
       "--ExcTextField--background",
       "--ExcTextField--border",
@@ -1718,6 +1718,12 @@
       "--main-foreground",
       "--main-muted",
       "--modal-shadow",
+      "--motion-duration-fast",
+      "--motion-duration-normal",
+      "--motion-ease",
+      "--motion-ease-in",
+      "--motion-ease-linear",
+      "--motion-ease-out",
       "--muted",
       "--muted-foreground",
       "--nb-accent",
@@ -1923,19 +1929,19 @@
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e"
+      "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "ac6d4711f54327543e202b6cb734e7b202c5646e6e10522a738f1af948cfb96e"
+      "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94"
     }
   },
   "sources": [
     {
       "file": "src/flavors/default.css",
-      "sha256": "8cfa5691bded86c083c9e79716040be3054b8207738894348b4ef23dd8c74626",
-      "bytes": 14614,
-      "lines": 354,
+      "sha256": "037b598e606ede70ab64be7a8747d8e76043329a62aba195eab9ff1a7da21ee8",
+      "bytes": 14848,
+      "lines": 361,
       "selectorCount": 8,
       "selectors": [
         "#sidebar",
@@ -1947,7 +1953,7 @@
         ":root",
         "html.t-light"
       ],
-      "customPropertyCount": 205,
+      "customPropertyCount": 211,
       "customProperties": [
         "--accent",
         "--accent-foreground",
@@ -1984,6 +1990,12 @@
         "--main",
         "--main-foreground",
         "--main-muted",
+        "--motion-duration-fast",
+        "--motion-duration-normal",
+        "--motion-ease",
+        "--motion-ease-in",
+        "--motion-ease-linear",
+        "--motion-ease-out",
         "--muted",
         "--muted-foreground",
         "--nb-accent",
@@ -2597,9 +2609,9 @@
     },
     {
       "file": "src/theme-css/components/overlays.css",
-      "sha256": "7de4caf1aed76d5fb265cdd4da919362fb718dab96afa3cad5a9f8f7b93b1a59",
-      "bytes": 21644,
-      "lines": 588,
+      "sha256": "0e8e1c28151705014f580635867ed788508967e0dd518d78c76781ee97b9b094",
+      "bytes": 22109,
+      "lines": 594,
       "selectorCount": 110,
       "selectors": [
         ".orca-block-popup",
@@ -2662,7 +2674,7 @@
         ".orca-menu .orca-popup:not(.orca-command-modal):not(.orca-search-modal)",
         ".orca-menu.orca-block-preview",
         ".orca-menu:not(.orca-block-popup):not(.orca-inline-reference):not(.orca-command-modal):not(.orca-search-modal):not(.orca-block-preview):not(.orca-block-preview-popup)",
-        ".orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal)",
+        ".orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-inline-reference-with-preview):not(.orca-command-modal):not(.orca-block-preview):not(.orca-block-preview-popup)",
         ".orca-modal",
         ".orca-notification",
         ".orca-plugin-marketplace",

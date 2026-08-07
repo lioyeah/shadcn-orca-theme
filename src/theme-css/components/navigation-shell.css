@@ -37,7 +37,7 @@
 		line-height: 1.25rem !important;
 		font-weight: var(--base-font-weight) !important;
 		min-width: 0 !important;
-		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 		transform: none !important;
 		&:hover,
 		&:active,

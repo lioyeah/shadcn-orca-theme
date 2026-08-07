@@ -64,23 +64,29 @@
 		font-weight: 500 !important;
 		line-height: 1.25rem !important;
 		cursor: pointer !important;
-		transition: color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease) !important;
 		-webkit-font-smoothing: antialiased !important;
 	}
 
 	.orca-repr-tag-props-title::before {
+		content: "" !important;
 		order: 2 !important;
+		display: block !important;
 		flex-shrink: 0 !important;
 		margin: 0 !important;
 		margin-inline-start: auto !important;
+		inline-size: 0.45rem !important;
+		block-size: 0.45rem !important;
 		color: var(--orca-repr-tag-props-color, var(--muted-foreground)) !important;
-		font-size: 1rem !important;
-		line-height: 1 !important;
-		transition: transform 0.2s ease !important;
+		border-inline-end: 1.5px solid currentColor !important;
+		border-block-end: 1.5px solid currentColor !important;
+		transform: rotate(-45deg) !important;
+		transform-origin: center !important;
+		transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
 	}
 
 	.orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before {
-		transform: rotate(180deg) !important;
+		transform: rotate(45deg) !important;
 	}
 
 	.orca-repr-tag-props-group:has(> .orca-repr-tag-props-title.orca-repr-tag-props-collapsed) > :not(.orca-repr-tag-props-title) {
@@ -780,7 +786,7 @@
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
-		transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		padding: 0.25rem 0.625rem !important;
 		min-block-size: 1.75rem !important;
 		align-self: center !important;

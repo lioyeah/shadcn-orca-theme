@@ -2,12 +2,60 @@
 	@keyframes shadcn-popover-in {
 		from {
 			opacity: 0;
-			transform: scale(0.98);
+			transform: scale(0.98) translateY(-4px);
 		}
 		to {
 			opacity: 1;
-			transform: scale(1);
+			transform: scale(1) translateY(0);
 		}
+	}
+
+	@keyframes shadcn-toc-in {
+		from {
+			opacity: 0;
+			transform: translateX(10px) scale(0.99);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-tooltip-in {
+		from {
+			opacity: 0;
+			transform: translateY(2px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-toast-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-tooltip-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(1px) scale(0.98); }
+	}
+
+	@keyframes shadcn-toast-out {
+		from { opacity: 1; transform: translateY(0) scale(1); }
+		to { opacity: 0; transform: translateY(4px) scale(0.98); }
+	}
+
+	@keyframes shadcn-panel-out {
+		from { opacity: 1; transform: translateX(0) scale(1); }
+		to { opacity: 0; transform: translateX(8px) scale(0.99); }
 	}
 
 	/* ----------------------------------------------------------
@@ -143,10 +191,33 @@
 		padding: 0 !important;
 	}
 
-	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
-	.orca-select-menu {
-		animation: shadcn-popover-in 0.14s ease-out both;
+	/* TOC is a right-side sheet, not a centered editor popover. */
+	.orca-toc {
+		animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: right center;
+	}
+
+	/* Popover enter — opacity + slight scale/slide; excludes search/command/preview shells */
+	.orca-dropdown,
+	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-inline-reference-with-preview):not(.orca-command-modal):not(.orca-block-preview):not(.orca-block-preview-popup),
+	.orca-select-menu,
+	.orca-select-popup,
+	.orca-slash-commands,
+	.orca-datepicker-menu,
+	.orca-block-select-popup,
+	.orca-repo-switcher-modal {
+		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
+	}
+
+	.orca-repo-switcher-modal {
+		transform-origin: top right;
+	}
+
+	.orca-toc[data-state="closed"],
+	.orca-repo-switcher-modal[data-state="closed"] {
+		animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
@@ -439,7 +510,7 @@
 		margin-inline: 0.375rem !important;
 		padding-block: 0.5rem !important;
 		cursor: pointer !important;
-		transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+		transition: background var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 
 		& .orca-search-modal-result-label {
 			color: var(--foreground) !important;
@@ -531,6 +602,8 @@
 		border: none !important;
 		border-radius: var(--radius-md) !important;
 		box-shadow: none !important;
+		animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: bottom center;
 		--orca-shadow-md: none;
 		--orca-shadow-menu: none;
 		--orca-shadow-popup: none;
@@ -538,6 +611,12 @@
 		--orca-color-text-2: color-mix(in oklab, var(--background) 75%, var(--foreground));
 		--orca-color-gray-4: color-mix(in oklab, var(--background) 75%, var(--foreground));
 		--orca-color-gray-5: color-mix(in oklab, var(--background) 75%, var(--foreground));
+	}
+
+	.orca-tooltip[data-state="closed"],
+	.orca-tooltip[aria-hidden="true"] {
+		animation: shadcn-tooltip-out var(--motion-duration-fast) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 	.orca-tooltip .orca-tooltip-shortcut {
 		display: inline-flex !important;
@@ -574,6 +653,14 @@
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
+		animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both;
+		transform-origin: bottom right;
+	}
+
+	.orca-notification[data-state="closed"],
+	.orca-notification[aria-hidden="true"] {
+		animation: shadcn-toast-out var(--motion-duration-normal) var(--motion-ease-in) both;
+		pointer-events: none !important;
 	}
 
 	.orca-progress, progress {
