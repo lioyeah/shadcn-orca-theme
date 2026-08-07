@@ -77,3 +77,32 @@
 	}
 }
 
+/* ============================================================
+   2. REDUCED MOTION — global fallback
+   Unlayered: beats @layer components/overrides timing rules.
+   Instant completion preserves animation-fill-mode end states
+   without resetting static transform used for layout.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+	:root,
+	html.t-light {
+		--motion-duration-fast: 0ms;
+		--motion-duration-normal: 0ms;
+		--typeset-link-highlight-duration: 0ms;
+		--typeset-scope-line-duration: 0ms;
+		--shimmer-duration: 0ms;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		animation-delay: -1ms !important;
+		transition-duration: 0.01ms !important;
+		transition-delay: 0s !important;
+		scroll-behavior: auto !important;
+	}
+}
+
