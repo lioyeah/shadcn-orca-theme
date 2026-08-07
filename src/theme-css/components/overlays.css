@@ -10,6 +10,17 @@
 		}
 	}
 
+	@keyframes shadcn-toc-in {
+		from {
+			opacity: 0;
+			transform: translateX(10px) scale(0.99);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -141,6 +152,12 @@
 		border-radius: 0 !important;
 		box-shadow: none !important;
 		padding: 0 !important;
+	}
+
+	/* TOC is a right-side sheet, not a centered editor popover. */
+	.orca-toc {
+		animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: right center;
 	}
 
 	/* Popover enter — opacity + slight scale/slide; excludes search/command/preview shells */

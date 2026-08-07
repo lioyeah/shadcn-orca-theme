@@ -10,6 +10,46 @@
 		:scope { border: 1px solid var(--border); border-radius: var(--border-radius); box-shadow: none; }
 	}
 
+	/* TOC behaves like a right-side sheet, not a card floating above the editor. */
+	.orca-toc {
+		background: var(--background) !important;
+		color: var(--foreground) !important;
+		border: 0 !important;
+		border-left: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		overflow: hidden !important;
+	}
+
+	.orca-toc-items {
+		background: transparent !important;
+		color: inherit !important;
+	}
+
+	.orca-toc-item {
+		color: var(--foreground) !important;
+		border-radius: var(--radius-sm) !important;
+	}
+
+	.orca-toc-item:hover,
+	.orca-toc-item[aria-selected="true"],
+	.orca-toc-item.selected {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-toc-item-label {
+		color: inherit !important;
+	}
+
+	.orca-toc-item-fold-arrow {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-toc-resizer {
+		background: transparent !important;
+	}
+
 	/*
 	   Stats / About shells: ONLY strip blue popup chrome.
 	   Do NOT touch .orca-modal-overlay or position/display.

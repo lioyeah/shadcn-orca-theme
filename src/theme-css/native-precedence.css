@@ -656,6 +656,51 @@ html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
 	padding: 0 !important;
 }
 
+/* TOC popup — the panel is the right-side sheet; its popup wrapper is only a shell. */
+html.t-shadcn .orca-popup:has(> .orca-toc) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+html.t-shadcn .orca-toc {
+	animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: right center !important;
+	background: var(--background) !important;
+	color: var(--foreground) !important;
+	border: 0 !important;
+	border-left: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: hidden !important;
+}
+
+html.t-shadcn .orca-toc-items {
+	background: transparent !important;
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item:hover,
+html.t-shadcn .orca-toc-item[aria-selected="true"],
+html.t-shadcn .orca-toc-item.selected {
+	background: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-item-label {
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item-fold-arrow {
+	color: var(--muted-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-resizer {
+	background: transparent !important;
+}
+
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
 html .orca-popup:has(.orca-block-popup),
 html .orca-popup:has(.orca-inline-reference-with-preview),

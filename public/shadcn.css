@@ -2234,6 +2234,17 @@ html.t-light {
 		}
 	}
 
+	@keyframes shadcn-toc-in {
+		from {
+			opacity: 0;
+			transform: translateX(10px) scale(0.99);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0) scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -2365,6 +2376,12 @@ html.t-light {
 		border-radius: 0 !important;
 		box-shadow: none !important;
 		padding: 0 !important;
+	}
+
+	/* TOC is a right-side sheet, not a centered editor popover. */
+	.orca-toc {
+		animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: right center;
 	}
 
 	/* Popover enter — opacity + slight scale/slide; excludes search/command/preview shells */
@@ -6457,6 +6474,46 @@ html.t-light {
 		:scope { border: 1px solid var(--border); border-radius: var(--border-radius); box-shadow: none; }
 	}
 
+	/* TOC behaves like a right-side sheet, not a card floating above the editor. */
+	.orca-toc {
+		background: var(--background) !important;
+		color: var(--foreground) !important;
+		border: 0 !important;
+		border-left: 1px solid var(--border) !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		overflow: hidden !important;
+	}
+
+	.orca-toc-items {
+		background: transparent !important;
+		color: inherit !important;
+	}
+
+	.orca-toc-item {
+		color: var(--foreground) !important;
+		border-radius: var(--radius-sm) !important;
+	}
+
+	.orca-toc-item:hover,
+	.orca-toc-item[aria-selected="true"],
+	.orca-toc-item.selected {
+		background: var(--accent) !important;
+		color: var(--accent-foreground) !important;
+	}
+
+	.orca-toc-item-label {
+		color: inherit !important;
+	}
+
+	.orca-toc-item-fold-arrow {
+		color: var(--muted-foreground) !important;
+	}
+
+	.orca-toc-resizer {
+		background: transparent !important;
+	}
+
 	/*
 	   Stats / About shells: ONLY strip blue popup chrome.
 	   Do NOT touch .orca-modal-overlay or position/display.
@@ -8429,6 +8486,51 @@ html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
 	border: none !important;
 	box-shadow: none !important;
 	padding: 0 !important;
+}
+
+/* TOC popup — the panel is the right-side sheet; its popup wrapper is only a shell. */
+html.t-shadcn .orca-popup:has(> .orca-toc) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+html.t-shadcn .orca-toc {
+	animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: right center !important;
+	background: var(--background) !important;
+	color: var(--foreground) !important;
+	border: 0 !important;
+	border-left: 1px solid var(--border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	overflow: hidden !important;
+}
+
+html.t-shadcn .orca-toc-items {
+	background: transparent !important;
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item:hover,
+html.t-shadcn .orca-toc-item[aria-selected="true"],
+html.t-shadcn .orca-toc-item.selected {
+	background: var(--accent) !important;
+	color: var(--accent-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-item-label {
+	color: inherit !important;
+}
+
+html.t-shadcn .orca-toc-item-fold-arrow {
+	color: var(--muted-foreground) !important;
+}
+
+html.t-shadcn .orca-toc-resizer {
+	background: transparent !important;
 }
 
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
