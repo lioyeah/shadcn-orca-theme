@@ -2245,6 +2245,28 @@ html.t-light {
 		}
 	}
 
+	@keyframes shadcn-tooltip-in {
+		from {
+			opacity: 0;
+			transform: translateY(2px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-toast-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -2778,6 +2800,8 @@ html.t-light {
 		border: none !important;
 		border-radius: var(--radius-md) !important;
 		box-shadow: none !important;
+		animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: bottom center;
 		--orca-shadow-md: none;
 		--orca-shadow-menu: none;
 		--orca-shadow-popup: none;
@@ -2821,6 +2845,8 @@ html.t-light {
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
+		animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both;
+		transform-origin: bottom right;
 	}
 
 	.orca-progress, progress {
@@ -2831,6 +2857,16 @@ html.t-light {
 	progress::-webkit-progress-bar { background: var(--secondary-background) !important; border-radius: var(--border-radius) !important; }
 	progress::-webkit-progress-value { background: var(--primary) !important; border-radius: var(--border-radius) !important; }
 
+	.shadcn-click-spark-canvas {
+		position: fixed !important;
+		inset: 0 !important;
+		z-index: 1000 !important;
+		display: block !important;
+		inline-size: 100vw !important;
+		block-size: 100vh !important;
+		pointer-events: none !important;
+		background: transparent !important;
+	}
 	/* ----------------------------------------------------------
 	   4.8 Code Block
 	   ---------------------------------------------------------- */
@@ -8540,6 +8576,16 @@ html.t-shadcn .orca-toc-item-fold-arrow {
 
 html.t-shadcn .orca-toc-resizer {
 	background: transparent !important;
+}
+
+html.t-shadcn .orca-tooltip {
+	animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: bottom center !important;
+}
+
+html.t-shadcn .orca-notification {
+	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
+	transform-origin: bottom right !important;
 }
 
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */

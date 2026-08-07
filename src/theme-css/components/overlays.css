@@ -21,6 +21,28 @@
 		}
 	}
 
+	@keyframes shadcn-tooltip-in {
+		from {
+			opacity: 0;
+			transform: translateY(2px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes shadcn-toast-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.98);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
 	/* ----------------------------------------------------------
 	   4.7 Surface / Card
 	   ---------------------------------------------------------- */
@@ -554,6 +576,8 @@
 		border: none !important;
 		border-radius: var(--radius-md) !important;
 		box-shadow: none !important;
+		animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		transform-origin: bottom center;
 		--orca-shadow-md: none;
 		--orca-shadow-menu: none;
 		--orca-shadow-popup: none;
@@ -597,6 +621,8 @@
 		border: 1px solid var(--border) !important;
 		border-radius: var(--border-radius) !important;
 		box-shadow: none !important;
+		animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both;
+		transform-origin: bottom right;
 	}
 
 	.orca-progress, progress {

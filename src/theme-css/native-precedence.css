@@ -701,6 +701,16 @@ html.t-shadcn .orca-toc-resizer {
 	background: transparent !important;
 }
 
+html.t-shadcn .orca-tooltip {
+	animation: shadcn-tooltip-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: bottom center !important;
+}
+
+html.t-shadcn .orca-notification {
+	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
+	transform-origin: bottom right !important;
+}
+
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
 html .orca-popup:has(.orca-block-popup),
 html .orca-popup:has(.orca-inline-reference-with-preview),
