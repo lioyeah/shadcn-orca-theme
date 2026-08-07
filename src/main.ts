@@ -24,6 +24,12 @@ let whiteboardExcalidrawFixUnsub: (() => void) | null = null;
 let blockGraphSliderUnsub: (() => void) | null = null;
 let clickSparkUnsub: (() => void) | null = null;
 
+/**
+ * Adds the configured hotspot coordinates to an Excalidraw SVG laser cursor.
+ *
+ * @param cursor - The CSS cursor value to inspect.
+ * @returns The corrected cursor value, or `null` when no correction is needed or the value is unsupported.
+ */
 function fixExcalidrawLaserCursor(cursor: string): string | null {
 	if (!cursor.includes("data:image/svg+xml")) {
 		return null;
@@ -224,6 +230,11 @@ function setupBlockGraphSliderDetents() {
 	return () => cleanups.splice(0).forEach((cleanup) => cleanup());
 }
 
+/**
+ * Loads the theme and initializes its UI enhancements and theme-mode synchronization.
+ *
+ * @param name - The display name used when registering the theme
+ */
 export async function load(name: string) {
 	themeModeUnsub?.();
 	blockGraphSliderUnsub?.();
@@ -254,6 +265,9 @@ export async function load(name: string) {
 	themeModeUnsub = subscribe(orca.state, syncThemeMode);
 }
 
+/**
+ * Removes the theme and releases its active subscriptions and effects.
+ */
 export async function unload() {
 	if (themeModeUnsub) {
 		themeModeUnsub();

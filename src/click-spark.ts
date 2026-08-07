@@ -12,10 +12,20 @@ type Spark = {
 	startTime: number;
 };
 
+/**
+ * Determines whether the user prefers reduced motion.
+ *
+ * @returns `true` if reduced motion is preferred, `false` otherwise.
+ */
 function isReducedMotion(): boolean {
 	return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+/**
+ * Sets up an animated spark effect for primary-button pointer presses.
+ *
+ * @returns A cleanup function that removes the spark effect and its event listeners.
+ */
 export function setupClickSpark(): () => void {
 	const canvas = document.createElement("canvas");
 	canvas.className = CLICK_SPARK_CANVAS_CLASS;
