@@ -2,11 +2,11 @@
 	@keyframes shadcn-popover-in {
 		from {
 			opacity: 0;
-			transform: scale(0.98);
+			transform: scale(0.98) translateY(-4px);
 		}
 		to {
 			opacity: 1;
-			transform: scale(1);
+			transform: scale(1) translateY(0);
 		}
 	}
 
@@ -143,8 +143,14 @@
 		padding: 0 !important;
 	}
 
-	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference-with-preview):not(.orca-command-modal),
-	.orca-select-menu {
+	/* Popover enter — opacity + slight scale/slide; excludes search/command/preview shells */
+	.orca-dropdown,
+	.orca-menu:not(.orca-search-modal):not(.orca-block-popup):not(.orca-inline-reference):not(.orca-inline-reference-with-preview):not(.orca-command-modal):not(.orca-block-preview):not(.orca-block-preview-popup),
+	.orca-select-menu,
+	.orca-select-popup,
+	.orca-slash-commands,
+	.orca-datepicker-menu,
+	.orca-block-select-popup {
 		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
 	}
