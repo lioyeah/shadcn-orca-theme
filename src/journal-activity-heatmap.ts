@@ -18,7 +18,7 @@ export type ActivitySnapshot = {
 
 const DATE_ONLY_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
 const ISO_DATETIME_RE =
-	/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})?$/;
+	/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
 
 function isRealCalendarDate(year: number, month: number, day: number): boolean {
 	const date = new Date(year, month - 1, day);
@@ -98,23 +98,27 @@ export function normalizeActivityDate(value: unknown): Date | null {
 }
 
 function toActivityBlock(block: Block): ActivityBlock {
+	if (!hasPresentActivityDateValue(block.created)) {
+		throw new Error(`Missing block created date for block ${block.id}`);
+	}
+	if (!hasPresentActivityDateValue(block.modified)) {
+		throw new Error(`Missing block modified date for block ${block.id}`);
+	}
+
 	const created = normalizeActivityDate(block.created);
 	const modified = normalizeActivityDate(block.modified);
 
-	if (hasPresentActivityDateValue(block.created) && !created) {
+	if (!created) {
 		throw new Error(`Invalid block created date for block ${block.id}`);
 	}
-	if (hasPresentActivityDateValue(block.modified) && !modified) {
+	if (!modified) {
 		throw new Error(`Invalid block modified date for block ${block.id}`);
-	}
-	if (!created && !modified) {
-		throw new Error(`Missing block dates for block ${block.id}`);
 	}
 
 	return {
 		id: block.id,
-		created: created ?? modified!,
-		modified: modified ?? created!,
+		created,
+		modified,
 	};
 }
 
@@ -1056,6 +1060,10 @@ function runDevFixture(): void {
 	);
 
 	assertFixture(normalizeActivityDate("not-a-date") === null, "invalid date strings are rejected");
+	assertFixture(
+		normalizeActivityDate("2020-06-15T12:00:00") === null,
+		"timezone-less ISO datetime strings are rejected",
+	);
 	assertFixture(normalizeActivityDate("2020-06-15 12:00:00") === null, "ambiguous date strings are rejected");
 	assertFixture(normalizeActivityDate("2020/06/15") === null, "slash-separated date strings are rejected");
 	assertFixture(normalizeActivityDate("2020-02-30") === null, "rollover date-only strings are rejected");
@@ -1076,6 +1084,36 @@ function runDevFixture(): void {
 		invalidBlockThrew = true;
 	}
 	assertFixture(invalidBlockThrew, "invalid fetched block dates fail the collector path");
+
+	let missingCreatedThrew = false;
+	try {
+		toActivityBlock({
+			id: 98,
+			created: null,
+			modified: blockSameDay.modified,
+		} as unknown as Block);
+	} catch {
+		missingCreatedThrew = true;
+	}
+	assertFixture(
+		missingCreatedThrew,
+		"missing created date fails instead of falling back to modified",
+	);
+
+	let missingModifiedThrew = false;
+	try {
+		toActivityBlock({
+			id: 97,
+			created: blockSameDay.created,
+			modified: "",
+		} as unknown as Block);
+	} catch {
+		missingModifiedThrew = true;
+	}
+	assertFixture(
+		missingModifiedThrew,
+		"missing modified date fails instead of falling back to created",
+	);
 
 	const goodSnapshot = aggregateActivity([blockSameDay], today);
 	let lastSuccessfulSnapshot: ActivitySnapshot | null = goodSnapshot;
