@@ -215,7 +215,7 @@
 		box-shadow: none !important;
 		border-radius: 9999px !important;
 		padding: 0 !important;
-		transition: width 0.2s ease, background-color 0.15s ease !important;
+		transition: width var(--motion-duration-normal) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	/* Creative hours = shadcn Bar Chart (rectangular bars, not capsules).
@@ -259,7 +259,7 @@
 		border-radius: 0 !important;
 		rx: 0 !important;
 		ry: 0 !important;
-		transition: opacity 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 	.orca-stats-content .orca-stats-chart-bar:hover { opacity: 0.85 !important; }
 

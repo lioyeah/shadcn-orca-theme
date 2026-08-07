@@ -21,6 +21,7 @@
 			border-radius: var(--border-radius);
 			background: transparent !important;
 			color: var(--foreground) !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		}
 		html .orca-settings > .sections .item.selected,
 		html .orca-settings > .sections .item:hover,

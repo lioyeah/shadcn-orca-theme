@@ -711,6 +711,11 @@ html.t-shadcn .orca-notification {
 	transform-origin: bottom right !important;
 }
 
+html.t-shadcn .orca-repo-switcher-modal {
+	animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: top right !important;
+}
+
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */
 html .orca-popup:has(.orca-block-popup),
 html .orca-popup:has(.orca-inline-reference-with-preview),

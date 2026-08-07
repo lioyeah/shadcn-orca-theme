@@ -1852,6 +1852,7 @@ html.t-light {
 		border: 1px solid transparent !important;
 		background: transparent !important;
 		border-radius: calc(var(--radius) - 4px) !important;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	.orca-select-menu .orca-select-item:not(.disabled):hover,
@@ -2112,7 +2113,7 @@ html.t-light {
 		margin: 0 !important;
 		min-block-size: calc(100% - 1px) !important;
 		white-space: nowrap !important;
-		transition: color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		&:hover { color: var(--foreground) !important; }
 		&:focus-visible {
 			border-color: var(--ring) !important;
@@ -2413,9 +2414,14 @@ html.t-light {
 	.orca-select-popup,
 	.orca-slash-commands,
 	.orca-datepicker-menu,
-	.orca-block-select-popup {
+	.orca-block-select-popup,
+	.orca-repo-switcher-modal {
 		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
+	}
+
+	.orca-repo-switcher-modal {
+		transform-origin: top right;
 	}
 
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */
@@ -4236,6 +4242,16 @@ html.t-light {
 		background-image: none !important;
 		border: 1px solid transparent !important;
 		align-items: center !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	/* Low-risk press feedback for ordinary UI actions only. */
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn) {
+		transition: transform var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn):active {
+		transform: scale(0.98) !important;
 	}
 
 	/* Menu leading icons — dropdown-menu.tsx: items-center, icon size-4 (1rem) */
@@ -5733,6 +5749,7 @@ html.t-light {
 			border-radius: var(--border-radius);
 			background: transparent !important;
 			color: var(--foreground) !important;
+			transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 		}
 		html .orca-settings > .sections .item.selected,
 		html .orca-settings > .sections .item:hover,
@@ -6724,7 +6741,7 @@ html.t-light {
 		box-shadow: none !important;
 		border-radius: 9999px !important;
 		padding: 0 !important;
-		transition: width 0.2s ease, background-color 0.15s ease !important;
+		transition: width var(--motion-duration-normal) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	/* Creative hours = shadcn Bar Chart (rectangular bars, not capsules).
@@ -6768,7 +6785,7 @@ html.t-light {
 		border-radius: 0 !important;
 		rx: 0 !important;
 		ry: 0 !important;
-		transition: opacity 0.15s ease !important;
+		transition: opacity var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 	.orca-stats-content .orca-stats-chart-bar:hover { opacity: 0.85 !important; }
 
@@ -8586,6 +8603,11 @@ html.t-shadcn .orca-tooltip {
 html.t-shadcn .orca-notification {
 	animation: shadcn-toast-in var(--motion-duration-normal) var(--motion-ease-out) both !important;
 	transform-origin: bottom right !important;
+}
+
+html.t-shadcn .orca-repo-switcher-modal {
+	animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	transform-origin: top right !important;
 }
 
 /* Block ref popups — beat .orca-menu blue shell; preview = editor grid */

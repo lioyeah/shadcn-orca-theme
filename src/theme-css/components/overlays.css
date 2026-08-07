@@ -189,9 +189,14 @@
 	.orca-select-popup,
 	.orca-slash-commands,
 	.orca-datepicker-menu,
-	.orca-block-select-popup {
+	.orca-block-select-popup,
+	.orca-repo-switcher-modal {
 		animation: shadcn-popover-in var(--motion-duration-fast) var(--motion-ease-out) both;
 		transform-origin: top center;
+	}
+
+	.orca-repo-switcher-modal {
+		transform-origin: top right;
 	}
 
 	/* Shell = dark secondary (not blue .orca-menu); padding 0 for full-bleed footer */

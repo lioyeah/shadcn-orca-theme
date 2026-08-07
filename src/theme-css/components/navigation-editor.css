@@ -29,6 +29,16 @@
 		background-image: none !important;
 		border: 1px solid transparent !important;
 		align-items: center !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	/* Low-risk press feedback for ordinary UI actions only. */
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn) {
+		transition: transform var(--motion-duration-fast) var(--motion-ease) !important;
+	}
+
+	:is(#headbar, .orca-toolbar, .orca-settings, .orca-popup) .orca-button:not(.plain):not(.orca-no-editable-btn):not(.orca-block-editor-go-btn):active {
+		transform: scale(0.98) !important;
 	}
 
 	/* Menu leading icons — dropdown-menu.tsx: items-center, icon size-4 (1rem) */
