@@ -4719,13 +4719,16 @@ html.t-light {
 		min-inline-size: 0 !important;
 	}
 
+	/* Arrow — Orca toggles caret icon classes; keep aria-expanded/data-state for
+	   shadcn parity. Body is conditionally mounted (not display-toggled) and the
+	   card root already uses host auto-animate, so skip CSS body transitions here. */
 	.orca-query-conditions-header-arrow {
 		color: var(--muted-foreground) !important;
 		font-size: 1rem !important;
 		line-height: 1 !important;
 		flex-shrink: 0 !important;
 		transform: rotate(0deg) !important;
-		transition: transform 0.2s ease !important;
+		transition: transform var(--motion-duration-normal) var(--motion-ease) !important;
 	}
 	.orca-query-conditions-header[aria-expanded="true"] .orca-query-conditions-header-arrow,
 	.orca-query-conditions-header[data-state="open"] .orca-query-conditions-header-arrow,
