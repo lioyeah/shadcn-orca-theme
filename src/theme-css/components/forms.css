@@ -157,7 +157,6 @@
 
 	:is(input, textarea, [role="textbox"])[aria-invalid="true"] {
 		animation: shadcn-form-error-shake var(--motion-duration-fast) var(--motion-ease) both;
-		border-color: var(--destructive) !important;
 	}
 
 	/* shadcn input.tsx — plain shell (no adornments) */
@@ -168,6 +167,13 @@
 		background: var(--secondary-background) !important;
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
+	}
+
+	/* Persistent invalid state indicator on container */
+	.orca-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]) {
+		border-color: var(--destructive) !important;
 	}
 
 	/*

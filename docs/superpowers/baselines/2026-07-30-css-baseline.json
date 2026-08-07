@@ -1,9 +1,9 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "8d8c6bd63be1ec89764acd83a4bc7e2b3965b4e6a7281838c629d69fefc5ea4f",
-    "bytes": 379725,
-    "lines": 9929,
+    "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94",
+    "bytes": 391490,
+    "lines": 10226,
     "selectorCount": 1584,
     "selectors": [
       "#app.sidebar-closed #main.orca-panels-container",
@@ -1591,7 +1591,7 @@
       "to",
       "video"
     ],
-    "customPropertyCount": 328,
+    "customPropertyCount": 330,
     "customProperties": [
       "--ExcTextField--background",
       "--ExcTextField--border",
@@ -1721,6 +1721,8 @@
       "--motion-duration-fast",
       "--motion-duration-normal",
       "--motion-ease",
+      "--motion-ease-in",
+      "--motion-ease-linear",
       "--motion-ease-out",
       "--muted",
       "--muted-foreground",
@@ -1927,19 +1929,19 @@
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "8d8c6bd63be1ec89764acd83a4bc7e2b3965b4e6a7281838c629d69fefc5ea4f"
+      "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "8d8c6bd63be1ec89764acd83a4bc7e2b3965b4e6a7281838c629d69fefc5ea4f"
+      "sha256": "bf978876ca74b16751858780e9d2989b610f212b3c4e9a1f6d58cbb4e40b6c94"
     }
   },
   "sources": [
     {
       "file": "src/flavors/default.css",
-      "sha256": "f78610686bcbed976a85bc75947c10682ca17ce9956c7716623b7411336c1ebd",
-      "bytes": 14789,
-      "lines": 360,
+      "sha256": "037b598e606ede70ab64be7a8747d8e76043329a62aba195eab9ff1a7da21ee8",
+      "bytes": 14848,
+      "lines": 361,
       "selectorCount": 8,
       "selectors": [
         "#sidebar",
@@ -1951,7 +1953,7 @@
         ":root",
         "html.t-light"
       ],
-      "customPropertyCount": 209,
+      "customPropertyCount": 211,
       "customProperties": [
         "--accent",
         "--accent-foreground",
@@ -1991,6 +1993,8 @@
         "--motion-duration-fast",
         "--motion-duration-normal",
         "--motion-ease",
+        "--motion-ease-in",
+        "--motion-ease-linear",
         "--motion-ease-out",
         "--muted",
         "--muted-foreground",

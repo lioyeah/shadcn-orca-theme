@@ -975,30 +975,31 @@ html.t-light {
 
 /* ============================================================
    2. REDUCED MOTION — global fallback
-   Unlayered: beats @layer components/overrides timing rules.
    Instant completion preserves animation-fill-mode end states
    without resetting static transform used for layout.
    ============================================================ */
 
-@media (prefers-reduced-motion: reduce) {
-	:root,
-	html.t-light {
-		--motion-duration-fast: 0ms;
-		--motion-duration-normal: 0ms;
-		--typeset-link-highlight-duration: 0ms;
-		--typeset-scope-line-duration: 0ms;
-		--shimmer-duration: 0ms;
-	}
+@layer base {
+	@media (prefers-reduced-motion: reduce) {
+		:root,
+		html.t-light {
+			--motion-duration-fast: 0ms;
+			--motion-duration-normal: 0ms;
+			--typeset-link-highlight-duration: 0ms;
+			--typeset-scope-line-duration: 0ms;
+			--shimmer-duration: 0ms;
+		}
 
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		animation-delay: -1ms !important;
-		transition-duration: 0.01ms !important;
-		transition-delay: 0s !important;
-		scroll-behavior: auto !important;
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			animation-delay: -1ms !important;
+			transition-duration: 0.01ms !important;
+			transition-delay: 0s !important;
+			scroll-behavior: auto !important;
+		}
 	}
 }
 
@@ -1332,7 +1333,6 @@ html.t-light {
 
 	:is(input, textarea, [role="textbox"])[aria-invalid="true"] {
 		animation: shadcn-form-error-shake var(--motion-duration-fast) var(--motion-ease) both;
-		border-color: var(--destructive) !important;
 	}
 
 	/* shadcn input.tsx — plain shell (no adornments) */
@@ -1343,6 +1343,13 @@ html.t-light {
 		background: var(--secondary-background) !important;
 		box-shadow: var(--shadow-xs) !important;
 		outline: none !important;
+	}
+
+	/* Persistent invalid state indicator on container */
+	.orca-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea-input:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]),
+	.orca-textarea:has(:is(input, textarea, [role="textbox"])[aria-invalid="true"]) {
+		border-color: var(--destructive) !important;
 	}
 
 	/*
@@ -2918,6 +2925,12 @@ html.t-light {
 		block-size: 100vh !important;
 		pointer-events: none !important;
 		background: transparent !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shadcn-click-spark-canvas {
+			display: none !important;
+		}
 	}
 	/* ----------------------------------------------------------
 	   4.8 Code Block
