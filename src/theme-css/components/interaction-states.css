@@ -15,7 +15,7 @@
 		.orca-tab,
 		.orca-query-tab,
 		.orca-sidebar-tab
-	):is(.disabled, [aria-disabled="true"]) {
+	):is(.disabled, :disabled, [aria-disabled="true"]) {
 		opacity: 0.5 !important;
 		cursor: not-allowed !important;
 	}
