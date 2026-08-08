@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "7cc73a8ded19ce8007d8c97d8e40611cf7b875f6761055ff66c9055d1a3e2c07",
-    "bytes": 399241,
+    "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee",
+    "bytes": 399252,
     "lines": 10462,
-    "selectorCount": 1649,
+    "selectorCount": 1650,
     "selectors": [
       "#headbar .orca-button.plain:hover",
       "#headbar .orca-headbar-global-tools > .orca-button",
@@ -960,6 +960,7 @@
       "::-webkit-scrollbar-track",
       "::placeholder",
       "::selection",
+      ":disabled",
       ":focus-visible:not(input):not(textarea):not(select):not(.orca-input):not(.orca-input-input):not(.orca-input-actualinput):not(.orca-textarea-input):not(.orca-textarea):not(.orca-find-replace):not(:has(> .orca-find-replace))",
       ":lang(ja)",
       ":lang(ko)",
@@ -2007,11 +2008,11 @@
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "7cc73a8ded19ce8007d8c97d8e40611cf7b875f6761055ff66c9055d1a3e2c07"
+      "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "7cc73a8ded19ce8007d8c97d8e40611cf7b875f6761055ff66c9055d1a3e2c07"
+      "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee"
     }
   },
   "sources": [
@@ -2603,8 +2604,8 @@
     },
     {
       "file": "src/theme-css/components/interaction-states.css",
-      "sha256": "7414cbc3cf9a119fdac6431fac45cdbc82157ba66b169476b5366bc178689f48",
-      "bytes": 704,
+      "sha256": "67340ef00a51cd001ed0323631b2745dfc5032e62556fb34036e74dbedd7feec",
+      "bytes": 715,
       "lines": 32,
       "selectorCount": 2,
       "selectors": [
