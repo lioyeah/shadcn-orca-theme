@@ -10,6 +10,8 @@ module.exports = {
 	base: ["theme-css/base/reset.css", "theme-css/base/surfaces.css"],
 	components: [
 		"theme-css/components/forms.css",
+		"theme-css/components/interaction-states.css",
+		"theme-css/components/ux-polish.css",
 		"theme-css/components/navigation.css",
 		"theme-css/components/overlays.css",
 		"theme-css/components/click-spark.css",
@@ -29,6 +31,7 @@ module.exports = {
 		"theme-css/components/query-text.css",
 	],
 	overrides: [
+		"theme-css/components/header-overflow.css",
 		"theme-css/context-overrides.css",
 		"theme-css/native-precedence.css",
 	],

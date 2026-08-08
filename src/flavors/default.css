@@ -63,6 +63,20 @@
 	--motion-ease-in: ease-in;
 	--motion-ease-out: ease-out;
 	--motion-ease-linear: linear;
+	--motion-panel-duration: 0.42s;
+	--motion-panel-duration-out: 0.32s;
+	--motion-panel-ease: cubic-bezier(0.16, 1, 0.3, 1);
+	--motion-panel-ease-out: cubic-bezier(0.7, 0, 0.84, 0);
+	--motion-toolbar-duration: 0.2s;
+	--motion-toolbar-stagger: 0.02s;
+	--motion-toolbar-group-delay: 0.12s;
+
+	/* UX layout tokens — shared control and panel rhythm */
+	--ux-control-height: 2.25rem;
+	--ux-control-height-sm: 1.75rem;
+	--ux-panel-padding: 1rem;
+	--ux-section-gap: 0.75rem;
+	--ux-sidebar-item-height: 2.25rem;
 
 	/* Orca backward-compat aliases (no blue chrome) */
 	--secondary-background: var(--card);

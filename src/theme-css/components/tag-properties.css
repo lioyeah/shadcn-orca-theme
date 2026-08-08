@@ -331,14 +331,22 @@
 		padding: 0 0.5rem 0.25rem !important;
 	}
 
-	.orca-repr-tag-props :is(.orca-datepicker-btn, .orca-select-button) {
-		border: 0 !important;
-		border-bottom: 1px solid var(--input) !important;
-		padding: 0.5rem !important;
-		border-radius: 0 !important;
+	.orca-repr-tag-props :is(
+		.orca-datepicker-btn,
+		input[type="date"],
+		input[type="time"]
+	) {
+		min-block-size: 2rem !important;
+		padding: 0.375rem 0.75rem !important;
+		border: 1px solid var(--input) !important;
+		border-radius: var(--radius-md) !important;
+		background: var(--secondary-background) !important;
+		color: var(--foreground) !important;
+		box-shadow: var(--shadow-xs) !important;
 	}
 
-	.orca-repr-tag-props .orca-block-select-button {
+	/* Block-reference controls are shared by every property-bar variant. */
+	.orca-block-select-button {
 		border: 0 !important;
 		border-radius: 0 !important;
 		background: transparent !important;
@@ -347,7 +355,7 @@
 		box-shadow: none !important;
 	}
 
-	.orca-repr-tag-props .orca-block-select-button :is(
+	.orca-block-select-button :is(
 		.orca-select-button-text,
 		.orca-select-button-placeholder,
 		.orca-select-button-selector
@@ -357,7 +365,7 @@
 	}
 
 	/* Block-reference value — interior.dev tag-input rounded rectangle */
-	.orca-repr-tag-props .orca-block-select-button :is(
+	.orca-block-select-button :is(
 		.orca-tag,
 		.orca-select-button-selection
 	) {

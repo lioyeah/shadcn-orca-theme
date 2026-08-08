@@ -656,6 +656,49 @@ html .orca-panels-container > header .orca-popup:has(> .orca-menu) {
 	padding: 0 !important;
 }
 
+html .orca-popup:has(.orca-headbar-menu) {
+	position: absolute !important;
+	z-index: 1000 !important;
+	flex: 0 0 auto !important;
+	contain: layout !important;
+	left: auto !important;
+	right: 0 !important;
+	transform-origin: top right !important;
+}
+
+html .orca-headbar-menu {
+	width: max-content !important;
+	min-width: 12rem !important;
+	max-width: min(18rem, calc(100vw - 1rem)) !important;
+	box-sizing: border-box !important;
+}
+
+html .orca-headbar-menu .orca-menu-item,
+html .orca-headbar-menu .orca-menu-text {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-start !important;
+	gap: 0.5rem !important;
+	width: 100% !important;
+	box-sizing: border-box !important;
+}
+
+html .orca-headbar-menu .orca-menu-text-icon,
+html .orca-headbar-menu .orca-menu-text-pre,
+html .orca-headbar-menu .orca-menu-item > .ti,
+html .orca-headbar-menu .orca-menu-item > .orca-icon {
+	flex: 0 0 1rem !important;
+	inline-size: 1rem !important;
+	block-size: 1rem !important;
+	margin-inline: 0 !important;
+}
+
+html .orca-headbar-menu .orca-menu-text-text {
+	flex: 1 1 auto !important;
+	min-inline-size: 0 !important;
+	text-align: start !important;
+}
+
 /* TOC popup — the panel is the right-side sheet; its popup wrapper is only a shell. */
 html.t-shadcn .orca-popup:has(> .orca-toc) {
 	background: transparent !important;
@@ -666,7 +709,7 @@ html.t-shadcn .orca-popup:has(> .orca-toc) {
 }
 
 html.t-shadcn .orca-toc {
-	animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both !important;
+	animation: shadcn-toc-in var(--motion-panel-duration) var(--motion-panel-ease) both !important;
 	transform-origin: right center !important;
 	background: var(--background) !important;
 	color: var(--foreground) !important;
@@ -728,7 +771,11 @@ html.t-shadcn .orca-repo-switcher-modal {
 	transform-origin: top right !important;
 }
 
-html.t-shadcn .orca-toc[data-state="closed"],
+html.t-shadcn .orca-toc[data-state="closed"] {
+	animation: shadcn-toc-out var(--motion-panel-duration-out) var(--motion-panel-ease-out) both !important;
+	pointer-events: none !important;
+}
+
 html.t-shadcn .orca-repo-switcher-modal[data-state="closed"] {
 	animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both !important;
 	pointer-events: none !important;
@@ -891,7 +938,7 @@ html .orca-settings > .sections .item > i.ti::before {
 	line-height: 1 !important;
 }
 
-/* Switch geometry — beat native padding/gap/translate in late-loaded Orca CSS */
+/* Switch geometry — keep the host state, but use the theme track treatment. */
 html:root:root .orca-switch {
 	display: inline-flex !important;
 	align-items: center !important;
@@ -905,10 +952,8 @@ html:root:root .orca-switch {
 	margin: 0 !important;
 	gap: 0 !important;
 	line-height: 0 !important;
-	text-align: start !important;
 	overflow: hidden !important;
 	border-radius: 9999px !important;
-	vertical-align: middle !important;
 }
 
 html:root:root .orca-switch-toggle {
@@ -918,21 +963,15 @@ html:root:root .orca-switch-toggle {
 	block-size: 1rem !important;
 	min-inline-size: 1rem !important;
 	min-block-size: 1rem !important;
-	aspect-ratio: 1 !important;
-	border-radius: 9999px !important;
 	position: static !important;
 	inset: auto !important;
 	margin: 0 !important;
 	transform: none !important;
-	translate: none !important;
+	translate: 0 !important;
 }
 
-html:root:root .orca-switch-on .orca-switch-toggle {
-	margin-inline-start: auto !important;
-}
-
-html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch-on .orca-switch-toggle {
-	margin-inline-start: auto !important;
+html:root:root .orca-switch:is(.orca-switch-on, .on, [data-state="on"]) {
+	justify-content: flex-end !important;
 }
 
 html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch).orca-switch {
@@ -946,16 +985,6 @@ html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-va
 	block-size: 0.75rem !important;
 	min-inline-size: 0.75rem !important;
 	min-block-size: 0.75rem !important;
-}
-
-html:root:root :is(#main, .orca-block-editor, .orca-repr-tag-props, .orca-tag-value-switch) .orca-switch {
-	vertical-align: -0.1em !important;
-}
-
-html:root:root .orca-settings .orca-switch {
-	align-self: center !important;
-	margin-block: 0 !important;
-	vertical-align: middle !important;
 }
 
 @layer base {
@@ -1372,11 +1401,9 @@ html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-m
 }
 
 /* Sidebar collapsed — #app.sidebar-closed (class on #app, not body) */
-html:root:root body #app.sidebar-closed #main,
-html:root:root body #app.sidebar-closed > #main,
-:root:root #app.sidebar-closed > #main.orca-panels-container,
-:root:root #app.sidebar-closed #main.orca-panels-container {
-	margin-inline-start: 0.5rem !important;
+html:root:root body #app.sidebar-closed #sidebar {
+	background: transparent !important;
+	background-color: transparent !important;
 }
 
 /* Tag properties collapsible — borderless shell with a flat title separator */
@@ -1429,11 +1456,21 @@ html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::b
 	transform: rotate(45deg) !important;
 }
 
-html:root:root .orca-repr-tag-props :is(.orca-textarea, .orca-textarea-input, input, .orca-datepicker-btn, .orca-select-button) {
-	border-bottom-color: var(--input) !important;
+html:root:root .orca-repr-tag-props :is(
+	.orca-datepicker-btn,
+	input[type="date"],
+	input[type="time"]
+) {
+	min-block-size: 2rem !important;
+	padding: 0.375rem 0.75rem !important;
+	border: 1px solid var(--input) !important;
+	border-radius: var(--radius-md) !important;
+	background: var(--secondary-background) !important;
+	color: var(--foreground) !important;
+	box-shadow: var(--shadow-xs) !important;
 }
 
-html:root:root .orca-repr-tag-props .orca-block-select-button {
+html:root:root .orca-block-select-button {
 	border: 0 !important;
 	border-bottom: 0 !important;
 	border-bottom-color: transparent !important;
@@ -1444,7 +1481,7 @@ html:root:root .orca-repr-tag-props .orca-block-select-button {
 	box-shadow: none !important;
 }
 
-html:root:root .orca-repr-tag-props .orca-block-select-button :is(
+html:root:root .orca-block-select-button :is(
 	.orca-select-button-text,
 	.orca-select-button-placeholder,
 	.orca-select-button-selector
@@ -1453,7 +1490,7 @@ html:root:root .orca-repr-tag-props .orca-block-select-button :is(
 	color: inherit !important;
 }
 
-html:root:root .orca-repr-tag-props button.orca-block-select-button :is(
+html:root:root button.orca-block-select-button :is(
 	.orca-tag,
 	.orca-select-button-selection
 ) {
@@ -1994,9 +2031,9 @@ html:root:root.t-shadcn .orca-repr-tag-props :is(
 	box-shadow: none !important;
 }
 
-html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button,
-html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button > .orca-select-button-text,
-html:root:root.t-shadcn .orca-repr-tag-props button.orca-block-select-button > .orca-select-button-placeholder {
+html:root:root.t-shadcn button.orca-block-select-button,
+html:root:root.t-shadcn button.orca-block-select-button > .orca-select-button-text,
+html:root:root.t-shadcn button.orca-block-select-button > .orca-select-button-placeholder {
 	background: transparent !important;
 	background-color: transparent !important;
 	border: 0 !important;
