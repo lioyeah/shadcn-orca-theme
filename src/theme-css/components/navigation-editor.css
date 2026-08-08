@@ -29,7 +29,7 @@
 		background-image: none !important;
 		border: 1px solid transparent !important;
 		align-items: center !important;
-		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
+		transition: color var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), box-shadow var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
 	/* Low-risk press feedback for ordinary UI actions only. */

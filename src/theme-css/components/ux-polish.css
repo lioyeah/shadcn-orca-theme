@@ -1,0 +1,30 @@
+@layer components {
+	/* Settings navigation: stable row rhythm without changing host navigation. */
+	html .orca-settings > .sections {
+		padding: 0.5rem !important;
+	}
+
+	html .orca-settings > .sections .item,
+	html .orca-settings > .sections .plugin-item {
+		min-block-size: var(--ux-sidebar-item-height) !important;
+		padding-block: 0.375rem !important;
+		padding-inline: 0.625rem !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Sidebar header: align the repository control with sidebar item rhythm. */
+	.orca-sidebar-header {
+		gap: var(--ux-section-gap) !important;
+		padding: 0.5rem !important;
+	}
+
+	/* Empty state: make the state readable without inventing actions or copy. */
+	.orca-empty-state {
+		display: grid !important;
+		place-items: center !important;
+		min-block-size: 8rem !important;
+		padding: var(--ux-panel-padding) !important;
+		text-align: center !important;
+		color: var(--muted-foreground) !important;
+	}
+}

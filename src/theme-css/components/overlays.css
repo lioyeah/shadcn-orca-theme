@@ -13,11 +13,22 @@
 	@keyframes shadcn-toc-in {
 		from {
 			opacity: 0;
-			transform: translateX(10px) scale(0.99);
+			transform: translateX(1.5rem);
 		}
 		to {
 			opacity: 1;
-			transform: translateX(0) scale(1);
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes shadcn-toc-out {
+		from {
+			opacity: 1;
+			transform: translateX(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateX(1.5rem);
 		}
 	}
 
@@ -193,7 +204,7 @@
 
 	/* TOC is a right-side sheet, not a centered editor popover. */
 	.orca-toc {
-		animation: shadcn-toc-in var(--motion-duration-fast) var(--motion-ease-out) both;
+		animation: shadcn-toc-in var(--motion-panel-duration) var(--motion-panel-ease) both;
 		transform-origin: right center;
 	}
 
@@ -214,7 +225,11 @@
 		transform-origin: top right;
 	}
 
-	.orca-toc[data-state="closed"],
+	.orca-toc[data-state="closed"] {
+		animation: shadcn-toc-out var(--motion-panel-duration-out) var(--motion-panel-ease-out) both;
+		pointer-events: none !important;
+	}
+
 	.orca-repo-switcher-modal[data-state="closed"] {
 		animation: shadcn-panel-out var(--motion-duration-fast) var(--motion-ease-in) both;
 		pointer-events: none !important;

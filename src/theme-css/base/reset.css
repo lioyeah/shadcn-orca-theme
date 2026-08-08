@@ -89,6 +89,11 @@
 		html.t-light {
 			--motion-duration-fast: 0ms;
 			--motion-duration-normal: 0ms;
+			--motion-panel-duration: 0ms;
+			--motion-panel-duration-out: 0ms;
+			--motion-toolbar-duration: 0ms;
+			--motion-toolbar-stagger: 0ms;
+			--motion-toolbar-group-delay: 0ms;
 			--typeset-link-highlight-duration: 0ms;
 			--typeset-scope-line-duration: 0ms;
 			--shimmer-duration: 0ms;

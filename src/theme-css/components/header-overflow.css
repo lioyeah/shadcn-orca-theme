@@ -1,0 +1,139 @@
+@layer components {
+	/*
+	   Header overflow — actual Orca structure:
+	   sidebar-tools | user-tools | global-tools (last button = dots)
+
+	   Buttons retain their layout slots so the dots trigger never moves.
+	   The visual reveal is clipped and translated from the trigger side.
+	*/
+	#headbar .orca-headbar-global-tools {
+		position: relative !important;
+		display: flex !important;
+		align-items: center !important;
+		isolation: isolate !important;
+	}
+
+	#headbar .orca-headbar-global-tools::before {
+		content: "" !important;
+		position: absolute !important;
+		z-index: 0 !important;
+		inset-block: -1rem !important;
+		inset-inline-start: -16rem !important;
+		inline-size: 16rem !important;
+		clip-path: inset(0) !important;
+		pointer-events: auto !important;
+	}
+
+	#headbar .orca-headbar-global-tools > .orca-button,
+	#headbar .orca-headbar-user-tools > .orca-button {
+		position: relative !important;
+		z-index: 1 !important;
+	}
+
+	/* Never collect the left sidebar toggle, back, or forward controls. */
+	#headbar .orca-headbar-sidebar-tools {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+		visibility: visible !important;
+		transform: none !important;
+	}
+
+	#headbar .orca-headbar-global-tools > .orca-button:not(:last-child),
+	#headbar .orca-headbar-user-tools > .orca-button {
+		opacity: 0 !important;
+		pointer-events: none !important;
+		visibility: hidden !important;
+		clip-path: inset(0 0 0 100%) !important;
+		transform: translateX(0.5rem) !important;
+		transition:
+			opacity var(--motion-toolbar-duration) var(--motion-panel-ease-out),
+			clip-path var(--motion-toolbar-duration) var(--motion-panel-ease-out),
+			transform var(--motion-toolbar-duration) var(--motion-panel-ease-out),
+			visibility 0s linear var(--motion-toolbar-duration) !important;
+	}
+
+	#headbar .orca-headbar-global-tools > .orca-button:last-child {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+		visibility: visible !important;
+		clip-path: none !important;
+		transform: none !important;
+	}
+
+	/* Reveal toward the left, starting with the button nearest the dots. */
+	#headbar .orca-headbar-global-tools:hover > .orca-button:not(:last-child),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:not(:last-child),
+	#headbar:has(.orca-headbar-user-tools:hover)
+		.orca-headbar-global-tools > .orca-button:not(:last-child),
+	#headbar:has(.orca-popup .orca-headbar-menu)
+		.orca-headbar-global-tools > .orca-button:not(:last-child),
+	#headbar:has(.orca-headbar-global-tools:hover, .orca-headbar-user-tools:hover)
+		.orca-headbar-user-tools > .orca-button,
+	#headbar:has(.orca-headbar-global-tools .orca-button:focus-visible)
+		.orca-headbar-user-tools > .orca-button,
+	#headbar:has(.orca-popup .orca-headbar-menu)
+		.orca-headbar-user-tools > .orca-button {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+		visibility: visible !important;
+		clip-path: inset(0) !important;
+		transform: none !important;
+	}
+
+	/* Third-party tools reveal as one group, independent of their count. */
+	#headbar:has(.orca-headbar-global-tools:hover, .orca-headbar-user-tools:hover)
+		.orca-headbar-user-tools > .orca-button,
+	#headbar:has(.orca-headbar-global-tools .orca-button:focus-visible)
+		.orca-headbar-user-tools > .orca-button {
+		transition-delay: var(--motion-toolbar-group-delay),
+			var(--motion-toolbar-group-delay),
+			var(--motion-toolbar-group-delay), 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(2),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(2) {
+		transition-delay: 0s, 0s, 0s, 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(3),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(3) {
+		transition-delay: var(--motion-toolbar-stagger), var(--motion-toolbar-stagger),
+			var(--motion-toolbar-stagger), 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(4),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(4) {
+		transition-delay: calc(var(--motion-toolbar-stagger) * 2),
+			calc(var(--motion-toolbar-stagger) * 2),
+			calc(var(--motion-toolbar-stagger) * 2), 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(5),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(5) {
+		transition-delay: calc(var(--motion-toolbar-stagger) * 3),
+			calc(var(--motion-toolbar-stagger) * 3),
+			calc(var(--motion-toolbar-stagger) * 3), 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(6),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(6) {
+		transition-delay: calc(var(--motion-toolbar-stagger) * 4),
+			calc(var(--motion-toolbar-stagger) * 4),
+			calc(var(--motion-toolbar-stagger) * 4), 0s !important;
+	}
+
+	#headbar .orca-headbar-global-tools:hover > .orca-button:nth-last-child(7),
+	#headbar .orca-headbar-global-tools:has(.orca-button:focus-visible) > .orca-button:nth-last-child(7) {
+		transition-delay: calc(var(--motion-toolbar-stagger) * 5),
+			calc(var(--motion-toolbar-stagger) * 5),
+			calc(var(--motion-toolbar-stagger) * 5), 0s !important;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#headbar .orca-headbar-global-tools > .orca-button,
+		#headbar .orca-headbar-user-tools > .orca-button {
+			transition: none !important;
+			transform: none !important;
+		}
+	}
+}

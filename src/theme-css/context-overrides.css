@@ -345,13 +345,6 @@ html body #main.orca-panels-container,
 	box-sizing: border-box !important;
 }
 
-html body #app.sidebar-closed #main,
-html body #app.sidebar-closed > #main,
-#app.sidebar-closed > #main.orca-panels-container,
-#app.sidebar-closed #main.orca-panels-container {
-	margin-inline-start: 0.5rem !important;
-}
-
 html .orca-search-modal-result-preview #main,
 html .orca-block-popup-preview #main,
 html .orca-inline-reference-preview #main,

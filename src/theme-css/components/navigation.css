@@ -77,13 +77,12 @@
 
 	/* ----------------------------------------------------------
 	   4.4 Switch — shadcn switch.tsx
-	   Default (settings): w-8 h-[1.15rem], thumb size-4 (16px)
-	   Sm (body/tag props): w-6 h-3.5, thumb size-3 (12px)
 	   ---------------------------------------------------------- */
 
 	.orca-switch {
 		display: inline-flex !important;
 		align-items: center !important;
+		justify-content: flex-start !important;
 		box-sizing: border-box !important;
 		min-width: 2rem !important;
 		width: 2rem !important;
@@ -97,26 +96,15 @@
 		position: relative !important;
 		vertical-align: middle !important;
 		align-self: center !important;
-		justify-content: flex-start !important;
-		gap: 0 !important;
-		margin: 0 !important;
-		line-height: 0 !important;
-		text-align: start !important;
 		overflow: hidden !important;
 		cursor: pointer !important;
 		transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease) !important;
 	}
 
-	html:not(.t-light) .orca-switch:not(.orca-switch-on):not(.orca-switch.orca-switch-on) {
-		background: color-mix(in oklab, var(--input) 80%, transparent) !important;
-		background-color: color-mix(in oklab, var(--input) 80%, transparent) !important;
-	}
-
-	.orca-switch.orca-switch-on,
-	.orca-switch-on {
+	.orca-switch:is(.orca-switch-on, .on, [data-state="on"]) {
+		justify-content: flex-end !important;
 		background: var(--primary) !important;
 		background-color: var(--primary) !important;
-		border-color: transparent !important;
 	}
 
 	.orca-switch-toggle {
@@ -126,41 +114,38 @@
 		height: 1rem !important;
 		min-width: 1rem !important;
 		min-height: 1rem !important;
-		aspect-ratio: 1 !important;
+		flex-shrink: 0 !important;
 		border: none !important;
 		border-radius: 9999px !important;
 		background: var(--background) !important;
 		background-color: var(--background) !important;
 		box-shadow: none !important;
-		flex-shrink: 0 !important;
 		position: static !important;
-		inset: auto !important;
 		margin: 0 !important;
 		transform: none !important;
-		translate: none !important;
-		transition: margin-inline-start var(--motion-duration-fast) var(--motion-ease) !important;
+		translate: 0 !important;
 	}
 
-	html:not(.t-light) .orca-switch-on .orca-switch-toggle,
-	html:not(.t-light) .orca-switch.orca-switch-on .orca-switch-toggle {
+	html:not(.t-light) .orca-switch:not(:is(.orca-switch-on, .on, [data-state="on"])) {
+		background: color-mix(in oklab, var(--input) 80%, transparent) !important;
+		background-color: color-mix(in oklab, var(--input) 80%, transparent) !important;
+	}
+
+	html:not(.t-light) .orca-switch:is(.orca-switch-on, .on, [data-state="on"]) .orca-switch-toggle {
 		background: var(--primary-foreground) !important;
 		background-color: var(--primary-foreground) !important;
 	}
 
-	html:not(.t-light) .orca-switch:not(.orca-switch-on) .orca-switch-toggle {
+	html:not(.t-light) .orca-switch:not(:is(.orca-switch-on, .on, [data-state="on"])) .orca-switch-toggle {
 		background: var(--foreground) !important;
 		background-color: var(--foreground) !important;
-	}
-
-	.orca-switch-on .orca-switch-toggle,
-	.orca-switch.orca-switch-on .orca-switch-toggle {
-		margin-inline-start: auto !important;
 	}
 
 	.orca-switch-readonly,
 	.orca-switch-unset {
 		opacity: 0.5 !important;
 	}
+
 	.orca-switch-readonly {
 		cursor: default !important;
 	}
@@ -171,7 +156,6 @@
 		outline: none !important;
 	}
 
-	/* Body / tag-property — switch size=sm */
 	#main .orca-switch,
 	.orca-block-editor .orca-switch,
 	.orca-repr-tag-props .orca-switch,
@@ -179,12 +163,8 @@
 		min-width: 1.5rem !important;
 		width: 1.5rem !important;
 		height: 0.875rem !important;
-		box-shadow: var(--shadow-xs) !important;
-		vertical-align: middle !important;
-		align-self: center !important;
-		margin-block: 0 !important;
-		line-height: 0 !important;
 	}
+
 	#main .orca-switch-toggle,
 	.orca-block-editor .orca-switch-toggle,
 	.orca-repr-tag-props .orca-switch-toggle,
@@ -193,22 +173,6 @@
 		height: 0.75rem !important;
 		min-width: 0.75rem !important;
 		min-height: 0.75rem !important;
-	}
-	#main .orca-switch-on .orca-switch-toggle,
-	.orca-block-editor .orca-switch-on .orca-switch-toggle,
-	.orca-repr-tag-props .orca-switch-on .orca-switch-toggle,
-	.orca-tag-value-switch.orca-switch-on .orca-switch-toggle {
-		margin-inline-start: auto !important;
-	}
-
-	/* Tag props layout — see §4.22b accordion card */
-
-	/* Settings — default size; vertically centered with label row */
-	html .orca-settings .orca-switch {
-		flex-shrink: 0 !important;
-		margin-block: 0 !important;
-		vertical-align: middle !important;
-		align-self: center !important;
 	}
 
 	/* ----------------------------------------------------------

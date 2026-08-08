@@ -1,0 +1,31 @@
+@layer components {
+	/*
+	   Shared interaction states.
+	   Keep selection and focus ownership with Orca; this layer only gives
+	   equivalent semantic states a consistent visual treatment.
+	*/
+	:is(
+		.orca-button,
+		.orca-menu-item,
+		.orca-menu-text,
+		.orca-select-item,
+		.orca-checkbox-box,
+		.orca-tab-item,
+		.orca-segmented-item,
+		.orca-tab,
+		.orca-query-tab,
+		.orca-sidebar-tab
+	):is(.disabled, [aria-disabled="true"]) {
+		opacity: 0.5 !important;
+		cursor: not-allowed !important;
+	}
+
+	.orca-button[aria-busy="true"] {
+		cursor: wait !important;
+		opacity: 0.7 !important;
+	}
+
+	.orca-button:not(:disabled):not([aria-disabled="true"]):not(.disabled):active {
+		opacity: 0.88 !important;
+	}
+}
