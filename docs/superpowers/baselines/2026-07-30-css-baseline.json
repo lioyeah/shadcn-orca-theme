@@ -1,10 +1,10 @@
 {
   "generated": {
     "file": "dist/shadcn.css",
-    "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee",
-    "bytes": 399252,
-    "lines": 10462,
-    "selectorCount": 1650,
+    "sha256": "b57f31ba59f6773d7b0d4bce38c148191db8ae9776a5e0a88f11e0f54b378793",
+    "bytes": 401803,
+    "lines": 10546,
+    "selectorCount": 1661,
     "selectors": [
       "#headbar .orca-button.plain:hover",
       "#headbar .orca-headbar-global-tools > .orca-button",
@@ -265,6 +265,9 @@
       ".orca-checkbox-box:not(:empty)",
       ".orca-checkbox-box[data-state=\"checked\"]",
       ".orca-code-block",
+      ".orca-code-editor",
+      ".orca-code-editor-container",
+      ".orca-code-preview",
       ".orca-code-preview) :is( .token.boolean",
       ".orca-code-preview) :is( .token.comment",
       ".orca-code-preview) :is( .token.function",
@@ -435,6 +438,7 @@
       ".orca-no-editable-btn",
       ".orca-no-editable-btn.orca-button",
       ".orca-no-editable-btn.orca-button.plain",
+      ".orca-no-editable-container",
       ".orca-notification",
       ".orca-notification[aria-hidden=\"true\"]",
       ".orca-notification[data-state=\"closed\"]",
@@ -598,6 +602,7 @@
       ".orca-repo-switcher-modal.orca-menu > *",
       ".orca-repo-switcher-modal[data-state=\"closed\"]",
       ".orca-repr-code",
+      ".orca-repr-code-content",
       ".orca-repr-quote2-error",
       ".orca-repr-quote2-important",
       ".orca-repr-quote2-note ) :is(.orca-block",
@@ -1571,6 +1576,9 @@
       "html:root:root .orca-popup.orca-command-modal.orca-menu",
       "html:root:root .orca-query-card",
       "html:root:root .orca-query-list-block-block .orca-repr-self-fold-container",
+      "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg",
+      "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-children",
+      "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-main",
       "html:root:root .orca-query-list-block::before",
       "html:root:root .orca-repr-self-fold-container",
       "html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized)",
@@ -1607,6 +1615,9 @@
       "html:root:root .orca-repr-tag-props-title",
       "html:root:root .orca-repr-tag-props-title::before",
       "html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before",
+      "html:root:root .orca-repr.orca-mirror-bg",
+      "html:root:root .orca-repr.orca-mirror-bg::before",
+      "html:root:root .orca-repr.orca-mirror-bg:has(> .orca-repr-children > .orca-block)",
       "html:root:root .orca-settings",
       "html:root:root .orca-settings > .sections",
       "html:root:root .orca-settings > .views",
@@ -2003,16 +2014,16 @@
       "--ux-sidebar-item-height",
       "--variant-filled"
     ],
-    "declarationBlockCount": 1196
+    "declarationBlockCount": 1205
   },
   "artifacts": {
     "public": {
       "file": "public/shadcn.css",
-      "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee"
+      "sha256": "b57f31ba59f6773d7b0d4bce38c148191db8ae9776a5e0a88f11e0f54b378793"
     },
     "dist": {
       "file": "dist/shadcn.css",
-      "sha256": "1313622f454644c49c0ae76e69835fc1fc16b940fd56e131ac050313da09d5ee"
+      "sha256": "b57f31ba59f6773d7b0d4bce38c148191db8ae9776a5e0a88f11e0f54b378793"
     }
   },
   "sources": [
@@ -3966,19 +3977,28 @@
     },
     {
       "file": "src/theme-css/native-precedence.css",
-      "sha256": "0cf89f09296d6a979fcd3deafe835d58b785d1a236de24cc87f4451af17bfde6",
-      "bytes": 101812,
-      "lines": 2314,
-      "selectorCount": 559,
+      "sha256": "d393e86e004e993b793db58f22b37776ed290ac67687510c3715df8fe24136f2",
+      "bytes": 104363,
+      "lines": 2398,
+      "selectorCount": 574,
       "selectors": [
         ".choosen-month",
+        ".cm-editor",
         ".help-icon",
         ".on",
         ".orca-block-editor",
+        ".orca-code-block",
+        ".orca-code-editor",
+        ".orca-code-editor-container",
+        ".orca-code-preview",
+        ".orca-code-wrapper",
         ".orca-input-post",
+        ".orca-no-editable-container",
         ".orca-query-editor",
         ".orca-query-list-block",
         ".orca-query-result-list",
+        ".orca-repr-code",
+        ".orca-repr-code-content",
         ".orca-repr-tag-props",
         ".orca-select-button-placeholder",
         ".orca-select-menu-options",
@@ -4472,6 +4492,9 @@
         "html:root:root .orca-popup.orca-command-modal.orca-menu",
         "html:root:root .orca-query-card",
         "html:root:root .orca-query-list-block-block .orca-repr-self-fold-container",
+        "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg",
+        "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-children",
+        "html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-main",
         "html:root:root .orca-query-list-block::before",
         "html:root:root .orca-repr-self-fold-container",
         "html:root:root .orca-repr-self-fold-container .orca-aichat-container:not(.orca-maximized)",
@@ -4508,6 +4531,9 @@
         "html:root:root .orca-repr-tag-props-title",
         "html:root:root .orca-repr-tag-props-title::before",
         "html:root:root .orca-repr-tag-props-title:not(.orca-repr-tag-props-collapsed)::before",
+        "html:root:root .orca-repr.orca-mirror-bg",
+        "html:root:root .orca-repr.orca-mirror-bg::before",
+        "html:root:root .orca-repr.orca-mirror-bg:has(> .orca-repr-children > .orca-block)",
         "html:root:root .orca-settings",
         "html:root:root .orca-settings > .sections",
         "html:root:root .orca-settings > .views",
@@ -4569,7 +4595,7 @@
         "--selected",
         "--text-color"
       ],
-      "declarationBlockCount": 228
+      "declarationBlockCount": 237
     }
   ]
 }
