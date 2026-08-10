@@ -9539,18 +9539,6 @@ html:root:root .orca-repr.orca-mirror-bg :is(
 	background-color: transparent !important;
 }
 
-/* Keep host-owned collapsed dots visible without changing their geometry. */
-html:root:root .orca-query-list-block-block .orca-block-handle-collapsed,
-html:root:root .orca-query-list-block-block .orca-block-handle-collapsed::before {
-	color: var(--muted-foreground) !important;
-}
-
-/* Light mode: passive handles must remain visible before hover. */
-html.t-light .orca-block-handle:not(.orca-block-handle-colored):not(:hover),
-html.t-light .orca-block-handle:not(.orca-block-handle-colored):not(:hover)::before {
-	color: var(--muted-foreground) !important;
-}
-
 html:root:root .orca-repr-tag-props .orca-tag-data-propicon {
 	display: inline-flex !important;
 	align-items: center !important;
