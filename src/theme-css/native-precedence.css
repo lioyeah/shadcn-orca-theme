@@ -1303,8 +1303,104 @@ html:root:root :is(
 }
 
 html:root:root .orca-query-list-block::before {
-	background-color: var(--card) !important;
+	background: var(--muted) !important;
+	background-color: var(--muted) !important;
 	border-radius: var(--radius-lg) !important;
+}
+
+/* Mirror blocks use a transparent surface with a light structural cue. */
+html:root:root .orca-repr.orca-mirror-bg {
+	background: transparent !important;
+	background-color: transparent !important;
+	background-image: none !important;
+	border: 0 !important;
+}
+
+html:root:root .orca-repr.orca-mirror-bg::before {
+	background: transparent !important;
+	background-color: transparent !important;
+	background-image: none !important;
+}
+
+html:root:root .orca-repr.orca-mirror-bg > .orca-repr-main > :is(
+	.orca-repr-main-content,
+	.orca-repr-code-content
+) {
+	border: 1px dashed var(--muted-foreground) !important;
+	border-radius: var(--radius-md) !important;
+}
+
+html:root:root .orca-repr.orca-mirror-bg:has(> .orca-repr-children > .orca-block) {
+	border: 1px dashed var(--muted-foreground) !important;
+	border-radius: var(--radius-md) !important;
+}
+
+html:root:root .orca-repr.orca-mirror-bg:has(> .orca-repr-children > .orca-block) > .orca-repr-main > :is(
+	.orca-repr-main-content,
+	.orca-repr-code-content
+) {
+	border: 0 !important;
+}
+
+html:root:root .orca-repr.orca-mirror-bg.orca-repr-code > .orca-repr-main > :is(
+	.orca-repr-main-content,
+	.orca-repr-code-content
+) {
+	padding-inline: 0.5rem !important;
+}
+
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-main > :is(
+	.orca-repr-main-content,
+	.orca-repr-code-content
+) {
+	border-color: var(--muted-foreground) !important;
+}
+
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg,
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-main,
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-main > :is(
+	.orca-repr-main-content,
+	.orca-repr-code-content,
+	.orca-repr-scope-line
+),
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg > .orca-repr-children,
+html:root:root .orca-query-list-block-block .orca-repr.orca-mirror-bg :is(
+	.orca-repr-main-none-editable,
+	.orca-no-editable-container,
+	.orca-no-editable
+) {
+	background: transparent !important;
+	background-color: transparent !important;
+	background-image: none !important;
+}
+
+/* Avoid a second solid frame around code inside a dashed mirror container. */
+html:root:root .orca-repr.orca-mirror-bg :is(
+	pre,
+	.orca-code-block,
+	.orca-code-wrapper,
+	.orca-repr-code,
+	.orca-code-preview,
+	.orca-code-editor,
+	.orca-code-editor-container,
+	.cm-editor,
+	.cm-scroller
+) {
+	border: 0 !important;
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+/* Keep host-owned collapsed dots visible without changing their geometry. */
+html:root:root .orca-query-list-block-block .orca-block-handle-collapsed,
+html:root:root .orca-query-list-block-block .orca-block-handle-collapsed::before {
+	color: var(--muted-foreground) !important;
+}
+
+/* Light mode: passive handles must remain visible before hover. */
+html.t-light .orca-block-handle:not(.orca-block-handle-colored):not(:hover),
+html.t-light .orca-block-handle:not(.orca-block-handle-colored):not(:hover)::before {
+	color: var(--muted-foreground) !important;
 }
 
 html:root:root .orca-repr-tag-props .orca-tag-data-propicon {
